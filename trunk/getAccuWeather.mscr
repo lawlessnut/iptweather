@@ -1,4 +1,4 @@
-ErrorLevel("off")
+#ErrorLevel("off")
 
 # ############################################################################
 # retrieve user preference
@@ -28,7 +28,6 @@ EndIf
 # configure location of parsed weather data in registry
 IPTWregRoot              = IniRead("weather.ini", "Script settings", "IPTWregRoot")
 IPTWregKey               = IniRead("weather.ini", "Script settings", "IPTWregKey")
-IPTWaccuWeatherURL       = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?" & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
 IPTWdataFile             = SystemPath("ScriptPath") \ "data.xml"
 IPTWparserPath           = SystemPath("ScriptPath")
 IPTWxmlParserConfigFile  = SystemPath("ScriptPath") \ "config.xml"
@@ -42,11 +41,11 @@ EndIf
 # set up for next notification
 currentDate = FormatTime("m/d/Y")
 # kill any lingering notification
+mort = SystemPath("ScriptExe") \ "MortScript.exe"
+script = SystemPath("ScriptPath") \ SystemPath("ScriptName") & SystemPath("ScriptExt")
 RemoveNotifications(mort, script) 
 If (IPTWdelayHours <> 0 OR IPTWdelayMinutes <> 0)
   utime = TimeStamp() + (IPTWdelayHours * 60 + IPTWdelayMinutes) * 60
-  mort = SystemPath("ScriptExe") \ "MortScript.exe"
-  script = SystemPath("ScriptPath") \ SystemPath("ScriptName") & SystemPath("ScriptExt")
   # set notify for myself at next time
   RunAt(utime, mort, script)
 EndIf
@@ -61,15 +60,30 @@ lastobstime = RegRead(IPTWregRoot, IPTWregKey, "obstime")
 # load data
 didconnect = FALSE
 If (IPTWpreventSleepOnUpdate)
-  BattSuspendTimeout = RegRead ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout")
-  ACSuspendTimeout = RegRead ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout")
-  BatteryTimeout = RegRead ("HKCU", "ControlPanel\Backlight", "BatteryTimeout")
-  ACTimeout = RegRead ("HKCU", "ControlPanel\Backlight", "ACTimeout")
+  sleepOnUpdatePrevented = RegRead(IPTWregRoot, IPTWregKey, "sleepOnUpdatePrevented")
+  If (sleepOnUpdatePrevented = 1)
+    BattSuspendTimeout = RegRead(IPTWregRoot, IPTWregKey, "BattSuspendTimeout")
+    ACSuspendTimeout = RegRead(IPTWregRoot, IPTWregKey, "ACSuspendTimeout")
+    BatteryTimeout = RegRead(IPTWregRoot, IPTWregKey, "BatteryTimeout")
+    ACTimeout = RegRead(IPTWregRoot, IPTWregKey, "ACTimeout")
+  Else
+    BattSuspendTimeout = RegRead("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout")
+    ACSuspendTimeout = RegRead("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout")
+    BatteryTimeout = RegRead("HKCU", "ControlPanel\Backlight", "BatteryTimeout")
+    ACTimeout = RegRead("HKCU", "ControlPanel\Backlight", "ACTimeout")
 
-  RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts","BattSuspendTimeout", 0)
-  RegWriteDword ("HKCU", "ControlPanel\Backlight", "BatteryTimeout", 0)
-  RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts","ACSuspendTimeout", 0)
-  RegWriteDword ("HKCU", "ControlPanel\Backlight", "ACTimeout", 0)
+    RegWriteDword(IPTWregRoot, IPTWregKey,"BattSuspendTimeout", BattSuspendTimeout)
+    RegWriteDword(IPTWregRoot, IPTWregKey, "BatteryTimeout", BatteryTimeout)
+    RegWriteDword(IPTWregRoot, IPTWregKey,"ACSuspendTimeout", ACSuspendTimeout)
+    RegWriteDword(IPTWregRoot, IPTWregKey, "ACTimeout", ACTimeout)
+  EndIf
+
+  RegWriteDword("HKLM", "System\CurrentControlSet\Control\Power\Timeouts","BattSuspendTimeout", 0)
+  RegWriteDword("HKCU", "ControlPanel\Backlight", "BatteryTimeout", 0)
+  RegWriteDword("HKLM", "System\CurrentControlSet\Control\Power\Timeouts","ACSuspendTimeout", 0)
+  RegWriteDword("HKCU", "ControlPanel\Backlight", "ACTimeout", 0)
+
+  RegWriteDword(IPTWregRoot, IPTWregKey, "sleepOnUpdatePrevented", 1)
 EndIf
 
 If (NOT InternetConnected("http://www.perdu.com"))
@@ -82,6 +96,30 @@ If (NOT InternetConnected("http://www.perdu.com"))
   EndWhile
 EndIf
 If (InternetConnected("http://www.perdu.com"))
+  If (IPTWaccuWeatherLocation eq "My Location")
+#    ipData = ReadFile("http://www.monadresseip.fr/")
+#    ipBegin = Find(ipData, "ip=") + 3
+#    ipEnd = Find(ipData, "'>", ipBegin)
+#    ip = Replace(SubStr(ipData, ipBegin, ipEnd - ipBegin), " ", "")
+
+#    locationData = ReadFile("http://www.ipgetinfo.com/?mode=ip&lang=fr&ip=" & ip)
+#    latitudeBegin = Find(locationData, "latitude</b>: ") + 14
+#    latitudeEnd = Find(locationData, "<br", latitudeBegin)
+#    latitude = SubStr(locationData, latitudeBegin, latitudeEnd - latitudeBegin)
+ 
+#    longitudeBegin = Find(locationData, "longitude</b>: ") + 14
+#    longitudeEnd = Find(locationData, "<br", longitudeBegin)
+#    longitude = SubStr(locationData, longitudeBegin, longitudeEnd - longitudeBegin)
+
+    locationData = ReadFile("http://www.maxmind.com/app/mylocation")
+    locBegin = Find(locationData, "Latitude/Longitude") + 57
+    locEnd = Find(locationData, "</td>", locBegin)
+    Split(SubStr(locationData, locBegin, locEnd - locBegin - 1), "/", 1, latitude, longitude)
+
+    IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+  Else
+    IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?" & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
+  EndIf
   data = ReadFile(IPTWaccuWeatherURL)
   WriteFile(IPTWdataFile, data)
 EndIf
@@ -96,6 +134,8 @@ If (IPTWpreventSleepOnUpdate)
   RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout", ACSuspendTimeout)
   RegWriteDword ("HKCU", "ControlPanel\Backlight", "BatteryTimeout", BatteryTimeout)
   RegWriteDword ("HKCU", "ControlPanel\Backlight", "ACTimeout", ACTimeout)
+
+  RegWriteDword(IPTWregRoot, IPTWregKey, "sleepOnUpdatePrevented", 0)
 EndIf
 
 If (NOT FileExists(IPTWdataFile))
@@ -108,6 +148,10 @@ If (NOT FileExists(IPTWdataFile))
 EndIf
 
 RunWait(IPTWparserPath \ "xml2reg.exe", IPTWxmlParserConfigFile)
+
+url = RegRead(IPTWregRoot, IPTWregKey, "url")
+locationCodeBegin = ReverseFind(url, "=") + 1
+RegWriteString(IPTWregRoot, IPTWregKey, "locationCode", SubStr(url, locationCodeBegin))
 
 # ############################################################################
 # new data observation date and time
@@ -292,8 +336,14 @@ Sub IPTWreloadS2U2
         weatherText = RegRead(IPTWregRoot, IPTWregKey, "text" & suffix & iconNum)
         newS2U2text = IniRead("weather.ini", "Weather description translation", weatherText)
         If (Length(newS2U2text) = 0)
-          IniWrite("weather.ini", "Weather description translation", weatherText, weatherText)
           newS2U2text = weatherText
+          If (Length(newS2U2text) > 19)
+            newS2U2text = Replace(newS2U2text, " and ", " & ")
+            If (Length(newS2U2text) > 19)
+              newS2U2text = Replace(newS2U2text, " with ", " w/ ")
+            EndIf
+          EndIf
+          IniWrite("weather.ini", "Weather description translation", weatherText, newS2U2text)
         EndIf
 
         If (oldS2U2text ne newS2U2text)
