@@ -13,7 +13,7 @@
 	<state>France</state>
 	<lat>48.86</lat> 
 	<lon>2.33</lon>
-	<time>17:30</time>
+	<time>19:30</time>
 	<timeZone>01:00</timeZone>
 	<obsDaylight>1</obsDaylight>
 	<isDaylight>False</isDaylight>
@@ -24,25 +24,25 @@
 			
 				<url>http://www.accuweather.com/world-index-forecast.asp?partner=rdona&amp;loccode=EUR|FR|FR012|PARIS</url>
 				
-				<observationtime>5:30 PM</observationtime>
+				<observationtime>7:30 PM</observationtime>
 			
-				<pressure state="Decreasing">102</pressure>
+				<pressure state="Steady">102</pressure>
 			
-				<temperature>14</temperature>
+				<temperature>13</temperature>
 			
-				<realfeel>12</realfeel>
+				<realfeel>13</realfeel>
 			
-				<humidity>58%</humidity>
+				<humidity>62%</humidity>
 			
-				<weathertext>Partly Sunny</weathertext>
+				<weathertext>Sunny</weathertext>
 			
-				<weathericon>03</weathericon>
+				<weathericon>01</weathericon>
 			
-				<windgusts>14</windgusts>
+				<windgusts>4</windgusts>
 			
-				<windspeed>14</windspeed>
+				<windspeed>4</windspeed>
 			
-				<winddirection>SSW</winddirection>
+				<winddirection>SE</winddirection>
 			
 				<visibility>16</visibility>
 			
@@ -52,28 +52,26 @@
 			
 				<dewpoint>6</dewpoint>
 			
-				<cloudcover>40%</cloudcover>
+				<cloudcover>20%</cloudcover>
 						
 
 		</currentconditions>
 		
 			<planets>
-				<sun rise="6:48 AM" set="7:08 PM"/>
-				<moon rise="10:50 AM" set="2:47 AM"/>
-				<mercury rise="7:08 AM" set="7:43 PM"/>
-<venus rise="7:27 AM" set="8:33 PM"/>
-<mars rise="1:07 PM" set="5:11 AM"/>
-<jupiter rise="6:26 AM" set="5:31 PM"/>
-<saturn rise="6:49 PM" set="7:14 AM"/>
-<uranus rise="6:47 AM" set="6:38 PM"/>
-<neptune rise="5:47 AM" set="3:56 PM"/>
-<pluto rise="2:39 AM" set="11:51 AM"/>
+				<sun rise="6:46 AM" set="7:09 PM"/>
+				<moon rise="12:03 PM" set="3:34 AM"/>
+				<mercury rise="7:06 AM" set="7:50 PM"/>
+<venus rise="7:26 AM" set="8:36 PM"/>
+<mars rise="1:04 PM" set="5:07 AM"/>
+<jupiter rise="6:22 AM" set="5:29 PM"/>
+<saturn rise="6:44 PM" set="7:10 AM"/>
+<uranus rise="6:43 AM" set="6:34 PM"/>
+<neptune rise="5:43 AM" set="3:52 PM"/>
+<pluto rise="2:35 AM" set="11:48 AM"/>
 
 			</planets>
 			<moon>
 				
-					<phase date="3/22/2010" text="Waxing Crescent" >6</phase>
-			
 					<phase date="3/23/2010" text="First" >7</phase>
 			
 					<phase date="3/24/2010" text="Waxing Gibbous" >8</phase>
@@ -136,6 +134,8 @@
 			
 					<phase date="4/22/2010" text="First" >7</phase>
 			
+					<phase date="4/23/2010" text="Waxing Gibbous" >8</phase>
+			
 			</moon>
 		
 			<forecast>
@@ -143,82 +143,6 @@
 					<url>http://www.accuweather.com/world-forecast.asp?partner=rdona&amp;loccode=EUR|FR|FR012|PARIS</url>
 					<day number="1">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=1</url>
-						
-					<obsdate>3/22/2010</obsdate>
-					<daycode>Monday</daycode>
-					
-						<sunrise>6:48 AM</sunrise>
-						<sunset>7:08 PM</sunset>
-					
-					<daytime>
-						
-							<txtshort>Periods of clouds and sunshine</txtshort>
-							
-							<txtlong>Periods of clouds and sunshine</txtlong>
-							
-							<weathericon>04</weathericon>
-						
-							<hightemperature>14</hightemperature>
-							<lowtemperature>7</lowtemperature>
-						
-							<realfeelhigh>17</realfeelhigh>
-							<realfeellow>5</realfeellow>
-						
-							<windspeed>9</windspeed>
-						
-							<winddirection>SSW</winddirection>
-						
-							<windgust>25</windgust>
-						
-							<maxuv>3</maxuv>
-						
-							<rainamount>0.0</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-						<precipamount>0.0</precipamount>
-						
-							<tstormprob>0</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>Clear to partly cloudy</txtshort>
-							
-							<txtlong>Clear to partly cloudy</txtlong>
-							
-							<weathericon>34</weathericon>
-						
-							<hightemperature>14</hightemperature>
-							<lowtemperature>7</lowtemperature>
-						
-							<realfeelhigh>17</realfeelhigh>
-							<realfeellow>5</realfeellow>
-						
-							<windspeed>9</windspeed>
-						
-							<winddirection>SSW</winddirection>
-						
-							<windgust>22</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>0.0</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>0.0</precipamount>
-						
-							<tstormprob>0</tstormprob>
-						
-					</nighttime>
-				</day>
-				<day number="2">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=2</url>
 						
 					<obsdate>3/23/2010</obsdate>
 					<daycode>Tuesday</daycode>
@@ -228,25 +152,25 @@
 					
 					<daytime>
 						
-							<txtshort>Thickening clouds</txtshort>
+							<txtshort>Increasing clouds</txtshort>
 							
-							<txtlong>Sun and areas of high clouds in the morning, then mostly cloudy in the afternoon</txtlong>
+							<txtlong>Increasing clouds</txtlong>
 							
 							<weathericon>06</weathericon>
 						
-							<hightemperature>16</hightemperature>
-							<lowtemperature>10</lowtemperature>
+							<hightemperature>15</hightemperature>
+							<lowtemperature>8</lowtemperature>
 						
-							<realfeelhigh>16</realfeelhigh>
-							<realfeellow>7</realfeellow>
+							<realfeelhigh>17</realfeelhigh>
+							<realfeellow>6</realfeellow>
 						
-							<windspeed>12</windspeed>
+							<windspeed>9</windspeed>
 						
 							<winddirection>SSE</winddirection>
 						
-							<windgust>28</windgust>
+							<windgust>22</windgust>
 						
-							<maxuv>3</maxuv>
+							<maxuv>4</maxuv>
 						
 							<rainamount>0.0</rainamount>
 						
@@ -267,17 +191,17 @@
 							
 							<weathericon>07</weathericon>
 						
-							<hightemperature>16</hightemperature>
-							<lowtemperature>10</lowtemperature>
+							<hightemperature>15</hightemperature>
+							<lowtemperature>8</lowtemperature>
 						
-							<realfeelhigh>16</realfeelhigh>
-							<realfeellow>7</realfeellow>
+							<realfeelhigh>17</realfeelhigh>
+							<realfeellow>6</realfeellow>
 						
-							<windspeed>12</windspeed>
+							<windspeed>14</windspeed>
 						
-							<winddirection>SSE</winddirection>
+							<winddirection>SE</winddirection>
 						
-							<windgust>33</windgust>
+							<windgust>32</windgust>
 						
 							<maxuv></maxuv>
 						
@@ -293,8 +217,8 @@
 						
 					</nighttime>
 				</day>
-				<day number="3">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=3</url>
+				<day number="2">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=2</url>
 						
 					<obsdate>3/24/2010</obsdate>
 					<daycode>Wednesday</daycode>
@@ -304,19 +228,19 @@
 					
 					<daytime>
 						
-							<txtshort>Sun, then clouds</txtshort>
+							<txtshort>Mostly cloudy</txtshort>
 							
-							<txtlong>Sun and areas of high clouds in the morning; cloudy in the afternoon</txtlong>
+							<txtlong>Mostly cloudy</txtlong>
 							
 							<weathericon>06</weathericon>
 						
-							<hightemperature>13</hightemperature>
-							<lowtemperature>11</lowtemperature>
+							<hightemperature>16</hightemperature>
+							<lowtemperature>9</lowtemperature>
 						
-							<realfeelhigh>12</realfeelhigh>
-							<realfeellow>7</realfeellow>
+							<realfeelhigh>16</realfeelhigh>
+							<realfeellow>6</realfeellow>
 						
-							<windspeed>17</windspeed>
+							<windspeed>19</windspeed>
 						
 							<winddirection>SSE</winddirection>
 						
@@ -332,45 +256,45 @@
 						
 						<precipamount>0.0</precipamount>
 						
-							<tstormprob>0</tstormprob>
+							<tstormprob>20</tstormprob>
 						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Mostly cloudy, a shower late</txtshort>
+							<txtshort>Rain and drizzle</txtshort>
 							
-							<txtlong>Mostly cloudy with a passing shower late</txtlong>
+							<txtlong>Rain and drizzle</txtlong>
 							
-							<weathericon>12</weathericon>
+							<weathericon>18</weathericon>
 						
-							<hightemperature>13</hightemperature>
-							<lowtemperature>11</lowtemperature>
+							<hightemperature>16</hightemperature>
+							<lowtemperature>9</lowtemperature>
 						
-							<realfeelhigh>12</realfeelhigh>
-							<realfeellow>7</realfeellow>
+							<realfeelhigh>16</realfeelhigh>
+							<realfeellow>6</realfeellow>
 						
 							<windspeed>17</windspeed>
 						
 							<winddirection>SSE</winddirection>
 						
-							<windgust>45</windgust>
+							<windgust>41</windgust>
 						
 							<maxuv></maxuv>
 						
-							<rainamount>1.3</rainamount>
+							<rainamount>3.6</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-							<precipamount>1.3</precipamount>
+							<precipamount>3.6</precipamount>
 						
-							<tstormprob>6</tstormprob>
+							<tstormprob>0</tstormprob>
 						
 					</nighttime>
 				</day>
-				<day number="4">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=4</url>
+				<day number="3">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=3</url>
 						
 					<obsdate>3/25/2010</obsdate>
 					<daycode>Thursday</daycode>
@@ -380,35 +304,35 @@
 					
 					<daytime>
 						
-							<txtshort>A thunderstorm in spots</txtshort>
+							<txtshort>Spotty showers</txtshort>
 							
-							<txtlong>A t-storm in spots; cloudy in the morning, then intervals of clouds and sunshine in the afternoon</txtlong>
+							<txtlong>Spotty showers; cloudy in the morning, then intervals of clouds and sunshine in the afternoon</txtlong>
 							
-							<weathericon>06</weathericon>
+							<weathericon>13</weathericon>
 						
-							<hightemperature>17</hightemperature>
-							<lowtemperature>6</lowtemperature>
+							<hightemperature>14</hightemperature>
+							<lowtemperature>8</lowtemperature>
 						
-							<realfeelhigh>14</realfeelhigh>
-							<realfeellow>2</realfeellow>
+							<realfeelhigh>11</realfeelhigh>
+							<realfeellow>4</realfeellow>
 						
-							<windspeed>24</windspeed>
+							<windspeed>22</windspeed>
 						
-							<winddirection>S</winddirection>
+							<winddirection>SSW</winddirection>
 						
-							<windgust>54</windgust>
+							<windgust>51</windgust>
 						
 							<maxuv>2</maxuv>
 						
-							<rainamount>0.8</rainamount>
+							<rainamount>3.6</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>0.8</precipamount>
+						<precipamount>3.6</precipamount>
 						
-							<tstormprob>31</tstormprob>
+							<tstormprob>18</tstormprob>
 						
 					</daytime>
 					<nighttime>
@@ -419,34 +343,34 @@
 							
 							<weathericon>18</weathericon>
 						
-							<hightemperature>17</hightemperature>
-							<lowtemperature>6</lowtemperature>
+							<hightemperature>14</hightemperature>
+							<lowtemperature>8</lowtemperature>
 						
-							<realfeelhigh>14</realfeelhigh>
-							<realfeellow>2</realfeellow>
+							<realfeelhigh>11</realfeelhigh>
+							<realfeellow>4</realfeellow>
 						
 							<windspeed>17</windspeed>
 						
-							<winddirection>S</winddirection>
+							<winddirection>SSW</winddirection>
 						
-							<windgust>46</windgust>
+							<windgust>40</windgust>
 						
 							<maxuv></maxuv>
 						
-							<rainamount>16.3</rainamount>
+							<rainamount>7.1</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-							<precipamount>16.3</precipamount>
+							<precipamount>7.1</precipamount>
 						
-							<tstormprob>5</tstormprob>
+							<tstormprob>26</tstormprob>
 						
 					</nighttime>
 				</day>
-				<day number="5">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=5</url>
+				<day number="4">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=4</url>
 						
 					<obsdate>3/26/2010</obsdate>
 					<daycode>Friday</daycode>
@@ -456,25 +380,134 @@
 					
 					<daytime>
 						
-							<txtshort>Cooler with a shower or two</txtshort>
+							<txtshort>Cloudy with spotty showers</txtshort>
 							
-							<txtlong>Cloudy, breezy and cooler with a brief shower or two</txtlong>
+							<txtlong>Cloudy and breezy with a couple of showers</txtlong>
 							
 							<weathericon>12</weathericon>
 						
-							<hightemperature>13</hightemperature>
-							<lowtemperature>5</lowtemperature>
+							<hightemperature>11</hightemperature>
+							<lowtemperature>6</lowtemperature>
 						
-							<realfeelhigh>7</realfeelhigh>
-							<realfeellow>0</realfeellow>
+							<realfeelhigh>6</realfeelhigh>
+							<realfeellow>-1</realfeellow>
 						
-							<windspeed>28</windspeed>
+							<windspeed>25</windspeed>
 						
 							<winddirection>SSW</winddirection>
 						
-							<windgust>64</windgust>
+							<windgust>57</windgust>
 						
 							<maxuv>2</maxuv>
+						
+							<rainamount>1.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>1.0</precipamount>
+						
+							<tstormprob>35</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>Rain and drizzle late</txtshort>
+							
+							<txtlong>Mostly cloudy and breezy; occasional late-night rain and drizzle</txtlong>
+							
+							<weathericon>12</weathericon>
+						
+							<hightemperature>11</hightemperature>
+							<lowtemperature>6</lowtemperature>
+						
+							<realfeelhigh>6</realfeelhigh>
+							<realfeellow>-1</realfeellow>
+						
+							<windspeed>30</windspeed>
+						
+							<winddirection>SW</winddirection>
+						
+							<windgust>64</windgust>
+						
+							<maxuv></maxuv>
+						
+							<rainamount>1.8</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+							<precipamount>1.8</precipamount>
+						
+							<tstormprob>16</tstormprob>
+						
+					</nighttime>
+				</day>
+				<day number="5">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=5</url>
+						
+					<obsdate>3/27/2010</obsdate>
+					<daycode>Saturday</daycode>
+					
+						<sunrise>7:38 AM</sunrise>
+						<sunset>8:15 PM</sunset>
+					
+					<daytime>
+						
+							<txtshort>Breezy with occasional rain</txtshort>
+							
+							<txtlong>Breezy with occasional rain</txtlong>
+							
+							<weathericon>18</weathericon>
+						
+							<hightemperature>11</hightemperature>
+							<lowtemperature>2</lowtemperature>
+						
+							<realfeelhigh>4</realfeelhigh>
+							<realfeellow>-1</realfeellow>
+						
+							<windspeed>32</windspeed>
+						
+							<winddirection>WSW</winddirection>
+						
+							<windgust>69</windgust>
+						
+							<maxuv>1</maxuv>
+						
+							<rainamount>6.1</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>6.1</precipamount>
+						
+							<tstormprob>20</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>Showers around early; cloudy</txtshort>
+							
+							<txtlong>A couple of evening showers; otherwise, cloudy</txtlong>
+							
+							<weathericon>12</weathericon>
+						
+							<hightemperature>11</hightemperature>
+							<lowtemperature>2</lowtemperature>
+						
+							<realfeelhigh>4</realfeelhigh>
+							<realfeellow>-1</realfeellow>
+						
+							<windspeed>19</windspeed>
+						
+							<winddirection>WSW</winddirection>
+						
+							<windgust>56</windgust>
+						
+							<maxuv></maxuv>
 						
 							<rainamount>0.5</rainamount>
 						
@@ -482,42 +515,9 @@
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>0.5</precipamount>
+							<precipamount>0.5</precipamount>
 						
-							<tstormprob>62</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>A couple of showers late</txtshort>
-							
-							<txtlong>Mostly cloudy and breezy; a couple of late-night showers</txtlong>
-							
-							<weathericon>12</weathericon>
-						
-							<hightemperature>13</hightemperature>
-							<lowtemperature>5</lowtemperature>
-						
-							<realfeelhigh>7</realfeelhigh>
-							<realfeellow>0</realfeellow>
-						
-							<windspeed>27</windspeed>
-						
-							<winddirection>SW</winddirection>
-						
-							<windgust>59</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>0.3</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>0.3</precipamount>
-						
-							<tstormprob>39</tstormprob>
+							<tstormprob>0</tstormprob>
 						
 					</nighttime>
 				</day>

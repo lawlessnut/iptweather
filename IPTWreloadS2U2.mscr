@@ -36,7 +36,8 @@ If (argv[1] < 0)
 		EndIf
 
 		If (IPTWuseS2U2wallpaperForBackground AND IPTWiPhoneTodayDisabled ne "1")
-			IPTWiPhoneTodayPath = IniRead("weather.ini", "User settings", "IPTWiPhoneTodayPath")
+			IPTWiPhoneTodayPath = RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "DLL")
+			IPTWiPhoneTodayPath = SubStr(IPTWiPhoneTodayPath, 1, Length(IPTWiPhoneTodayPath) - ReverseFind(IPTWiPhoneTodayPath, "\") -2)
 			IPTsettings = ReadFile(IPTWiPhoneTodayPath \ "settings.xml")
 			wallpaperStartPos = Find(IPTsettings, "<wallpaper>") + 11
 			If (wallpaperStartPos > 11)
@@ -58,11 +59,11 @@ If (argv[1] < 0)
 				IPTsettings = Replace(IPTsettings, "wallpaper=""" & oldwallpaper & """", "wallpaper=""" & wallpaper & """")
 			EndIf
 			WriteFile(IPTWiPhoneTodayPath \ "settings.xml", IPTsettings, FALSE)
-			If (WndExists("iPhoneToday"))
+			If (RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "Enabled") = 1)
+				RedrawToday
+			Else
 				Kill("iPhoneToday.exe")
 				Run(IPTWiPhoneTodayPath \ "iPhoneToday.exe")
-			Else
-				RedrawToday
 			EndIf
 			Sleep(1000)
 		EndIf
@@ -142,7 +143,8 @@ Else
 			EndIf
 
 			If (IPTWuseS2U2wallpaperForBackground AND IPTWiPhoneTodayDisabled ne "1")
-				IPTWiPhoneTodayPath = IniRead("weather.ini", "User settings", "IPTWiPhoneTodayPath")
+				IPTWiPhoneTodayPath = RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "DLL")
+				IPTWiPhoneTodayPath = SubStr(IPTWiPhoneTodayPath, 1, Length(IPTWiPhoneTodayPath) - ReverseFind(IPTWiPhoneTodayPath, "\") -2)
 				IPTsettings = ReadFile(IPTWiPhoneTodayPath \ "settings.xml")
 				wallpaperStartPos = Find(IPTsettings, "<wallpaper>") + 11
 				If (wallpaperStartPos > 11)
@@ -164,11 +166,11 @@ Else
 					IPTsettings = Replace(IPTsettings, "wallpaper=""" & oldwallpaper & """", "wallpaper=""" & wallpaper & """")
 				EndIf
 				WriteFile(IPTWiPhoneTodayPath \ "settings.xml", IPTsettings, FALSE)
-				If (WndExists("iPhoneToday"))
+				If (RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "Enabled") = 1)
+					RedrawToday
+				Else
 					Kill("iPhoneToday.exe")
 					Run(IPTWiPhoneTodayPath \ "iPhoneToday.exe")
-				Else
-					RedrawToday
 				EndIf
 				Sleep(1000)
 			EndIf
