@@ -2,7 +2,7 @@ reloadS2U2 = FALSE
 IPTWS2U2Path = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2Path")
 If (argv[1] < 0)
 	IPTWtomorrowForecastInS2U2UserWeather = IniRead("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather")
-	If (IPTWtomorrowForecastInS2U2UserWeather)
+	If (IPTWtomorrowForecastInS2U2UserWeather = 1 OR IPTWtomorrowForecastInS2U2UserWeather = -1)
 		oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
 		newS2U2weather = "C|10000|N/A"
 		If (oldS2U2weather ne newS2U2weather)
@@ -78,21 +78,10 @@ If (argv[1] < 0)
 	EndIf
 Else
 	IPTWtomorrowForecastInS2U2UserWeather = IniRead("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather")
-	If (IPTWtomorrowForecastInS2U2UserWeather)
-		oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
-		S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "iconD" & argv[1])
-		S2U2Text = RegRead(IPTWregRoot, IPTWregKey, "hiTemp" & argv[1]) & "(" & RegRead(IPTWregRoot, IPTWregKey, "hiFeelTemp" & argv[1]) & ") / " & RegRead(IPTWregRoot, IPTWregKey, "loTemp" & argv[1]) & "(" & RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & argv[1]) & ")"
-		newS2U2weather = "C|" & S2U2Pic & "|" & S2U2Text
-		If (oldS2U2weather ne newS2U2weather)
-			RegWriteString("HKCU", "\Software\A_C\S2U2\", "UserWeather", newS2U2weather)
-			reloadS2U2 = TRUE
-		EndIf
-	EndIf
-
 	IPTWtodayForecastInS2U2Text = IniRead("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Text")
 	IPTWtodayForecastInS2U2Wallpaper = IniRead("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Wallpaper")
 	IPTWuseS2U2wallpaperForBackground = IniRead("..\weather.ini", "User settings", "IPTWuseS2U2wallpaperForBackground")
-	If (IPTWtodayForecastInS2U2Text OR IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground)
+	If (IPTWtodayForecastInS2U2Text OR IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground OR IPTWtomorrowForecastInS2U2UserWeather = 1 OR IPTWtomorrowForecastInS2U2UserWeather = -1)
 		currenttime = Replace(FormatTime("A h:i", TimeStamp()), " 12", " 00")
 		sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & (argv[1] - 1)), -8)
 		sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
@@ -101,6 +90,86 @@ Else
 			suffix = "N"
 		Else
 			suffix = "D"
+		EndIf
+
+		If (IPTWtomorrowForecastInS2U2UserWeather = 1)
+			oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
+			S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "iconD" & argv[1])
+
+			IPTWobsoleteDataPrefix = IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
+			IPTWS2U2UserWeatherTextPattern = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherTextPattern")
+			beginNAPos = 1
+			While (beginNAPos <> 0)
+				beginNAPos = Find(IPTWS2U2UserWeatherTextPattern, "%NA%")
+				endNAPos = Find(IPTWS2U2UserWeatherTextPattern, "%NA%", beginNAPos + 4) + 4
+				If (beginNAPos = 1)
+					IPTWS2U2UserWeatherTextPattern = SubStr(IPTWS2U2UserWeatherTextPattern, endNAPos)
+				ElseIf (beginNAPos <> 0)
+					IPTWS2U2UserWeatherTextPattern = SubStr(IPTWS2U2UserWeatherTextPattern, 1, beginNAPos - 1) & SubStr(IPTWS2U2UserWeatherTextPattern, endNAPos)
+				EndIf
+			EndWhile
+			IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CT%", IPTWobsoleteDataPrefix)
+			IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CRFT%", IPTWobsoleteDataPrefix)
+			IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%HT%", RegRead(IPTWregRoot, IPTWregKey, "hiTemp" & argv[1]))
+			IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%HRFT%", RegRead(IPTWregRoot, IPTWregKey, "hiFeelTemp" & argv[1]))
+			IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%LT%", RegRead(IPTWregRoot, IPTWregKey, "loTemp" & argv[1]))
+			IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%LRFT%", RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & argv[1])) 
+
+			S2U2Text = IPTWS2U2UserWeatherTextPattern
+			newS2U2weather = "C|" & S2U2Pic & "|" & S2U2Text
+			If (oldS2U2weather ne newS2U2weather)
+				RegWriteString("HKCU", "\Software\A_C\S2U2\", "UserWeather", newS2U2weather)
+				reloadS2U2 = TRUE
+			EndIf
+		ElseIf (IPTWtomorrowForecastInS2U2UserWeather = -1)
+			IPTWS2U2UserWeatherTextPattern = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherTextPattern")
+			If (iconNum = 0)
+				oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
+				S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "icon0")
+
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%NA%", "")
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CT%", RegRead(IPTWregRoot, IPTWregKey, "temp0"))
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CRFT%", RegRead(IPTWregRoot, IPTWregKey, "tempfeel0"))
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%HT%", RegRead(IPTWregRoot, IPTWregKey, "hiTemp0"))
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%HRFT%", RegRead(IPTWregRoot, IPTWregKey, "hiFeelTemp0"))
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%LT%", RegRead(IPTWregRoot, IPTWregKey, "loTemp0"))
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%LRFT%", RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp0")) 
+				S2U2Text = IPTWS2U2UserWeatherTextPattern
+
+				newS2U2weather = "C|" & S2U2Pic & "|" & S2U2Text
+				If (oldS2U2weather ne newS2U2weather)
+					RegWriteString("HKCU", "\Software\A_C\S2U2\", "UserWeather", newS2U2weather)
+					reloadS2U2 = TRUE
+				EndIf
+			Else
+				oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
+				S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "icon" & suffix & iconNum)
+				IPTWobsoleteDataPrefix = IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
+
+				beginNAPos = 1
+				While (beginNAPos <> 0)
+					beginNAPos = Find(IPTWS2U2UserWeatherTextPattern, "%NA%")
+					endNAPos = Find(IPTWS2U2UserWeatherTextPattern, "%NA%", beginNAPos + 4) + 4
+					If (beginNAPos = 1)
+						IPTWS2U2UserWeatherTextPattern = SubStr(IPTWS2U2UserWeatherTextPattern, endNAPos)
+					ElseIf (beginNAPos <> 0)
+						IPTWS2U2UserWeatherTextPattern = SubStr(IPTWS2U2UserWeatherTextPattern, 1, beginNAPos - 1) & SubStr(IPTWS2U2UserWeatherTextPattern, endNAPos)
+					EndIf
+				EndWhile
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CT%", IPTWobsoleteDataPrefix)
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CRFT%", IPTWobsoleteDataPrefix)
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%HT%", RegRead(IPTWregRoot, IPTWregKey, "hiTemp" & iconNum))
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%HRFT%", RegRead(IPTWregRoot, IPTWregKey, "hiFeelTemp" & iconNum))
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%LT%", RegRead(IPTWregRoot, IPTWregKey, "loTemp" & iconNum))
+				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%LRFT%", RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & iconNum)) 
+
+				S2U2Text = IPTWS2U2UserWeatherTextPattern
+				newS2U2weather = "C|" & S2U2Pic & "|" & S2U2Text
+				If (oldS2U2weather ne newS2U2weather)
+					RegWriteString("HKCU", "\Software\A_C\S2U2\", "UserWeather", newS2U2weather)
+					reloadS2U2 = TRUE
+				EndIf
+			EndIf
 		EndIf
 
 		If (IPTWtodayForecastInS2U2Text)
