@@ -16,13 +16,14 @@ If (IPTWreloadLastDataOnStart)
   RegWriteDWord(IPTWregRoot, IPTWregKey, "ShowingForecast", 1)
   CallScript(IPTWscriptPath \ "iPhoneTodayAccuWeather.mscr")
 Else
-  iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
-  RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", IPTWcurrentWeatherPage)
-  RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", IPTWcurrentWeatherIcon)
-  RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", IPTWstartText)
-  RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ iPhoneTodayPic)
-  RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 1)
-
+  If (IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled") ne "1")
+    iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
+    RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", IPTWcurrentWeatherPage)
+    RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", IPTWcurrentWeatherIcon)
+    RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", IPTWstartText)
+    RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ iPhoneTodayPic)
+    RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 1)
+  EndIf
   RegWriteDWord(IPTWregRoot, IPTWregKey, "Started", 0)
 EndIf
 
@@ -37,9 +38,11 @@ If (IPTWscheduleNextUpdateOnStart AND (IPTWdelayHours <> 0 OR IPTWdelayMinutes <
   RunAt(utime, mort, script)
 EndIf
 
+If (IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled") ne "1")
 # ############################################################################
 # Quit only when iPhoneToday has finished working
-While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcon") AND RegKeyExists("HKLM", "\Software\iPhonetoday\icon0"))
-  Sleep(500)
-EndWhile
-Sleep(1000)
+  While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcon") AND RegKeyExists("HKLM", "\Software\iPhonetoday\icon0"))
+    Sleep(500)
+  EndWhile
+  Sleep(1000)
+EndIf
