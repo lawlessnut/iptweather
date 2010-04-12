@@ -23,12 +23,12 @@ IPTWforceDelayHours                 = IniRead("weather.ini", "User settings", "I
 IPTWforceDelayMinutes               = IniRead("weather.ini", "User settings", "IPTWforceDelayMinutes")
 IPTWnightIconSuffix                 = IniRead("weather.ini", "User settings", "IPTWnightIconSuffix")
 IPTWdownloadDataAfterStartOnIconTap = IniRead("weather.ini", "User settings", "IPTWdownloadDataAfterStartOnIconTap")
+IPTWaccuWeatherLocation  = IniRead("weather.ini", "User settings", "IPTWaccuWeatherLocation")
 
 # ############################################################################
 # configure location of parsed weather data in registry
 IPTWregRoot              = IniRead("weather.ini", "Script settings", "IPTWregRoot")
 IPTWregKey               = IniRead("weather.ini", "Script settings", "IPTWregKey")
-IPTWaccuWeatherURL       = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?location="&IPTWaccuWeatherLocation&"&metric="&IPTWaccuWeatherMetric
 IPTWdataFile             = SystemPath("ScriptPath") \ "data.xml"
 IPTWparserPath           = SystemPath("ScriptPath")
 IPTWxmlParserConfigFile  = SystemPath("ScriptPath") \ "config.xml"
@@ -104,7 +104,12 @@ Else
     j = 1
     If (IPTWdisplayCityName)
       iconNum = 2 * (i - daysToSkip) + j - 1 - skipMorning
-      iPhoneTodayPic = IniRead("weather.ini", "User settings", "IPTWcityIcon")
+      cityIcon = IPTWaccuWeatherIconPath \ Replace(IPTWaccuWeatherLocation, "|", "_") & "." & IPTWiconsExtension
+      If (FileExists(cityIcon))
+        iPhoneTodayPic = Replace(IPTWaccuWeatherLocation, "|", "_") & "." & IPTWiconsExtension
+      Else
+        iPhoneTodayPic = IniRead("weather.ini", "User settings", "IPTWdefaultCityIcon")
+      EndIf
       iPhoneTodayText = RegRead(IPTWregRoot, IPTWregKey, "city")
       Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon + iconNum, iPhoneTodayText, iPhoneTodayPic, iconNum)
       j = j + 1

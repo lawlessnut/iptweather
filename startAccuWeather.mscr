@@ -28,7 +28,7 @@ EndIf
 
 # ############################################################################
 # set up for next notification
-If (IPTWscheduleNextUpdateOnStart)
+If (IPTWscheduleNextUpdateOnStart AND (If (IPTWdelayHours <> 0 OR IPTWdelayMinutes <> 0))
   currentDate = FormatTime("m/d/Y")
   utime = TimeStamp() + (IPTWdelayHours * 60 + IPTWdelayMinutes) * 60
   mort = SystemPath("ScriptExe") \ "MortScript.exe"
