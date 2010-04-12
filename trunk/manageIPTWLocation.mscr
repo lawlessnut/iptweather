@@ -11,7 +11,8 @@ IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "User settings", "IPTWupd
 # configure location of parsed weather data in registry
 IPTWregRoot					= IniRead("weather.ini", "Script settings", "IPTWregRoot")
 IPTWregKey					= IniRead("weather.ini", "Script settings", "IPTWregKey")
-IPTWaccuLocationURL			= "http://rainmeter.accu-weather.com/widget/rainmeter/city-find.asp?location="
+IPTWaccuLocationURL			= "http://rdona.accu-weather.com/widget/rdona/city-find.asp?location="
+#IPTWaccuLocationURL			= "http://rainmeter.accu-weather.com/widget/rainmeter/city-find.asp?location="
 IPTWgetAccuWeatherScript	= "getAccuWeather.mscr"
 
 currentCityName = RegRead(IPTWregRoot, IPTWregKey, "city")

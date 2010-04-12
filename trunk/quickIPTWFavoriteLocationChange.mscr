@@ -23,19 +23,27 @@ currentLocationCode = IPTWaccuWeatherLocation
 
 favoriteLocationsList = Split(IPTWaccuWeatherFavoriteLocations, ";")
 
-nextOne = 0
-ForEach location in array(favoriteLocationsList)
-	If (nextOne = 1)
-		nextOne = 2
-		newLocationCode = Part(location, ",", -1, TRUE)
+If (argv[1] ne "")
+	If (MaxIndex(favoriteLocationsList) >= argv[1])
+		newLocationCode = Part(favoriteLocationsList[argv[1]], ",", -1, TRUE)
 	EndIf
-	If (currentLocationCode eq Part(location, ",", -1, TRUE))
-		nextOne = 1
-	EndIf
-EndForEach
+EndIf
 
-If (nextOne = 0 OR nextOne = 1)
-	newLocationCode = Part(favoriteLocationsList[1], ",", -1, TRUE)
+If (newLocationCode eq "")
+	nextOne = 0
+	ForEach location in array(favoriteLocationsList)
+		If (nextOne = 1)
+			nextOne = 2
+			newLocationCode = Part(location, ",", -1, TRUE)
+		EndIf
+		If (currentLocationCode eq Part(location, ",", -1, TRUE))
+			nextOne = 1
+		EndIf
+	EndForEach
+
+	If (nextOne = 0 OR nextOne = 1)
+		newLocationCode = Part(favoriteLocationsList[1], ",", -1, TRUE)
+	EndIf
 EndIf
 
 IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", newLocationCode)
