@@ -1,4 +1,4 @@
-ErrorLevel("off")
+#ErrorLevel("off")
 
 # ############################################################################
 # retrieve user preference
@@ -15,6 +15,7 @@ IPTWobsoleteDataPrefix   = IniRead("weather.ini", "User settings", "IPTWobsolete
 IPTWwakeUpOnUpdate       = IniRead("weather.ini", "User settings", "IPTWwakeUpOnUpdate")
 IPTWpreventSleepOnUpdate = IniRead("weather.ini", "User settings", "IPTWpreventSleepOnUpdate")
 IPTWnightIconSuffix      = IniRead("weather.ini", "User settings", "IPTWnightIconSuffix")
+IPTWgoogleUserID      = IniRead("weather.ini", "User settings", "IPTWgoogleUserID")
 
 If (IPTWaccuWeatherLocation ne "")
   weatherLocation = "location=" & IPTWaccuWeatherLocation
@@ -115,6 +116,13 @@ If (InternetConnected("http://www.perdu.com"))
     locBegin = Find(locationData, "Latitude/Longitude") + 57
     locEnd = Find(locationData, "</td>", locBegin)
     Split(SubStr(locationData, locBegin, locEnd - locBegin - 1), "/", 1, latitude, longitude)
+
+    IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+  ElseIf (IPTWaccuWeatherLocation eq "Google Latitude" AND IPTWgoogleUserID ne "")
+    locationData= ReadFile("http://www.google.com/latitude/apps/badge/api?user=" & IPTWgoogleUserID & "&type=json")
+    locBegin = Find(locationData, "coordinates") + 15
+    locEnd = Find(locationData, "]", locBegin)
+    Split(SubStr(locationData, locBegin, locEnd - locBegin), ",", 1, longitude, latitude)
 
     IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
   Else
@@ -235,16 +243,19 @@ Sleep(1000)
 
 Sub IPTWreloadIcon
 
-  RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", argv[1])
-  RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", argv[2])
-  RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", argv[3])
-  RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ argv[4])
-  RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 1)
+  If (IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled") ne "1")
+    RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", argv[1])
+    RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", argv[2])
+    RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", argv[3])
+    RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ argv[4])
+    RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 1)
+  EndIf
 
 EndSub
 
 Sub IPTWreloadS2U2
 
+  IPTWiPhoneTodayDisabled = IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled")
   reloadS2U2 = FALSE
   IPTWS2U2Path = IniRead("weather.ini", "S2U2 settings", "IPTWS2U2Path")
   If (argv[1] < 0)
@@ -282,7 +293,7 @@ Sub IPTWreloadS2U2
         RegWriteString("HKCU", "\Software\A_C\S2U2\", "Wallpaper", wallpaper)
       EndIf
 
-      If (IPTWuseS2U2wallpaperForBackground)
+      If (IPTWuseS2U2wallpaperForBackground AND IPTWiPhoneTodayDisabled ne "1")
         IPTsettings = ReadFile("\iPhoneToday\settings.xml")
         wallpaperStartPos = Find(IPTsettings, "<wallpaper>") + 11
         wallpaperEndPos = Find(IPTsettings, "</wallpaper>", wallpaperStartPos)
@@ -341,6 +352,21 @@ Sub IPTWreloadS2U2
             newS2U2text = Replace(newS2U2text, " and ", " & ")
             If (Length(newS2U2text) > 19)
               newS2U2text = Replace(newS2U2text, " with ", " w/ ")
+              If (Length(newS2U2text) > 19)
+                newS2U2text = Replace(newS2U2text, "this morning", "a.m.")
+                If (Length(newS2U2text) > 19)
+                  newS2U2text = Replace(newS2U2text, "this afternoon", "p.m.")
+                  If (Length(newS2U2text) > 19)
+                    newS2U2text = Replace(newS2U2text, "morning", "a.m.")
+                    If (Length(newS2U2text) > 19)
+                      newS2U2text = Replace(newS2U2text, "afternoon", "p.m.")
+                      If (Length(newS2U2text) > 19)
+                        newS2U2text = Replace(newS2U2text, "ing ", "in' ")
+                      EndIf
+                    EndIf
+                  EndIf
+                EndIf
+              EndIf
             EndIf
           EndIf
           IniWrite("weather.ini", "Weather description translation", weatherText, newS2U2text)
@@ -363,7 +389,7 @@ Sub IPTWreloadS2U2
           RegWriteString("HKCU", "\Software\A_C\S2U2\", "Wallpaper", wallpaper)
         EndIf
 
-        If (IPTWuseS2U2wallpaperForBackground)
+        If (IPTWuseS2U2wallpaperForBackground AND IPTWiPhoneTodayDisabled ne "1")
           IPTsettings = ReadFile("\iPhoneToday\settings.xml")
           wallpaperStartPos = Find(IPTsettings, "<wallpaper>") + 11
           wallpaperEndPos = Find(IPTsettings, "</wallpaper>", wallpaperStartPos)
