@@ -104,9 +104,10 @@ Else
     j = 1
     If (IPTWdisplayCityName)
       iconNum = 2 * (i - daysToSkip) + j - 1 - skipMorning
-      cityIcon = IPTWaccuWeatherIconPath \ Replace(IPTWaccuWeatherLocation, "|", "_") & "." & IPTWiconsExtension
+      locationCode = Replace(RegRead(IPTWregRoot, IPTWregKey, "locationCode"), "|", "_")
+      cityIcon = IPTWaccuWeatherIconPath \ locationCode & "." & IPTWiconsExtension
       If (FileExists(cityIcon))
-        iPhoneTodayPic = Replace(IPTWaccuWeatherLocation, "|", "_") & "." & IPTWiconsExtension
+        iPhoneTodayPic = locationCode & "." & IPTWiconsExtension
       Else
         iPhoneTodayPic = IniRead("weather.ini", "User settings", "IPTWdefaultCityIcon")
       EndIf
