@@ -122,16 +122,19 @@ If (InternetConnected("http://www.perdu.com"))
 		locEnd = Find(locationData, "</td>", locBegin)
 		Split(SubStr(locationData, locBegin, locEnd - locBegin - 1), "/", 1, latitude, longitude)
 
-		IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+#		IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
 	ElseIf (IPTWaccuWeatherLocation eq "Google Latitude" AND IPTWgoogleUserID ne "")
 		locationData= ReadFile("http://www.google.com/latitude/apps/badge/api?user=" & IPTWgoogleUserID & "&type=json")
 		locBegin = Find(locationData, "coordinates") + 15
 		locEnd = Find(locationData, "]", locBegin)
 		Split(SubStr(locationData, locBegin, locEnd - locBegin), ",", 1, longitude, latitude)
 
-		IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+#		IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
 	Else
-		IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?" & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
+		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?" & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
+#		IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?" & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
 	EndIf
 	data = ReadFile(IPTWaccuWeatherURL)
 	WriteFile(IPTWdataFile, data)
@@ -161,9 +164,9 @@ If (NOT FileExists(IPTWdataFile))
 	Exit
 EndIf
 
-If (Find(data, "<failure>") > 0)
+If (Find(data, "<failure>") > 0 OR Find(data, "<error>") > 0)
 	iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
-	iPhoneTodayTemp = "Failure"
+	iPhoneTodayTemp = "Error"
 	CallScript("IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
 	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 0)
 	CallScript("IPTWreloadS2U2.mscr", -1)

@@ -102,7 +102,7 @@ Else
 				i = i + 1
 			EndWhile
 		Else
-			i = 0
+			i = daysToSkip
 		EndIf
 		j = 1
 		If (IPTWdisplayCityName)
