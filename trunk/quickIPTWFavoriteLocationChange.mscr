@@ -8,6 +8,11 @@ IPTWaccuWeatherFavoriteLocations	= IniRead("weather.ini", "User settings", "IPTW
 IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "User settings", "IPTWupdateWeatherNowQuestion")
 IPTWquickLocationChangeSleepMsgTime		= IniRead("weather.ini", "User settings", "IPTWquickLocationChangeSleepMsgTime")
 
+If (IPTWquickLocationChangeSleepMsgTime eq "")
+	IPTWquickLocationChangeSleepMsgTime = 1
+	IniWrite("weather.ini", "User settings", "IPTWquickLocationChangeSleepMsgTime", 1)
+EndIf
+
 # ############################################################################
 # configure location of parsed weather data in registry
 IPTWregRoot					= IniRead("weather.ini", "Script settings", "IPTWregRoot")

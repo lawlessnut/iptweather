@@ -19,6 +19,11 @@ IPTWgoogleUserID			= IniRead("weather.ini", "User settings", "IPTWgoogleUserID")
 IPTWiPhoneTodayDisabled		= IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled")
 IPTWlanguageFile			= IniRead("weather.ini", "User settings", "IPTWlanguageFile")
 IPTWaccuWeatherIconPath		= IniRead("weather.ini", "User settings", "IPTWaccuWeatherIconPath")
+IPTWaccuWeatherAPI		= IniRead("weather.ini", "User settings", "IPTWaccuWeatherAPI")
+
+If (IPTWaccuWeatherAPI eq "")
+	IPTWaccuWeatherAPI = "rdona"
+EndIf
 
 If (IPTWaccuWeatherLocation ne "")
 	weatherLocation = "location=" & IPTWaccuWeatherLocation
@@ -36,6 +41,7 @@ IPTWregKey				= IniRead("weather.ini", "Script settings", "IPTWregKey") \ IPTWac
 IPTWdataFile			= SystemPath("ScriptPath") \ "data.xml"
 IPTWparserPath			= SystemPath("ScriptPath")
 IPTWxmlParserConfigFile	= SystemPath("ScriptPath") \ "config.xml"
+IPTWaccuWeatherURL = "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/weather-data.asp?"
 
 If (IPTWwakeUpOnUpdate)
 	ToggleDisplay(ON)
@@ -111,16 +117,16 @@ If (InternetConnected("http://www.perdu.com"))
 		latitude = RegRead("HKLM", "Services\myLocation", "Latitude")
 		longitude = RegRead("HKLM", "Services\myLocation", "Longitude")
 		
-		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+		IPTWaccuWeatherURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
 	ElseIf (IPTWaccuWeatherLocation eq "Google Latitude" AND IPTWgoogleUserID ne "")
 		locationData= ReadFile("http://www.google.com/latitude/apps/badge/api?user=" & IPTWgoogleUserID & "&type=json")
 		locBegin = Find(locationData, "coordinates") + 15
 		locEnd = Find(locationData, "]", locBegin)
 		Split(SubStr(locationData, locBegin, locEnd - locBegin), ",", 1, longitude, latitude)
 
-		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+		IPTWaccuWeatherURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
 	Else
-		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?" & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
+		IPTWaccuWeatherURL = IPTWaccuWeatherURL & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
 	EndIf
 	data = ReadFile(IPTWaccuWeatherURL)
 	WriteFile(IPTWdataFile, data)

@@ -6,12 +6,17 @@ IPTWinternetConnection				= IniRead("weather.ini", "User settings", "IPTWinterne
 IPTWdisconnectOnExit				= IniRead("weather.ini", "User settings", "IPTWdisconnectOnExit")
 IPTWaccuWeatherFavoriteLocations	= IniRead("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations")
 IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "User settings", "IPTWupdateWeatherNowQuestion")
+IPTWaccuWeatherAPI		= IniRead("weather.ini", "User settings", "IPTWaccuWeatherAPI")
+
+If (IPTWaccuWeatherAPI eq "")
+	IPTWaccuWeatherAPI = "rdona"
+EndIf
 
 # ############################################################################
 # configure location of parsed weather data in registry
 IPTWregRoot					= IniRead("weather.ini", "Script settings", "IPTWregRoot")
 IPTWregKey					= IniRead("weather.ini", "Script settings", "IPTWregKey")
-IPTWaccuLocationURL			= "http://rdona.accu-weather.com/widget/rdona/city-find.asp?location="
+IPTWaccuLocationURL			= "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/city-find.asp?location="
 #IPTWaccuLocationURL			= "http://rainmeter.accu-weather.com/widget/rainmeter/city-find.asp?location="
 IPTWgetAccuWeatherScript	= "getAccuWeather.mscr"
 
