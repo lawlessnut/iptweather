@@ -13,7 +13,7 @@
 	<state>France</state>
 	<lat>48.86</lat> 
 	<lon>2.33</lon>
-	<time>20:45</time>
+	<time>22:54</time>
 	<timeZone>01:00</timeZone>
 	<obsDaylight>1</obsDaylight>
 	<isDaylight>False</isDaylight>
@@ -23,23 +23,23 @@
 			
 				<url>http://www.accuweather.com/world-index-forecast.asp?partner=rainmeter&amp;loccode=EUR|FR|FR012|PARIS</url>
 				
-				<observationtime>8:45 PM</observationtime>
+				<observationtime>10:54 PM</observationtime>
 			
-				<pressure state="Rising">101</pressure>
+				<pressure state="Steady">101</pressure>
 			
 				<temperature>4</temperature>
 			
-				<realfeel>-129</realfeel>
+				<realfeel>-1</realfeel>
 			
 				<humidity>86%</humidity>
 			
-				<weathertext>Mostly Cloudy</weathertext>
+				<weathertext>Partly Cloudy</weathertext>
 			
-				<weathericon>38</weathericon>
+				<weathericon>35</weathericon>
 			
-				<windgusts>11</windgusts>
+				<windgusts>16</windgusts>
 			
-				<windspeed>11</windspeed>
+				<windspeed>16</windspeed>
 			
 				<winddirection>WSW</winddirection>
 			
@@ -47,15 +47,15 @@
 			
 				<precip>0.0</precip>
 			
-				<uvindex index="-999">Low</uvindex>
+				<uvindex index="0">Low</uvindex>
 			
 				<dewpoint>2</dewpoint>
 			
-				<cloudcover>95%</cloudcover>
+				<cloudcover>41%</cloudcover>
 							
 				<apparenttemp>4</apparenttemp>
 							
-				<windchill>1</windchill>
+				<windchill>0</windchill>
 						
 
 		</currentconditions>
@@ -84,7 +84,7 @@
 							<lowtemperature>1</lowtemperature>
 						
 							<realfeelhigh>8</realfeelhigh>
-							<realfeellow>-3</realfeellow>
+							<realfeellow>-1</realfeellow>
 						
 							<windspeed>11</windspeed>
 						
@@ -107,23 +107,23 @@
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Mostly cloudy</txtshort>
+							<txtshort>Increasing clouds</txtshort>
 							
-							<txtlong>Mostly cloudy</txtlong>
+							<txtlong>Increasing clouds</txtlong>
 							
-							<weathericon>38</weathericon>
+							<weathericon>40</weathericon>
 						
 							<hightemperature>9</hightemperature>
 							<lowtemperature>1</lowtemperature>
 						
 							<realfeelhigh>8</realfeelhigh>
-							<realfeellow>-3</realfeellow>
+							<realfeellow>-1</realfeellow>
 						
-							<windspeed>16</windspeed>
+							<windspeed>11</windspeed>
 						
 							<winddirection>S</winddirection>
 						
-							<windgust>37</windgust>
+							<windgust>30</windgust>
 						
 							<maxuv></maxuv>
 						

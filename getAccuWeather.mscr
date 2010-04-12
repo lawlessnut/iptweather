@@ -241,18 +241,16 @@ Sub IPTWreloadS2U2
       currenttime = Replace(FormatTime("A h:i", TimeStamp()), " 12", " 00")
       sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & (argv[1] - 1)), -8)
       sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
+      iconNum = argv[1] - 1
       If (currenttime gt sunset)
         suffix = "N"
-        iconNum = argv[1] - 1
       Else
-        sunrise = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunrise" & daysToSkip), -8)
+        sunrise = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunrise" & argv[1]), -8)
         sunrise = Replace(Part(sunrise, " ", 2) & " " & Part(sunrise, " ", 1), " 12", " 00")
         If (currenttime lt sunrise)
           suffix = "N"
-          iconNum = argv[1]
         Else
           suffix = "D"
-          iconNum = argv[1] - 1
         EndIf
       EndIf
 
