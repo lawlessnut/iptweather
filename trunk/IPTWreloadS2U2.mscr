@@ -12,7 +12,7 @@ If (argv[1] < 0)
 	EndIf
 
 	IPTWtodayForecastInS2U2Text = IniRead("weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Text")
-	If (IPTWtodayForecastInS2U2Text)
+	If (IPTWtodayForecastInS2U2Text AND FileExists(IPTWS2U2Path & "lang.ini"))
 		newS2U2text = IniRead("weather.ini", "S2U2 settings", "IPTWdefaultS2U2Text")
 		oldS2U2text = IniRead(IPTWS2U2Path & "lang.ini", "", "s_S2UText")
 
@@ -58,7 +58,7 @@ If (argv[1] < 0)
 				IPTsettings = Replace(IPTsettings, "wallpaper=""" & oldwallpaper & """", "wallpaper=""" & wallpaper & """")
 			EndIf
 			WriteFile(IPTWiPhoneTodayPath \ "settings.xml", IPTsettings, FALSE)
-			If (IniRead("weather.ini", "User settings", "IPTWuseExeIPhoneToday"))
+			If (WndExists("iPhoneToday"))
 				Kill("iPhoneToday.exe")
 				Run(IPTWiPhoneTodayPath \ "iPhoneToday.exe")
 			Else
@@ -94,7 +94,7 @@ Else
 			suffix = "D"
 		EndIf
 
-		If (IPTWtodayForecastInS2U2Text)
+		If (IPTWtodayForecastInS2U2Text AND FileExists(IPTWS2U2Path & "lang.ini"))
 			oldS2U2text = IniRead(IPTWS2U2Path & "lang.ini", "", "s_S2UText")
 			weatherText = RegRead(IPTWregRoot, IPTWregKey, "text" & suffix & iconNum)
 			newS2U2text = IniRead(IPTWlanguageFile, "Weather description translation", weatherText)
@@ -164,7 +164,7 @@ Else
 					IPTsettings = Replace(IPTsettings, "wallpaper=""" & oldwallpaper & """", "wallpaper=""" & wallpaper & """")
 				EndIf
 				WriteFile(IPTWiPhoneTodayPath \ "settings.xml", IPTsettings, FALSE)
-				If (IniRead("weather.ini", "User settings", "IPTWuseExeIPhoneToday"))
+				If (WndExists("iPhoneToday"))
 					Kill("iPhoneToday.exe")
 					Run(IPTWiPhoneTodayPath \ "iPhoneToday.exe")
 				Else

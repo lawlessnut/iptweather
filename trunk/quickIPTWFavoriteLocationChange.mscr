@@ -6,6 +6,7 @@ IPTWinternetConnection				= IniRead("weather.ini", "User settings", "IPTWinterne
 IPTWdisconnectOnExit				= IniRead("weather.ini", "User settings", "IPTWdisconnectOnExit")
 IPTWaccuWeatherFavoriteLocations	= IniRead("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations")
 IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "User settings", "IPTWupdateWeatherNowQuestion")
+IPTWquickLocationChangeSleepMsgTime		= IniRead("weather.ini", "User settings", "IPTWquickLocationChangeSleepMsgTime")
 
 # ############################################################################
 # configure location of parsed weather data in registry
@@ -48,7 +49,7 @@ EndIf
 
 IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", newLocationCode)
 
-SleepMessage(1, "Changing location to " & newLocationCode)
+SleepMessage(IPTWquickLocationChangeSleepMsgTime, "Changing location to " & newLocationCode)
 
 If (RegKeyExists(IPTWregRoot, IPTWregKey \ newLocationCode))
 	RegWriteDWord(IPTWregRoot, IPTWregKey, "Started", 1)
