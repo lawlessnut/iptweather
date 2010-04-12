@@ -1,0 +1,7 @@
+#summary Where to set user preferences for IPTWeather?
+
+Settings are in the weather.ini file.<br />
+They are commented, but if you have some questions, I will answer to them with pleasure.<br />
+You can easily change your location thanks to the manageIPTWLocation.mscr script.<br />
+You can switch between your favorite locations quickly using the quickIPTWFavoriteLocationChange.mscr and setIPTWFavoriteLocation.mscr scripts.<br />
+<br />
