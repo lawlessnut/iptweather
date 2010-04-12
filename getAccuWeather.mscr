@@ -222,17 +222,21 @@ Sub IPTWreloadS2U2
     If (IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground)
       IPTWS2U2WallpaperExtension = IniRead("weather.ini", "S2U2 settings", "IPTWS2U2WallpaperExtension")
       IPTWS2U2WallpaperPath = IniRead("weather.ini", "S2U2 settings", "IPTWS2U2WallpaperPath")
-      wallpaper = IniRead("weather.ini", "S2U2 settings", "IPTWdefautS2U2Wallpaper")
+      wallpaper = IPTWS2U2WallpaperPath \ IniRead("weather.ini", "S2U2 settings", "IPTWdefautS2U2Wallpaper") & "." & IPTWS2U2WallpaperExtension
 
       If (IPTWtodayForecastInS2U2Wallpaper)
-        RegWriteString("HKCU", "\Software\A_C\S2U2\", "Wallpaper", IPTWS2U2WallpaperPath \ wallpaper & "." & IPTWS2U2WallpaperExtension)
+        RegWriteString("HKCU", "\Software\A_C\S2U2\", "Wallpaper", wallpaper)
       EndIf
 
       If (IPTWuseS2U2wallpaperForBackground)
         IPTsettings = ReadFile("\iPhoneToday\settings.xml")
         wallpaperStartPos = Find(IPTsettings, "<wallpaper>") + 11
         wallpaperEndPos = Find(IPTsettings, "</wallpaper>", wallpaperStartPos)
-        oldwallpaper = SubStr(IPTsettings, wallpaperStartPos, wallpaperEndPos - wallpaperStartPos)
+        If (wallpaperStartPos = wallpaperEndPos)
+          oldwallpaper = ""
+        Else
+          oldwallpaper = SubStr(IPTsettings, wallpaperStartPos, wallpaperEndPos - wallpaperStartPos)
+        EndIf
         IPTsettings = Replace(IPTsettings, "<wallpaper>" & oldwallpaper & "</wallpaper>", "<wallpaper>" & wallpaper & "</wallpaper>")
         IPTsettings = Replace(IPTsettings, "<staticWallpaper>0</staticWallpaper>", "<staticWallpaper>1</staticWallpaper>")
         IPTsettings = Replace(IPTsettings, "<backTransparent>1</backTransparent>", "<backTransparent>0</backTransparent>")
@@ -288,17 +292,21 @@ Sub IPTWreloadS2U2
       If (IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground)
         IPTWS2U2WallpaperExtension = IniRead("weather.ini", "S2U2 settings", "IPTWS2U2WallpaperExtension")
         IPTWS2U2WallpaperPath = IniRead("weather.ini", "S2U2 settings", "IPTWS2U2WallpaperPath")
-        wallpaper = Eval(RegRead(IPTWregRoot, IPTWregKey, "icon" & suffix & iconNum))
+        wallpaper = IPTWS2U2WallpaperPath \ Eval(RegRead(IPTWregRoot, IPTWregKey, "icon" & suffix & iconNum)) & "." & IPTWS2U2WallpaperExtension
 
         If (IPTWtodayForecastInS2U2Wallpaper)
-          RegWriteString("HKCU", "\Software\A_C\S2U2\", "Wallpaper", IPTWS2U2WallpaperPath \ wallpaper & "." & IPTWS2U2WallpaperExtension)
+          RegWriteString("HKCU", "\Software\A_C\S2U2\", "Wallpaper", wallpaper)
         EndIf
 
         If (IPTWuseS2U2wallpaperForBackground)
           IPTsettings = ReadFile("\iPhoneToday\settings.xml")
           wallpaperStartPos = Find(IPTsettings, "<wallpaper>") + 11
           wallpaperEndPos = Find(IPTsettings, "</wallpaper>", wallpaperStartPos)
-          oldwallpaper = SubStr(IPTsettings, wallpaperStartPos, wallpaperEndPos - wallpaperStartPos)
+          If (wallpaperStartPos = wallpaperEndPos)
+            oldwallpaper = ""
+          Else
+            oldwallpaper = SubStr(IPTsettings, wallpaperStartPos, wallpaperEndPos - wallpaperStartPos)
+          EndIf
           IPTsettings = Replace(IPTsettings, "<wallpaper>" & oldwallpaper & "</wallpaper>", "<wallpaper>" & wallpaper & "</wallpaper>")
           IPTsettings = Replace(IPTsettings, "<staticWallpaper>0</staticWallpaper>", "<staticWallpaper>1</staticWallpaper>")
           IPTsettings = Replace(IPTsettings, "<backTransparent>1</backTransparent>", "<backTransparent>0</backTransparent>")
