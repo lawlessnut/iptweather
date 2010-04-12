@@ -16,11 +16,19 @@ IPTWwakeUpOnUpdate       = IniRead("weather.ini", "User settings", "IPTWwakeUpOn
 IPTWpreventSleepOnUpdate = IniRead("weather.ini", "User settings", "IPTWpreventSleepOnUpdate")
 IPTWnightIconSuffix      = IniRead("weather.ini", "User settings", "IPTWnightIconSuffix")
 
+If (IPTWaccuWeatherLocation ne "")
+  weatherLocation = "location=" & IPTWaccuWeatherLocation
+Else
+  IPTWlocationLatitude = IniRead("weather.ini", "User settings", "IPTWlocationLatitude")
+  IPTWlocationLongitude = IniRead("weather.ini", "User settings", "IPTWlocationLongitude")
+  weatherLocation = "slat=" & IPTWlocationLatitude & "slon=" & IPTWlocationLongitude
+EndIf
+
 # ############################################################################
 # configure location of parsed weather data in registry
 IPTWregRoot              = IniRead("weather.ini", "Script settings", "IPTWregRoot")
 IPTWregKey               = IniRead("weather.ini", "Script settings", "IPTWregKey")
-IPTWaccuWeatherURL       = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?location="&IPTWaccuWeatherLocation&"&metric="&IPTWaccuWeatherMetric
+IPTWaccuWeatherURL       = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?" & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
 IPTWdataFile             = SystemPath("ScriptPath") \ "data.xml"
 IPTWparserPath           = SystemPath("ScriptPath")
 IPTWxmlParserConfigFile  = SystemPath("ScriptPath") \ "config.xml"
@@ -33,13 +41,15 @@ EndIf
 # ############################################################################
 # set up for next notification
 currentDate = FormatTime("m/d/Y")
-utime = TimeStamp() + (IPTWdelayHours * 60 + IPTWdelayMinutes) * 60
-mort = SystemPath("ScriptExe") \ "MortScript.exe"
-script = SystemPath("ScriptPath") \ SystemPath("ScriptName") & SystemPath("ScriptExt")
 # kill any lingering notification
 RemoveNotifications(mort, script) 
-# set notify for myself at next time
-RunAt(utime, mort, script)
+If (IPTWdelayHours <> 0 OR IPTWdelayMinutes <> 0)
+  utime = TimeStamp() + (IPTWdelayHours * 60 + IPTWdelayMinutes) * 60
+  mort = SystemPath("ScriptExe") \ "MortScript.exe"
+  script = SystemPath("ScriptPath") \ SystemPath("ScriptName") & SystemPath("ScriptExt")
+  # set notify for myself at next time
+  RunAt(utime, mort, script)
+EndIf
 
 # ############################################################################
 # last data observation date and time

@@ -13,7 +13,7 @@
 	<state>France</state>
 	<lat>48.86</lat> 
 	<lon>2.33</lon>
-	<time>13:08</time>
+	<time>19:35</time>
 	<timeZone>01:00</timeZone>
 	<obsDaylight>1</obsDaylight>
 	<isDaylight>False</isDaylight>
@@ -23,39 +23,39 @@
 			
 				<url>http://www.accuweather.com/world-index-forecast.asp?partner=rainmeter&amp;loccode=EUR|FR|FR012|PARIS</url>
 				
-				<observationtime>1:08 PM</observationtime>
+				<observationtime>7:35 PM</observationtime>
 			
-				<pressure state="Steady">100</pressure>
+				<pressure state="Steady">102</pressure>
 			
-				<temperature>3</temperature>
+				<temperature>-4</temperature>
 			
-				<realfeel>2</realfeel>
+				<realfeel>-5</realfeel>
 			
-				<humidity>100%</humidity>
+				<humidity>85%</humidity>
 			
-				<weathertext>Partly Sunny</weathertext>
+				<weathertext>Mostly Cloudy</weathertext>
 			
-				<weathericon>03</weathericon>
+				<weathericon>35</weathericon>
 			
 				<windgusts>9</windgusts>
 			
-				<windspeed>9</windspeed>
+				<windspeed>8</windspeed>
 			
-				<winddirection>ESE</winddirection>
+				<winddirection>ENE</winddirection>
 			
-				<visibility>4</visibility>
+				<visibility>12</visibility>
 			
 				<precip>0.0</precip>
 			
 				<uvindex index="0">Low</uvindex>
 			
-				<dewpoint>3</dewpoint>
+				<dewpoint>-6</dewpoint>
 			
-				<cloudcover>35%</cloudcover>
+				<cloudcover>37%</cloudcover>
 							
-				<apparenttemp>3</apparenttemp>
+				<apparenttemp>-4</apparenttemp>
 							
-				<windchill>0</windchill>
+				<windchill>-8</windchill>
 						
 
 		</currentconditions>
@@ -66,31 +66,31 @@
 					<day number="1">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rainmeter&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=1</url>
 						
-					<obsdate>12/28/2009</obsdate>
+					<obsdate>1/4/2010</obsdate>
 					<daycode>Monday</daycode>
 					
 						<sunrise>8:44 AM</sunrise>
-						<sunset>5:02 PM</sunset>
+						<sunset>5:09 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>Considerable cloudiness</txtshort>
+							<txtshort>Sunny and colder</txtshort>
 							
-							<txtlong>Considerable cloudiness</txtlong>
+							<txtlong>Sunny and colder</txtlong>
 							
-							<weathericon>07</weathericon>
+							<weathericon>01</weathericon>
 						
-							<hightemperature>6</hightemperature>
-							<lowtemperature>3</lowtemperature>
+							<hightemperature>-1</hightemperature>
+							<lowtemperature>-5</lowtemperature>
 						
-							<realfeelhigh>4</realfeelhigh>
-							<realfeellow>-3</realfeellow>
+							<realfeelhigh>-1</realfeelhigh>
+							<realfeellow>-6</realfeellow>
 						
-							<windspeed>9</windspeed>
+							<windspeed>8</windspeed>
 						
-							<winddirection>ESE</winddirection>
+							<winddirection>NE</winddirection>
 						
-							<windgust>32</windgust>
+							<windgust>19</windgust>
 						
 							<maxuv>1</maxuv>
 						
@@ -107,33 +107,33 @@
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Rain and drizzle late</txtshort>
+							<txtshort>Mainly clear and cold</txtshort>
 							
-							<txtlong>Increasing clouds with rain and drizzle late</txtlong>
+							<txtlong>Mainly clear and cold</txtlong>
 							
-							<weathericon>40</weathericon>
+							<weathericon>34</weathericon>
 						
-							<hightemperature>6</hightemperature>
-							<lowtemperature>3</lowtemperature>
+							<hightemperature>-1</hightemperature>
+							<lowtemperature>-5</lowtemperature>
 						
-							<realfeelhigh>4</realfeelhigh>
-							<realfeellow>-3</realfeellow>
+							<realfeelhigh>-1</realfeelhigh>
+							<realfeellow>-6</realfeellow>
 						
-							<windspeed>20</windspeed>
+							<windspeed>6</windspeed>
 						
-							<winddirection>SSE</winddirection>
+							<winddirection>ENE</winddirection>
 						
-							<windgust>43</windgust>
+							<windgust>14</windgust>
 						
 							<maxuv></maxuv>
 						
-							<rainamount>3.3</rainamount>
+							<rainamount>0.0</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-							<precipamount>3.3</precipamount>
+							<precipamount>0.0</precipamount>
 						
 							<tstormprob>0</tstormprob>
 						
@@ -142,185 +142,33 @@
 				<day number="2">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rainmeter&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=2</url>
 						
-					<obsdate>12/29/2009</obsdate>
+					<obsdate>1/5/2010</obsdate>
 					<daycode>Tuesday</daycode>
 					
 						<sunrise>8:44 AM</sunrise>
-						<sunset>5:03 PM</sunset>
+						<sunset>5:10 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>Morning rain; cloudy, breezy</txtshort>
+							<txtshort>Partly sunny and cold</txtshort>
 							
-							<txtlong>Rain at times in the morning; otherwise, breezy and mild with low clouds</txtlong>
+							<txtlong>Partly sunny and cold</txtlong>
 							
-							<weathericon>12</weathericon>
+							<weathericon>03</weathericon>
 						
-							<hightemperature>11</hightemperature>
-							<lowtemperature>7</lowtemperature>
+							<hightemperature>0</hightemperature>
+							<lowtemperature>-3</lowtemperature>
 						
-							<realfeelhigh>5</realfeelhigh>
-							<realfeellow>2</realfeellow>
-						
-							<windspeed>27</windspeed>
-						
-							<winddirection>SSW</winddirection>
-						
-							<windgust>67</windgust>
-						
-							<maxuv>0</maxuv>
-						
-							<rainamount>8.6</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-						<precipamount>8.6</precipamount>
-						
-							<tstormprob>0</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>Cloudy, rain and drizzle late</txtshort>
-							
-							<txtlong>Considerable cloudiness with rain and drizzle late</txtlong>
-							
-							<weathericon>12</weathericon>
-						
-							<hightemperature>11</hightemperature>
-							<lowtemperature>7</lowtemperature>
-						
-							<realfeelhigh>5</realfeelhigh>
-							<realfeellow>2</realfeellow>
-						
-							<windspeed>19</windspeed>
-						
-							<winddirection>SSW</winddirection>
-						
-							<windgust>48</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>3.8</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>3.8</precipamount>
-						
-							<tstormprob>0</tstormprob>
-						
-					</nighttime>
-				</day>
-				<day number="3">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rainmeter&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=3</url>
-						
-					<obsdate>12/30/2009</obsdate>
-					<daycode>Wednesday</daycode>
-					
-						<sunrise>8:44 AM</sunrise>
-						<sunset>5:03 PM</sunset>
-					
-					<daytime>
-						
-							<txtshort>Rain and drizzle in the a.m.</txtshort>
-							
-							<txtlong>Low clouds with rain and drizzle in the morning, becoming breezy in the afternoon</txtlong>
-							
-							<weathericon>12</weathericon>
-						
-							<hightemperature>11</hightemperature>
-							<lowtemperature>6</lowtemperature>
-						
-							<realfeelhigh>4</realfeelhigh>
-							<realfeellow>3</realfeellow>
-						
-							<windspeed>24</windspeed>
-						
-							<winddirection>SSW</winddirection>
-						
-							<windgust>65</windgust>
-						
-							<maxuv>0</maxuv>
-						
-							<rainamount>3.6</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-						<precipamount>3.6</precipamount>
-						
-							<tstormprob>9</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>Rain and drizzle</txtshort>
-							
-							<txtlong>Rain and drizzle</txtlong>
-							
-							<weathericon>18</weathericon>
-						
-							<hightemperature>11</hightemperature>
-							<lowtemperature>6</lowtemperature>
-						
-							<realfeelhigh>4</realfeelhigh>
-							<realfeellow>3</realfeellow>
-						
-							<windspeed>11</windspeed>
-						
-							<winddirection>W</winddirection>
-						
-							<windgust>46</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>6.9</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>6.9</precipamount>
-						
-							<tstormprob>0</tstormprob>
-						
-					</nighttime>
-				</day>
-				<day number="4">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rainmeter&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=4</url>
-						
-					<obsdate>12/31/2009</obsdate>
-					<daycode>Thursday</daycode>
-					
-						<sunrise>8:44 AM</sunrise>
-						<sunset>5:04 PM</sunset>
-					
-					<daytime>
-						
-							<txtshort>Low clouds</txtshort>
-							
-							<txtlong>Low clouds</txtlong>
-							
-							<weathericon>08</weathericon>
-						
-							<hightemperature>7</hightemperature>
-							<lowtemperature>3</lowtemperature>
-						
-							<realfeelhigh>5</realfeelhigh>
+							<realfeelhigh>0</realfeelhigh>
 							<realfeellow>-3</realfeellow>
 						
-							<windspeed>12</windspeed>
+							<windspeed>8</windspeed>
 						
-							<winddirection>WNW</winddirection>
+							<winddirection>NE</winddirection>
 						
-							<windgust>27</windgust>
+							<windgust>16</windgust>
 						
-							<maxuv>0</maxuv>
+							<maxuv>1</maxuv>
 						
 							<rainamount>0.0</rainamount>
 						
@@ -335,97 +183,21 @@
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Cloudy, showers around late</txtshort>
+							<txtshort>Clear and cold</txtshort>
 							
-							<txtlong>Low clouds with a couple of showers late</txtlong>
+							<txtlong>Clear and cold</txtlong>
 							
-							<weathericon>12</weathericon>
+							<weathericon>33</weathericon>
 						
-							<hightemperature>7</hightemperature>
-							<lowtemperature>3</lowtemperature>
+							<hightemperature>0</hightemperature>
+							<lowtemperature>-3</lowtemperature>
 						
-							<realfeelhigh>5</realfeelhigh>
+							<realfeelhigh>0</realfeelhigh>
 							<realfeellow>-3</realfeellow>
 						
-							<windspeed>16</windspeed>
+							<windspeed>4</windspeed>
 						
-							<winddirection>WNW</winddirection>
-						
-							<windgust>38</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>0.3</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>0.3</precipamount>
-						
-							<tstormprob>0</tstormprob>
-						
-					</nighttime>
-				</day>
-				<day number="5">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rainmeter&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=5</url>
-						
-					<obsdate>1/1/2010</obsdate>
-					<daycode>Friday</daycode>
-					
-						<sunrise>8:44 AM</sunrise>
-						<sunset>5:05 PM</sunset>
-					
-					<daytime>
-						
-							<txtshort>A morning shower; cloudy</txtshort>
-							
-							<txtlong>A shower in places in the morning; otherwise, low clouds</txtlong>
-							
-							<weathericon>08</weathericon>
-						
-							<hightemperature>4</hightemperature>
-							<lowtemperature>0</lowtemperature>
-						
-							<realfeelhigh>2</realfeelhigh>
-							<realfeellow>2</realfeellow>
-						
-							<windspeed>16</windspeed>
-						
-							<winddirection>W</winddirection>
-						
-							<windgust>40</windgust>
-						
-							<maxuv>0</maxuv>
-						
-							<rainamount>0.3</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-						<precipamount>0.3</precipamount>
-						
-							<tstormprob>0</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>Partly cloudy</txtshort>
-							
-							<txtlong>Partly cloudy</txtlong>
-							
-							<weathericon>36</weathericon>
-						
-							<hightemperature>4</hightemperature>
-							<lowtemperature>0</lowtemperature>
-						
-							<realfeelhigh>2</realfeelhigh>
-							<realfeellow>2</realfeellow>
-						
-							<windspeed>3</windspeed>
-						
-							<winddirection>SSW</winddirection>
+							<winddirection>ESE</winddirection>
 						
 							<windgust>12</windgust>
 						
@@ -443,10 +215,238 @@
 						
 					</nighttime>
 				</day>
+				<day number="3">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rainmeter&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=3</url>
+						
+					<obsdate>1/6/2010</obsdate>
+					<daycode>Wednesday</daycode>
+					
+						<sunrise>8:43 AM</sunrise>
+						<sunset>5:11 PM</sunset>
+					
+					<daytime>
+						
+							<txtshort>Clouding up; cold</txtshort>
+							
+							<txtlong>Cold with increasing clouds; a flurry or two in the afternoon</txtlong>
+							
+							<weathericon>06</weathericon>
+						
+							<hightemperature>-2</hightemperature>
+							<lowtemperature>-3</lowtemperature>
+						
+							<realfeelhigh>-4</realfeelhigh>
+							<realfeellow>-6</realfeellow>
+						
+							<windspeed>11</windspeed>
+						
+							<winddirection>S</winddirection>
+						
+							<windgust>27</windgust>
+						
+							<maxuv>1</maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>0.3</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>Cloudy, a bit of snow late</txtshort>
+							
+							<txtlong>Low clouds and cold; a little late-night snow</txtlong>
+							
+							<weathericon>22</weathericon>
+						
+							<hightemperature>-2</hightemperature>
+							<lowtemperature>-3</lowtemperature>
+						
+							<realfeelhigh>-4</realfeelhigh>
+							<realfeellow>-6</realfeellow>
+						
+							<windspeed>8</windspeed>
+						
+							<winddirection>ESE</winddirection>
+						
+							<windgust>12</windgust>
+						
+							<maxuv></maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.51</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+							<precipamount>0.3</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</nighttime>
+				</day>
+				<day number="4">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rainmeter&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=4</url>
+						
+					<obsdate>1/7/2010</obsdate>
+					<daycode>Thursday</daycode>
+					
+						<sunrise>8:43 AM</sunrise>
+						<sunset>5:12 PM</sunset>
+					
+					<daytime>
+						
+							<txtshort>Cold with a little snow</txtshort>
+							
+							<txtlong>Cold with a little snow</txtlong>
+							
+							<weathericon>22</weathericon>
+						
+							<hightemperature>-3</hightemperature>
+							<lowtemperature>-6</lowtemperature>
+						
+							<realfeelhigh>-4</realfeelhigh>
+							<realfeellow>-12</realfeellow>
+						
+							<windspeed>9</windspeed>
+						
+							<winddirection>NE</winddirection>
+						
+							<windgust>14</windgust>
+						
+							<maxuv>0</maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>3.56</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>1.8</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>Mainly cloudy and cold</txtshort>
+							
+							<txtlong>Mainly cloudy and cold</txtlong>
+							
+							<weathericon>38</weathericon>
+						
+							<hightemperature>-3</hightemperature>
+							<lowtemperature>-6</lowtemperature>
+						
+							<realfeelhigh>-4</realfeelhigh>
+							<realfeellow>-12</realfeellow>
+						
+							<windspeed>14</windspeed>
+						
+							<winddirection>NNE</winddirection>
+						
+							<windgust>25</windgust>
+						
+							<maxuv></maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+							<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</nighttime>
+				</day>
+				<day number="5">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rainmeter&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=5</url>
+						
+					<obsdate>1/8/2010</obsdate>
+					<daycode>Friday</daycode>
+					
+						<sunrise>8:43 AM</sunrise>
+						<sunset>5:13 PM</sunset>
+					
+					<daytime>
+						
+							<txtshort>Cold with some sun</txtshort>
+							
+							<txtlong>Cold with times of sun and clouds</txtlong>
+							
+							<weathericon>04</weathericon>
+						
+							<hightemperature>-2</hightemperature>
+							<lowtemperature>-4</lowtemperature>
+						
+							<realfeelhigh>-9</realfeelhigh>
+							<realfeellow>-13</realfeellow>
+						
+							<windspeed>20</windspeed>
+						
+							<winddirection>N</winddirection>
+						
+							<windgust>45</windgust>
+						
+							<maxuv>1</maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>Breezy and cold with snow</txtshort>
+							
+							<txtlong>Breezy and cold with snow</txtlong>
+							
+							<weathericon>22</weathericon>
+						
+							<hightemperature>-2</hightemperature>
+							<lowtemperature>-4</lowtemperature>
+						
+							<realfeelhigh>-9</realfeelhigh>
+							<realfeellow>-13</realfeellow>
+						
+							<windspeed>27</windspeed>
+						
+							<winddirection>N</winddirection>
+						
+							<windgust>59</windgust>
+						
+							<maxuv></maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>3.56</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+							<precipamount>2.5</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</nighttime>
+				</day>
 				
 			</forecast>
 			
-		<copyright>Copyright 2009 AccuWeather.com</copyright>
+		<copyright>Copyright 2010 AccuWeather.com</copyright>
 		<use>This document is intended only for use by authorized licensees of AccuWeather.com. Unauthorized use is prohibited. All Rights Reserved.</use>
 		<product>rainmeter</product>
 		<redistribution>Redistribution Prohibited.</redistribution>
