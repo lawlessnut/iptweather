@@ -147,7 +147,7 @@ If (RegKeyExists(IPTWregRoot, IPTWregKey \ locationCode))
 Else
 	updateWeatherNow = Question(IPTWupdateWeatherNowQuestion)
 	If (updateWeatherNow)
-		KillScript(SystemPath("ScriptPath") \ IPTWgetAccuWeatherScript)
-		CallScript(SystemPath("ScriptPath") \ IPTWgetAccuWeatherScript)
+		KillScript(IPTWgetAccuWeatherScript)
+		CallScript(SystemPath("ScriptPath") \ "sys" \ IPTWgetAccuWeatherScript)
 	EndIf
 EndIf
