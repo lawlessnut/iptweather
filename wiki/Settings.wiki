@@ -1,4 +1,4 @@
-#summary Where to set user preferences for IPTWeather?
+#summary IPTWeather user preferences.
 
 Settings are in the weather.ini file.<br />
 They are commented, but if you have some questions, I will answer to them with pleasure.<br />
