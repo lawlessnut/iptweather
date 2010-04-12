@@ -245,13 +245,7 @@ Sub IPTWreloadS2U2
       If (currenttime gt sunset)
         suffix = "N"
       Else
-        sunrise = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunrise" & argv[1]), -8)
-        sunrise = Replace(Part(sunrise, " ", 2) & " " & Part(sunrise, " ", 1), " 12", " 00")
-        If (currenttime lt sunrise)
-          suffix = "N"
-        Else
-          suffix = "D"
-        EndIf
+        suffix = "D"
       EndIf
 
       If (IPTWtodayForecastInS2U2Text)
