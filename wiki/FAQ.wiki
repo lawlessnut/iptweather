@@ -1,0 +1,23 @@
+#summary IPTWeather FAQ.
+
+<b>FAQ:</b><br />
+<b><font color="Green">Q: No weather icon is displayed on S2U2!</font></b><br />
+A: Please choose the UserWeather (option 5) for the 'Today's Weather Forecast from' in the S2U2 Information Settings.<br />
+<br />
+<b><font color="Green">Q: How to use IPTWeather only with S2U2, not with iPhoneToday?</font></b><br />
+A: In the weather.ini file, set IPTWiPhoneTodayDisabled=1<br />
+<br />
+<b><font color="Green">Q: How to use IPTWeather only with iPhoneToday, not with S2U2?</font></b><br />
+A: In the weather.ini file, set IPTWtomorrowForecastInS2U2UserWeather=0, IPTWtodayForecastInS2U2Wallpaper=0, and IPTWtodayForecastInS2U2Text=0<br />
+<br />
+<b><font color="Green">Q1: The text shown on the S2U2 slider is sometimes to long and is not entirely visible and the right margin is out of the text box. Can I fix it somehow?<br />
+Q2: I'd like the text shown on the S2U2 slider to be in a different language. Is it possible?</font></b><br />
+A: In the weather.ini you can set the IPTWlanguageFile to the weather description file you want. By default, it is eng.ini but you can change it. You can also change the text to fit your language or the size you want.<br />
+<br />
+<b><font color="Green">Q: How to change the installation path?</font></b><br />
+A: First, be aware of the fact <font color="Red">MortScript cannot run from a script another script that is in the \Program Files\ folder, so do not try to install IPTWeather in the \Program Files\ folder because it won't work.</font> I cannot do anything for that since it is a MortScript limitation.<br />
+To change the installation path of the IPTWeather folder, you have to:<br />
+0 - Move the IPTWeather to the folder you want and check the path of your icons in the weather.ini file<br />
+1 - Run the autostartIPTWeather.mscr script<br />
+2 - Run the startAccuWeather.mscr script<br />
+<br />
