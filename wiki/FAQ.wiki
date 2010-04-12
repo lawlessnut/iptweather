@@ -1,6 +1,5 @@
 #summary IPTWeather FAQ.
 
-<b>FAQ:</b><br />
 <b><font color="Green">Q: No weather icon is displayed on S2U2!</font></b><br />
 A: Please choose the UserWeather (option 5) for the 'Today's Weather Forecast from' in the S2U2 Information Settings.<br />
 <br />
