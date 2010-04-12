@@ -103,27 +103,15 @@ EndIf
 dataUpdated = 0
 If (InternetConnected("http://www.perdu.com"))
 	If (IPTWaccuWeatherLocation eq "My Location")
-#		ipData = ReadFile("http://www.monadresseip.fr/")
-#		ipBegin = Find(ipData, "ip=") + 3
-#		ipEnd = Find(ipData, "'>", ipBegin)
-#		ip = Replace(SubStr(ipData, ipBegin, ipEnd - ipBegin), " ", "")
+#		locationData = ReadFile("http://www.maxmind.com/app/mylocation")
+#		locBegin = Find(locationData, "Latitude/Longitude") + 57
+#		locEnd = Find(locationData, "</td>", locBegin)
+#		Split(SubStr(locationData, locBegin, locEnd - locBegin - 1), "/", 1, latitude, longitude)
 
-#		locationData = ReadFile("http://www.ipgetinfo.com/?mode=ip&lang=fr&ip=" & ip)
-#		latitudeBegin = Find(locationData, "latitude</b>: ") + 14
-#		latitudeEnd = Find(locationData, "<br", latitudeBegin)
-#		latitude = SubStr(locationData, latitudeBegin, latitudeEnd - latitudeBegin)
- 
-#		longitudeBegin = Find(locationData, "longitude</b>: ") + 14
-#		longitudeEnd = Find(locationData, "<br", longitudeBegin)
-#		longitude = SubStr(locationData, longitudeBegin, longitudeEnd - longitudeBegin)
-
-		locationData = ReadFile("http://www.maxmind.com/app/mylocation")
-		locBegin = Find(locationData, "Latitude/Longitude") + 57
-		locEnd = Find(locationData, "</td>", locBegin)
-		Split(SubStr(locationData, locBegin, locEnd - locBegin - 1), "/", 1, latitude, longitude)
-
+		latitude = RegRead("HKLM", "Services\myLocation", "Latitude")
+		longitude = RegRead("HKLM", "Services\myLocation", "Longitude")
+		
 		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
-#		IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
 	ElseIf (IPTWaccuWeatherLocation eq "Google Latitude" AND IPTWgoogleUserID ne "")
 		locationData= ReadFile("http://www.google.com/latitude/apps/badge/api?user=" & IPTWgoogleUserID & "&type=json")
 		locBegin = Find(locationData, "coordinates") + 15
@@ -131,10 +119,8 @@ If (InternetConnected("http://www.perdu.com"))
 		Split(SubStr(locationData, locBegin, locEnd - locBegin), ",", 1, longitude, latitude)
 
 		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
-#		IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
 	Else
 		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?" & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
-#		IPTWaccuWeatherURL = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?" & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
 	EndIf
 	data = ReadFile(IPTWaccuWeatherURL)
 	WriteFile(IPTWdataFile, data)
