@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <xml2reg>
-	<sourcefile>\iPhoneToday\IPTWeather\data.xml</sourcefile>
+	<sourcefile>\IPTWeather\data.xml</sourcefile>
 	<xmlin>
 		<node name="adc_database">
 			<node name="units">
