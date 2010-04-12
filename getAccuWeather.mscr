@@ -218,7 +218,7 @@ Sub IPTWreloadS2U2
     EndIf
 
     IPTWtodayForecastInS2U2Wallpaper = IniRead("weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Wallpaper")
-    IPTWuseS2U2wallpaperForBackground = IniRead("weather.ini", "S2U2 settings", "IPTWuseS2U2wallpaperForBackground")
+    IPTWuseS2U2wallpaperForBackground = IniRead("weather.ini", "User settings", "IPTWuseS2U2wallpaperForBackground")
     If (IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground)
       IPTWS2U2WallpaperExtension = IniRead("weather.ini", "S2U2 settings", "IPTWS2U2WallpaperExtension")
       IPTWS2U2WallpaperPath = IniRead("weather.ini", "S2U2 settings", "IPTWS2U2WallpaperPath")
@@ -256,7 +256,7 @@ Sub IPTWreloadS2U2
 
     IPTWtodayForecastInS2U2Text = IniRead("weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Text")
     IPTWtodayForecastInS2U2Wallpaper = IniRead("weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Wallpaper")
-    IPTWuseS2U2wallpaperForBackground = IniRead("weather.ini", "S2U2 settings", "IPTWuseS2U2wallpaperForBackground")
+    IPTWuseS2U2wallpaperForBackground = IniRead("weather.ini", "User settings", "IPTWuseS2U2wallpaperForBackground")
     If (IPTWtodayForecastInS2U2Text OR IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground)
       currenttime = Replace(FormatTime("A h:i", TimeStamp()), " 12", " 00")
       sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & (argv[1] - 1)), -8)
