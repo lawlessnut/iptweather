@@ -2,32 +2,32 @@
 
 # ############################################################################
 # retrieve user preference
-IPTWforecastStartIcon        = IniRead("weather.ini", "User settings", "IPTWforecastStartIcon")
-IPTWforecastStartPage        = IniRead("weather.ini", "User settings", "IPTWforecastStartPage")
-IPTWcurrentWeatherIcon       = IniRead("weather.ini", "User settings", "IPTWcurrentWeatherIcon")
-IPTWcurrentWeatherPage       = IniRead("weather.ini", "User settings", "IPTWcurrentWeatherPage")
-IPTWiconsExtension           = IniRead("weather.ini", "User settings", "IPTWiconsExtension")
-IPTWgoToAccuWeatherQuestion  = IniRead("weather.ini", "User settings", "IPTWgoToAccuWeatherQuestion")
-weekday["Monday"]            = IniRead("weather.ini", "User settings", "IPTWmondayText")
-weekday["Tuesday"]           = IniRead("weather.ini", "User settings", "IPTWtuesdayText")
-weekday["Wednesday"]         = IniRead("weather.ini", "User settings", "IPTWwednesdayText")
-weekday["Thursday"]          = IniRead("weather.ini", "User settings", "IPTWthursdayText")
-weekday["Friday"]            = IniRead("weather.ini", "User settings", "IPTWfridayText")
-weekday["Saturday"]          = IniRead("weather.ini", "User settings", "IPTWsaturdayText")
-weekday["Sunday"]            = IniRead("weather.ini", "User settings", "IPTWsundayText")
-IPTWobsoleteDataPrefix       = IniRead("weather.ini", "User settings", "IPTWobsoleteDataPrefix")
-IPTWupdateWeatherNowQuestion = IniRead("weather.ini", "User settings", "IPTWupdateWeatherNowQuestion")
-IPTWdisplayCityName          = IniRead("weather.ini", "User settings", "IPTWdisplayCityName")
-IPTWdisplayObservationTime   = IniRead("weather.ini", "User settings", "IPTWdisplayObservationTime")
-IPTWforceDelayHours          = IniRead("weather.ini", "User settings", "IPTWforceDelayHours")
-IPTWforceDelayMinutes        = IniRead("weather.ini", "User settings", "IPTWforceDelayMinutes")
-IPTWnightIconSuffix          = IniRead("weather.ini", "User settings", "IPTWnightIconSuffix")
+IPTWforecastStartIcon               = IniRead("weather.ini", "User settings", "IPTWforecastStartIcon")
+IPTWforecastStartPage               = IniRead("weather.ini", "User settings", "IPTWforecastStartPage")
+IPTWcurrentWeatherIcon              = IniRead("weather.ini", "User settings", "IPTWcurrentWeatherIcon")
+IPTWcurrentWeatherPage              = IniRead("weather.ini", "User settings", "IPTWcurrentWeatherPage")
+IPTWiconsExtension                  = IniRead("weather.ini", "User settings", "IPTWiconsExtension")
+IPTWgoToAccuWeatherQuestion         = IniRead("weather.ini", "User settings", "IPTWgoToAccuWeatherQuestion")
+weekday["Monday"]                   = IniRead("weather.ini", "User settings", "IPTWmondayText")
+weekday["Tuesday"]                  = IniRead("weather.ini", "User settings", "IPTWtuesdayText")
+weekday["Wednesday"]                = IniRead("weather.ini", "User settings", "IPTWwednesdayText")
+weekday["Thursday"]                 = IniRead("weather.ini", "User settings", "IPTWthursdayText")
+weekday["Friday"]                   = IniRead("weather.ini", "User settings", "IPTWfridayText")
+weekday["Saturday"]                 = IniRead("weather.ini", "User settings", "IPTWsaturdayText")
+weekday["Sunday"]                   = IniRead("weather.ini", "User settings", "IPTWsundayText")
+IPTWobsoleteDataPrefix              = IniRead("weather.ini", "User settings", "IPTWobsoleteDataPrefix")
+IPTWupdateWeatherNowQuestion        = IniRead("weather.ini", "User settings", "IPTWupdateWeatherNowQuestion")
+IPTWdisplayCityName                 = IniRead("weather.ini", "User settings", "IPTWdisplayCityName")
+IPTWdisplayObservationTime          = IniRead("weather.ini", "User settings", "IPTWdisplayObservationTime")
+IPTWforceDelayHours                 = IniRead("weather.ini", "User settings", "IPTWforceDelayHours")
+IPTWforceDelayMinutes               = IniRead("weather.ini", "User settings", "IPTWforceDelayMinutes")
+IPTWnightIconSuffix                 = IniRead("weather.ini", "User settings", "IPTWnightIconSuffix")
 IPTWdownloadDataAfterStartOnIconTap = IniRead("weather.ini", "User settings", "IPTWdownloadDataAfterStartOnIconTap")
 
 # ############################################################################
 # configure location of parsed weather data in registry
-IPTWregRoot              = "HKCU"
-IPTWregKey               = "Software\iPhoneToday\AccuWeather"
+IPTWregRoot              = IniRead("weather.ini", "Script settings", "IPTWregRoot")
+IPTWregKey               = IniRead("weather.ini", "Script settings", "IPTWregKey")
 IPTWaccuWeatherURL       = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?location="&IPTWaccuWeatherLocation&"&metric="&IPTWaccuWeatherMetric
 IPTWdataFile             = SystemPath("ScriptPath") \ "data.xml"
 IPTWparserPath           = SystemPath("ScriptPath")
@@ -48,6 +48,7 @@ Else
   isShowingForecast = RegRead(IPTWregRoot, IPTWregKey, "ShowingForecast")
 EndIf
 If (isStarted = 0 AND IPTWdownloadDataAfterStartOnIconTap)
+  KillScript(SystemPath("ScriptPath") \ IPTWgetAccuWeatherScript)
   CallScript(SystemPath("ScriptPath") \ IPTWgetAccuWeatherScript)
 Else
   If (isShowingForecast = 0)
@@ -131,15 +132,16 @@ Else
       EndIf
     EndIf
     If (updateWeatherNow)
+      KillScript(SystemPath("ScriptPath") \ IPTWgetAccuWeatherScript)
       CallScript(SystemPath("ScriptPath") \ IPTWgetAccuWeatherScript)
     Else
       currentDate = FormatTime("m/d/Y")
       obsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
       obsdate = SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2) & "/" & Part(obsdate, "/", 3)
       If (obsdate eq currentDate)
-        iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "icon0")
+        iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "icon0") & "." & IPTWiconsExtension
         iPhoneTodayTemp = RegRead(IPTWregRoot, IPTWregKey, "temp0") & " (" & RegRead(IPTWregRoot, IPTWregKey, "tempfeel0") & ")"
-        Call("IPTWreloadIcon", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic, IPTWiconsExtension)
+        Call("IPTWreloadIcon", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
 # no new data?
       Else
 # If change of day, we retrieve previous night forecast as current condition
@@ -160,21 +162,21 @@ Else
           sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & daysToSkip), -8)
           sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
           If (currenttime gt sunset)
-            iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip)
+            iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
             iPhoneTodayTemp = IPTWobsoleteDataPrefix & RegRead(IPTWregRoot, IPTWregKey, "loTemp" & daysToSkip) & " (" & RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & daysToSkip) & ")"
-            Call("IPTWreloadIcon", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic & IPTWnightIconSuffix, IPTWiconsExtension)
+            Call("IPTWreloadIcon", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
           Else
             sunrise = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunrise" & daysToSkip), -8)
             sunrise = Replace(Part(sunrise, " ", 2) & " " & Part(sunrise, " ", 1), " 12", " 00")
             If (currenttime lt sunrise)
               daysToSkip = daysToSkip - 1
-              iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip)
+              iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
               iPhoneTodayTemp = IPTWobsoleteDataPrefix & RegRead(IPTWregRoot, IPTWregKey, "loTemp" & daysToSkip) & " (" & RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & daysToSkip) & ")"
-              Call("IPTWreloadIcon", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic & IPTWnightIconSuffix, IPTWiconsExtension)
+              Call("IPTWreloadIcon", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
             Else
-              iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconD" & daysToSkip)
+              iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconD" & daysToSkip) & "." & IPTWiconsExtension
               iPhoneTodayTemp = IPTWobsoleteDataPrefix & RegRead(IPTWregRoot, IPTWregKey, "hiTemp" & daysToSkip) & " (" & RegRead(IPTWregRoot, IPTWregKey, "hiFeelTemp" & daysToSkip) & ")"
-              Call("IPTWreloadIcon", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic, IPTWiconsExtension)
+              Call("IPTWreloadIcon", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
             EndIf
           EndIf
         Else
@@ -210,8 +212,7 @@ Sub IPTWreloadIcon
   RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", argv[1])
   RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", argv[2])
   RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", argv[3])
-  RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ argv[4] & "." & argv[5])
-
+  RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ argv[4])
   RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 1)
 
 EndSub

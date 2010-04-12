@@ -2,29 +2,29 @@ ErrorLevel("off")
 
 # ############################################################################
 # retrieve user preference
-IPTWaccuWeatherMetric   = IniRead("weather.ini", "User settings", "IPTWaccuWeatherMetric")
-IPTWaccuWeatherLocation = IniRead("weather.ini", "User settings", "IPTWaccuWeatherLocation")
-IPTWdelayHours          = IniRead("weather.ini", "User settings", "IPTWdelayHours")
-IPTWdelayMinutes        = IniRead("weather.ini", "User settings", "IPTWdelayMinutes")
-IPTWinternetConnection  = IniRead("weather.ini", "User settings", "IPTWinternetConnection")
-IPTWdisconnectOnExit    = IniRead("weather.ini", "User settings", "IPTWdisconnectOnExit")
-IPTWcurrentWeatherIcon  = IniRead("weather.ini", "User settings", "IPTWcurrentWeatherIcon")
-IPTWcurrentWeatherPage  = IniRead("weather.ini", "User settings", "IPTWcurrentWeatherPage")
-IPTWiconsExtension      = IniRead("weather.ini", "User settings", "IPTWiconsExtension")
-IPTWobsoleteDataPrefix = IniRead("weather.ini", "User settings", "IPTWobsoleteDataPrefix")
-IPTWwakeUpOnUpdate = IniRead("weather.ini", "User settings", "IPTWwakeUpOnUpdate")
+IPTWaccuWeatherMetric    = IniRead("weather.ini", "User settings", "IPTWaccuWeatherMetric")
+IPTWaccuWeatherLocation  = IniRead("weather.ini", "User settings", "IPTWaccuWeatherLocation")
+IPTWdelayHours           = IniRead("weather.ini", "User settings", "IPTWdelayHours")
+IPTWdelayMinutes         = IniRead("weather.ini", "User settings", "IPTWdelayMinutes")
+IPTWinternetConnection   = IniRead("weather.ini", "User settings", "IPTWinternetConnection")
+IPTWdisconnectOnExit     = IniRead("weather.ini", "User settings", "IPTWdisconnectOnExit")
+IPTWcurrentWeatherIcon   = IniRead("weather.ini", "User settings", "IPTWcurrentWeatherIcon")
+IPTWcurrentWeatherPage   = IniRead("weather.ini", "User settings", "IPTWcurrentWeatherPage")
+IPTWiconsExtension       = IniRead("weather.ini", "User settings", "IPTWiconsExtension")
+IPTWobsoleteDataPrefix   = IniRead("weather.ini", "User settings", "IPTWobsoleteDataPrefix")
+IPTWwakeUpOnUpdate       = IniRead("weather.ini", "User settings", "IPTWwakeUpOnUpdate")
 IPTWpreventSleepOnUpdate = IniRead("weather.ini", "User settings", "IPTWpreventSleepOnUpdate")
-IPTWnightIconSuffix        = IniRead("weather.ini", "User settings", "IPTWnightIconSuffix")
+IPTWnightIconSuffix      = IniRead("weather.ini", "User settings", "IPTWnightIconSuffix")
 
 # ############################################################################
 # configure location of parsed weather data in registry
-IPTWregRoot             = IniRead("weather.ini", "Script settings", "IPTWregRoot")
-IPTWregKey              = IniRead("weather.ini", "Script settings", "IPTWregKey")
-IPTWaccuWeatherURL      = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?location="&IPTWaccuWeatherLocation&"&metric="&IPTWaccuWeatherMetric
-IPTWdataFile            = SystemPath("ScriptPath") \ "data.xml"
-IPTWparserPath          = SystemPath("ScriptPath")
-IPTWxmlParserConfigFile = SystemPath("ScriptPath") \ "config.xml"
-IPTWaccuWeatherIconPath = SystemPath("ScriptPath") \ "accuweathericons"
+IPTWregRoot              = IniRead("weather.ini", "Script settings", "IPTWregRoot")
+IPTWregKey               = IniRead("weather.ini", "Script settings", "IPTWregKey")
+IPTWaccuWeatherURL       = "http://rainmeter.accu-weather.com/widget/rainmeter/weather-data.asp?location="&IPTWaccuWeatherLocation&"&metric="&IPTWaccuWeatherMetric
+IPTWdataFile             = SystemPath("ScriptPath") \ "data.xml"
+IPTWparserPath           = SystemPath("ScriptPath")
+IPTWxmlParserConfigFile  = SystemPath("ScriptPath") \ "config.xml"
+IPTWaccuWeatherIconPath  = SystemPath("ScriptPath") \ "accuweathericons"
 
 If (IPTWwakeUpOnUpdate)
   ToggleDisplay(ON)
@@ -164,8 +164,8 @@ Else
     Else
       iPhoneTodayPic = "AccuWeather"
       iPhoneTodayTemp = "N/A"
-      Call("IPTWreloadIcon", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic, IPTWiconsExtension)
       Call("IPTWreloadS2U2", -1)
+      Call("IPTWreloadIcon", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic, IPTWiconsExtension)
     EndIf
   EndIf
 EndIf
@@ -241,7 +241,12 @@ Sub IPTWreloadS2U2
         IPTsettings = Replace(IPTsettings, "<staticWallpaper>0</staticWallpaper>", "<staticWallpaper>1</staticWallpaper>")
         IPTsettings = Replace(IPTsettings, "<backTransparent>1</backTransparent>", "<backTransparent>0</backTransparent>")
         WriteFile("\iPhoneToday\settings.xml", IPTsettings, FALSE)
-        RedrawToday
+        If (IniRead("weather.ini", "User settings", "IPTWuseExeIPhoneToday"))
+          Kill("iPhoneToday.exe")
+          Run("\iPhoneToday\iPhoneToday.exe")
+        Else
+          RedrawToday
+        EndIf
         Sleep(1000)
       EndIf
     EndIf
@@ -311,7 +316,12 @@ Sub IPTWreloadS2U2
           IPTsettings = Replace(IPTsettings, "<staticWallpaper>0</staticWallpaper>", "<staticWallpaper>1</staticWallpaper>")
           IPTsettings = Replace(IPTsettings, "<backTransparent>1</backTransparent>", "<backTransparent>0</backTransparent>")
           WriteFile("\iPhoneToday\settings.xml", IPTsettings, FALSE)
-          RedrawToday
+          If (IniRead("weather.ini", "User settings", "IPTWuseExeIPhoneToday"))
+            Kill("iPhoneToday.exe")
+            Run("\iPhoneToday\iPhoneToday.exe")
+          Else
+            RedrawToday
+          EndIf
           Sleep(1000)
         EndIf
       EndIf
