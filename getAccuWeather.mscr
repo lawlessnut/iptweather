@@ -2,45 +2,40 @@ ErrorLevel("off")
 
 # ############################################################################
 # retrieve user preference
-IPTWaccuWeatherMetric		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherMetric")
-IPTWaccuWeatherLocation		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherLocation")
-IPTWdelayHours				= IniRead("..\weather.ini", "User settings", "IPTWdelayHours")
-IPTWdelayMinutes			= IniRead("..\weather.ini", "User settings", "IPTWdelayMinutes")
-IPTWinternetConnection		= IniRead("..\weather.ini", "User settings", "IPTWinternetConnection")
-IPTWdisconnectOnExit		= IniRead("..\weather.ini", "User settings", "IPTWdisconnectOnExit")
-IPTWcurrentWeatherIcon		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherIcon")
-IPTWcurrentWeatherPage		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherPage")
-IPTWiconsExtension			= IniRead("..\weather.ini", "User settings", "IPTWiconsExtension")
-IPTWobsoleteDataPrefix		= IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
-IPTWwakeUpOnUpdate			= IniRead("..\weather.ini", "User settings", "IPTWwakeUpOnUpdate")
-IPTWpreventSleepOnUpdate	= IniRead("..\weather.ini", "User settings", "IPTWpreventSleepOnUpdate")
-IPTWnightIconSuffix			= IniRead("..\weather.ini", "User settings", "IPTWnightIconSuffix")
-IPTWgoogleUserID			= IniRead("..\weather.ini", "User settings", "IPTWgoogleUserID")
-IPTWiPhoneTodayDisabled		= IniRead("..\weather.ini", "User settings", "IPTWiPhoneTodayDisabled")
-IPTWlanguageFile			= IniRead("..\weather.ini", "User settings", "IPTWlanguageFile")
-IPTWaccuWeatherIconPath		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherIconPath")
-IPTWaccuWeatherAPI		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherAPI")
-
-If (IPTWaccuWeatherAPI eq "")
-	IPTWaccuWeatherAPI = "rdona"
-EndIf
+IPTWaccuWeatherMetric		= IniRead("weather.ini", "User settings", "IPTWaccuWeatherMetric")
+IPTWaccuWeatherLocation		= IniRead("weather.ini", "User settings", "IPTWaccuWeatherLocation")
+IPTWdelayHours				= IniRead("weather.ini", "User settings", "IPTWdelayHours")
+IPTWdelayMinutes			= IniRead("weather.ini", "User settings", "IPTWdelayMinutes")
+IPTWinternetConnection		= IniRead("weather.ini", "User settings", "IPTWinternetConnection")
+IPTWdisconnectOnExit		= IniRead("weather.ini", "User settings", "IPTWdisconnectOnExit")
+IPTWcurrentWeatherIcon		= IniRead("weather.ini", "User settings", "IPTWcurrentWeatherIcon")
+IPTWcurrentWeatherPage		= IniRead("weather.ini", "User settings", "IPTWcurrentWeatherPage")
+IPTWiconsExtension			= IniRead("weather.ini", "User settings", "IPTWiconsExtension")
+IPTWobsoleteDataPrefix		= IniRead("weather.ini", "User settings", "IPTWobsoleteDataPrefix")
+IPTWwakeUpOnUpdate			= IniRead("weather.ini", "User settings", "IPTWwakeUpOnUpdate")
+IPTWpreventSleepOnUpdate	= IniRead("weather.ini", "User settings", "IPTWpreventSleepOnUpdate")
+IPTWnightIconSuffix			= IniRead("weather.ini", "User settings", "IPTWnightIconSuffix")
+IPTWgoogleUserID			= IniRead("weather.ini", "User settings", "IPTWgoogleUserID")
+IPTWiPhoneTodayDisabled		= IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled")
+IPTWlanguageFile			= IniRead("weather.ini", "User settings", "IPTWlanguageFile")
+IPTWaccuWeatherIconPath		= IniRead("weather.ini", "User settings", "IPTWaccuWeatherIconPath")
 
 If (IPTWaccuWeatherLocation ne "")
 	weatherLocation = "location=" & IPTWaccuWeatherLocation
 Else
-	IPTWlocationLatitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLatitude")
-	IPTWlocationLongitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLongitude")
+	IPTWlocationLatitude = IniRead("weather.ini", "User settings", "IPTWlocationLatitude")
+	IPTWlocationLongitude = IniRead("weather.ini", "User settings", "IPTWlocationLongitude")
 	weatherLocation = "slat=" & IPTWlocationLatitude & "slon=" & IPTWlocationLongitude
 EndIf
 
 # ############################################################################
 # configure location of parsed weather data in registry
-IPTWregRoot				= IniRead("..\weather.ini", "Script settings", "IPTWregRoot")
-IPTWappRegKey			= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
-IPTWregKey				= IniRead("..\weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
+IPTWregRoot				= IniRead("weather.ini", "Script settings", "IPTWregRoot")
+IPTWappRegKey			= IniRead("weather.ini", "Script settings", "IPTWregKey")
+IPTWregKey				= IniRead("weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
 IPTWdataFile			= SystemPath("ScriptPath") \ "data.xml"
+IPTWparserPath			= SystemPath("ScriptPath")
 IPTWxmlParserConfigFile	= SystemPath("ScriptPath") \ "config.xml"
-IPTWaccuWeatherURL = "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/weather-data.asp?"
 
 If (IPTWwakeUpOnUpdate)
 	ToggleDisplay(ON)
@@ -116,16 +111,16 @@ If (InternetConnected("http://www.perdu.com"))
 		latitude = RegRead("HKLM", "Services\myLocation", "Latitude")
 		longitude = RegRead("HKLM", "Services\myLocation", "Longitude")
 		
-		IPTWaccuWeatherURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
 	ElseIf (IPTWaccuWeatherLocation eq "Google Latitude" AND IPTWgoogleUserID ne "")
 		locationData= ReadFile("http://www.google.com/latitude/apps/badge/api?user=" & IPTWgoogleUserID & "&type=json")
 		locBegin = Find(locationData, "coordinates") + 15
 		locEnd = Find(locationData, "]", locBegin)
 		Split(SubStr(locationData, locBegin, locEnd - locBegin), ",", 1, longitude, latitude)
 
-		IPTWaccuWeatherURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
 	Else
-		IPTWaccuWeatherURL = IPTWaccuWeatherURL & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
+		IPTWaccuWeatherURL = "http://rdona.accu-weather.com/widget/rdona/weather-data.asp?" & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
 	EndIf
 	data = ReadFile(IPTWaccuWeatherURL)
 	WriteFile(IPTWdataFile, data)
@@ -166,15 +161,7 @@ EndIf
 
 If (dataUpdated = 1)
 	If (Find(data,"</adc_database>") > 0)
-		xmlParserConfigFile = ReadFile(IPTWxmlParserConfigFile)
-		beginXMLPos = Find(xmlParserConfigFile, "<sourcefile>") + 12
-		endXMLPos = Find(xmlParserConfigFile, "</sourcefile>", beginXMLPos)
-		oldXMLFile = SubStr(xmlParserConfigFile, beginXMLPos, endXMLPos - beginXMLPos)
-		If (IPTWdataFile ne oldXMLFile)
-			xmlParserConfigFile = Replace(xmlParserConfigFile, oldXMLFile, IPTWdataFile)
-			WriteFile(IPTWxmlParserConfigFile, xmlParserConfigFile)
-		EndIf
-		RunWait(SystemPath("ScriptPath") \ "xml2reg.exe", IPTWxmlParserConfigFile)
+		RunWait(IPTWparserPath \ "xml2reg.exe", IPTWxmlParserConfigFile)
 		RegWriteString(IPTWregRoot, IPTWregKey, "updateTime", TimeStamp())
 	EndIf
 

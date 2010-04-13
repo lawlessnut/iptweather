@@ -1,4 +1,4 @@
-IPTWscriptPath					= SystemPath("ScriptPath")
+IPTWscriptPath					= "\IPTWeather"
 IPTWregRoot						= IniRead(IPTWscriptPath \ "weather.ini", "Script settings", "IPTWregRoot")
 IPTWregKey						= IniRead(IPTWscriptPath \ "weather.ini", "Script settings", "IPTWregKey")
 IPTWcurrentWeatherIcon			= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWcurrentWeatherIcon")
@@ -33,7 +33,7 @@ If (IPTWscheduleNextUpdateOnStart AND (IPTWdelayHours <> 0 OR IPTWdelayMinutes <
 	currentDate = FormatTime("m/d/Y")
 	utime = TimeStamp() + (IPTWdelayHours * 60 + IPTWdelayMinutes) * 60
 	mort = SystemPath("ScriptExe") \ "MortScript.exe"
-	script = IPTWscriptPath \ "sys\getAccuWeather.mscr"
+	script = IPTWscriptPath \ "getAccuWeather.mscr"
 	RemoveNotifications(mort, script)
 	RunAt(utime, mort, script)
 EndIf
