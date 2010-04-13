@@ -1,0 +1,63 @@
+
+# ############################################################################
+# retrieve user preference
+IPTWaccuWeatherLocation				= IniRead("weather.ini", "User settings", "IPTWaccuWeatherLocation")
+IPTWinternetConnection				= IniRead("weather.ini", "User settings", "IPTWinternetConnection")
+IPTWdisconnectOnExit				= IniRead("weather.ini", "User settings", "IPTWdisconnectOnExit")
+IPTWaccuWeatherFavoriteLocations	= IniRead("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations")
+IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "User settings", "IPTWupdateWeatherNowQuestion")
+
+# ############################################################################
+# configure location of parsed weather data in registry
+IPTWregRoot					= IniRead("weather.ini", "Script settings", "IPTWregRoot")
+IPTWregKey					= IniRead("weather.ini", "Script settings", "IPTWregKey")
+IPTWaccuLocationURL			= "http://rainmeter.accu-weather.com/widget/rainmeter/city-find.asp?location="
+IPTWgetAccuWeatherScript	= "getAccuWeather.mscr"
+
+If (IPTWaccuWeatherFavoriteLocations eq "")
+	Message("No favorite location to change to.")
+	Exit
+EndIf
+
+currentLocationCode = IPTWaccuWeatherLocation
+
+favoriteLocationsList = Split(IPTWaccuWeatherFavoriteLocations, ";")
+
+If (argv[1] ne "")
+	If (MaxIndex(favoriteLocationsList) >= argv[1])
+		newLocationCode = Part(favoriteLocationsList[argv[1]], ",", -1, TRUE)
+	EndIf
+EndIf
+
+If (newLocationCode eq "")
+	nextOne = 0
+	ForEach location in array(favoriteLocationsList)
+		If (nextOne = 1)
+			nextOne = 2
+			newLocationCode = Part(location, ",", -1, TRUE)
+		EndIf
+		If (currentLocationCode eq Part(location, ",", -1, TRUE))
+			nextOne = 1
+		EndIf
+	EndForEach
+
+	If (nextOne = 0 OR nextOne = 1)
+		newLocationCode = Part(favoriteLocationsList[1], ",", -1, TRUE)
+	EndIf
+EndIf
+
+IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", newLocationCode)
+
+SleepMessage(1, "Changing location to " & newLocationCode)
+
+If (RegKeyExists(IPTWregRoot, IPTWregKey \ newLocationCode))
+	RegWriteDWord(IPTWregRoot, IPTWregKey, "Started", 1)
+	RegWriteDWord(IPTWregRoot, IPTWregKey, "ShowingForecast", 1)
+	CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
+Else
+	updateWeatherNow = Question(IPTWupdateWeatherNowQuestion)
+	If (updateWeatherNow)
+		KillScript(SystemPath("ScriptPath") \ IPTWgetAccuWeatherScript)
+		CallScript(SystemPath("ScriptPath") \ IPTWgetAccuWeatherScript)
+	EndIf
+EndIf
