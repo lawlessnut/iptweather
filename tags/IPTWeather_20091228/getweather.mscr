@@ -1,0 +1,479 @@
+ToggleDisplay(ON)
+ErrorLevel("off")
+# Original found on forum-xda http://forum.xda-developers.com/showthread.php?t=358952 by schettj
+# changed by Sid-Shrunk
+# Changed to support for iFonz:
+# - change any iFonzIcon you want to show weather
+# - Change shown Name to currenttemp(HiTemp/LoTemp)
+# - Pressing icon will open selectesd Browser with yahooweatherinfo
+#   of selected location(can be deactivated)
+# - select if you want to connect to Radio if no other connection available or not!!!
+# - restarts after defined time (delayHours,delayMinutes)
+#
+# Changed by moesfeld
+# Thanks go out to:
+# - MiToNiOeS for the fantastic IPhonetoday
+# - A_C for the fantastic S2U2
+# - Mort for his Mortscript
+# - superflysocal for his weather wallpaper script which had a big influence on this (Pointing me to mortscript!) and for his wallpapers
+# - schettj for providing the and base for this script
+# - Sid-Shrunk who also provided the base for this script	
+# - bluemetalaxe for his Realize weather icons
+# - someone I can´t remember who proivided the diamond weather png´s (Sorry! Please speak up if you are the one)
+# - someone I can´t remember for making Refreshtoday.exe (Sorry! Please speak up if you are the one)
+#
+# - changed to support s2u2+iPhonetoday
+# - s2u2 features
+#		- display tomorrows forecast in s2u2 weather section
+#		- display today forecast in s2u2 slider and wallpaper pic (I didn´t see any need to implement current weather since I can simply look out of the window)
+#			(note: slide text only working from s2u2 1.30 to present [1.44] {well since it is stored in lang.ini}
+#		- option to translate the forecast (german translation included but not complete since from time to time new weather conditons pop up)
+#			(note: feel free to update to any language and repost)
+#			
+#			(note2: If you are using my weather wallpaper pack and icons I highly recommend using the translation even if it´s not for translation but for cropping the 
+#					forecast to ~ 14 chars otherwise they might not fit into the s2u2 slider bar and the Hi/Lo temps will be offset
+#					(Implying that someone will have to make an english "translation/cropsetting" as well even though the data is provided in english)
+#			
+#			(note3: usualy the weather data sould be ~ 14 chars long however in some cases the length goes up to 18 chars especialy when the forecast is very short(around 5 chars)
+#					Best way to figure it out is trial&error. Use your favorite RegEditor to fill in the translated forcast into HKCU/Software/A_C/S2U2/UserWeather
+#					(C|*anynumeryoulikebetween1and47*|*YourTranslatedForecastHere*|Hi°/Lo°) and add/remove spaces until it fits. 
+#			
+#			(note3.1: On temperatures with less then 2 chars an extra space is added. So depending on the temperature length there are 2 OR 3 spaces between the forecast & the temperature
+#						TAKE THIS INTO ACCOUNT WHEN USING THE ABOVE DESCRIBED TRIAL&ERROR OR YOU HAVE TO START OVER AGAIN (Made this mistake once and it was a pain in the arse fixing spaces)
+#
+#			(note4: Don´t worry that with to much Spaces added the text won´t fit into the s2u2 slide bar. Spaces in front and back will be stripped
+#
+#
+#		- Added new weather "Panel" style Backround along with some theme stuff (well only a matching slider) .PNG´s included for translation. Photoshop scriptfile included for Batch processing the
+#			PNG´s (lock the Layers that allways sould be shown (overlays) and then batch process (use no file prefix on batch processing to obtain the right filenames)) 
+#			After that delete unwanted pictures (no need for the first layer png´s)
+#					 
+#			You can also apply the weather "panel" overlays to your favorite wallpaper (if not using weather wallpaper) just open backg.png add your wallpaper as 
+#			layer move the layer underneath the overlays and then save as jpg.
+# - iPhonetoday features
+#		- display actual temperature + min° + max° + matching weather icon
+#		- display next 4 days forecast icons + min° + max°
+#
+#					
+#  
+#collect settings
+s2u2forecast = IniRead( "\IPhonetoday\weather.ini","", "s2u2forecast" )
+wallpapertype= IniRead( "\IPhonetoday\weather.ini","", "wallpapertype" )
+wallpaperfolder = IniRead( "\IPhonetoday\weather.ini","", "wallpaperfolder" )
+s2u2path = IniRead( "\IPhonetoday\weather.ini","", "s2u2path" )
+defwallpaper = IniRead( "\IPhonetoday\weather.ini","", "defwallpaper" )
+defs2u2text = IniRead( "\IPhonetoday\weather.ini","", "defs2u2text" )
+location = IniRead( "\IPhonetoday\weather.ini","", "location" )
+units = IniRead( "\IPhonetoday\weather.ini","", "units" )
+translate = IniRead( "\IPhonetoday\weather.ini","", "translate" )
+GSMConnection = IniRead( "\IPhonetoday\weather.ini","", "GSMConnection" )
+doe=IniRead( "\IPhonetoday\weather.ini","", "doe" )
+delayHours = IniRead( "\IPhonetoday\weather.ini","", "delayHours" )
+delayMinutes = IniRead( "\IPhonetoday\weather.ini","", "delayMinutes" )
+useweatherwallpaper = IniRead( "\IPhonetoday\weather.ini","", "useweatherwallpaper" )
+iPhonetodayPixPath = IniRead( "\IPhonetoday\weather.ini","", "iPhonetodayPixPath" )
+actualdisplayrow = IniRead( "\IPhonetoday\weather.ini","", "actualdisplayrow" )
+actualcolumn = IniRead( "\IPhonetoday\weather.ini","", "actualcolumn" )
+currentpageselect = (IniRead( "\IPhonetoday\weather.ini","", "currentpageselect" ) + 1)
+iPhonetodayTorF = IniRead( "\IPhonetoday\weather.ini","", "iPhonetodayTorF" )
+nodata = IniRead( "\IPhonetoday\weather.ini","", "nodata" )
+dataerror = IniRead( "\IPhonetoday\weather.ini","", "dataerror" )
+noweather = IniRead( "\IPhonetoday\weather.ini","", "noweather" )
+bdc = IniRead( "\IPhonetoday\weather.ini","", "bdc" )
+#
+# set up for next notification
+# ----------------------------
+today = timestamp()/86400
+GetTime(hour,min,sec,day,month,year)
+utime = TimeStamp() + (delayHours*60+delayMinutes)*60
+mort = SystemPath("ScriptExe") & "\MortScript.exe"
+script = SystemPath("ScriptPath") & "\" & SystemPath("ScriptName") & SystemPath("ScriptExt")
+# kill any lingering notification
+RemoveNotifications(mort, script) 
+exit
+## set notify for myself at next time
+RunAt(utime, mort, script)
+# Quietly ignore all errors
+#ErrorLevel("off")
+#
+# avoid registry writes if no change(will be compared to new values)
+# ------------------------------------------------------------------
+
+curs2u2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
+curwallpaper= RegRead("HKCU", "\Software\A_C\S2U2\", "wallpaper")
+olds2u2text = IniRead( s2u2path&"lang.ini","", "s_S2UText" )
+#
+# INTERNRTCONNECTION
+# try to connect
+If (bdc eq 1)
+	RegWriteDword("HKLM", "\Comm\ConnMgr\Providers\{7c4b7a38-5ff7-4bc1-80f6-5da7870bb1aa}\Connections\"&GSMConnection&"\", "Enabled", 1)
+Endif
+if (not InternetConnected( "http://www.perdu.com"))
+   if(GSMConnection ne "")
+	connect(GSMConnection)
+	didconnect=1
+   endif
+   Sleep(30000)
+Endif
+# do we have internet?
+if (InternetConnected( "http://www.perdu.com"))
+   raw = ReadFile("http://weather.yahooapis.com/forecastrss?w="&location&"&u="&units)
+   if (Length(raw) < 20)
+	# something wrong!
+	Exit
+   endif
+# LOAD CURRENT WEATHER AND FORECAST 5 DAYS
+   FCCounter=0
+   ccond = ""
+   ccode = ""
+   temp = ""
+   iPhonetodayTemp=""
+   iPhonetodayPic=noweather
+#Split up weather data
+   ForEach line in split(raw,"^LF^",1)
+	if (Find(line,"<yweather:condition"))
+		CallFunction("getValue", ccond, line, "text")
+		CallFunction("getValue", ccode, line, "code")
+		if (ccode="3200")
+			ccode=noweather
+		endif
+		CallFunction("getValue", temp, line, "temp")
+	else
+		if (Find(line,"<yweather:forecast"))
+			CallFunction("getValue", cond[FCCounter], line, "text")
+			CallFunction("getValue", code[FCCounter], line, "code")	
+
+#Replace forecasts with language specific (also convert to ~ 14 chars legth [depends on width of the word trial&error])
+			if (translate = 1)
+
+#Remove prefixes in forcasts
+
+				cond[FCCounter] = Replace(cond[FCCounter], "AM ", "")
+				cond[FCCounter] = Replace(cond[FCCounter], "PM ", "")
+				cond[FCCounter] = Replace(cond[FCCounter], " Early", "")
+				cond[FCCounter] = Replace(cond[FCCounter], " Late", "")
+				cond[FCCounter] = Replace(cond[FCCounter], "Few ", "")
+				cond[FCCounter] = Replace(cond[FCCounter], "Scattered ", "")
+
+#Replace Partial forecasts (e.g. Light Rain/Fog	(First line[the ones ending with /] sould be ~8 chars (including /) Second line [starting with /] sould be ~ 7 chars (including /))	
+
+#				Partly section(Partial)
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "/Partly Cloudy", "/T.Bewö")
+				cond[FCCounter] = Replace(cond[FCCounter], "Partly Cloudy/", "T.Bewöl/")
+					
+#				Mostly section(Partial)
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "/Mostly Sunny", "/M.Sonn")
+				cond[FCCounter] = Replace(cond[FCCounter], "Mostly Sunny/", "M.Sonn./")
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "/Mostly Clear", "/M. Klar")
+				cond[FCCounter] = Replace(cond[FCCounter], "Mostly Clear/", " M. Klar/")
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "/Mostly Cloudy", "/M. Bewö")
+				cond[FCCounter] = Replace(cond[FCCounter], "Mostly Cloudy/", "M. Bewöl/")
+					
+#				Light section(Partial)					
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "/Light Snow", "/L.Schn")
+				cond[FCCounter] = Replace(cond[FCCounter], "Light Snow/", "L.Schn./")
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "/Light Rain", "/L.Reg.")
+				cond[FCCounter] = Replace(cond[FCCounter], "Light Rain/", "L.Regen/")
+					
+#				Showers section(Partial)
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "/Snow Showers", "/Schn.S")
+				cond[FCCounter] = Replace(cond[FCCounter], "Snow Showers/", "SchneeS/")
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "/Rain Showers", "/RegenS")
+				cond[FCCounter] = Replace(cond[FCCounter], "Rain Showers/", " RegenS/")
+					
+#				Single word section(Partial)
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "/Sunny", "/Sonnig")
+				cond[FCCounter] = Replace(cond[FCCounter], "Sunny/", " Sonnig/")
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "/Clearing", "/Auflo.")
+				cond[FCCounter] = Replace(cond[FCCounter], "Clearing/", "Auflock/")
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "/Clear", "/Klar  ")
+				cond[FCCounter] = Replace(cond[FCCounter], "Clear/", "   Klar/")
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "/Cloudy", "/Bewöl.")
+				cond[FCCounter] = Replace(cond[FCCounter], "Cloudy/", "Bewölkt/")
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "Clouds/", " Wolken/")
+				cond[FCCounter] = Replace(cond[FCCounter], "/Clouds", "/Wolken")
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "/Sun", "/Sonne")
+				cond[FCCounter] = Replace(cond[FCCounter], "Sun/", "  Sonne/")
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "Foggy/", "/Nebelig")
+				cond[FCCounter] = Replace(cond[FCCounter], "/Foggy", "/Nebel ")
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "Fog/", "  Nebel/")
+				cond[FCCounter] = Replace(cond[FCCounter], "/Fog", "/Nebel ")
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "Rain/", "  Regen/")
+				cond[FCCounter] = Replace(cond[FCCounter], "/Rain", "/Regen ")
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "Snow/", " Schnee/")
+				cond[FCCounter] = Replace(cond[FCCounter], "/Snow", "/Schnee")
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "Fair/", " Heiter/")
+				cond[FCCounter] = Replace(cond[FCCounter], "/Fair", "/Heiter")
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "Showers/", "Schauer/")
+				cond[FCCounter] = Replace(cond[FCCounter], "/Showers", "/Schau.")
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "Wind/", "  Böig /")
+				cond[FCCounter] = Replace(cond[FCCounter], "/Wind", "/ Böig ")
+				
+#				Partly section(Full)
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "Partly Cloudy", " Teilw. Bewölkt")
+				
+#				Mostly section(Full)
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "Mostly Sunny", " Meist Sonnig ")
+				cond[FCCounter] = Replace(cond[FCCounter], "Mostly Clear", "MeistWolkenlos")
+				cond[FCCounter] = Replace(cond[FCCounter], "Mostly Cloudy", " Meist Bewölkt")
+				
+#				Light section(Full)	
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "Light Snow", "Leichter Schnee")
+				cond[FCCounter] = Replace(cond[FCCounter], "Light Rain", " Leichter Regen")
+				
+#				Shower section(Full)	
+				
+				cond[FCCounter] = Replace(cond[FCCounter], "Snow Showers", "Schneeschauer")
+				cond[FCCounter] = Replace(cond[FCCounter], "Rain Showers", "Regen Schauer")
+
+#				Single word section(Full)
+					
+				cond[FCCounter] = Replace(cond[FCCounter], "Foggy", "     Nebelig     ")
+				cond[FCCounter] = Replace(cond[FCCounter], "Sunny", "     Sonnig      ")
+				cond[FCCounter] = Replace(cond[FCCounter], "Clear", "    Wolkenlos   ")
+				cond[FCCounter] = Replace(cond[FCCounter], "Cloudy", "     Bewölkt     ")
+				cond[FCCounter] = Replace(cond[FCCounter], "Fair", "       Heiter      ")
+				cond[FCCounter] = Replace(cond[FCCounter], "Fog", "       Nebel      ")
+				cond[FCCounter] = Replace(cond[FCCounter], "Showers", "    Schauer     ")
+				cond[FCCounter] = Replace(cond[FCCounter], "Wind", "     Windig     ")
+				cond[FCCounter] = Replace(cond[FCCounter], "Rain", "       Regen      ")
+				
+			endif
+			if (code[FCCounter]="3200")
+				code[FCCounter]=noweather
+			endif
+
+			CallFunction("getValue", hitemp[FCCounter], line, "high")
+			if (Length (hitemp[FCCounter]) < 2
+				hitemp[FCCounter] = " "&hitemp[FCCounter]
+			endif
+
+			CallFunction("getValue", lotemp[FCCounter], line, "low")
+			if (Length (lotemp[FCCounter]) < 2
+				lotemp[FCCounter] = " "&lotemp[FCCounter]
+			endif
+			FCCounter=FCCounter+1
+		endif
+	endif
+   EndForEach
+#
+#  START ANALYSIS OF DATA AND SAVE VALUES
+#
+   if (FCCounter = 0) 
+#ERROR READING WEATHERDATA -> try to find saved alternate forecast
+	FoundNoAlternate = TRUE
+	For i=0 to 4
+		if (today = RegRead("HKCU", "\Software\moesfeld\Weather\", "Day"&i))
+			iPhonetodayPic=RegRead("HKCU", "\Software\moesfeld\Weather\", "code"&i)
+			iPhonetodayTemp="Err("&RegRead("HKCU", "\Software\moesfeld\Weather\", "HiTemp"&i)&"°/"&RegRead("HKCU", "\Software\moesfeld\Weather\", "LoTemp"&i)&"°)"
+			iPhonetodaycond=cond[i]
+			if(i < 4)
+				s2u2weather="C|"&RegRead("HKCU", "\Software\moesfeld\Weather\", "code"&i+1)&"|"&RegRead("HKCU", "\Software\moesfeld\Weather\", "cond"&i+1)&"  "&RegRead("HKCU", "\Software\moesfeld\Weather\", "HiTemp"&i+1)&"°/"&RegRead("HKCU", "\Software\moesfeld\Weather\", "LoTemp"&i+1)&"°"
+			else
+				s2u2weather="C|"&noweather&"|"&nodata
+			endif
+			s2u2text=Part( RegRead("HKCU", "\Software\moesfeld\Weather\", "cond"&i), "#", 1)&" "&RegRead("HKCU", "\Software\moesfeld\Weather\", "HiTemp"&i)&"/"&RegRead("HKCU", "\Software\moesfeld\Weather\", "LoTemp"&i)
+			wallpaper=wallpaperfolder&RegRead("HKCU", "\Software\moesfeld\Weather\", "code"&i)&wallpapertype
+			FoundNoAlternate = FALSE
+		endif
+	next
+	if (FoundNoAlternate)
+		iPhonetodayPic=noweather
+		iPhonetodayTemp=dataerror
+		iPhonetodaycond=dataerror
+		s2u2weather="C|"&noweather&"|"&dataerror
+		s2u2text=defs2u2text
+		wallpaper=wallpaperfolder&defwalpaper&wallpapertype
+	endif
+   else
+# set temps for icon and image & s2u2
+	iPhonetodayTemp=temp&"°("&hitemp[0]&"°/"&lotemp[0]&"°)"
+	iPhonetodayPic=code[0]
+	iPhonetodaycond=cond[0]
+	s2u2weather="C|"&code[1]&"|"&cond[1]&"  "&hitemp[1]&"°/"&lotemp[1]&"°"
+	s2u2text=Part( cond[0], "#", 1)&" "&hitemp[0]&"/"&lotemp[0]
+	wallpaper=wallpaperfolder&code[0]&wallpapertype
+#	Only save to registry if value changed
+	for i=0 to 4
+		if (i < FCCounter)
+			if (RegRead("HKCU", "\Software\moesfeld\Weather\", "Day"&i) ne today+i)
+				RegWriteString("HKCU", "\Software\moesfeld\Weather\", "Day"&i, today+i)
+			endif
+			if (RegRead("HKCU", "\Software\moesfeld\Weather\", "cond"&i) ne cond[i])
+				RegWriteString("HKCU", "\Software\moesfeld\Weather\", "cond"&i, cond[i])
+			endif
+			if (RegRead("HKCU", "\Software\moesfeld\Weather\", "code"&i) ne code[i])
+				RegWriteString("HKCU", "\Software\moesfeld\Weather\", "code"&i, code[i])
+			endif
+			if (RegRead("HKCU", "\Software\moesfeld\Weather\", "HiTemp"&i) ne hitemp[i])
+				RegWriteString("HKCU", "\Software\moesfeld\Weather\", "HiTemp"&i, hitemp[i])
+			endif
+			if (RegRead("HKCU", "\Software\moesfeld\Weather\", "LoTemp"&i) ne lotemp[i])
+				RegWriteString("HKCU", "\Software\moesfeld\Weather\", "LoTemp"&i, lotemp[i])
+			endif
+		else
+			if (RegValueExists("HKCU", "\Software\moesfeld\Weather\", "Day"&i))
+				RegDelete("HKCU", "\Software\moesfeld\Weather\", "Day"&i)
+			EndIf
+			if (RegValueExists("HKCU", "\Software\moesfeld\Weather\", "cond"&i))
+				RegDelete("HKCU", "\Software\moesfeld\Weather\", "cond"&i)
+			EndIf
+			if (RegValueExists("HKCU", "\Software\moesfeld\Weather\", "code"&i))
+				RegDelete("HKCU", "\Software\moesfeld\Weather\", "code"&i)
+			EndIf
+			if (RegValueExists("HKCU", "\Software\moesfeld\Weather\", "HiTemp"&i))
+				RegDelete("HKCU", "\Software\moesfeld\Weather\", "HiTemp"&i)
+			EndIf
+			if (RegValueExists("HKCU", "\Software\moesfeld\Weather\", "LoTemp"&i))
+				RegDelete("HKCU", "\Software\moesfeld\Weather\", "LoTemp"&i)
+			EndIf
+		EndIf
+	next
+   endif
+else
+#  NO DATACONNECTION AVAILABLE
+	FoundNoAlternate = TRUE
+	For i=0 to 4
+		if (today = RegRead("HKCU", "\Software\moesfeld\Weather\", "Day"&i))
+			iPhonetodayPic=RegRead("HKCU", "\Software\moesfeld\Weather\", "code"&i)
+			iPhonetodayTemp="N/A("&RegRead("HKCU", "\Software\moesfeld\Weather\", "HiTemp"&i)&"°-"&RegRead("HKCU", "\Software\moesfeld\Weather\", "LoTemp"&i)&"°)"
+			iPhonetodaycond=cond[i]
+			if(i < 4)
+				s2u2weather="C|"&RegRead("HKCU", "\Software\moesfeld\Weather\", "code"&i+1)&"|"&RegRead("HKCU", "\Software\moesfeld\Weather\", "cond"&i+1)&"  "&RegRead("HKCU", "\Software\moesfeld\Weather\", "HiTemp"&i+1)&"°/"&RegRead("HKCU", "\Software\moesfeld\Weather\", "LoTemp"&i+1)&"°"
+			else
+				s2u2weather="C|"&noweather&"|"&nodata
+			endif
+			s2u2text=Part( RegRead("HKCU", "\Software\moesfeld\Weather\", "cond"&i), "#", 1)&" "&RegRead("HKCU", "\Software\moesfeld\Weather\", "HiTemp"&i)&"/"&RegRead("HKCU", "\Software\moesfeld\Weather\", "LoTemp"&i)
+			wallpaper=wallpaperfolder&RegRead("HKCU", "\Software\moesfeld\Weather\", "code"&i)&wallpapertype
+			FoundNoAlternate = FALSE
+		endif
+	next
+	if (FoundNoAlternate)
+		iPhonetodayPic=noweather
+		iPhonetodayTemp=nodata
+		iPhonetodaycond=nodata
+		s2u2weather="C|"&noweather&"|"&nodata
+		s2u2text=defs2u2text
+		wallpaper=wallpaperfolder&defwalpaper&wallpapertype
+	endif
+endif
+#Parse iphonetoday´s xml into pages/icons
+If (FileExists("\iPhoneToday\original.xml"))
+	xml = ReadFile("\iPhoneToday\original.xml", 0, "utf8")
+else 
+	xml = ReadFile("\iPhoneToday\icons.xml", 0, "utf8")	
+endif
+iconsperrow = ReadFile("\iPhoneToday\settings.xml", 0, "utf8")
+iconsperrow = SubStr(iconsperrow, (Find(iconsperrow, "</numIcons>")-1), 1)
+iconreplace = (iconsperrow * (actualdisplayrow - 2)) + (iconsperrow + 1 +actualcolumn)
+#iconreplace = IniRead("\iPhonetoday\weather.ini","", "currentdisplayicon") + 1
+iconcount = 0
+While(iconcount < iconreplace)
+	pages = Replace(xml, '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>', "")
+	pages = Replace(pages, '<root>', "")
+	pages = Replace(pages, '</root>', "")
+	pages = Replace(pages, '<screen>', "")
+	page = Split(pages, "</screen>")
+	pagecount = ElementCount(page)
+	if (Find(page[pagecount], "</bottomBar>") ne 0)
+		Clear(page[pagecount])
+	endif
+	pagecount = MaxIndex(page)
+	if (pagecount < currentpageselect)
+		icon = Split(page[pagecount], "<icon")
+	else
+		icon = Split(page[currentpageselect], "<icon")
+	EndIf
+	iconcount = MaxIndex(icon)
+	if (iconcount < iconreplace)
+		xml = Replace(xml, icon[iconcount], icon[iconcount]&'^NL^^TAB^^TAB^<icon name="" image="dummy'&iconcount&'.png" exec="" parameters="" type="0" execAlt="" parametersAlt=""/>')
+	EndIf
+EndWhile
+#Take data to IPhonetoday
+If(iPhonetodayTorF eq 0)
+	if(icon[iconreplace] ne 'name="'&iPhonetodayTemp&'" image="'&iPhonetodayPixPath&iPhonetodayPic&'.png" exec="\iPhonetoday\Weather\iPhonetodayWeather.mscr" parameters="" type="0"/>')
+		xml = Replace(xml, icon[iconreplace], 'name="'&iPhonetodayTemp&'" image="'&iPhonetodayPixPath&iPhonetodayPic&'.png" exec="\IPhonetoday\Weather\iPhonetodayWeather.mscr" parameters="" type="0"/>')
+		If (FileExists("\iPhoneToday\original.xml") = 1)
+			Writefile("\iPhoneToday\original.xml", xml, False, "utf8")
+		else 
+			Writefile("\iPhoneToday\icons.xml", xml, False, "utf8")
+			RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcons", 1)
+		endif
+	EndIf
+else
+	if(icon[iconreplace] ne 'name="'&iPhonetodaycond&'" image="'&iPhonetodayPixPath&iPhonetodayPic&'.png" exec="\IPhonetoday\Weather\iPhonetodayWeather.mscr" parameters="" type="0"/>')
+		xml = Replace(xml, icon[iconreplace], 'name="'&iPhonetodaycond&'" image="'&iPhonetodayPixPath&iPhonetodayPic&'.png" exec="\IPhonetoday\Weather\iPhonetodayWeather.mscr" parameters="" type="0"/>')
+		If (FileExists("\iPhoneToday\original.xml") = 1)
+			Writefile("\iPhoneToday\original.xml", xml, False, "utf8")
+		else 
+			Writefile("\iPhoneToday\icons.xml", xml, False, "utf8")
+			RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcons", 1)
+		endif
+	EndIf
+EndIf
+#Take data to s2u2
+If (s2u2forecast eq 1)
+	if(s2u2weather ne curs2u2weather)
+		RegWriteString("HKCU", "\Software\A_C\S2U2\", "UserWeather", s2u2weather)
+	endif
+	if(olds2u2text ne s2u2text)
+		tempset = ReadFile( s2u2path&"lang.ini", 0, "unicode")
+		tempset = Replace(tempset, olds2u2text, s2u2text)
+		WriteFile( s2u2path&"lang.ini", tempset, FALSE, "unicode")
+	endif
+	if(useweatherwallpaper = 1)
+		if(curwallpaper ne wallpaper)
+			RegWriteString("HKCU", "\Software\A_C\S2U2\", "Wallpaper", wallpaper)
+		endif
+	endif
+endif
+#Anything changed -> refresh s2u2
+if(s2u2weather ne curs2u2weather or olds2u2text ne s2u2text or curwallpaper ne wallpaper)
+	if (WndExists("S2U2") = True)
+		Run(s2u2path&"iLock2.exe", "-nomsg")
+		Sleep(1000)
+		Run(s2u2path&"s2u2.exe")
+	else
+		Run(s2u2path&"iLock2.exe", "-nomsg")
+		Sleep(2000)
+		Run(s2u2path&"iLock2.exe")
+	endif
+endif
+#disconnect if connection was established
+If (bdc eq 1)
+	RegWriteDword("HKLM", "\Comm\ConnMgr\Providers\{7c4b7a38-5ff7-4bc1-80f6-5da7870bb1aa}\Connections\"&GSMConnection&"\", "Enabled", 0)
+Endif
+if(didconnect=1 and doe=1)
+	CloseConnection
+	disconnect
+endif
+# subroutine to pull value out of XML
+Sub getValue
+   offset = Find(argv[1],argv[2]) + Length(argv[2])+2
+   endoff = find(argv[1], """", offset)
+   return (SubStr(argv[1], offset, endoff-offset))
+EndSub
