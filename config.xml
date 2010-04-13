@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <xml2reg>
-	<sourcefile>\IPTWeather\sys\data.xml</sourcefile>
+	<sourcefile>\iPhoneToday\IPTWeather\data.xml</sourcefile>
 	<xmlin>
 		<node name="adc_database">
 			<node name="units">
@@ -13,13 +13,9 @@
 			<node name="local">
 				<node name="time" out="localtime"/>
 				<node name="city" out="city"/>
-				<node name="state" out="state"/>
 				<node name="isDaylight" out="isDaylight"/>
 			</node>
-			<node name="watchwarnareas">
-			</node>
 			<node name="currentconditions">
-				<node name="url" out="curr_url"/>
 				<node name="temperature" out="curr_temp"/>
 				<node name="realfeel" out="curr_feel"/>
 				<node name="pressure" out="curr_pressure">
@@ -294,9 +290,7 @@
 		<!-- current weather situation -->
 		<value name="obsdate0"><data type="data">obsdate</data></value>
 		<value name="obstime"><data type="data">localtime</data></value>
-		<value name="url"><data type="data">curr_url</data></value>
 		<value name="city"><data type="data">city</data></value>
-		<value name="state"><data type="data">state</data></value>
 		<value name="isDaylight"><data type="data">isDaylight</data></value>
 		<value name="icon0"><data type="data">curr_icon</data></value>
 		<value name="iconD0"><data type="data">forcd1_icon</data></value>
