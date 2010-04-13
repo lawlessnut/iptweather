@@ -136,8 +136,6 @@ Else
 			If (time < ctime)
 				updateWeatherNow = Question(IPTWupdateWeatherNowQuestion)
 			EndIf
-		Else
-			updateWeatherNow = TRUE
 		EndIf
 		If (updateWeatherNow)
 			KillScript(IPTWgetAccuWeatherScript)
