@@ -1,48 +1,45 @@
-IPTWscriptPath					= SystemPath("ScriptPath")
-IPTWregRoot						= IniRead(IPTWscriptPath \ "weather.ini", "Script settings", "IPTWregRoot")
-IPTWregKey						= IniRead(IPTWscriptPath \ "weather.ini", "Script settings", "IPTWregKey")
-IPTWcurrentWeatherIcon			= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWcurrentWeatherIcon")
-IPTWcurrentWeatherPage			= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWcurrentWeatherPage")
-IPTWaccuWeatherIconPath			= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWaccuWeatherIconPath")
-IPTWiconsExtension				= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWiconsExtension")
-IPTWstartText					= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWstartText")
-IPTWscheduleNextUpdateOnStart	= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWscheduleNextUpdateOnStart")
-IPTWdelayHours					= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWdelayHours")
-IPTWdelayMinutes				= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWdelayMinutes")
-IPTWreloadLastDataOnStart		= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWreloadLastDataOnStart")
+IPTWscriptPath = "\iPhoneToday\IPTWeather"
+IPTWregRoot = IniRead(IPTWscriptPath \ "weather.ini", "Script settings", "IPTWregRoot")
+IPTWregKey  = IniRead(IPTWscriptPath \ "weather.ini", "Script settings", "IPTWregKey")
+IPTWcurrentWeatherIcon  = IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWcurrentWeatherIcon")
+IPTWcurrentWeatherPage  = IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWcurrentWeatherPage")
+IPTWaccuWeatherIconPath  = IPTWscriptPath \ "accuweathericons"
+IPTWiconsExtension      = IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWiconsExtension")
+IPTWstartText = IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWstartText")
+IPTWscheduleNextUpdateOnStart = IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWscheduleNextUpdateOnStart")
+IPTWdelayHours          = IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWdelayHours")
+IPTWdelayMinutes        = IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWdelayMinutes")
+IPTWreloadLastDataOnStart = IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWreloadLastDataOnStart")
 
 If (IPTWreloadLastDataOnStart)
-	RegWriteDWord(IPTWregRoot, IPTWregKey, "Started", 1)
-	RegWriteDWord(IPTWregRoot, IPTWregKey, "ShowingForecast", 1)
-	CallScript(IPTWscriptPath \ "iPhoneTodayAccuWeather.mscr")
+  RegWriteDWord(IPTWregRoot, IPTWregKey, "Started", 1)
+  RegWriteDWord(IPTWregRoot, IPTWregKey, "ShowingForecast", 1)
+  CallScript(IPTWscriptPath \ "iPhoneTodayAccuWeather.mscr")
 Else
-	If (IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled") ne "1")
-		iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
-		RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", IPTWcurrentWeatherPage)
-		RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", IPTWcurrentWeatherIcon)
-		RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", IPTWstartText)
-		RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ iPhoneTodayPic)
-		RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 1)
-	EndIf
-	RegWriteDWord(IPTWregRoot, IPTWregKey, "Started", 0)
+  iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
+  RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", IPTWcurrentWeatherPage)
+  RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", IPTWcurrentWeatherIcon)
+  RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", IPTWstartText)
+  RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ iPhoneTodayPic)
+  RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 1)
+
+  RegWriteDWord(IPTWregRoot, IPTWregKey, "Started", 0)
 EndIf
 
 # ############################################################################
 # set up for next notification
 If (IPTWscheduleNextUpdateOnStart AND (IPTWdelayHours <> 0 OR IPTWdelayMinutes <> 0))
-	currentDate = FormatTime("m/d/Y")
-	utime = TimeStamp() + (IPTWdelayHours * 60 + IPTWdelayMinutes) * 60
-	mort = SystemPath("ScriptExe") \ "MortScript.exe"
-	script = IPTWscriptPath \ "sys\getAccuWeather.mscr"
-	RemoveNotifications(mort, script)
-	RunAt(utime, mort, script)
+  currentDate = FormatTime("m/d/Y")
+  utime = TimeStamp() + (IPTWdelayHours * 60 + IPTWdelayMinutes) * 60
+  mort = SystemPath("ScriptExe") \ "MortScript.exe"
+  script = IPTWscriptPath \ "getAccuWeather.mscr"
+  RemoveNotifications(mort, script)
+  RunAt(utime, mort, script)
 EndIf
 
-If (IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled") ne "1")
 # ############################################################################
 # Quit only when iPhoneToday has finished working
-	While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcon") AND RegKeyExists("HKLM", "\Software\iPhonetoday\icon0"))
-		Sleep(500)
-	EndWhile
-	Sleep(1000)
-EndIf
+While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcon") AND RegKeyExists("HKLM", "\Software\iPhonetoday\icon0"))
+  Sleep(500)
+EndWhile
+Sleep(1000)
