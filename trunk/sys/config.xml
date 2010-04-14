@@ -361,6 +361,7 @@
 		<value name="textN2"><data type="data">forcn3_short</data></value>
 		<value name="textN3"><data type="data">forcn4_short</data></value>
 		<value name="textN4"><data type="data">forcn5_short</data></value>
+		<value name="humidity"><data type="data">curr_humidity</data></value>
 	</xmlout>
 </xml2reg>
 

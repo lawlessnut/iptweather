@@ -16,6 +16,7 @@ If (foundDay)
 	If (currenttime gt sunset)
 		iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
 		iPhoneTodayTemp = IPTWobsoleteDataPrefix & RegRead(IPTWregRoot, IPTWregKey, "loTemp" & daysToSkip) & " (" & RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & daysToSkip) & ")"
+		suffix = "N"
 	Else
 		sunrise = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunrise" & daysToSkip), -8)
 		sunrise = Replace(Part(sunrise, " ", 2) & " " & Part(sunrise, " ", 1), " 12", " 00")
@@ -23,9 +24,11 @@ If (foundDay)
 			daysToSkip = daysToSkip - 1
 			iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
 			iPhoneTodayTemp = IPTWobsoleteDataPrefix & RegRead(IPTWregRoot, IPTWregKey, "loTemp" & daysToSkip) & " (" & RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & daysToSkip) & ")"
+			suffix = "N"
 		Else
 			iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconD" & daysToSkip) & "." & IPTWiconsExtension
 			iPhoneTodayTemp = IPTWobsoleteDataPrefix & RegRead(IPTWregRoot, IPTWregKey, "hiTemp" & daysToSkip) & " (" & RegRead(IPTWregRoot, IPTWregKey, "hiFeelTemp" & daysToSkip) & ")"
+			suffix = "D"
 		EndIf
 	EndIf
 	CallScript("IPTWreloadS2U2.mscr", daysToSkip + 1)
