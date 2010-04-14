@@ -14,10 +14,10 @@ EndIf
 
 # ############################################################################
 # configure location of parsed weather data in registry
-IPTWregRoot					= IniRead("weather.ini", "Script settings", "IPTWregRoot")
-IPTWregKey					= IniRead("weather.ini", "Script settings", "IPTWregKey")
+IPTWregRoot			= IniRead("weather.ini", "Script settings", "IPTWregRoot")
+IPTWappRegKey			= IniRead("weather.ini", "Script settings", "IPTWregKey")
+IPTWregKey				= IniRead("weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
 IPTWaccuLocationURL			= "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/city-find.asp?location="
-#IPTWaccuLocationURL			= "http://rainmeter.accu-weather.com/widget/rainmeter/city-find.asp?location="
 IPTWgetAccuWeatherScript	= "getAccuWeather.mscr"
 
 currentCityName = RegRead(IPTWregRoot, IPTWregKey, "city")
@@ -139,10 +139,10 @@ Else
 	IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", Part(choiceList[choosenAction], ",", -1, TRUE))
 EndIf
 
-locationCode = RegRead(IPTWregRoot, IPTWregKey, "locationCode")
-If (RegKeyExists(IPTWregRoot, IPTWregKey \ locationCode))
-	RegWriteDWord(IPTWregRoot, IPTWregKey, "Started", 1)
-	RegWriteDWord(IPTWregRoot, IPTWregKey, "ShowingForecast", 1)
+IPTWaccuWeatherLocation = IniRead("weather.ini", "User settings", "IPTWaccuWeatherLocation")
+If (RegKeyExists(IPTWregRoot, IPTWappRegKey \ IPTWaccuWeatherLocation))
+	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
+	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 1)
 	CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
 Else
 	updateWeatherNow = Question(IPTWupdateWeatherNowQuestion)

@@ -1,3 +1,4 @@
+ShowWaitCursor
 #ErrorLevel("off")
 
 # ############################################################################
@@ -123,7 +124,7 @@ Else
 		EndIf
 		RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 1)
 		While(RegKeyExists("HKLM", "\Software\iPhonetoday\icon" & iconNum))
-			Sleep(500)
+			Sleep(200)
 		EndWhile
 	Else
 		RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 0)
@@ -147,7 +148,17 @@ Else
 			obsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
 			obsdate = SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2) & "/" & Part(obsdate, "/", 3)
 			If (obsdate eq currentDate)
-				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "icon0") & "." & IPTWiconsExtension
+				currenttime = Replace(FormatTime("A h:i", TimeStamp()), " 12", " 00")
+				sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset0"), -8)
+				sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
+				If (currenttime gt sunset)
+					iconSuffix = IPTWnightIconSuffix
+					suffix = "N"
+				Else
+					iconSuffix = ""
+					suffix = "D"
+				EndIf
+				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "icon0") & iconSuffix & "." & IPTWiconsExtension
 				iPhoneTodayTemp = RegRead(IPTWregRoot, IPTWregKey, "temp0") & " (" & RegRead(IPTWregRoot, IPTWregKey, "tempfeel0") & ")"
 				CallScript(SystemPath("ScriptPath") \ "sys\IPTWreloadS2U2.mscr", 1)
 				CallScript(SystemPath("ScriptPath") \ "sys\IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
@@ -160,17 +171,17 @@ Else
 	EndIf
 EndIf
 
-If (IPTWiPhoneTodayDisabled ne "1")
+If (NOT IPTWiPhoneTodayDisabled)
 # ############################################################################
 # Quit only when iPhoneToday has finished working
 	While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcon") AND RegKeyExists("HKLM", "\Software\iPhonetoday\icon0"))
-		Sleep(500)
+		Sleep(200)
 	EndWhile
-	Sleep(1000)
+	Sleep(500)
 EndIf
 
 Sub IPTWsetIcon
-	If (IPTWiPhoneTodayDisabled ne "1")
+	If (NOT IPTWiPhoneTodayDisabled)
 		RegWriteDWord("HKLM", "\Software\iPhonetoday\icon" & argv[5], "nScreen", argv[1])
 		RegWriteDWord("HKLM", "\Software\iPhonetoday\icon" & argv[5], "nIcon", argv[2])
 		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strName", argv[3])

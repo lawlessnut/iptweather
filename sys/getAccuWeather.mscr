@@ -42,6 +42,11 @@ IPTWdataFile			= SystemPath("ScriptPath") \ "data.xml"
 IPTWxmlParserConfigFile	= SystemPath("ScriptPath") \ "config.xml"
 IPTWaccuWeatherURL = "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/weather-data.asp?"
 
+# ############################################################################
+# Set App-to-date version file path
+versionFilePath = SystemPath("ScriptPath") \ "version.xml"
+RegWriteString("HKCU", "Software\MoDaCo\AppToDate\XML", "IPTWeather", versionFilePath)
+
 If (IPTWwakeUpOnUpdate)
 	ToggleDisplay(ON)
 EndIf
@@ -211,11 +216,15 @@ isStarted = RegRead(IPTWregRoot, IPTWappRegKey, "Started")
 
 # new not obsolete data, so update
 If (isStarted = 0 OR ((newobsdate eq currentDate) AND ((lastlocation ne newlocation) OR (lastobsdate ne newobsdate) OR (lastobstime ne newobstime))))
-	isDaylight = RegRead(IPTWregRoot, IPTWregKey, "isDaylight")
-	If (isDaylight eq "False")
+	currenttime = Replace(FormatTime("A h:i", TimeStamp()), " 12", " 00")
+	sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset0"), -8)
+	sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
+	If (currenttime gt sunset)
 		iconSuffix = IPTWnightIconSuffix
+		suffix = "N"
 	Else
 		iconSuffix = ""
+		suffix = "D"
 	EndIf
 	iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "icon0") & iconSuffix & "." & IPTWiconsExtension
 	iPhoneTodayTemp = RegRead(IPTWregRoot, IPTWregKey, "temp0") & " (" & RegRead(IPTWregRoot, IPTWregKey, "tempfeel0") & ")"
@@ -231,11 +240,11 @@ EndIf
 
 RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
 
-If (IPTWiPhoneTodayDisabled ne "1")
+If (NOT IPTWiPhoneTodayDisabled)
 # ############################################################################
 # Quit only when iPhoneToday has finished working
 	While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcon") AND RegKeyExists("HKLM", "\Software\iPhonetoday\icon0"))
-		Sleep(500)
+		Sleep(200)
 	EndWhile
-	Sleep(1000)
+	Sleep(500)
 EndIf

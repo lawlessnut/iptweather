@@ -1,6 +1,6 @@
-If (IPTWiPhoneTodayDisabled ne "1")
+If (NOT IPTWiPhoneTodayDisabled)
 	While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcons") <> 0)
-		Sleep(500)
+		Sleep(200)
 	EndWhile
 
 	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", argv[1])
