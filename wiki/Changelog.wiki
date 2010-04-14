@@ -1,121 +1,155 @@
 #summary Changelog of IPTWeather.
 
-=== Latest version is IPTWeather_20100401 ===
-- If IPTWgoToAccuWeatherQuestion is empty, the weather update will be forced without a question.<br />
-- Added field %TXT% for the IPTWS2U2UserWeatherTextPattern setting to display the weather description.<br />
-- If it is past midnight, and no new data is available, then, with IPTWtomorrowForecastInS2U2UserWeather=-1, not last current weather icon/text is displayed in S2U2 UserWeather, but current night icon/text and the obsolete data pattern applies.
-<br />
+=== IPTWeather_20100414 ===
+<ul>
+<li>Code optimizations.</li>
+<li>Added %HUM% for the IPTWS2U2UserWeatherTextPattern setting to show current humidity.</li>
+<li>Corrected wrong current location display in the manageIPTWLocation.mscr script.</li>
+<li>Decreased sleep time for faster icon updates in iPhoneToday.</li>
+<li>Added ShowWaitCursor when runnin the iPhoneTodayAccuWeather.mscr script.</li>
+<li>New userScriptOnUpdate.mscr script. It's a kind of API run at each display update where you can call your own custom scripts (to play a sound on weather updates, etc.).</li>
+<li>Project moved onto Google Code.</li>
+<li>Added Modaco App-to-date support.</li>
+</ul>
+=== IPTWeather_20100401 ===
+<ul>
+<li>If IPTWgoToAccuWeatherQuestion is empty, the weather update will be forced without a question.</li>
+<li>Added field %TXT% for the IPTWS2U2UserWeatherTextPattern setting to display the weather description.</li>
+<li>If it is past midnight, and no new data is available, then, with IPTWtomorrowForecastInS2U2UserWeather=-1, not last current weather icon/text is displayed in S2U2 UserWeather, but current night icon/text and the obsolete data pattern applies.</li>
+</ul>
 === IPTWeather_20100330b (47 downloads in xda) ===
-- Added following fields for the IPTWS2U2UserWeatherTextPattern setting: %CITY%, %SUNS%, %SUNR%, %OBSD% and %OBST%. Please check the weather.ini file for the description of each field.
-<br />
+<ul>
+<li>Added following fields for the IPTWS2U2UserWeatherTextPattern setting: %CITY%, %SUNS%, %SUNR%, %OBSD% and %OBST%. Please check the weather.ini file for the description of each field.</li>
+</ul>
 === IPTWeather_20100330 (2 downloads in xda) ===
-- By setting IPTWtomorrowForecastInS2U2UserWeather=-1, you'll have in S2U2 the current conditions icon, and under the icon, current temperatures<br />
-- Added setting IPTWS2U2UserWeatherTextPattern to set the text pattern of the text displayed under the S2U2 User Weather icon. Please read the weather.ini file for further information. By default, it is set to display information related to IPTWtomorrowForecastInS2U2UserWeather=-1.
-<br />
+<ul>
+<li>By setting IPTWtomorrowForecastInS2U2UserWeather=-1, you'll have in S2U2 the current conditions icon, and under the icon, current temperatures</li>
+<li>Added setting IPTWS2U2UserWeatherTextPattern to set the text pattern of the text displayed under the S2U2 User Weather icon. Please read the weather.ini file for further information. By default, it is set to display information related to IPTWtomorrowForecastInS2U2UserWeather=-1.</li>
+</ul>
 === IPTWeather_20100328 (52 downloads in xda) ===
-- Check existence of S2U2 when IPTWtomorrowForecastInS2U2UserWeather=0 or IPTWtodayForecastInS2U2Wallpaper=0 or IPTWtodayForecastInS2U2Text=0 to avoid errors due to bad weather.ini file user configuration<br />
-- Move non-user scripts used by IPTWeather to the sys folder<br />
-- Simplified the "change IPTWeather installation path" procedure by removing the step "2 - change the path of the IPTWeather folder in the 3rd line of the config.xml file", and by replacing the step "1 - change the path of the IPTWeather folder in the 1st line of the startAccuWeather.mscr script" by "1 - Run the autostartIPTWeather.mscr script"
-<br />
+<ul>
+<li>Check existence of S2U2 when IPTWtomorrowForecastInS2U2UserWeather=0 or IPTWtodayForecastInS2U2Wallpaper=0 or IPTWtodayForecastInS2U2Text=0 to avoid errors due to bad weather.ini file user configuration</li>
+<li>Move non-user scripts used by IPTWeather to the sys folder</li>
+<li>Simplified the "change IPTWeather installation path" procedure by removing the step "2 - change the path of the IPTWeather folder in the 3rd line of the config.xml file", and by replacing the step "1 - change the path of the IPTWeather folder in the 1st line of the startAccuWeather.mscr script" by "1 - Run the autostartIPTWeather.mscr script"</li>
+</ul>
 === IPTWeather_20100325 (49 downloads in xda) ===
-- Corrected the automatic iPhoneToday path detection to make it work for each ROM language.
-<br />
+<ul>
+<li>Corrected the automatic iPhoneToday path detection to make it work for each ROM language.</li>
+</ul>
 === IPTWeather_20100323 (49 downloads in xda) ===
-- Added parameter IPTWaccuWeatherAPI set to rdona by default, in case AccuWeather disconnects the rdona API as the rainmeter API...<br />
-- Detection of the use of the exe or the dll version of iPhoneToday is now based on the following registry value and not the existence of the iPhoneToday window: HKLM\Software\Microsoft\Today\Items\iPhoneToday\Enabled<br />
-- If IPTWquickLocationChangeSleepMsgTime is not set, then the quickIPTWFavoriteLocationChange.mscr script sets it by default to 1<br />
-- Removed setting IPTWiPhoneTodayPath: the path of iPhoneToday is automatically detected, so IPTWeather is compatible with all versions of iPhoneToday without having to change any setting :)
-<br />
+<ul>
+<li>Added parameter IPTWaccuWeatherAPI set to rdona by default, in case AccuWeather disconnects the rdona API as the rainmeter API...</li>
+<li>Detection of the use of the exe or the dll version of iPhoneToday is now based on the following registry value and not the existence of the iPhoneToday window: HKLM\Software\Microsoft\Today\Items\iPhoneToday\Enabled</li>
+<li>If IPTWquickLocationChangeSleepMsgTime is not set, then the quickIPTWFavoriteLocationChange.mscr script sets it by default to 1</li>
+<li>Removed setting IPTWiPhoneTodayPath: the path of iPhoneToday is automatically detected, so IPTWeather is compatible with all versions of iPhoneToday without having to change any setting :)</li>
+</ul>
 === IPTWeather_20100322 (29 downloads on xda) ===
-- Removed setting IPTWuseExeIPhoneToday: now IPTWeather detects if you're using the exe or the dll version by its own.<br />
-- 'My Location' location code doesn't use the IP address to define current location anymore, but Sleuth's myLocation Service<br />
-- Added a test to avoid the error "'\Program Files\S2U2\lang.ini' couldn't be opened" when the user has badly configured IPTWeather<br />
-- Added weather.ini file setting IPTWquickLocationChangeSleepMsgTime to set the number of seconds the message showing the new location has to be displayed for, when using the scripts quickFavoriteLocationChange.mscr and setIPTWFavoriteLocation.mscr<br />
-- Optimization for iPhoneToday 1.5.0 and upper, but still compatible with the 1.3 version: use of the reloadIcon = 2 feature in order to update the icons.xml file for the main weather icon
-<br />
+<ul>
+<li>Removed setting IPTWuseExeIPhoneToday: now IPTWeather detects if you're using the exe or the dll version by its own.</li>
+<li>'My Location' location code doesn't use the IP address to define current location anymore, but Sleuth's myLocation Service</li>
+<li>Added a test to avoid the error "'\Program Files\S2U2\lang.ini' couldn't be opened" when the user has badly configured IPTWeather</li>
+<li>Added weather.ini file setting IPTWquickLocationChangeSleepMsgTime to set the number of seconds the message showing the new location has to be displayed for, when using the scripts quickFavoriteLocationChange.mscr and setIPTWFavoriteLocation.mscr</li>
+<li>Optimization for iPhoneToday 1.5.0 and upper, but still compatible with the 1.3 version: use of the reloadIcon = 2 feature in order to update the icons.xml file for the main weather icon</li>
+</ul>
 === IPTWeather_20100316 (209 downloads on xda) ===
-- Use of Rdona API to retrieve AccuWeather data :)<br />
-- Changed script quickIPTWFavoriteLocationChange.mscr to jump to a specific favorite location when called with a parameter from another script. The parameter is the position of the location in the favorite list: if you have for instance three favorite locations, then the parameter may be 1, 2 or 3. If called without any parameter quickIPTWFavoriteLocationChange.mscr will behave as in the previous version, that means it will circle through favorite locations.<br />
-- Added an example script setIPTFavoriteLocation.mscr that calls quickIPTWFavoriteLocationChange.mscr with the parameter 5, to jump directly to the fifth favorite location. You can map an iPhoneToday icon to call setIPTFavoriteLocation.mscr to change current weather to the fifth favorite location. You may want to make copies of this script, to have for instance setIPTFavoriteLocation0.mscr, setIPTFavoriteLocation1.mscr, etc.<br />
-- Corrected issue: when no data at all was available, then IPTWeather could freeze, forcing to restart the phone and to delete some registry keys specific to iPhoneToday...
-<br />
+<ul>
+<li>Use of Rdona API to retrieve AccuWeather data :)</li>
+<li>Changed script quickIPTWFavoriteLocationChange.mscr to jump to a specific favorite location when called with a parameter from another script. The parameter is the position of the location in the favorite list: if you have for instance three favorite locations, then the parameter may be 1, 2 or 3. If called without any parameter quickIPTWFavoriteLocationChange.mscr will behave as in the previous version, that means it will circle through favorite locations.</li>
+<li>Added an example script setIPTFavoriteLocation.mscr that calls quickIPTWFavoriteLocationChange.mscr with the parameter 5, to jump directly to the fifth favorite location. You can map an iPhoneToday icon to call setIPTFavoriteLocation.mscr to change current weather to the fifth favorite location. You may want to make copies of this script, to have for instance setIPTFavoriteLocation0.mscr, setIPTFavoriteLocation1.mscr, etc.</li>
+<li>Corrected issue: when no data at all was available, then IPTWeather could freeze, forcing to restart the phone and to delete some registry keys specific to iPhoneToday...</li>
+</ul>
 === IPTWeather_20100304 (95 downloads on xda) ===
-- Known issue: doesn't work since Rainmeter API has been deprecated by AccuWeather :(<br />
-- Changed default installation path to \IPTWeather instead of \iPhoneToday\IPTWeather<br />
-- IPTWiPhoneTodayPath to set the iPhoneToday.exe and settings.xml path for 1.4x compatibility.<br />
-- IPTWaccuWeatherIconPath to set the path for weather icons, to easily change your weather icon theme.<br />
-- New spil icons theme.<br />
-- Added a check on the data.xml file to avoid parsing pop-up errors.v
-- Compatibility with iPhoneToday 1.4.3 and upper (just change the IPTWiPhoneTodayPath).<br />
-- Not forcing background to be static when using IPTWuseS2U2wallpaperForBackground=1<br />
-- Change of the location through the manageIPTWLocation.mscr script restore previousely downloaded data WITHOUT a new update.<br />
-- New script quickIPTWFavoriteLocationChange.mscr to change current weather with just a single tap!<br />
-- Added IPTWlocationLatitude and IPTWlocationLongitude to use your geographic location instead of an AccuWeather code, if IPTWaccuWeatherLocation is set to blank.<br />
-- Corrected minor issue: when changing the location for a different time zone, the weather update may not be triggered correctly.<br />
-- Corrected minor issue: no icon was drawn if there was no downloaded data.
-<br />
+<ul>
+<li>Known issue: doesn't work since Rainmeter API has been deprecated by AccuWeather :(</li>
+<li>Changed default installation path to \IPTWeather instead of \iPhoneToday\IPTWeather</li>
+<li>IPTWiPhoneTodayPath to set the iPhoneToday.exe and settings.xml path for 1.4x compatibility.</li>
+<li>IPTWaccuWeatherIconPath to set the path for weather icons, to easily change your weather icon theme.</li>
+<li>New spil icons theme.</li>
+<li>Added a check on the data.xml file to avoid parsing pop-up errors.</li>
+<li>Compatibility with iPhoneToday 1.4.3 and upper (just change the IPTWiPhoneTodayPath).</li>
+<li>Not forcing background to be static when using IPTWuseS2U2wallpaperForBackground=1</li>
+<li>Change of the location through the manageIPTWLocation.mscr script restore previousely downloaded data WITHOUT a new update.</li>
+<li>New script quickIPTWFavoriteLocationChange.mscr to change current weather with just a single tap!</li>
+<li>Added IPTWlocationLatitude and IPTWlocationLongitude to use your geographic location instead of an AccuWeather code, if IPTWaccuWeatherLocation is set to blank.</li>
+<li>Corrected minor issue: when changing the location for a different time zone, the weather update may not be triggered correctly.</li>
+<li>Corrected minor issue: no icon was drawn if there was no downloaded data.</li>
+</ul>
 === IPTWeather_20100125 (158 downloads on xda) ===
-- Removed duplicated code sections by creating "sub" scripts => easier code maintenance + faster scripts!<br />
-- New setting IPTWlanguageFile in the weather.ini file: put in the name of an ini file containing the "Weather description translation" section. You'll have to cut and paste the old "Weather description translation" section from the weather.ini to this new ini file, so the weather.ini file is smaller and the scripts get faster. By default, you have IPTWlanguageFile=eng.ini.<br />
-Thanks to this, you can easily set different languages displayed in the S2U2 slide text, especially if different users share their language file ;)
-<br />
+<ul>
+<li>Removed duplicated code sections by creating "sub" scripts => easier code maintenance + faster scripts!</li>
+<li>New setting IPTWlanguageFile in the weather.ini file: put in the name of an ini file containing the "Weather description translation" section. You'll have to cut and paste the old "Weather description translation" section from the weather.ini to this new ini file, so the weather.ini file is smaller and the scripts get faster. By default, you have IPTWlanguageFile=eng.ini.
+Thanks to this, you can easily set different languages displayed in the S2U2 slide text, especially if different users share their language file ;)</li>
+</ul>
 === IPTWeather_20100112 ===
-- Corrected issue: parsing error in the manageIPTWLocation.mscr script with some cities as Leicester. You have to enter the location code manually in the weather.ini...<br />
-- Added Google Latitude setting in the manageIPTWLocation.mscr script<br />
-- Added setting IPTWgoogleUserID (find your Google User ID here)<br />
-- Added IPTWaccuWeatherLocation=Google Latitude option (also in the manageIPTWLocation.mscr script) in order to use your Google Latitude location as the weather location. Make sure to enable your Google Location Badge: http://www.google.com/latitude/apps/badge<br />
-- Improved text shortening in the S2U2 slide text: "morning" replaced by "a.m.", "afternoon" replace by "p.m.", " ing" replaced by " in'"<br />
-- Added setting IPTWiPhoneTodayDisabled: set it to 1 if you want to use S2U2 only
-<br />
+<ul>
+<li>Corrected issue: parsing error in the manageIPTWLocation.mscr script with some cities as Leicester. You have to enter the location code manually in the weather.ini...</li>
+<li>Added Google Latitude setting in the manageIPTWLocation.mscr script</li>
+<li>Added setting IPTWgoogleUserID (find your Google User ID here)</li>
+<li>Added IPTWaccuWeatherLocation=Google Latitude option (also in the manageIPTWLocation.mscr script) in order to use your Google Latitude location as the weather location. Make sure to enable your Google Location Badge: http://www.google.com/latitude/apps/badge</li>
+<li>Improved text shortening in the S2U2 slide text: "morning" replaced by "a.m.", "afternoon" replace by "p.m.", " ing" replaced by " in'"</li>
+<li>Added setting IPTWiPhoneTodayDisabled: set it to 1 if you want to use S2U2 only</li>
+</ul>
 === IPTWeather_20100108 ===
-- Uncommented first line of the getAccuWeather.mscr script (ErrorLevel("off")) to allow automatic recovery from download errors, as usual. I just forgot to do this in the previous version, sorry...<br />
-- Kown issue: parsing error in the manageIPTWLocation.mscr script with some cities as Leicester. You have to enter the location code manually in the weather.ini...
-<br />
+<ul>
+<li>Uncommented first line of the getAccuWeather.mscr script (ErrorLevel("off")) to allow automatic recovery from download errors, as usual. I just forgot to do this in the previous version, sorry...</li>
+<li>Kown issue: parsing error in the manageIPTWLocation.mscr script with some cities as Leicester. You have to enter the location code manually in the weather.ini...</li>
+</ul>
 === IPTWeather_20100107 ===
-- If IPTWaccuWeatherLocation=My Location, then your location, based on IP geolocation, will be used to retrieve the weather forecast<br />
-- Added the "My Location" option in the manageIPTWLocation.mscr script<br />
-- Corrected minor bug: notifications are not correctly managed, so when forcing an update, you may get more automatic updates than expected for few updates...<br />
-- Corrected display bug when using US zip codes as location codes and calling iPhoneTodayAccuWeather.mscr<br />
-- No longer IPTWaccuWeatherLocationCode is used for the displayed city icon, but the location code stored in the registry after received data are parsed. Thus, even when using IPTWaccuWeatherLocation=My Location, you can still display the city icon (would be fun if we could have a city icon database...).<br />
-- Corrected bug: "unknown command if" error in the startAccuWeather.mscr script<br />
-- Better management of the IPTWpreventSleepModeOnUpdate setting when an error occurs during the update<br />
-- Improved generation of new entries in the weather.ini file in the "Weather description translation" section: if the text is too long, " and " is replaced by " & ", and " with " is replaced by " w/ ". If you have other ideas on shortening the text...<br />
-- Separated accuweathericons folder from the IPTWeather zip file so it is easier for you to update, especially if you use other icons.
-<br />
+<ul>
+<li>If IPTWaccuWeatherLocation=My Location, then your location, based on IP geolocation, will be used to retrieve the weather forecast</li>
+<li>Added the "My Location" option in the manageIPTWLocation.mscr script</li>
+<li>Corrected minor bug: notifications are not correctly managed, so when forcing an update, you may get more automatic updates than expected for few updates...</li>
+<li>Corrected display bug when using US zip codes as location codes and calling iPhoneTodayAccuWeather.mscr</li>
+<li>No longer IPTWaccuWeatherLocationCode is used for the displayed city icon, but the location code stored in the registry after received data are parsed. Thus, even when using IPTWaccuWeatherLocation=My Location, you can still display the city icon (would be fun if we could have a city icon database...).</li>
+<li>Corrected bug: "unknown command if" error in the startAccuWeather.mscr script</li>
+<li>Better management of the IPTWpreventSleepModeOnUpdate setting when an error occurs during the update</li>
+<li>Improved generation of new entries in the weather.ini file in the "Weather description translation" section: if the text is too long, " and " is replaced by " & ", and " with " is replaced by " w/ ". If you have other ideas on shortening the text...</li>
+<li>Separated accuweathericons folder from the IPTWeather zip file so it is easier for you to update, especially if you use other icons.</li>
+</ul>
 === IPTWeather_20100104 ===
-- Known minor bug: notifications are not correctly managed, so when forcing an update, you may get more automatic updates than expected for few updates...<br />
-- Known bug: "unknown command if" error in the startAccuWeather.mscr script<br />
-- New script manageIPTWLocation.mscr to easily change the weather location without the need of searching manually for an AccuWeather.com location code, and to manage a favorite locations list<br />
-- New setting IPTWaccuWeatherFavoriteLocations<br />
-- If IPTWdelayHours=0 and IPTWdelayMinutes=0, then no automatic update will be scheduled (perhaps it already worked, but now it's sure)<br />
-- Replaced setting IPTWcityIcon with IPTWdefaultCityIcon: if an icon named 'IPTWaccuWeatherLocationCode (with | replaced by _)'.'IPTWiconsExtension' exists in the accuweathericons folder, then it will be used as the city icon to display, else the IPTWdefaultCityIcon will be displayed. For instance, if IPTWaccuWeatherLocationCode=EUR|FR|FR012|PARIS and IPTWiconsExtension=bmp, then the EUR_FR_FR012_PARIS.bmp icon will be displayed if it exists.<br />
-- Corrected the 18.jpg icon in the S2U2wallpapers pack => S2U2wallpapers_20100104.zip
-<br />
+<ul>
+<li>Known minor bug: notifications are not correctly managed, so when forcing an update, you may get more automatic updates than expected for few updates...</li>
+<li>Known bug: "unknown command if" error in the startAccuWeather.mscr script</li>
+<li>New script manageIPTWLocation.mscr to easily change the weather location without the need of searching manually for an AccuWeather.com location code, and to manage a favorite locations list</li>
+<li>New setting IPTWaccuWeatherFavoriteLocations</li>
+<li>If IPTWdelayHours=0 and IPTWdelayMinutes=0, then no automatic update will be scheduled (perhaps it already worked, but now it's sure)</li>
+<li>Replaced setting IPTWcityIcon with IPTWdefaultCityIcon: if an icon named "IPTWaccuWeatherLocationCode (with | replaced by underscores)"."IPTWiconsExtension" exists in the accuweathericons folder, then it will be used as the city icon to display, else the IPTWdefaultCityIcon will be displayed. For instance, if IPTWaccuWeatherLocationCode=EUR|FR|FR012|PARIS and IPTWiconsExtension=bmp, then the EUR_FR_FR012_PARIS.bmp icon will be displayed if it exists.</li>
+<li>Corrected the 18.jpg icon in the S2U2wallpapers pack => S2U2wallpapers_20100104.zip</li>
+</ul>
 === IPTWeather_20091229b ===
-- Added IPTWuseExeIPhoneToday=1 to make work the IPTWuseS2U2wallpaperForBackground setting even with the exe version of iPhoneToday
-<br />
+<ul>
+<li>Added IPTWuseExeIPhoneToday=1 to make work the IPTWuseS2U2wallpaperForBackground setting even with the exe version of iPhoneToday</li>
+</ul>
 === IPTWeather_20091229 ===
-- At last working and deeply tested the new feature IPTWuseS2U2wallpaperForBackground
-<br />
+<ul>
+<li>At last working and deeply tested the new feature IPTWuseS2U2wallpaperForBackground</li>
+</ul>
 === IPTWeather_20091228d ===
-- Corrected section of the IPTWuseS2U2wallpaperForBackground. It is in the [User settings] section of the weather.ini file, but in the 20091228c version, the script was not reading the parametter in the right section...<br />
-- Known bug: IPTWuseS2U2wallpaperForBackground still doesn't work, especially not if you hadn't any wallpaper previousely defined in iPhoneToday
-<br />
+<ul>
+<li>Corrected section of the IPTWuseS2U2wallpaperForBackground. It is in the [User settings] section of the weather.ini file, but in the 20091228c version, the script was not reading the parametter in the right section...</li>
+<li>Known bug: IPTWuseS2U2wallpaperForBackground still doesn't work, especially not if you hadn't any wallpaper previousely defined in iPhoneToday</li>
+</ul>
 === IPTWeather_20091228c ===
-- Added setting IPTWuseS2U2wallpaperForBackground to have the wallpaper changing in iPhoneToday as in S2U2<br />
-- Known bug: new setting IPTWuseS2U2wallpaperForBackground doesn't work
-<br />
+<ul>
+<li>Added setting IPTWuseS2U2wallpaperForBackground to have the wallpaper changing in iPhoneToday as in S2U2</li>
+<li>Known bug: new setting IPTWuseS2U2wallpaperForBackground doesn't work</li>
+</ul>
 === IPTWeather_20091228b ===
-- Corrected S2U2 wallpaper forecast (when sun has not yet risen up, not current day forecast was shown, but the next night forecast...)
-<br />
+<ul>
+<li>Corrected S2U2 wallpaper forecast (when sun has not yet risen up, not current day forecast was shown, but the next night forecast...)</li>
+</ul>
 === IPTWeather_20091228 ===
-- Corrected S2U2 wallpaper forecast (when sun has set, not current night forecast was shown, but the next night forecast...)
-<br />
+<ul>
+<li>Corrected S2U2 wallpaper forecast (when sun has set, not current night forecast was shown, but the next night forecast...)</li>
+</ul>
 === IPTWeather_20091227 ===
-- Some recode<br />
-- Removed IPTWofflineMode weather.ini setting<br />
-- Added 13 new optional User settings in the weather.ini file: IPTWobsoleteDataPrefix, IPTWupdateWeatherNowQuestion, IPTWforceDelayHours, IPTWforceDelayMinutes, IPTWdisplayCityName, IPTWdisplayCityIcon, IPTWdisplayObservationTime, IPTWwakeUpOnUpdate, IPTWpreventSleepOnUpdate, IPTWnightIconSuffix, IPTWscheduleNextUpdateOnStart, IPTWdowloadDataAfterStartOnIconTap, IPTWreloadLastDataOnStart<br />
-- Added support for S2U2 as in Moesfeld's weather scripts
-<br />
+<ul>
+<li>Some recode</li>
+<li>Removed IPTWofflineMode weather.ini setting</li>
+<li>Added 13 new optional User settings in the weather.ini file: IPTWobsoleteDataPrefix, IPTWupdateWeatherNowQuestion, IPTWforceDelayHours, IPTWforceDelayMinutes, IPTWdisplayCityName, IPTWdisplayCityIcon, IPTWdisplayObservationTime, IPTWwakeUpOnUpdate, IPTWpreventSleepOnUpdate, IPTWnightIconSuffix, IPTWscheduleNextUpdateOnStart, IPTWdowloadDataAfterStartOnIconTap, IPTWreloadLastDataOnStart</li>
+<li>Added support for S2U2 as in Moesfeld's weather scripts</li>
+</ul>
 === IPTWeather ===
-- first release which should have been named IPTWeather_20091220
+<ul>
+<li>first release which should have been named IPTWeather_20091220</li>
+</ul>
