@@ -14,9 +14,7 @@ Q2: I'd like the text shown on the S2U2 slider to be in a different language. Is
 A: In the weather.ini you can set the IPTWlanguageFile to the weather description file you want. By default, it is eng.ini but you can change it. You can also change the text to fit your language or the size you want.<br />
 <br />
 <b><font color="Green">Q: How to change the installation path?</font></b><br />
-A: First, be aware of the fact <font color="Red">MortScript cannot run from a script another script that is in the \Program Files\ folder, so do not try to install IPTWeather in the \Program Files\ folder because it won't work.</font> I cannot do anything for that since it is a MortScript limitation.<br />
-To change the installation path of the IPTWeather folder, you have to:<br />
+A: To change the installation path of the IPTWeather folder, you have to:<br />
 0 - Move the IPTWeather to the folder you want and check the path of your icons in the weather.ini file<br />
 1 - Run the autostartIPTWeather.mscr script<br />
 2 - Run the startAccuWeather.mscr script<br />
-<br />
