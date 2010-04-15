@@ -1,6 +1,7 @@
 <application>
 <name>IPTWeather</name>
-<version>20100414</version>
-<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br />What's new in IPTWeather_20100414:<br />- Code optimizations.<br />- Added %HUM% for the IPTWS2U2UserWeatherTextPattern setting to show current humidity.<br />- Corrected wrong current location display in the manageIPTWLocation.mscr script.<br />- Decreased sleep time for faster icon updates in iPhoneToday.<br />- Added ShowWaitCursor when runnin the iPhoneTodayAccuWeather.mscr script.<br />- New userScriptOnUpdate.mscr script. It's a kind of API run at each display update where you can call your own custom scripts (to play a sound on weather updates, etc.).<br />- Project moved onto Google Code.<br />- Added Modaco App-to-date support.</description>
+<version>20100415</version>
+<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br />What's new in IPTWeather_20100415:<br />- IPTWeather can now be installed in any directory.<br />- Installation cab for scripts. You still have to configure manually the weather.ini file and to download icon/wallpaper sets.</description>
 <versionurl>http://iptweather.googlecode.com/files/version.xml</versionurl>
+<caburl>http://www.cameraware.net/apptodate/IPTWeather_20100415.cab</caburl>
 </application>
