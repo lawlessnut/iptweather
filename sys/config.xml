@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <xml2reg>
-	<sourcefile>\IPTWeather\sys\data.xml</sourcefile>
+	<sourcefile>\Program Files\IPTWeather\sys\data.xml</sourcefile>
 	<xmlin>
 		<node name="adc_database">
 			<node name="units">

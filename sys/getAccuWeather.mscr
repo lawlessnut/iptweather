@@ -57,11 +57,11 @@ currentDate = FormatTime("m/d/Y")
 # kill any lingering notification
 mort = SystemPath("ScriptExe") \ "MortScript.exe"
 script = SystemPath("ScriptPath") \ SystemPath("ScriptName") & SystemPath("ScriptExt")
-RemoveNotifications(mort, script) 
+RemoveNotifications(mort, """" & script & """") 
 If (IPTWdelayHours <> 0 OR IPTWdelayMinutes <> 0)
 	utime = TimeStamp() + (IPTWdelayHours * 60 + IPTWdelayMinutes) * 60
 	# set notify for myself at next time
-	RunAt(utime, mort, script)
+	RunAt(utime, mort, """" & script & """")
 EndIf
 
 # ############################################################################

@@ -39,8 +39,8 @@ If (IPTWscheduleNextUpdateOnStart AND (IPTWdelayHours <> 0 OR IPTWdelayMinutes <
 	utime = TimeStamp() + (IPTWdelayHours * 60 + IPTWdelayMinutes) * 60
 	mort = SystemPath("ScriptExe") \ "MortScript.exe"
 	script = IPTWscriptPath \ "sys\getAccuWeather.mscr"
-	RemoveNotifications(mort, script)
-	RunAt(utime, mort, script)
+	RemoveNotifications(mort, """" & script & """")
+	RunAt(utime, mort, """" & script & """")
 EndIf
 
 If (NOT IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled"))
