@@ -3,5 +3,5 @@
 <version>20100415</version>
 <description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br />What's new in IPTWeather_20100415:<br />- IPTWeather can now be installed in any directory.<br />- Installation cab for scripts. You still have to configure manually the weather.ini file and to download icon/wallpaper sets.</description>
 <versionurl>http://iptweather.googlecode.com/files/version.xml</versionurl>
-<caburl>http://www.cameraware.net/apptodate/IPTWeather_20100415.cab</caburl>
+<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100415.cab</caburl>
 </application>
