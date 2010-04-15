@@ -1,0 +1,250 @@
+ErrorLevel("off")
+
+# ############################################################################
+# retrieve user preference
+IPTWaccuWeatherMetric		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherMetric")
+IPTWaccuWeatherLocation		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherLocation")
+IPTWdelayHours				= IniRead("..\weather.ini", "User settings", "IPTWdelayHours")
+IPTWdelayMinutes			= IniRead("..\weather.ini", "User settings", "IPTWdelayMinutes")
+IPTWinternetConnection		= IniRead("..\weather.ini", "User settings", "IPTWinternetConnection")
+IPTWdisconnectOnExit		= IniRead("..\weather.ini", "User settings", "IPTWdisconnectOnExit")
+IPTWcurrentWeatherIcon		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherIcon")
+IPTWcurrentWeatherPage		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherPage")
+IPTWiconsExtension			= IniRead("..\weather.ini", "User settings", "IPTWiconsExtension")
+IPTWobsoleteDataPrefix		= IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
+IPTWwakeUpOnUpdate			= IniRead("..\weather.ini", "User settings", "IPTWwakeUpOnUpdate")
+IPTWpreventSleepOnUpdate	= IniRead("..\weather.ini", "User settings", "IPTWpreventSleepOnUpdate")
+IPTWnightIconSuffix			= IniRead("..\weather.ini", "User settings", "IPTWnightIconSuffix")
+IPTWgoogleUserID			= IniRead("..\weather.ini", "User settings", "IPTWgoogleUserID")
+IPTWiPhoneTodayDisabled		= IniRead("..\weather.ini", "User settings", "IPTWiPhoneTodayDisabled")
+IPTWlanguageFile			= IniRead("..\weather.ini", "User settings", "IPTWlanguageFile")
+IPTWaccuWeatherIconPath		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherIconPath")
+IPTWaccuWeatherAPI		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherAPI")
+
+If (IPTWaccuWeatherAPI eq "")
+	IPTWaccuWeatherAPI = "rdona"
+EndIf
+
+If (IPTWaccuWeatherLocation ne "")
+	weatherLocation = "location=" & IPTWaccuWeatherLocation
+Else
+	IPTWlocationLatitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLatitude")
+	IPTWlocationLongitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLongitude")
+	weatherLocation = "slat=" & IPTWlocationLatitude & "slon=" & IPTWlocationLongitude
+EndIf
+
+# ############################################################################
+# configure location of parsed weather data in registry
+IPTWregRoot				= IniRead("..\weather.ini", "Script settings", "IPTWregRoot")
+IPTWappRegKey			= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
+IPTWregKey				= IniRead("..\weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
+IPTWdataFile			= SystemPath("ScriptPath") \ "data.xml"
+IPTWxmlParserConfigFile	= SystemPath("ScriptPath") \ "config.xml"
+IPTWaccuWeatherURL = "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/weather-data.asp?"
+
+# ############################################################################
+# Set App-to-date version file path
+versionFilePath = SystemPath("ScriptPath") \ "version.xml"
+RegWriteString("HKCU", "Software\MoDaCo\AppToDate\XML", "IPTWeather", versionFilePath)
+
+If (IPTWwakeUpOnUpdate)
+	ToggleDisplay(ON)
+EndIf
+
+# ############################################################################
+# set up for next notification
+currentDate = FormatTime("m/d/Y")
+# kill any lingering notification
+mort = SystemPath("ScriptExe") \ "MortScript.exe"
+script = SystemPath("ScriptPath") \ SystemPath("ScriptName") & SystemPath("ScriptExt")
+RemoveNotifications(mort, """" & script & """") 
+If (IPTWdelayHours <> 0 OR IPTWdelayMinutes <> 0)
+	utime = TimeStamp() + (IPTWdelayHours * 60 + IPTWdelayMinutes) * 60
+	# set notify for myself at next time
+	RunAt(utime, mort, """" & script & """")
+EndIf
+
+# ############################################################################
+# last data observation date and time
+lastobsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
+lastobsdate = SubStr("0" & Part(lastobsdate, "/", 1), -2) & "/" & SubStr("0" & Part(lastobsdate, "/", 2), -2) & "/" & Part(lastobsdate, "/", 3)
+lastobstime = RegRead(IPTWregRoot, IPTWregKey, "obstime")
+lastlocation = RegRead(IPTWregRoot, IPTWappRegKey, "locationCode")
+
+# ############################################################################
+# load data
+didconnect = FALSE
+If (IPTWpreventSleepOnUpdate)
+	sleepOnUpdatePrevented = RegRead(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented")
+	If (sleepOnUpdatePrevented = 1)
+		BattSuspendTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "BattSuspendTimeout")
+		ACSuspendTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "ACSuspendTimeout")
+		BatteryTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "BatteryTimeout")
+		ACTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "ACTimeout")
+	Else
+		BattSuspendTimeout = RegRead("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout")
+		ACSuspendTimeout = RegRead("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout")
+		BatteryTimeout = RegRead("HKCU", "ControlPanel\Backlight", "BatteryTimeout")
+		ACTimeout = RegRead("HKCU", "ControlPanel\Backlight", "ACTimeout")
+
+		RegWriteDword(IPTWregRoot, IPTWappRegKey,"BattSuspendTimeout", BattSuspendTimeout)
+		RegWriteDword(IPTWregRoot, IPTWappRegKey, "BatteryTimeout", BatteryTimeout)
+		RegWriteDword(IPTWregRoot, IPTWappRegKey,"ACSuspendTimeout", ACSuspendTimeout)
+		RegWriteDword(IPTWregRoot, IPTWappRegKey, "ACTimeout", ACTimeout)
+	EndIf
+
+	RegWriteDword("HKLM", "System\CurrentControlSet\Control\Power\Timeouts","BattSuspendTimeout", 0)
+	RegWriteDword("HKCU", "ControlPanel\Backlight", "BatteryTimeout", 0)
+	RegWriteDword("HKLM", "System\CurrentControlSet\Control\Power\Timeouts","ACSuspendTimeout", 0)
+	RegWriteDword("HKCU", "ControlPanel\Backlight", "ACTimeout", 0)
+
+	RegWriteDword(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented", 1)
+EndIf
+
+If (NOT InternetConnected("http://www.perdu.com"))
+	Connect(IPTWinternetConnection)
+	didconnect = TRUE
+	nbSleeps = 0
+	While(NOT InternetConnected("http://www.perdu.com") AND nbSleeps < 6)
+		Sleep(5000)
+		nbSleeps = nbSleeps + 1
+	EndWhile
+EndIf
+dataUpdated = 0
+If (InternetConnected("http://www.perdu.com"))
+	If (IPTWaccuWeatherLocation eq "My Location")
+#		locationData = ReadFile("http://www.maxmind.com/app/mylocation")
+#		locBegin = Find(locationData, "Latitude/Longitude") + 57
+#		locEnd = Find(locationData, "</td>", locBegin)
+#		Split(SubStr(locationData, locBegin, locEnd - locBegin - 1), "/", 1, latitude, longitude)
+
+		latitude = RegRead("HKLM", "Services\myLocation", "Latitude")
+		longitude = RegRead("HKLM", "Services\myLocation", "Longitude")
+		
+		IPTWaccuWeatherURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+	ElseIf (IPTWaccuWeatherLocation eq "Google Latitude" AND IPTWgoogleUserID ne "")
+		locationData= ReadFile("http://www.google.com/latitude/apps/badge/api?user=" & IPTWgoogleUserID & "&type=json")
+		locBegin = Find(locationData, "coordinates") + 15
+		locEnd = Find(locationData, "]", locBegin)
+		Split(SubStr(locationData, locBegin, locEnd - locBegin), ",", 1, longitude, latitude)
+
+		IPTWaccuWeatherURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+	Else
+		IPTWaccuWeatherURL = IPTWaccuWeatherURL & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
+	EndIf
+	data = ReadFile(IPTWaccuWeatherURL)
+	WriteFile(IPTWdataFile, data)
+	dataUpdated = 1
+EndIf
+
+If (IPTWdisconnectOnExit AND didconnect)
+	CloseConnection
+	Disconnect
+EndIf
+
+If (IPTWpreventSleepOnUpdate)
+	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout", BattSuspendTimeout)
+	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout", ACSuspendTimeout)
+	RegWriteDword ("HKCU", "ControlPanel\Backlight", "BatteryTimeout", BatteryTimeout)
+	RegWriteDword ("HKCU", "ControlPanel\Backlight", "ACTimeout", ACTimeout)
+
+	RegWriteDword(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented", 0)
+EndIf
+
+If (NOT FileExists(IPTWdataFile))
+	iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
+	iPhoneTodayTemp = "N/A"
+	CallScript("IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
+	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 0)
+	CallScript("IPTWreloadS2U2.mscr", -1)
+	Exit
+EndIf
+
+If (Find(data, "<failure>") > 0 OR Find(data, "<error>") > 0)
+	iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
+	iPhoneTodayTemp = "Error"
+	CallScript("IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
+	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 0)
+	CallScript("IPTWreloadS2U2.mscr", -1)
+	Exit
+EndIf
+
+If (dataUpdated = 1)
+	If (Find(data,"</adc_database>") > 0)
+		xmlParserConfigFile = ReadFile(IPTWxmlParserConfigFile)
+		beginXMLPos = Find(xmlParserConfigFile, "<sourcefile>") + 12
+		endXMLPos = Find(xmlParserConfigFile, "</sourcefile>", beginXMLPos)
+		oldXMLFile = SubStr(xmlParserConfigFile, beginXMLPos, endXMLPos - beginXMLPos)
+		If (IPTWdataFile ne oldXMLFile)
+			xmlParserConfigFile = Replace(xmlParserConfigFile, oldXMLFile, IPTWdataFile)
+			WriteFile(IPTWxmlParserConfigFile, xmlParserConfigFile)
+		EndIf
+		RunWait(SystemPath("ScriptPath") \ "xml2reg.exe", IPTWxmlParserConfigFile)
+		RegWriteString(IPTWregRoot, IPTWregKey, "updateTime", TimeStamp())
+	EndIf
+
+# ############################################################################
+# copy all data the location registry key
+	ForEach value, data in regValues(IPTWregRoot, IPTWappRegKey)
+		If (value ne "ACSuspendTimeout" \
+				AND value ne "ACTimeout" \
+				AND value ne "BatteryTimeout" \
+				AND value ne "BattSuspendTimeout" \
+				AND value ne "ShowingForecast" \
+				AND value ne "sleepOnUpdatePrevented" \
+				AND value ne "Started")
+			 RegWriteString(IPTWregRoot, IPTWregKey, value, data)
+		EndIf
+	EndForEach
+
+	url = RegRead(IPTWregRoot, IPTWregKey, "url")
+	locationCodeBegin = ReverseFind(url, "=") + 1
+	locationCode = SubStr(url, locationCodeBegin)
+	RegWriteString(IPTWregRoot, IPTWregKey, "locationCode", locationCode)
+EndIf
+
+# ############################################################################
+# new data observation date and time
+newobsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
+newobsdate = SubStr("0" & Part(newobsdate, "/", 1), -2) & "/" & SubStr("0" & Part(newobsdate, "/", 2), -2) & "/" & Part(newobsdate, "/", 3)
+newobstime = RegRead(IPTWregRoot, IPTWregKey, "obstime")
+newlocation = RegRead(IPTWregRoot, IPTWregKey, "locationCode")
+
+# ############################################################################
+# is the first run of getAccuWeather after phone starts
+isStarted = RegRead(IPTWregRoot, IPTWappRegKey, "Started")
+
+# new not obsolete data, so update
+If (isStarted = 0 OR ((newobsdate eq currentDate) AND ((lastlocation ne newlocation) OR (lastobsdate ne newobsdate) OR (lastobstime ne newobstime))))
+	currenttime = Replace(FormatTime("A h:i", TimeStamp()), " 12", " 00")
+	sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset0"), -8)
+	sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
+	If (currenttime gt sunset)
+		iconSuffix = IPTWnightIconSuffix
+		suffix = "N"
+	Else
+		iconSuffix = ""
+		suffix = "D"
+	EndIf
+	iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "icon0") & iconSuffix & "." & IPTWiconsExtension
+	iPhoneTodayTemp = RegRead(IPTWregRoot, IPTWregKey, "temp0") & " (" & RegRead(IPTWregRoot, IPTWregKey, "tempfeel0") & ")"
+	CallScript("IPTWreloadS2U2.mscr", 1)
+	CallScript("IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
+# no new data?
+Else
+# If change of day, we retrieve previous night forecast as current condition
+	If (newobsdate ne currentDate)
+		CallScript("IPTWuseObsoleteData.mscr")
+	EndIf
+EndIf
+
+RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
+
+If (NOT IPTWiPhoneTodayDisabled)
+# ############################################################################
+# Quit only when iPhoneToday has finished working
+	While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcon") AND RegKeyExists("HKLM", "\Software\iPhonetoday\icon0"))
+		Sleep(200)
+	EndWhile
+	Sleep(500)
+EndIf
