@@ -1,6 +1,6 @@
 #summary IPTWeather installation steps.
 
-  * Install <a href="http://forum.xda-developers.com/showthread.php?t=508429" target="_blank">MiToNiOeS' iPhoneToday</a> or <a href="http://forum.xda-developers.com/showthread.php?t=633618" target="_blank">tronikos' iPhoneToday</a> and/or <a href="http://s2u2.ac-s2.com/" target="_blank">S2U2</a> (I don't recommand the use of the v2.34 of S2U2 that seems buggy...)<br />
+  * Install <a href="http://forum.xda-developers.com/showthread.php?t=508429" target="_blank">MiToNiOeS' iPhoneToday</a> or <a href="http://forum.xda-developers.com/showthread.php?t=633618" target="_blank">tronikos' iPhoneToday</a> and/or <a href="http://s2u2.ac-s2.com/" target="_blank">S2U2</a><br />
   * Install <a href="http://www.sto-helit.de/index.php?module=download&amp;action=view&amp;entry=65" target="_blank">Mortscript <b>4.2</b></a><br />
   * Install <a href="http://forum.xda-developers.com/showthread.php?t=607102" target="_blank">Sleuth's myLocation Service</a> if you want to use the 'My Location' feature<br />
   * Install the IPTWeather cab file<br />
