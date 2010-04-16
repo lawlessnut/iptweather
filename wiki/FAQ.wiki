@@ -1,5 +1,8 @@
 #summary IPTWeather FAQ.
 
+<b><font color="Green">Q: What is the iPhoneTodauAccuWeather.mscr script for?</font></b><br />
+A: This script expands temporarily, without modifying your icons.xml file, all weather forecast icons in iPhoneToday at first call. If you call it a second time, weather forecast icons are hidden and you come back to your icons.xml configuration.<br />
+<br />
 <b><font color="Green">Q: How to easily change the weather location?</font></b><br />
 A: Call the manageIPTWLocation.mscr script. You can also set your favorite locations thanks to this script.<br />
 <br />
