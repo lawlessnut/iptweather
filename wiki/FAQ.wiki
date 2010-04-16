@@ -1,5 +1,21 @@
 #summary IPTWeather FAQ.
 
+<b><font color="Green">Q: How to easily change the weather location?</font></b><br />
+A: Call the manageIPTWLocation.mscr script. You can also set your favorite locations thanks to this script.<br />
+<br />
+<b><font color="Green">Q: What is the quickIPTWFavoriteLocationChange.mscr script for?</font></b><br />
+A: This script allow you to change your current location to your next favorite location. You can set your favorite locations by calling the manageIPTWLocation.mscr script.<br />
+<br />
+<b><font color="Green">Q: What is the setIPTFavoriteLocation.mscr script for?</font></b><br />
+A: This script allow you to change your current location to the favorite location of your choice. By default, it change your location to your fifth favorite location. You may want to make copies of this script and editing each copy, to have for instance setIPTFavoriteLocation0.mscr, setIPTFavoriteLocation1.mscr, etc., each one allowing you to change your current location directly to your first, second, etc., favorite location.<br />
+<br />
+<b><font color="Green">Q: What is the startAccuWeather.mscr script for?</font></b><br />
+A: This script is to actually start IPTWeather. When you install the cab, a shortcut to this script is created to call this script.<br />
+<br />
+<b><font color="Green">Q: What is the autostartIPTWeather.mscr script
+for?</font></b><br />
+A: This script create a shortcut to the startAccuWeather.mscr script in your Windows StartUp menu, to start IPTWeather when you restart your device. This script should only be used if you want to change the installation directory of IPTWeather.<br />
+<br />
 <b><font color="Green">Q: No weather icon is displayed on S2U2!</font></b><br />
 A: Please choose the UserWeather (option 5) for the 'Today's Weather Forecast from' in the S2U2 Information Settings.<br />
 <br />
