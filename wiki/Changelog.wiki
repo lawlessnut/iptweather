@@ -1,5 +1,10 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20100415 ===
+
+  * IPTWeather can now be installed in any directory, so it is by default installed in the \Program Files\ directory.
+  * Installation cab for scripts. You still have to configure manually the weather.ini file and to download icon/wallpaper sets.
+
 === IPTWeather_20100414 ===
 
   * Code optimizations.
