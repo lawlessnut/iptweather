@@ -1,6 +1,6 @@
 <application>
 <name>IPTWeather</name>
-<version>20100415</version>
+<version>20100417</version>
 <description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br />Please make a backup of your weather.ini file before installing the cab!<br />What's new in IPTWeather_20100417:<br />- Added fields %WSPD%, %WDIR% and %WGUS% for the IPTWS2U2UserWeatherTextPattern setting to display the wind speed, direction and gusts.<br />- Added shortcut 'IPTWeather Location' to the manageIPTWLocation.mscr script in the Start Menu\Programs\IPTWeather folder.</description>
 <versionurl>http://iptweather.googlecode.com/files/version.xml</versionurl>
 <caburl>http://iptweather.googlecode.com/files/IPTWeather_20100417.cab</caburl>
