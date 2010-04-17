@@ -1,5 +1,10 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20100417 ===
+
+  * Added fields %WSPD%, %WDIR% and %WGUS% for the IPTWS2U2UserWeatherTextPattern setting to display the wind speed, direction and gusts.
+  * Added shortcut 'IPTWeather Location' to the manageIPTWLocation.mscr script in the Start Menu\Programs\IPTWeather folder.
+
 === IPTWeather_20100415 ===
 
   * IPTWeather can now be installed in any directory, so it is by default installed in the \Program Files\ directory.
