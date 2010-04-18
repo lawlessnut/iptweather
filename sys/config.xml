@@ -362,38 +362,6 @@
 		<value name="textN3"><data type="data">forcn4_short</data></value>
 		<value name="textN4"><data type="data">forcn5_short</data></value>
 		<value name="humidity"><data type="data">curr_humidity</data></value>
-		<value name="windgusts0"><data type="data">curr_wgust</data></value>
-		<value name="windgustsD0"><data type="data">forcd1_wgust</data></value>
-		<value name="windgustsD1"><data type="data">forcd2_wgust</data></value>
-		<value name="windgustsD2"><data type="data">forcd3_wgust</data></value>
-		<value name="windgustsD3"><data type="data">forcd4_wgust</data></value>
-		<value name="windgustsD4"><data type="data">forcd5_wgust</data></value>
-		<value name="windgustsN0"><data type="data">forcn1_wgust</data></value>
-		<value name="windgustsN1"><data type="data">forcn2_wgust</data></value>
-		<value name="windgustsN2"><data type="data">forcn3_wgust</data></value>
-		<value name="windgustsN3"><data type="data">forcn4_wgust</data></value>
-		<value name="windgustsN4"><data type="data">forcn5_wgust</data></value>
-		<value name="windspeed0"><data type="data">curr_wspeed</data></value>
-		<value name="windspeedD0"><data type="data">forcd1_wspeed</data></value>
-		<value name="windspeedD1"><data type="data">forcd2_wspeed</data></value>
-		<value name="windspeedD2"><data type="data">forcd3_wspeed</data></value>
-		<value name="windspeedD3"><data type="data">forcd4_wspeed</data></value>
-		<value name="windspeedD4"><data type="data">forcd5_wspeed</data></value>
-		<value name="windspeedN0"><data type="data">forcn1_wspeed</data></value>
-		<value name="windspeedN1"><data type="data">forcn2_wspeed</data></value>
-		<value name="windspeedN2"><data type="data">forcn3_wspeed</data></value>
-		<value name="windspeedN3"><data type="data">forcn4_wspeed</data></value>
-		<value name="windspeedN4"><data type="data">forcn5_wspeed</data></value>
-		<value name="winddirection0"><data type="data">curr_wdir</data></value>
-		<value name="winddirectionD0"><data type="data">forcd1_wdir</data></value>
-		<value name="winddirectionD1"><data type="data">forcd2_wdir</data></value>
-		<value name="winddirectionD2"><data type="data">forcd3_wdir</data></value>
-		<value name="winddirectionD3"><data type="data">forcd4_wdir</data></value>
-		<value name="winddirectionD4"><data type="data">forcd5_wdir</data></value>
-		<value name="winddirectionN0"><data type="data">forcn1_wdir</data></value>
-		<value name="winddirectionN1"><data type="data">forcn2_wdir</data></value>
-		<value name="winddirectionN2"><data type="data">forcn3_wdir</data></value>
-		<value name="winddirectionN3"><data type="data">forcn4_wdir</data></value>
-		<value name="winddirectionN4"><data type="data">forcn5_wdir</data></value>
 	</xmlout>
 </xml2reg>
+
