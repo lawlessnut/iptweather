@@ -373,7 +373,7 @@
 		<value name="windgustsN2"><data type="data">forcn3_wgust</data></value>
 		<value name="windgustsN3"><data type="data">forcn4_wgust</data></value>
 		<value name="windgustsN4"><data type="data">forcn5_wgust</data></value>
-		<value name="windspeed0"><data type="data">curr_windspeed</data></value>
+		<value name="windspeed0"><data type="data">curr_wspeed</data></value>
 		<value name="windspeedD0"><data type="data">forcd1_wspeed</data></value>
 		<value name="windspeedD1"><data type="data">forcd2_wspeed</data></value>
 		<value name="windspeedD2"><data type="data">forcd3_wspeed</data></value>
