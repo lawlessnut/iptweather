@@ -1,7 +1,12 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20100418 ===
+
+  * Correct config.xml file.
+
 === IPTWeather_20100417 ===
 
+  * Know issue: error on update because of a bad config.xml file.
   * Added fields %WSPD%, %WDIR% and %WGUS% for the IPTWS2U2UserWeatherTextPattern setting to display the wind speed, direction and gusts.
   * Added shortcut 'IPTWeather Location' to the manageIPTWLocation.mscr script in the Start Menu\Programs\IPTWeather folder.
 
