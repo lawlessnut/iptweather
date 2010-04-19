@@ -6,7 +6,7 @@ IPTWinternetConnection				= IniRead("weather.ini", "User settings", "IPTWinterne
 IPTWdisconnectOnExit				= IniRead("weather.ini", "User settings", "IPTWdisconnectOnExit")
 IPTWaccuWeatherFavoriteLocations	= IniRead("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations")
 IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "User settings", "IPTWupdateWeatherNowQuestion")
-IPTWaccuWeatherAPI		= IniRead("weather.ini", "User settings", "IPTWaccuWeatherAPI")
+IPTWaccuWeatherAPI					= IniRead("weather.ini", "User settings", "IPTWaccuWeatherAPI")
 
 If (IPTWaccuWeatherAPI eq "")
 	IPTWaccuWeatherAPI = "rdona"
@@ -14,9 +14,9 @@ EndIf
 
 # ############################################################################
 # configure location of parsed weather data in registry
-IPTWregRoot			= IniRead("weather.ini", "Script settings", "IPTWregRoot")
-IPTWappRegKey			= IniRead("weather.ini", "Script settings", "IPTWregKey")
-IPTWregKey				= IniRead("weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
+IPTWregRoot					= IniRead("weather.ini", "Script settings", "IPTWregRoot")
+IPTWappRegKey				= IniRead("weather.ini", "Script settings", "IPTWregKey")
+IPTWregKey					= IniRead("weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
 IPTWaccuLocationURL			= "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/city-find.asp?location="
 IPTWgetAccuWeatherScript	= "getAccuWeather.mscr"
 
@@ -145,8 +145,12 @@ If (RegKeyExists(IPTWregRoot, IPTWappRegKey \ IPTWaccuWeatherLocation))
 	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 1)
 	CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
 Else
-	updateWeatherNow = Question(IPTWupdateWeatherNowQuestion)
-	If (updateWeatherNow)
+   If (IPTWupdateWeatherNowQuestion)
+      updateWeatherNow = Question(IPTWupdateWeatherNowQuestion)
+   Else
+      updateWeatherNow = TRUE
+   Endif
+   If (updateWeatherNow)
 		KillScript(IPTWgetAccuWeatherScript)
 		CallScript(SystemPath("ScriptPath") \ "sys" \ IPTWgetAccuWeatherScript)
 	EndIf
