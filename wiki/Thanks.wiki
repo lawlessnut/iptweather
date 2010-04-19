@@ -12,3 +12,4 @@
 <li>Spil for his <a href="http://spil.wincustomize.com/skins.aspx?skinid=3360&amp;libid=39" target="_blank">set of weather icons</a></li>
 <li><a href="http://forum.xda-developers.com/member.php?u=285503" target="_blank">Sleuth255</a> for <a href="http://forum.xda-developers.com/showthread.php?t=607102" target="_blank">Sleuth's myLocation Service</a></li>
 <li><a href="http://forum.xda-developers.com/member.php?u=2073632" target="_blank">howdykeith</a> for his help to make IPTWeather better</li>
+<li><a href="http://macthemes.net/forum/profile.php?id=16217" target="_blank">Teknofrik</a> for his set of AccuWeatherHD wallpapers</li>
