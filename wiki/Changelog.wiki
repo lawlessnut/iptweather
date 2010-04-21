@@ -1,5 +1,12 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20100422 ===
+
+  * No question for update when changing location if IPTWupdateWeatherNowQuestion is empty.
+  * Added setting IPTWS2U2UserWeatherIconToForce
+  * Added setting options IPTWtodayForecastInS2U2Wallpaper=-1 and IPTWtodayForecastInS2U2Text=-1 to show the current weather in the S2U2 wallpaper and/or S2U2 slide text.
+  * Changed the default installed weather.ini file so the S2U2 wallpaper is the HD one.
+
 === IPTWeather_20100418 ===
 
   * Correct config.xml file.
