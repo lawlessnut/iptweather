@@ -1,7 +1,7 @@
 <application>
 <name>IPTWeather</name>
-<version>20100418</version>
-<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br />Please make a backup of your weather.ini file before installing the cab!<br />What's new in IPTWeather_20100418:<br />- Correct config.xml file.<br />What was new in IPTWeather_20100417:<br />- Added fields %WSPD%, %WDIR% and %WGUS% for the IPTWS2U2UserWeatherTextPattern setting to display the wind speed, direction and gusts.<br />- Added shortcut 'IPTWeather Location' to the manageIPTWLocation.mscr script in the Start Menu\Programs\IPTWeather folder.</description>
+<version>20100422</version>
+<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br />Please make a backup of your weather.ini file before installing the cab!<br />What's new in IPTWeather_20100422:<br />- No question for update when changing location if IPTWupdateWeatherNowQuestion is empty.<br />- Added setting IPTWS2U2UserWeatherIconToForce<br />- Added setting options IPTWtodayForecastInS2U2Wallpaper=-1 and IPTWtodayForecastInS2U2Text=-1 to show the current weather in the S2U2 wallpaper and/or S2U2 slide text.<br />- Changed the default installed weather.ini file so the S2U2 wallpaper is the HD one.</description>
 <versionurl>http://iptweather.googlecode.com/files/version.xml</versionurl>
-<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100418.cab</caburl>
+<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100422.cab</caburl>
 </application>
