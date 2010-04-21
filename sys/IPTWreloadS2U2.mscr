@@ -218,10 +218,14 @@ Else
 			EndIf
 		EndIf
 
-		If (IPTWtodayForecastInS2U2Text)
+		If (IPTWtodayForecastInS2U2Text = 1 OR IPTWtodayForecastInS2U2Text = -1)
  			If (FileExists(IPTWS2U2Path & "lang.ini"))
 				oldS2U2text = IniRead(IPTWS2U2Path & "lang.ini", "", "s_S2UText")
-				weatherText = RegRead(IPTWregRoot, IPTWregKey, "text" & suffix & iconNum)
+				If (IPTWtodayForecastInS2U2Text = -1)
+					weatherText = RegRead(IPTWregRoot, IPTWregKey, "text0")
+				Else
+					weatherText = RegRead(IPTWregRoot, IPTWregKey, "text" & suffix & iconNum)
+				EndIf
 				newS2U2text = IniRead(IPTWlanguageFile, "Weather description translation", weatherText)
 				If (Length(newS2U2text) = 0)
 					newS2U2text = weatherText
@@ -266,14 +270,16 @@ Else
 			EndIf
 		EndIf
 
-		If (IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground)
+		If (IPTWtodayForecastInS2U2Wallpaper = 1 OR IPTWuseS2U2wallpaperForBackground OR IPTWtodayForecastInS2U2Wallpaper = -1)
 			IPTWS2U2WallpaperExtension = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperExtension")
 			IPTWS2U2WallpaperPath = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperPath")
-			wallpaper = IPTWS2U2WallpaperPath \ Eval(RegRead(IPTWregRoot, IPTWregKey, "icon" & suffix & iconNum)) & "." & IPTWS2U2WallpaperExtension
 
-			If (IPTWtodayForecastInS2U2Wallpaper)
-				RegWriteString("HKCU", "\Software\A_C\S2U2\", "Wallpaper", wallpaper)
+			If (IPTWtodayForecastInS2U2Wallpaper = -1)
+				wallpaper = IPTWS2U2WallpaperPath \ Eval(RegRead(IPTWregRoot, IPTWregKey, "icon0")) & "." & IPTWS2U2WallpaperExtension
+			Else
+				wallpaper = IPTWS2U2WallpaperPath \ Eval(RegRead(IPTWregRoot, IPTWregKey, "icon" & suffix & iconNum)) & "." & IPTWS2U2WallpaperExtension
 			EndIf
+			RegWriteString("HKCU", "\Software\A_C\S2U2\", "Wallpaper", wallpaper)
 
 			If (IPTWuseS2U2wallpaperForBackground AND (NOT IPTWiPhoneTodayDisabled))
 				IPTWiPhoneTodayPath = RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "DLL")
