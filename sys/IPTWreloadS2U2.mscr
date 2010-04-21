@@ -4,7 +4,12 @@ If (argv[1] < 0)
 	IPTWtomorrowForecastInS2U2UserWeather = IniRead("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather")
 	If (IPTWtomorrowForecastInS2U2UserWeather = 1 OR IPTWtomorrowForecastInS2U2UserWeather = -1)
 		oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
-		newS2U2weather = "C|10000|N/A"
+		IPTWS2U2UserWeatherIconToForce = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherIconToForce")
+		If (IPTWS2U2UserWeatherIconToForce ne "")
+			newS2U2weather = "C|" & IPTWS2U2UserWeatherIconToForce & "|N/A"
+		Else
+			newS2U2weather = "C|10000|N/A"
+		EndIf
 		If (oldS2U2weather ne newS2U2weather)
 			RegWriteString("HKCU", "\Software\A_C\S2U2\", "UserWeather", newS2U2weather)
 			reloadS2U2 = TRUE
@@ -86,7 +91,12 @@ Else
 
 		If (IPTWtomorrowForecastInS2U2UserWeather = 1)
 			oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
-			S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "iconD" & argv[1])
+			IPTWS2U2UserWeatherIconToForce = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherIconToForce")
+			If (IPTWS2U2UserWeatherIconToForce ne "")
+				S2U2Pic = IPTWS2U2UserWeatherIconToForce
+			Else
+				S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "iconD" & argv[1])
+			EndIf
 
 			IPTWobsoleteDataPrefix = IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
 			IPTWS2U2UserWeatherTextPattern = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherTextPattern")
@@ -130,7 +140,12 @@ Else
 			obsdate = SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2) & "/" & Part(obsdate, "/", 3)
 			If ((iconNum = 0) AND (currentDate eq obsdate))
 				oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
-				S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "icon0")
+				IPTWS2U2UserWeatherIconToForce = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherIconToForce")
+				If (IPTWS2U2UserWeatherIconToForce ne "")
+					S2U2Pic = IPTWS2U2UserWeatherIconToForce
+				Else
+					S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "icon0")
+				EndIf
 
 				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%NA%", "")
 				IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CT%", RegRead(IPTWregRoot, IPTWregKey, "temp0"))
@@ -159,7 +174,12 @@ Else
 				EndIf
 			Else
 				oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
-				S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "icon" & suffix & iconNum)
+				IPTWS2U2UserWeatherIconToForce = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherIconToForce")
+				If (IPTWS2U2UserWeatherIconToForce ne "")
+					S2U2Pic = IPTWS2U2UserWeatherIconToForce
+				Else
+					S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "icon" & suffix & iconNum)
+				EndIf
 				IPTWobsoleteDataPrefix = IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
 
 				beginNAPos = 1
