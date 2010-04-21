@@ -19,7 +19,7 @@ IPTWiPhoneTodayDisabled=
 ;Set this to 1 if you don't want to use iPhoneToday
 
 IPTWaccuWeatherMetric=1
-;Set this to 1 for Metric units, or 0 for English units
+;Set this to 1 for Metric units (temp in °C, speed in KPH), or 0 for English units (temp in °F, speed in MPH)
 
 IPTWaccuWeatherLocation=EUR|FR|FR012|PARIS
 ;Run the manageIPTWLocations.mscr script to find your location code.
@@ -126,6 +126,11 @@ IPTWS2U2Path=\Program Files\S2U2\
 IPTWtomorrowForecastInS2U2UserWeather=-1
 ;If set to 1, then, IPTWeather will use the UserWeather feature to display weather in S2U2. Weather pictures must be in the gfx\weather folder of S2U2. Picture names have to be the same as for accuweathericons, but without the 0 behind the digits, i.e. not "01.png" but "1.png", and the AccuWeather icon has to be "10000.png" instead of "AccuWeather.png".
 
+IPTWS2U2UserWeatherIconToForce=
+;Set the number (only an integer) of the icon to be forced in the S2U2 UserWeather.
+;Whatever the weather is, always the set icon to be forced will be shown.
+;Usefull if you want to display the weather text, but not the weather icon: just set the number of a blank icon.
+
 IPTWS2U2UserWeatherTextPattern=%CT%%NA% (%CRFT%)%NA% / Hi: %HT% (%HRFT%) / Lo: %LT% (%LRFT%)
 ;Define what has to be displayed in the S2U2 UserWeather text. You can use the following special strings:
 ;%CT% for Current Temperature (only available if IPTWtomorrowForecastInS2U2UserWeather=-1, replaced by IPTWobsoleteDataPrefix if not available)
@@ -140,19 +145,24 @@ IPTWS2U2UserWeatherTextPattern=%CT%%NA% (%CRFT%)%NA% / Hi: %HT% (%HRFT%) / Lo: %
 ;%SUNR% sunrise time for displayed day
 ;%OBSD% AccuWeather observation date for displayed weather
 ;%OBST% AccuWeather observation time for displayed weather
-;%TXT% current weather description
-;%HUM% current humidity
+;%TXT% weather description
+;%HUM% current humidity (only available if IPTWtomorrowForecastInS2U2UserWeather=-1, replaced by IPTWobsoleteDataPrefix if not available)
+;%WSPD% wind speed
+;%WDIR% wind direction
+;%WGUS% wind gusts
 
 IPTWtodayForecastInS2U2Wallpaper=1
-;Set this to 1 to show the current day (or night if sun has set) forecast as S2U2 wallpaper.
+;Set this to 1 to show the current day (or night if sun has set) weather forecast as S2U2 wallpaper.
+;Set to -1 to show the current weather as S2U2 wallpaper.
 
-IPTWS2U2WallpaperExtension=jpg
-IPTWS2U2WallpaperPath=\Program Files\s2u2\gfx\wallpaper\
-IPTWdefautS2U2Wallpaper=10000
-;Parameters for the wallpaper. Picture names have to follow the same rules as for the IPTWtomorrowForecastInS2U2UserWeather pictures, as described above. But the AccuWeather pictures is replaced here by IPTWdefaultS2U2Wallpaper which can be any wallpaper you want, when no data is available.
+IPTWS2U2WallpaperExtension=png
+IPTWS2U2WallpaperPath=\Program Files\IPTWeather\AccuWeatherHD
+IPTWdefautS2U2Wallpaper=dunno
+;Parameters for the wallpaper. Picture names have to follow the same rules as for the IPTWtomorrowForecastInS2U2UserWeather pictures, as described above. But the AccuWeather pictures is replaced here by IPTWdefaultS2U2Wallpaper which can be any wallpaper you want, when no data is available
 
 IPTWtodayForecastInS2U2Text=1
-;Set this to 1 to show the current day (or night if sun has set) forecast description as S2U2 slide text.
+;Set this to 1 to show the current day (or night if sun has set) weather forecast description as S2U2 slide text.
+;Set to -1 to show the current weather description as S2U2 slide text.
 ;The translation between AccuWeather.com description and the description displayed as the slide text, is done in the [Weather description translation] section below.
 ;If a new weather description appears at AccuWeather.com, then IPTWeather will add a new line in this weather.ini file so you can easily do the translation.
 
