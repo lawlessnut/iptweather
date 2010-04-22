@@ -25,6 +25,11 @@ If (IPTWaccuWeatherAPI eq "")
 	IPTWaccuWeatherAPI = "rdona"
 EndIf
 
+If (NOT IPTWiPhoneTodayDisabled AND NOT RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "Enabled") AND NOT ProcExists("iPhoneToday.exe"))
+	IPTWiPhoneTodayDisabled = 1
+	IniWrite("..\weather.ini", "User settings", "IPTWiPhoneTodayDisabled", 1)
+EndIf
+
 If (IPTWaccuWeatherLocation ne "")
 	weatherLocation = "location=" & IPTWaccuWeatherLocation
 Else
