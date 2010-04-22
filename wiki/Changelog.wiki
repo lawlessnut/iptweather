@@ -1,5 +1,9 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20100423 ===
+  * Automatically disable iPhoneToday's IPTWeather icon updates if it is not used.
+  * Bypass an issue of iPhoneToday in version 1.5.2, that do not reset the registry value reloadIcons on start.
+
 === IPTWeather_20100422 ===
 
   * No question for update when changing location if IPTWupdateWeatherNowQuestion is empty.
