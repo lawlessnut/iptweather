@@ -1,5 +1,12 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20100425 ===
+  * Automatically set UserWeather to 05 in S2U2 settings if IPTWtomorrowForecastInS2U2UserWeather = 1 or IPTWtomorrowForecastInS2U2UserWeather = -1
+  * Shortcut created in overwrite mode when running the autostartIPTWeather.mscr script
+  * Added option IPTWreloadLastDataOnStart=-1 (by default) so IPTWeather doesn't reload data at device start, since it is no longer needed with latest tronikos' iPhoneToday versions thanks to the reloadIcons=2 feature. And this bypass iPhoneToday 1.5.1 and 1.5.2 issue with the managing of the registry values at start
+  * Added waitForReadyIPT.mscr script for better code maintenance
+  * Added a timer for iPhoneToday registry updates so IPTWeather doesn't enter in an infinite loop if there is a bug with iPhoneToday
+
 === IPTWeather_20100423 ===
   * Automatically disable iPhoneToday's IPTWeather icon updates if it is not used.
   * Bypass an issue of iPhoneToday in version 1.5.2, that do not reset the registry value reloadIcons on start.
