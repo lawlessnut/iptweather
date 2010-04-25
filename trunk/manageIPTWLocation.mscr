@@ -139,19 +139,6 @@ Else
 	IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", Part(choiceList[choosenAction], ",", -1, TRUE))
 EndIf
 
-IPTWaccuWeatherLocation = IniRead("weather.ini", "User settings", "IPTWaccuWeatherLocation")
-If (RegKeyExists(IPTWregRoot, IPTWappRegKey \ IPTWaccuWeatherLocation))
-	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
-	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 1)
-	CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
-Else
-   If (IPTWupdateWeatherNowQuestion)
-      updateWeatherNow = Question(IPTWupdateWeatherNowQuestion)
-   Else
-      updateWeatherNow = TRUE
-   Endif
-   If (updateWeatherNow)
-		KillScript(IPTWgetAccuWeatherScript)
-		CallScript(SystemPath("ScriptPath") \ "sys" \ IPTWgetAccuWeatherScript)
-	EndIf
-EndIf
+RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
+RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 1)
+CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
