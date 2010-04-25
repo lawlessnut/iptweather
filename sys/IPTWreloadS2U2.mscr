@@ -3,6 +3,10 @@ IPTWS2U2Path = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2Path")
 If (argv[1] < 0)
 	IPTWtomorrowForecastInS2U2UserWeather = IniRead("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather")
 	If (IPTWtomorrowForecastInS2U2UserWeather = 1 OR IPTWtomorrowForecastInS2U2UserWeather = -1)
+		If (RegRead("HKCU", "Software\A_C\S2U2", "ShowWeather") ne "05")
+			RegWriteBinary("HKCU", "Software\A_C\S2U2", "ShowWeather","05")
+			reloadS2U2 = TRUE
+		EndIf
 		oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
 		IPTWS2U2UserWeatherIconToForce = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherIconToForce")
 		If (IPTWS2U2UserWeatherIconToForce ne "")
@@ -90,6 +94,10 @@ Else
 		iconNum = argv[1] - 1
 
 		If (IPTWtomorrowForecastInS2U2UserWeather = 1)
+			If (RegRead("HKCU", "Software\A_C\S2U2", "ShowWeather") ne "05")
+				RegWriteBinary("HKCU", "Software\A_C\S2U2", "ShowWeather","05")
+				reloadS2U2 = TRUE
+			EndIf
 			oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
 			IPTWS2U2UserWeatherIconToForce = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherIconToForce")
 			If (IPTWS2U2UserWeatherIconToForce ne "")
@@ -134,6 +142,10 @@ Else
 				reloadS2U2 = TRUE
 			EndIf
 		ElseIf (IPTWtomorrowForecastInS2U2UserWeather = -1)
+			If (RegRead("HKCU", "Software\A_C\S2U2", "ShowWeather") ne "05")
+				RegWriteBinary("HKCU", "Software\A_C\S2U2", "ShowWeather","05")
+				reloadS2U2 = TRUE
+			EndIf
 			IPTWS2U2UserWeatherTextPattern = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherTextPattern")
 			currentDate = FormatTime("m/d/Y")
 			obsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
