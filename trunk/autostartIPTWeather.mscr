@@ -1,6 +1,6 @@
 startUpPath = SystemPath("Startup")
 answer = Question("This will create a shortcut to the startAccuWeather.mscr script in the " & startUpPath & " folder to make IPTWeather autostart when you restart your device. Continue ?")
 If (answer = 1)
-	CreateShortcut(startUpPath \ "Start IPTWeather.lnk", SystemPath("ScriptPath") \ "startAccuWeather.mscr")
+	CreateShortcut(startUpPath \ "Start IPTWeather.lnk", SystemPath("ScriptPath") \ "startAccuWeather.mscr", True)
 	Message("Done.")
 EndIf
