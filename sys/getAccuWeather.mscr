@@ -245,11 +245,4 @@ EndIf
 
 RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
 
-If (NOT IPTWiPhoneTodayDisabled)
-# ############################################################################
-# Quit only when iPhoneToday has finished working
-	While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcon") AND RegKeyExists("HKLM", "\Software\iPhonetoday\icon0"))
-		Sleep(200)
-	EndWhile
-	Sleep(500)
-EndIf
+CallScript("waitForReadyIPT.mscr", 2)

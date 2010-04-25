@@ -176,14 +176,7 @@ Else
 	EndIf
 EndIf
 
-If (NOT IPTWiPhoneTodayDisabled)
-# ############################################################################
-# Quit only when iPhoneToday has finished working
-	While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcon") AND RegKeyExists("HKLM", "\Software\iPhonetoday\icon0"))
-		Sleep(200)
-	EndWhile
-	Sleep(500)
-EndIf
+CallScript(SystemPath("ScriptPath") \ "sys" \ "waitForReadyIPT.mscr", 2)
 
 Sub IPTWsetIcon
 	If (NOT IPTWiPhoneTodayDisabled)
