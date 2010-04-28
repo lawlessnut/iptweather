@@ -1,4 +1,4 @@
-currenttime = Replace(FormatTime("A h:i", TimeStamp()), " 12", " 00")
+currenttime = Replace(FormatTime("A h:i", currentLocalTime), " 12", " 00")
 daysToSkip = 1
 foundDay = FALSE
 While (NOT foundDay AND RegValueExists(IPTWregRoot, IPTWregKey, "obsdate" & daysToSkip))
