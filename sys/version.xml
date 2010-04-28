@@ -1,7 +1,7 @@
 <application>
 <name>IPTWeather</name>
-<version>20100425</version>
-<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br />Please make a backup of your weather.ini file before installing the cab!<br />What's new in IPTWeather_20100425:<br />- Automatically set UserWeather to 05 in S2U2 settings if IPTWtomorrowForecastInS2U2UserWeather = 1 or IPTWtomorrowForecastInS2U2UserWeather = -1<br />- Shortcut created in overwrite mode when running the autostartIPTWeather.mscr script<br />- Added option IPTWreloadLastDataOnStart=-1 (by default) so IPTWeather doesn't reload data at device start, since it is no longer needed with latest tronikos' iPhoneToday versions thanks to the reloadIcons=2 feature. And this bypass iPhoneToday 1.5.1 and 1.5.2 issue with the managing of the registry values at start<br />- Added waitForReadyIPT.mscr script for better code maintenance<br />- Added a timer for iPhoneToday registry updates so IPTWeather doesn't enter in an infinite loop if there is a bug with iPhoneToday</description>
+<version>20100428</version>
+<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br />Please make a backup of your weather.ini file before installing the cab!<br />What's new in IPTWeather_20100428:<br />Added option IPTWiPhoneTodayDisabled=-1 if you don't want that IPTWeather disables automatically iPhoneToday IPTWeather features<br />Data update time is compared in device time so displayed data are alright even when weather data are from another time zone<br />If IPTWupdateWeatherNowQuestion was empty, then iPhoneTodayAccuWeather.mscr was always updating data when hiding weather forecasts, and not only if data were older than IPTWforceDelayHours and IPTWforceDelayMinutes<br />Cleaned code</description>
 <versionurl>http://iptweather.googlecode.com/files/version.xml</versionurl>
-<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100425.cab</caburl>
+<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100428.cab</caburl>
 </application>
