@@ -115,8 +115,7 @@
 === IPTWeather_20100125 (158 downloads on xda) ===
 
   * Removed duplicated code sections by creating "sub" scripts => easier code maintenance + faster scripts!
-  * New setting IPTWlanguageFile in the weather.ini file: put in the name of an ini file containing the "Weather description translation" section. You'll have to cut and paste the old "Weather description translation" section from the weather.ini to this new ini file, so the weather.ini file is smaller and the scripts get faster. By default, you have IPTWlanguageFile=eng.ini.
-Thanks to this, you can easily set different languages displayed in the S2U2 slide text, especially if different users share their language file ;)
+  * New setting IPTWlanguageFile in the weather.ini file: put in the name of an ini file containing the "Weather description translation" section. You'll have to cut and paste the old "Weather description translation" section from the weather.ini to this new ini file, so the weather.ini file is smaller and the scripts get faster. By default, you have IPTWlanguageFile=eng.ini. Thanks to this, you can easily set different languages displayed in the S2U2 slide text, especially if different users share their language file ;)
 
 === IPTWeather_20100112 ===
 
