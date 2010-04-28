@@ -25,9 +25,11 @@ If (IPTWaccuWeatherAPI eq "")
 	IPTWaccuWeatherAPI = "rdona"
 EndIf
 
-If (NOT IPTWiPhoneTodayDisabled AND NOT RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "Enabled") AND NOT ProcExists("iPhoneToday.exe"))
+If (IPTWiPhoneTodayDisabled <> 1 AND NOT RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "Enabled") AND NOT ProcExists("iPhoneToday.exe"))
 	IPTWiPhoneTodayDisabled = 1
-	IniWrite("..\weather.ini", "User settings", "IPTWiPhoneTodayDisabled", 1)
+	If (IPTWiPhoneTodayDisabled <> -1)
+		IniWrite("..\weather.ini", "User settings", "IPTWiPhoneTodayDisabled", 1)
+	EndIf
 EndIf
 
 If (IPTWaccuWeatherLocation ne "")
@@ -58,7 +60,6 @@ EndIf
 
 # ############################################################################
 # set up for next notification
-currentDate = FormatTime("m/d/Y")
 # kill any lingering notification
 mort = SystemPath("ScriptExe") \ "MortScript.exe"
 script = SystemPath("ScriptPath") \ SystemPath("ScriptName") & SystemPath("ScriptExt")
@@ -219,9 +220,16 @@ newlocation = RegRead(IPTWregRoot, IPTWregKey, "locationCode")
 # is the first run of getAccuWeather after phone starts
 isStarted = RegRead(IPTWregRoot, IPTWappRegKey, "Started")
 
+timeZone = RegRead(IPTWregRoot, IPTWregKey, "timeZone")
+deviceTimeZone = 60 * (TimeZoneBias() - 60)
+dataTimeZone = timeZone * 3600
+timeOffset = dataTimeZone - deviceTimeZone
+currentLocalTime = TimeStamp() + timeOffset
+currentDate = FormatTime("m/d/Y", currentLocalTime)
+
 # new not obsolete data, so update
 If (isStarted = 0 OR ((newobsdate eq currentDate) AND ((lastlocation ne newlocation) OR (lastobsdate ne newobsdate) OR (lastobstime ne newobstime))))
-	currenttime = Replace(FormatTime("A h:i", TimeStamp()), " 12", " 00")
+	currenttime = Replace(FormatTime("A h:i", currentLocalTime), " 12", " 00")
 	sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset0"), -8)
 	sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
 	If (currenttime gt sunset)
