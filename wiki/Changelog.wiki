@@ -1,4 +1,9 @@
 #summary Changelog of IPTWeather.
+=== IPTWeather_2010042? ===
+  * Added option IPTWiPhoneTodayDisabled=-1 if you don't want that IPTWeather disables automatically iPhoneToday IPTWeather features
+  * Data update time is compared in device time so displayed data are alright even when weather data are from another time zone
+  * If IPTWupdateWeatherNowQuestion was empty, then iPhoneTodayAccuWeather.mscr was always updating data when hiding weather forecasts, and not only if data were older than IPTWforceDelayHours and IPTWforceDelayMinutes
+  * Cleaned code
 
 === IPTWeather_20100425 ===
   * Automatically set UserWeather to 05 in S2U2 settings if IPTWtomorrowForecastInS2U2UserWeather = 1 or IPTWtomorrowForecastInS2U2UserWeather = -1
