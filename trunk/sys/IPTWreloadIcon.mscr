@@ -1,9 +1,5 @@
 If (NOT IPTWiPhoneTodayDisabled)
-	maxTryTime = TimeStamp() + 10
-	While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcons") <> 0 AND TimeStamp() < maxTryTime)
-		Sleep(200)
-	EndWhile
-	RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcons", 0)
+	CallScript("waitForReadyIPT.mscr", 1)
 
 	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", argv[1])
 	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", argv[2])
