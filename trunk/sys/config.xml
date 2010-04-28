@@ -12,6 +12,7 @@
 			</node>
 			<node name="local">
 				<node name="time" out="localtime"/>
+				<node name="timeZone" out="localtimezone"/>
 				<node name="city" out="city"/>
 				<node name="state" out="state"/>
 				<node name="isDaylight" out="isDaylight"/>
@@ -294,6 +295,7 @@
 		<!-- current weather situation -->
 		<value name="obsdate0"><data type="data">obsdate</data></value>
 		<value name="obstime"><data type="data">localtime</data></value>
+		<value name="timezone"><data type="data">localtimezone</data></value>
 		<value name="url"><data type="data">curr_url</data></value>
 		<value name="city"><data type="data">city</data></value>
 		<value name="state"><data type="data">state</data></value>
