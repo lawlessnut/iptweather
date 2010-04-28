@@ -1,0 +1,9 @@
+If (NOT IPTWiPhoneTodayDisabled)
+	CallScript("waitForReadyIPT.mscr", 1)
+
+	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", argv[1])
+	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", argv[2])
+	RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", argv[3])
+	RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ argv[4])
+	RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 2)
+EndIf
