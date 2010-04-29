@@ -1,5 +1,8 @@
 #summary IPTWeather FAQ.
 
+<b><font color="Green">Q: I have french (or something) shortnames for the days of the week. Jeu, Ven, Dim, etc.</font></b><br />
+A: In your weather.ini file, change the settings IPTWmondayText, IPTWtuesdayText, ..., IPTWsundayText.<br />
+<br />
 <b><font color="Green">Q: I have moved the weather icon in iPhoneToday, but IPTWeather keeps updating the previous icon and not the new one!</font></b><br />
 A: IPTWeather updates with the current weather the icon defined in the weather.ini file by the settings IPTWcurrentWeatherIcon and IPTWcurrentWeatherPage.<br />
 <br />
