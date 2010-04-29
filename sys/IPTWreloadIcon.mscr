@@ -1,4 +1,9 @@
 If (NOT IPTWiPhoneTodayDisabled)
+#If weather forecast icons are displayed in iPhoneToday, then do not update tge current weather icon, not to mess up the icons.xml file
+	If (RegRead(IPTWregRoot, IPTWappRegKey, "ShowingForecast"))
+		Exit
+	EndIf
+
 	CallScript("waitForReadyIPT.mscr", 1)
 
 	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", argv[1])

@@ -64,7 +64,7 @@ Else
 	dataTimeZone = timeZone * 3600
 	timeOffset = dataTimeZone - deviceTimeZone
 	currentLocalTime = TimeStamp() + timeOffset
-	If (isShowingForecast = 0)
+	If (isShowingForecast = 0 AND NOT IPTWiPhoneTodayDisabled)
 		RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 1)
 		currentDate = FormatTime("m/d/Y", currentLocalTime)
 		daysToSkip = 0
@@ -139,8 +139,9 @@ Else
 			Sleep(200)
 		EndWhile
 	Else
-		RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 0)
-		RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcons", 1)
+		If (NOT IPTWiPhoneTodayDisabled)
+			RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcons", 1)
+		EndIf
 
 		updateWeatherNow = FALSE
 		time = RegRead(IPTWregRoot, IPTWregKey, "updateTime") + (IPTWforceDelayHours * 60 + IPTWforceDelayMinutes) * 60
@@ -152,6 +153,10 @@ Else
 				updateWeatherNow = TRUE
 			EndIf
 		EndIf
+
+		CallScript(SystemPath("ScriptPath") \ "sys\waitForReadyIPT.mscr", 1)
+		RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 0)
+
 		If (updateWeatherNow)
 			KillScript(IPTWgetAccuWeatherScript)
 			CallScript(SystemPath("ScriptPath") \ "sys" \ IPTWgetAccuWeatherScript)
