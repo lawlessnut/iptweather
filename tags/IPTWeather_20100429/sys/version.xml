@@ -1,0 +1,7 @@
+<application>
+<name>IPTWeather</name>
+<version>20100429</version>
+<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br />Please make a backup of your weather.ini file before installing the cab!<br />What's new in IPTWeather_20100429:<br />- Bypass an issue in iPhoneToday so you can keep your original icons.xml file safe. The issue is that if you have some temp icons defined with the reloadIcon=1 feature (weather forecast icons), then, if you set an icon with reloadIcon=2 to write this and only this icon in the icons.xml file (current weather icon), all the temp icons will also be written in the icons.xml file and not only the icon defined with reloadIcon=2</description>
+<versionurl>http://iptweather.googlecode.com/files/version.xml</versionurl>
+<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100429.cab</caburl>
+</application>
