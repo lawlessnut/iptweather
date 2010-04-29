@@ -1,6 +1,9 @@
 #summary IPTWeather FAQ.
 
-<b><font color="Green">Q: What is the iPhoneTodauAccuWeather.mscr script for?</font></b><br />
+<b><font color="Green">Q: I have moved the weather icon in iPhoneToday, but IPTWeather keeps updating the previous icon and not the new one!</font></b><br />
+A: IPTWeather updates with the current weather the icon defined in the weather.ini file by the settings IPTWcurrentWeatherIcon and IPTWcurrentWeatherPage.
+<br />
+<b><font color="Green">Q: What is the iPhoneTodayAccuWeather.mscr script for?</font></b><br />
 A: This script expands temporarily, without modifying your icons.xml file, all weather forecast icons in iPhoneToday at first call. If you call it a second time, weather forecast icons are hidden and you come back to your icons.xml configuration.<br />
 <br />
 <b><font color="Green">Q: How to easily change the weather location?</font></b><br />
