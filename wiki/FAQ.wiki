@@ -1,5 +1,8 @@
 #summary IPTWeather FAQ.
 
+<b><font color="Green">Q: When I show the weather forecast icons in iPhoneToday, I can click on a day of the week. Instead of getting more information about that day, the icon opens the orignal application that iPhoneToday has under it.</font></b><br />
+A: Indeed, the weather forecast icons are just a temp display, but the iPhoneToday icon is mapped with the original application.<br />
+<br />
 <b><font color="Green">Q: I have french (or something) shortnames for the days of the week. Jeu, Ven, Dim, etc.</font></b><br />
 A: In your weather.ini file, change the settings IPTWmondayText, IPTWtuesdayText, ..., IPTWsundayText.<br />
 <br />
