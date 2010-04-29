@@ -1,4 +1,8 @@
 #summary Changelog of IPTWeather.
+
+=== IPTWeather_20100429 ===
+  * Bypass an issue in iPhoneToday so you can keep your original icons.xml file safe. The issue is that if you have some temp icons defined with the reloadIcon=1 feature (weather forecast icons), then, if you set an icon with reloadIcon=2 to write this and only this icon in the icons.xml file (current weather icon), all the temp icons will also be written in the icons.xml file and not only the icon defined with reloadIcon=2
+
 === IPTWeather_20100428 ===
   * Added option IPTWiPhoneTodayDisabled=-1 if you don't want that IPTWeather disables automatically iPhoneToday IPTWeather features
   * Data update time is compared in device time so displayed data are alright even when weather data are from another time zone
