@@ -4,7 +4,10 @@ If (NOT IPTWiPhoneTodayDisabled)
 		While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcons") <> 0 AND TimeStamp() < maxTryTime)
 			Sleep(200)
 		EndWhile
-		RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcons", 0)
+		If (RegRead("HKLM", "\Software\iPhonetoday", "reloadIcons"))
+			RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcons", 0)
+			Exit
+		EndIf
 	ElseIf (argv[1] = 2)
 		While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcon") AND RegKeyExists("HKLM", "\Software\iPhonetoday\icon0"))
 			Sleep(200)
