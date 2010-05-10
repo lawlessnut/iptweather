@@ -1,0 +1,7 @@
+<application>
+<name>IPTWeather</name>
+<version>20100510</version>
+<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br /><br />Please make a backup of your weather.ini file before installing the cab!<br /><br />What's new in IPTWeather_20100510:<br />- Working IPTWiPhoneTodayDisabled=-1 feature<br /><br />What was new in IPTWeather_20100509:<br />- Option IPTWiPhoneTodayDisabled=-1 working as expected (check weather.ini file for more information)<br />- Update iPhoneToday weather icons even if weather forecast icons are displayed, so you can have a page dedicated to weather forecasts without having to expand/collapse weather forecast icons</description>
+<versionurl>http://iptweather.googlecode.com/files/version.xml</versionurl>
+<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100510.cab</caburl>
+</application>
