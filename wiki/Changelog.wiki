@@ -1,5 +1,10 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20100526 ===
+  * Added setting IPTWvjvolubilisPath with the option VJVolubilis for the IPTWinternetConnection setting to use VJVolubilis to toggle the data connection for devices that don't support MortScript connection toggling (download VJVolubilis at http://www.vijay555.com/?Releases:VJVolubilis).
+  * Added settings IPTWforecastSkipIconFrequency and IPTWforecastSkipIconQuantity to configure some blank icons every some weather forecast icons in iPhoneToday.
+  * Added script stopAutoUpdate.mscr to remove and disable any automatic update.
+
 === IPTWeather_20100510 ===
   * Working IPTWiPhoneTodayDisabled=-1 feature
 
