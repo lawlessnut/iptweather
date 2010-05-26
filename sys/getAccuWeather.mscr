@@ -20,6 +20,7 @@ IPTWiPhoneTodayDisabled		= IniRead("..\weather.ini", "User settings", "IPTWiPhon
 IPTWlanguageFile			= IniRead("..\weather.ini", "User settings", "IPTWlanguageFile")
 IPTWaccuWeatherIconPath		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherIconPath")
 IPTWaccuWeatherAPI		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherAPI")
+IPTWvjvolubilisPath		= IniRead("..\weather.ini", "User settings", "IPTWvjvolubilisPath")
 
 If (IPTWaccuWeatherAPI eq "")
 	IPTWaccuWeatherAPI = "rdona"
@@ -112,8 +113,15 @@ If (IPTWpreventSleepOnUpdate)
 EndIf
 
 If (NOT InternetConnected("http://www.perdu.com"))
-	Connect(IPTWinternetConnection)
-	didconnect = TRUE
+	If (IPTWinternetConnection eq "VJVolubilis")
+		If (FileExists(IPTWvjvolubilisPath))
+			RunWait(IPTWvjvolubilisPath, "-gprson")
+			didconnect = TRUE
+		EndIf
+	Else
+		Connect(IPTWinternetConnection)
+		didconnect = TRUE
+	EndIf
 	nbSleeps = 0
 	While(NOT InternetConnected("http://www.perdu.com") AND nbSleeps < 6)
 		Sleep(5000)
@@ -148,8 +156,14 @@ If (InternetConnected("http://www.perdu.com"))
 EndIf
 
 If (IPTWdisconnectOnExit AND didconnect)
-	CloseConnection
-	Disconnect
+	If (IPTWinternetConnection eq "VJVolubilis")
+		If (FileExists(IPTWvjvolubilisPath))
+			Run(IPTWvjvolubilisPath, "-gprsoff")
+		EndIf
+	Else
+		CloseConnection
+		Disconnect
+	EndIf
 EndIf
 
 If (IPTWpreventSleepOnUpdate)
