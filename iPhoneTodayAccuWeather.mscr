@@ -28,6 +28,8 @@ IPTWaccuWeatherLocation				= IniRead("weather.ini", "User settings", "IPTWaccuWe
 IPTWiPhoneTodayDisabled				= IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled")
 IPTWlanguageFile					= IniRead("weather.ini", "User settings", "IPTWlanguageFile")
 IPTWaccuWeatherIconPath				= IniRead("weather.ini", "User settings", "IPTWaccuWeatherIconPath")
+IPTWforecastSkipIconFrequency				= IniRead("weather.ini", "User settings", "IPTWforecastSkipIconFrequency")
+IPTWforecastSkipIconQuantity				= IniRead("weather.ini", "User settings", "IPTWforecastSkipIconQuantity")
 
 # ############################################################################
 # configure location of parsed weather data in registry
@@ -83,6 +85,8 @@ Else
 				daysToSkip = daysToSkip + 1
 			EndIf
 		EndWhile
+		shownIcons = 0
+		iconPositionOffset = 0
 		If (foundDay)
 			currenttime = Replace(FormatTime("A h:i", currentLocalTime), " 12", " 00")
 			sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & daysToSkip), -8)
@@ -193,8 +197,14 @@ CallScript(SystemPath("ScriptPath") \ "sys" \ "waitForReadyIPT.mscr", 2)
 
 Sub IPTWsetIcon
 	If (NOT IPTWiPhoneTodayDisabled)
+		If (shownIcons = IPTWforecastSkipIconFrequency)
+			shownIcons = 0
+			iconPositionOffset = iconPositionOffset + IPTWforecastSkipIconQuantity
+		EndIf
+		shownIcons = shownIcons + 1
+		setIconPos = iconPositionOffset + argv[2]
 		RegWriteDWord("HKLM", "\Software\iPhonetoday\icon" & argv[5], "nScreen", argv[1])
-		RegWriteDWord("HKLM", "\Software\iPhonetoday\icon" & argv[5], "nIcon", argv[2])
+		RegWriteDWord("HKLM", "\Software\iPhonetoday\icon" & argv[5], "nIcon", setIconPos)
 		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strName", argv[3])
 		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strImage", IPTWaccuWeatherIconPath \ argv[4])
 	EndIf
