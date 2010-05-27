@@ -1,5 +1,8 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20100527 ===
+  * Added setting IPTWforecastIconSkipFirstAtSunset to be set to 1 in order to have a one icon shift when showing the weather forecast icons in the evening (when sun has set).
+
 === IPTWeather_20100526 ===
   * Added setting IPTWvjvolubilisPath with the option VJVolubilis for the IPTWinternetConnection setting to use VJVolubilis to toggle the data connection for devices that don't support MortScript connection toggling (download VJVolubilis at http://www.vijay555.com/?Releases:VJVolubilis).
   * Added settings IPTWforecastSkipIconFrequency and IPTWforecastSkipIconQuantity to configure some blank icons every some weather forecast icons in iPhoneToday.
