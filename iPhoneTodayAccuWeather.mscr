@@ -30,6 +30,7 @@ IPTWlanguageFile					= IniRead("weather.ini", "User settings", "IPTWlanguageFile
 IPTWaccuWeatherIconPath				= IniRead("weather.ini", "User settings", "IPTWaccuWeatherIconPath")
 IPTWforecastSkipIconFrequency				= IniRead("weather.ini", "User settings", "IPTWforecastSkipIconFrequency")
 IPTWforecastSkipIconQuantity				= IniRead("weather.ini", "User settings", "IPTWforecastSkipIconQuantity")
+IPTWforecastIconSkipFirstAtSunset				= IniRead("weather.ini", "User settings", "IPTWforecastIconSkipFirstAtSunset")
 
 # ############################################################################
 # configure location of parsed weather data in registry
@@ -93,6 +94,9 @@ Else
 			sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
 			If (currenttime gt sunset)
 				skipMorning = 1
+				If (IPTWforecastIconSkipFirstAtSunset)
+					IPTWforecastStartIcon = IPTWforecastStartIcon + 1
+				EndIf
 				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
 				iPhoneTodayTemp = weekday[RegRead(IPTWregRoot, IPTWregKey, "weekday" & daysToSkip)] & RegRead(IPTWregRoot, IPTWregKey, "loTemp" & daysToSkip) & " (" & RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & daysToSkip) & ")"
 				Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon, iPhoneTodayTemp, iPhoneTodayPic, 0)
