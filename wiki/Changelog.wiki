@@ -1,5 +1,9 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20100528 ===
+  * IPTWforecastSkipIconFrequency counts the empty icon left after sun has set when using IPTWforecastIconSkipFirstAtSunset=1.
+  * IPTWforecastIconSkipFirstAtSunset set to null by default in the weather.ini file.
+
 === IPTWeather_20100527 ===
   * Added setting IPTWforecastIconSkipFirstAtSunset to be set to 1 in order to have a one icon shift when showing the weather forecast icons in the evening (when sun has set).
 
