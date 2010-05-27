@@ -96,6 +96,7 @@ Else
 				skipMorning = 1
 				If (IPTWforecastIconSkipFirstAtSunset)
 					IPTWforecastStartIcon = IPTWforecastStartIcon + 1
+					shownIcons = 1
 				EndIf
 				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
 				iPhoneTodayTemp = weekday[RegRead(IPTWregRoot, IPTWregKey, "weekday" & daysToSkip)] & RegRead(IPTWregRoot, IPTWregKey, "loTemp" & daysToSkip) & " (" & RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & daysToSkip) & ")"
