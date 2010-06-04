@@ -1,5 +1,8 @@
 #summary IPTWeather FAQ.
 
+<b><font color="Green">Q: I have configured the weather.ini file to display weather icons in iPhoneToday on a place where there is no icon. Nothing is displayed.</font></b><br />
+A: If you want to have specific icons just for the weather and nothing else, you need to create blank icons in iPhoneToday. Because of the design of iPhoneToday, IPTWeather cannot create icons, but only update icons. The same rule applies if you want to have a page dedicated to weather icons.<br />
+<br />
 <b><font color="Green">Q: When I show the weather forecast icons in iPhoneToday, I can click on a day of the week. Instead of getting more information about that day, the icon opens the orignal application that iPhoneToday has under it.</font></b><br />
 A: Indeed, the weather forecast icons are just a temp display, but the iPhoneToday icon is mapped with the original application.<br />
 <br />
