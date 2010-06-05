@@ -1,5 +1,8 @@
 #summary IPTWeather FAQ.
 
+<b><font color="Green">Q: I use IPTWeather My Location service or Google Latitude to retrieve the location for current weather, but it doesn't seem very accurate because it gives me the weather of a city like 30 km from my location, even if Google Maps can find my position about 500 meters from my current. What could be the problem? </font></b><br />
+A: AccuWeather's database to translate GPS position into a city doesn't seem to be very accurate, but very approximative (around 30km). You cannot do anything but find the exact code of your location using the script manageIPTWLocation.mscr.<br />
+<br />
 <b><font color="Green">Q: I have configured the weather.ini file to display weather icons in iPhoneToday on a place where there is no icon. Nothing is displayed.</font></b><br />
 A: If you want to have specific icons just for the weather and nothing else, you need to create blank icons in iPhoneToday. Because of the design of iPhoneToday, IPTWeather cannot create icons, but only update icons. The same rule applies if you want to have a page dedicated to weather icons.<br />
 <br />
