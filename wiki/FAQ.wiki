@@ -1,7 +1,7 @@
 #summary IPTWeather FAQ.
 
 <b><font color="Green">Q: Could IPTWeather display in iPhoneToday a humidity icon?</font></b><br />
-A: Yes, IPTWeather can do that thanks to the userScriptOnUpdate.mscr script wich allows the user to have some custom features. Please check the following link for [URL=http://forum.xda-developers.com/showpost.php?p=6905046&postcount=523]full instructions on how to add this feature[/URL].<br />
+A: Yes, IPTWeather can do that thanks to the userScriptOnUpdate.mscr script wich allows the user to have some custom features. Please check the following link for [http://forum.xda-developers.com/showpost.php?p=6905046&postcount=523 full instructions on how to add this feature].<br />
 <br />
 <b><font color="Green">Q: I use IPTWeather My Location service or Google Latitude to retrieve the location for current weather, but it doesn't seem very accurate because it gives me the weather of a city like 30 km from my location, even if Google Maps can find my position about 500 meters from my current. What could be the problem? </font></b><br />
 A: AccuWeather's database to translate GPS position into a city doesn't seem to be very accurate, but very approximative (around 30km). You cannot do anything but find the exact code of your location using the script manageIPTWLocation.mscr.<br />
