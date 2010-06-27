@@ -1,5 +1,8 @@
 #summary IPTWeather FAQ.
 
+<b><font color="Green">Q: IPTweather have some bug, can update weather only several time after install, after this cant update at any time.</font></b><br />
+A: Try restarting your device. It may happen sometimes that the MortScript is "locked" during the download process, thus resulting in not updating any more. I cannot do anything about that. It is a MortScript limitation.<br />
+<br />
 <b><font color="Green">Q: Could IPTWeather display in iPhoneToday a humidity icon?</font></b><br />
 A: Yes, IPTWeather can do that thanks to the userScriptOnUpdate.mscr script wich allows the user to have some custom features. Please check the following link for [http://forum.xda-developers.com/showpost.php?p=6905046&postcount=523 full instructions on how to add this feature].<br />
 <br />
