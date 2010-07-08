@@ -72,5 +72,5 @@ Else
 	IniRead("../lang.ini", "Information display", "windgusts") & RegRead(IPTWregRoot, IPTWregKey, "windgusts" & dayOrNight & dayNum) & unitSpeed & "^NL^"& \
 	IniRead("../lang.ini", "Information display", "windspeed") & RegRead(IPTWregRoot, IPTWregKey, "windspeed" & dayOrNight & dayNum) & unitSpeed & "^NL^"& \
 	IniRead("../lang.ini", "Information display", "winddirection") & RegRead(IPTWregRoot, IPTWregKey, "winddirection" & dayOrNight & dayNum), \
-	weekday[RegRead(IPTWregRoot, IPTWregKey, "weekday" & dayNum)] & IniRead("../lang.ini", "Information display", "evening"))
+	weekday[RegRead(IPTWregRoot, IPTWregKey, "weekday" & dayNum)] & IniRead("../lang.ini", "Information display", "night"))
 EndIf
