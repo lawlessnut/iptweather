@@ -1,0 +1,56 @@
+
+If (argv[2] = 1)
+	IPTWobsoleteDataPrefix = IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
+	IPTWS2U2UserWeatherTextPattern = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherTextPattern")
+	beginNAPos = 1
+	While (beginNAPos <> 0)
+		beginNAPos = Find(IPTWS2U2UserWeatherTextPattern, "%NA%")
+		endNAPos = Find(IPTWS2U2UserWeatherTextPattern, "%NA%", beginNAPos + 4) + 4
+		If (beginNAPos = 1)
+			IPTWS2U2UserWeatherTextPattern = SubStr(IPTWS2U2UserWeatherTextPattern, endNAPos)
+		ElseIf (beginNAPos <> 0)
+			IPTWS2U2UserWeatherTextPattern = SubStr(IPTWS2U2UserWeatherTextPattern, 1, beginNAPos - 1) & SubStr(IPTWS2U2UserWeatherTextPattern, endNAPos)
+		EndIf
+	EndWhile
+	IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CT%", IPTWobsoleteDataPrefix)
+	IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CRFT%", IPTWobsoleteDataPrefix)
+	IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%HUM%", IPTWobsoleteDataPrefix)
+Else
+	IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%NA%", "")
+	IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CT%", RegRead(IPTWregRoot, IPTWregKey, "temp0"))
+	IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CRFT%", RegRead(IPTWregRoot, IPTWregKey, "tempfeel0"))
+	IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%HUM%", RegRead(IPTWregRoot, IPTWregKey, "humidity"))
+EndIf
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%CITY%", RegRead(IPTWregRoot, IPTWregKey, "city"))
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%OBST%", RegRead(IPTWregRoot, IPTWregKey, "obstime"))
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%OBSD%", RegRead(IPTWregRoot, IPTWregKey, "obsdate0"))
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%HT%", RegRead(IPTWregRoot, IPTWregKey, "hiTemp" & argv[1]))
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%HRFT%", RegRead(IPTWregRoot, IPTWregKey, "hiFeelTemp" & argv[1]))
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%LT%", RegRead(IPTWregRoot, IPTWregKey, "loTemp" & argv[1]))
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%LRFT%", RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & argv[1]))
+
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%TXT%", RegRead(IPTWregRoot, IPTWregKey, "text" & argv[3] & argv[1]))
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%WSPD%", RegRead(IPTWregRoot, IPTWregKey, "windspeed" & argv[3] & argv[1]))
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%WDIR%", RegRead(IPTWregRoot, IPTWregKey, "winddirection" & argv[3] & argv[1]))
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%WGUS%", RegRead(IPTWregRoot, IPTWregKey, "windgusts" & argv[3] & argv[1]))
+
+IPTWconvertTimeFormat = IniRead("..\weather.ini", "User settings", "IPTWconvertTimeFormat")
+sunset = RegRead(IPTWregRoot, IPTWregKey, "sunset" & argv[1])
+sunrise = RegRead(IPTWregRoot, IPTWregKey, "sunrise" & argv[1])
+If (IPTWconvertTimeFormat)
+	sunsettime = Part(sunset, " ", 1)
+	If (Part(sunset, " ", 2) eq "PM")
+		sunsettime = (12 + Part(sunsettime, ":", 1)) & ":" & Part(sunsettime, ":", 2)
+	EndIf
+	sunrisetime = Part(sunrise, " ", 1)
+	If (Part(sunrise, " ", 2) eq "PM")
+		sunrisetime = (12 + Part(sunrisetime, ":", 1)) & ":" & Part(sunrisetime, ":", 2)
+	EndIf
+Else
+	sunrisetime = sunrise
+	sunsettime = sunset
+EndIf
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%SUNS%", sunsettime)
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%SUNR%", sunrisetime)
+
+S2U2Text = IPTWS2U2UserWeatherTextPattern
