@@ -1,0 +1,7 @@
+<application>
+<name>IPTWeather</name>
+<version>20100708</version>
+<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br /><br />Please make a backup of your weather.ini file before installing the cab!<br /><br />What's new in IPTWeather_20100708:<br />- Now, when you click an forecast icon in iPhoneToday, you get more weather information (only compatible with iPhoneToday 1.5.3 and up). You can customize the displayed language in the lang.ini file.<br />- Added humidity icon.<br />- Added unitTemp and unitSpeed.<br />- Added option IPTWtranslationLanguageCode to have an automatic multi-language support (uses 10 times more data than default without translation).<br />- Added option IPTWconvertTimeFormat to convert sunrise and sunset time to the 24 hours format.</description>
+<versionurl>http://iptweather.googlecode.com/files/version.xml</versionurl>
+<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100708.cab</caburl>
+</application>
