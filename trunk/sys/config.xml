@@ -300,6 +300,8 @@
 		<value name="city"><data type="data">city</data></value>
 		<value name="state"><data type="data">state</data></value>
 		<value name="isDaylight"><data type="data">isDaylight</data></value>
+		<value name="unitTemp"><data type="data">unit_temp</data></value>
+		<value name="unitSpeed"><data type="data">unit_speed</data></value>
 		<value name="icon0"><data type="data">curr_icon</data></value>
 		<value name="iconD0"><data type="data">forcd1_icon</data></value>
 		<value name="iconD1"><data type="data">forcd2_icon</data></value>
