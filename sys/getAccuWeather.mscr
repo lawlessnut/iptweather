@@ -155,32 +155,13 @@ If (InternetConnected("http://www.perdu.com"))
 	dataUpdated = 1
 EndIf
 
-If (IPTWdisconnectOnExit AND didconnect)
-	If (IPTWinternetConnection eq "VJVolubilis")
-		If (FileExists(IPTWvjvolubilisPath))
-			Run(IPTWvjvolubilisPath, "-gprsoff")
-		EndIf
-	Else
-		CloseConnection
-		Disconnect
-	EndIf
-EndIf
-
-If (IPTWpreventSleepOnUpdate)
-	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout", BattSuspendTimeout)
-	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout", ACSuspendTimeout)
-	RegWriteDword ("HKCU", "ControlPanel\Backlight", "BatteryTimeout", BatteryTimeout)
-	RegWriteDword ("HKCU", "ControlPanel\Backlight", "ACTimeout", ACTimeout)
-
-	RegWriteDword(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented", 0)
-EndIf
-
 If (NOT FileExists(IPTWdataFile))
 	iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
 	iPhoneTodayTemp = "N/A"
 	CallScript("IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
 	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 0)
 	CallScript("IPTWreloadS2U2.mscr", -1)
+	CallScript("IPTWdisconnect.mscr")
 	Exit
 EndIf
 
@@ -190,6 +171,7 @@ If (Find(data, "<failure>") > 0 OR Find(data, "<error>") > 0)
 	CallScript("IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
 	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 0)
 	CallScript("IPTWreloadS2U2.mscr", -1)
+	CallScript("IPTWdisconnect.mscr")
 	Exit
 EndIf
 
@@ -268,6 +250,8 @@ Else
 		CallScript("IPTWuseObsoleteData.mscr")
 	EndIf
 EndIf
+
+CallScript("IPTWdisconnect.mscr")
 
 RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
 
