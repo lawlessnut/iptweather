@@ -28,9 +28,9 @@ IPTWaccuWeatherLocation				= IniRead("weather.ini", "User settings", "IPTWaccuWe
 IPTWiPhoneTodayDisabled				= IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled")
 IPTWlanguageFile					= IniRead("weather.ini", "User settings", "IPTWlanguageFile")
 IPTWaccuWeatherIconPath				= IniRead("weather.ini", "User settings", "IPTWaccuWeatherIconPath")
-IPTWforecastSkipIconFrequency				= IniRead("weather.ini", "User settings", "IPTWforecastSkipIconFrequency")
-IPTWforecastSkipIconQuantity				= IniRead("weather.ini", "User settings", "IPTWforecastSkipIconQuantity")
-IPTWforecastIconSkipFirstAtSunset				= IniRead("weather.ini", "User settings", "IPTWforecastIconSkipFirstAtSunset")
+IPTWforecastSkipIconFrequency		= IniRead("weather.ini", "User settings", "IPTWforecastSkipIconFrequency")
+IPTWforecastSkipIconQuantity		= IniRead("weather.ini", "User settings", "IPTWforecastSkipIconQuantity")
+IPTWforecastIconSkipFirstAtSunset	= IniRead("weather.ini", "User settings", "IPTWforecastIconSkipFirstAtSunset")
 
 # ############################################################################
 # configure location of parsed weather data in registry
@@ -100,14 +100,14 @@ Else
 				EndIf
 				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
 				iPhoneTodayTemp = weekday[RegRead(IPTWregRoot, IPTWregKey, "weekday" & daysToSkip)] & RegRead(IPTWregRoot, IPTWregKey, "loTemp" & daysToSkip) & " (" & RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & daysToSkip) & ")"
-				Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon, iPhoneTodayTemp, iPhoneTodayPic, 0)
+				Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon, iPhoneTodayTemp, iPhoneTodayPic, 0, "N", daysToSkip)
 			Else
 				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconD" & daysToSkip) & "." & IPTWiconsExtension
 				iPhoneTodayTemp = weekday[RegRead(IPTWregRoot, IPTWregKey, "weekday" & daysToSkip)] & RegRead(IPTWregRoot, IPTWregKey, "hiTemp" & daysToSkip) & " (" & RegRead(IPTWregRoot, IPTWregKey, "hiFeelTemp" & daysToSkip) & ")"
-				Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon, iPhoneTodayTemp, iPhoneTodayPic, 0)
+				Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon, iPhoneTodayTemp, iPhoneTodayPic, 0, "D", daysToSkip)
 				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
 				iPhoneTodayTemp = weekday[RegRead(IPTWregRoot, IPTWregKey, "weekday" & daysToSkip)] & RegRead(IPTWregRoot, IPTWregKey, "loTemp" & daysToSkip) & " (" & RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & daysToSkip) & ")"
-				Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon + 1, iPhoneTodayTemp, iPhoneTodayPic, 1)
+				Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon + 1, iPhoneTodayTemp, iPhoneTodayPic, 1, "N", daysToSkip)
 			EndIf
 			i = daysToSkip + 1
 			time = Array("D", "N")
@@ -119,7 +119,7 @@ Else
 						iconNum = 2 * (i - daysToSkip) + j - 1 - skipMorning
 						iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "icon" & time[j] & i) & iconSuffix[j] & "." & IPTWiconsExtension
 						iPhoneTodayTemp = weekday[RegRead(IPTWregRoot, IPTWregKey, "weekday" & i)] & RegRead(IPTWregRoot, IPTWregKey, tempType[j] & "Temp" & i) & " (" & RegRead(IPTWregRoot, IPTWregKey, tempType[j] & "FeelTemp" & i) & ")"
-						Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon + iconNum, iPhoneTodayTemp, iPhoneTodayPic, iconNum)
+						Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon + iconNum, iPhoneTodayTemp, iPhoneTodayPic, iconNum, time[j], i)
 					EndIf
 				Next
 				i = i + 1
@@ -138,14 +138,14 @@ Else
 				iPhoneTodayPic = IniRead("weather.ini", "User settings", "IPTWdefaultCityIcon")
 			EndIf
 			iPhoneTodayText = RegRead(IPTWregRoot, IPTWregKey, "city")
-			Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon + iconNum, iPhoneTodayText, iPhoneTodayPic, iconNum)
+			Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon + iconNum, iPhoneTodayText, iPhoneTodayPic, iconNum, "", 0)
 			j = j + 1
 		EndIf
 		If (IPTWdisplayObservationTime ne "")
 			iconNum = 2 * (i - daysToSkip) + j - 1 - skipMorning
 			iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
 			iPhoneTodayText = IPTWdisplayObservationTime & RegRead(IPTWregRoot, IPTWregKey, "obstime")
-			Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon + iconNum, iPhoneTodayText, iPhoneTodayPic, iconNum)
+			Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon + iconNum, iPhoneTodayText, iPhoneTodayPic, iconNum, "", 0)
 		EndIf
 		RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 1)
 	Else
@@ -212,5 +212,7 @@ Sub IPTWsetIcon
 		RegWriteDWord("HKLM", "\Software\iPhonetoday\icon" & argv[5], "nIcon", setIconPos)
 		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strName", argv[3])
 		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strImage", IPTWaccuWeatherIconPath \ argv[4])
+		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strExec", "\Program Files\MortScript\MortScript.exe")
+		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strParameters", """\Program Files\IPTWeather\sys\IPTWdisplayInfo.mscr"" dayOrNight=""" & argv[6] &""" dayNum=""" & argv[7] & """")
 	EndIf
 EndSub
