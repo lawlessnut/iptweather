@@ -35,3 +35,19 @@
 #If (sunset eq currentTime)
 #If (sunset gt currentTime)
 #...
+
+IPTWdisplayHumidityIcon	= IniRead("..\weather.ini", "Custom settings", "IPTWdisplayHumidityIcon")
+If (IPTWdisplayHumidityIcon)
+	IPTWhumidityIcon		= IniRead("..\weather.ini", "Custom settings", "IPTWhumidityIcon")
+	IPTWhumidityPage		= IniRead("..\weather.ini", "Custom settings", "IPTWhumidityPage")
+	IPTWhumidityIconName	= IniRead("..\weather.ini", "Custom settings", "IPTWhumidityIconName")
+	If (argv[1] = 1)
+		humidity = RegRead(IPTWregRoot, IPTWregKey, "humidity")
+	Else
+		humidity = "N/A"
+	EndIf
+	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon1", "nScreen", IPTWhumidityPage)
+	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon1", "nIcon", IPTWhumidityIcon)
+	RegWriteString("HKLM", "\Software\iPhonetoday\icon1", "strName", humidity)
+	RegWriteString("HKLM", "\Software\iPhonetoday\icon1", "strImage", IPTWaccuWeatherIconPath \ IPTWhumidityIconName)
+EndIf
