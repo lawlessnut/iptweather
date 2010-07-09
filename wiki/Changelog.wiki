@@ -1,5 +1,9 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20100709 ===
+  * SystemPath used to display the weather data when forecast icons are shown in iPhoneToday.
+  * unitSpeed and unitTemp can now be translated in the lang.ini file.
+
 === IPTWeather_20100708 ===
   * Now, when you click on a forecast icon in iPhoneToday, you get more weather information (only compatible with iPhoneToday 1.5.3 and up). You can customize the displayed language in the lang.ini file.
   * Added humidity icon.
