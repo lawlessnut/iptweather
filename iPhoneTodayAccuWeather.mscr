@@ -212,7 +212,7 @@ Sub IPTWsetIcon
 		RegWriteDWord("HKLM", "\Software\iPhonetoday\icon" & argv[5], "nIcon", setIconPos)
 		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strName", argv[3])
 		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strImage", IPTWaccuWeatherIconPath \ argv[4])
-		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strExec", "\Program Files\MortScript\MortScript.exe")
-		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strParameters", """\Program Files\IPTWeather\sys\IPTWdisplayInfo.mscr"" dayOrNight=""" & argv[6] &""" dayNum=""" & argv[7] & """")
+		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strExec", SystemPath("ScriptExe") \ "MortScript.exe")
+		RegWriteString("HKLM", "\Software\iPhonetoday\icon" & argv[5], "strParameters", """" & SystemPath("ScriptPath") \ "sys\IPTWdisplayInfo.mscr"" dayOrNight=""" & argv[6] &""" dayNum=""" & argv[7] & """")
 	EndIf
 EndSub
