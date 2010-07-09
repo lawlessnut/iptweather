@@ -1,7 +1,7 @@
 #summary Changelog of IPTWeather.
 
 === IPTWeather_20100708 ===
-  * Now, when you click an forecast icon in iPhoneToday, you get more weather information (only compatible with iPhoneToday 1.5.3 and up). You can customize the displayed language in the lang.ini file.
+  * Now, when you click on a forecast icon in iPhoneToday, you get more weather information (only compatible with iPhoneToday 1.5.3 and up). You can customize the displayed language in the lang.ini file.
   * Added humidity icon.
   * Added unitTemp and unitSpeed.
   * Added option IPTWtranslationLanguageCode to have an automatic multi-language support (uses 10 times more data than default without translation).
