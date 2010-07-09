@@ -15,7 +15,15 @@ weatherText = RegRead(IPTWregRoot, IPTWregKey, "text" & dayOrNight & dayNum)
 CallScript("IPTWS2U2translateSlideText.mscr")
 
 unitTemp = RegRead(IPTWregRoot, IPTWregKey, "unitTemp")
+translatedUnitTemp = IniRead("../lang.ini", "Information display", unitTemp)
+If (translatedUnitTemp ne "")
+	unitTemp = translatedUnitTemp
+EndIf
 unitSpeed = RegRead(IPTWregRoot, IPTWregKey, "unitSpeed")
+translatedUnitSpeed = IniRead("../lang.ini", "Information display", unitSpeed)
+If (translatedUnitSpeed ne "")
+	unitSpeed = translatedUnitSpeed
+EndIf
 If (dayOrNight eq "")
 	Message(\
 	IniRead("../lang.ini", "Information display", "obsdate") & RegRead(IPTWregRoot, IPTWregKey, "obsdate0") &"^NL^"& \
