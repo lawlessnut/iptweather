@@ -17,37 +17,6 @@ If (IPTWtranslationLanguageCode eq "" OR Find(IPTWaccuWeatherLocation, "|") = 0)
 		IniWrite(IPTWlanguageFile, "Weather description translation", weatherText, newS2U2text)
 	EndIf
 Else
-	currentText = RegRead(IPTWregRoot, IPTWregKey, "text0")
-	translatedCurrentText = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText)
-	If (Length(translatedCurrentText) = 0)
-		dataCTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/Quick-Look.aspx")
-		beginDesc = Find(dataCTr, "ctl00_cphContent_lblCurrentText") + 92
-		endDesc = Find(dataCTr, "</span>", beginDesc)
-		translatedCurrentText = SubStr(dataCTr, beginDesc, endDesc - beginDesc)
-		IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText, translatedCurrentText)
-	EndIf
-
-	i = 0
-	time = Array("D", "N")
-	timeTxt = Array("", "N")
-	While (RegValueExists(IPTWregRoot, IPTWregKey, "textD" & i))
-		For j = 1 to 2
-			If (RegValueExists(IPTWregRoot, IPTWregKey, "text" & time[j] & i))
-				forecastText = RegRead(IPTWregRoot, IPTWregKey, "text" & time[j] & i)
-				translatedForecastText = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", forecastText)
-				If (Length(translatedForecasttext) = 0)
-					If (dataFTr eq "")
-						dataFTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/forecast.aspx")
-					EndIf
-					beginDesc = Find(dataFTr, "ctl00_cphContent_rptFC_ctl0" & i & "_lblDesc" & timeTxt[j]) + 37 + j
-					endDesc = Find(dataFTr, "</span>", beginDesc)
-					translatedForecastText = SubStr(dataFTr, beginDesc, endDesc - beginDesc)
-					IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", forecastText, translatedForecastText)
-				EndIf
-			EndIf
-		Next
-		i = i + 1
-	EndWhile
 	newS2U2text = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", weatherText)
 EndIf
 
