@@ -29,7 +29,9 @@ IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%HRFT%
 IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%LT%", RegRead(IPTWregRoot, IPTWregKey, "loTemp" & argv[1]))
 IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%LRFT%", RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & argv[1]))
 
-IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%TXT%", RegRead(IPTWregRoot, IPTWregKey, "text" & argv[3] & argv[1]))
+weatherText = RegRead(IPTWregRoot, IPTWregKey, "text" & argv[3] & argv[1])
+CallScript("IPTWS2U2translateSlideText.mscr")
+IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%TXT%", newS2U2text)
 IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%WSPD%", RegRead(IPTWregRoot, IPTWregKey, "windspeed" & argv[3] & argv[1]))
 IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%WDIR%", RegRead(IPTWregRoot, IPTWregKey, "winddirection" & argv[3] & argv[1]))
 IPTWS2U2UserWeatherTextPattern = Replace(IPTWS2U2UserWeatherTextPattern, "%WGUS%", RegRead(IPTWregRoot, IPTWregKey, "windgusts" & argv[3] & argv[1]))
