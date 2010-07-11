@@ -1,0 +1,84 @@
+IPTWaccuWeatherLocation	= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherLocation")
+IPTWlanguageFile		= IniRead("..\weather.ini", "User settings", "IPTWlanguageFile")
+IPTWregRoot				= IniRead("..\weather.ini", "Script settings", "IPTWregRoot")
+IPTWappRegKey			= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
+IPTWregKey				= IniRead("..\weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
+weekday["Monday"]		= IniRead("..\weather.ini", "User settings", "IPTWmondayText")
+weekday["Tuesday"]		= IniRead("..\weather.ini", "User settings", "IPTWtuesdayText")
+weekday["Wednesday"]	= IniRead("..\weather.ini", "User settings", "IPTWwednesdayText")
+weekday["Thursday"]		= IniRead("..\weather.ini", "User settings", "IPTWthursdayText")
+weekday["Friday"]		= IniRead("..\weather.ini", "User settings", "IPTWfridayText")
+weekday["Saturday"]		= IniRead("..\weather.ini", "User settings", "IPTWsaturdayText")
+weekday["Sunday"]		= IniRead("..\weather.ini", "User settings", "IPTWsundayText")
+
+weatherText = RegRead(IPTWregRoot, IPTWregKey, "text" & dayOrNight & dayNum)
+CallScript("IPTWS2U2translateSlideText.mscr")
+
+unitTemp = RegRead(IPTWregRoot, IPTWregKey, "unitTemp")
+translatedUnitTemp = IniRead("../lang.ini", "Information display", unitTemp)
+If (translatedUnitTemp ne "")
+	unitTemp = translatedUnitTemp
+EndIf
+unitSpeed = RegRead(IPTWregRoot, IPTWregKey, "unitSpeed")
+translatedUnitSpeed = IniRead("../lang.ini", "Information display", unitSpeed)
+If (translatedUnitSpeed ne "")
+	unitSpeed = translatedUnitSpeed
+EndIf
+If (dayOrNight eq "")
+	Message(\
+	IniRead("../lang.ini", "Information display", "obsdate") & RegRead(IPTWregRoot, IPTWregKey, "obsdate0") &"^NL^"& \
+	IniRead("../lang.ini", "Information display", "obstime") & RegRead(IPTWregRoot, IPTWregKey, "obstime") & "^NL^"& \
+	IniRead("../lang.ini", "Information display", "timezone") & RegRead(IPTWregRoot, IPTWregKey, "timezone") & "^NL^"& \
+	IniRead("../lang.ini", "Information display", "city") & RegRead(IPTWregRoot, IPTWregKey, "city") & "^NL^"& \
+	IniRead("../lang.ini", "Information display", "state") & RegRead(IPTWregRoot, IPTWregKey, "state") & "^NL^" & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "temp") & RegRead(IPTWregRoot, IPTWregKey, "temp0") & unitTemp & "^NL^"& \
+	IniRead("../lang.ini", "Information display", "tempfeel") & RegRead(IPTWregRoot, IPTWregKey, "tempfeel0") & unitTemp & "^NL^" & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "text") & newS2U2text & "^NL^" & "^NL^" &\
+	IniRead("../lang.ini", "Information display", "humidity") & RegRead(IPTWregRoot, IPTWregKey, "humidity") & "^NL^" & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "windgusts") & RegRead(IPTWregRoot, IPTWregKey, "windgusts0") & unitSpeed & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "windspeed") & RegRead(IPTWregRoot, IPTWregKey, "windspeed0") & unitSpeed & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "winddirection") & RegRead(IPTWregRoot, IPTWregKey, "winddirection0"), \
+	IniRead("../lang.ini", "Information display", "currentweather"))
+ElseIf (dayOrNight eq "D")
+	IPTWconvertTimeFormat = IniRead("..\weather.ini", "User settings", "IPTWconvertTimeFormat")
+	sunrise = RegRead(IPTWregRoot, IPTWregKey, "sunrise" & daynum)
+	If (IPTWconvertTimeFormat)
+		sunrisetime = Part(sunrise, " ", 1)
+		If (Part(sunrise, " ", 2) eq "PM")
+			sunrisetime = (12 + Part(sunrisetime, ":", 1)) & ":" & Part(sunrisetime, ":", 2)
+		EndIf
+	Else
+		sunrisetime = sunrise
+	EndIf
+
+	Message(\
+	IniRead("../lang.ini", "Information display", "hitemp") & RegRead(IPTWregRoot, IPTWregKey, "hiTemp" & dayNum) & unitTemp & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "hitempfeel") & RegRead(IPTWregRoot, IPTWregKey, "hiFeelTemp" & dayNum) & unitTemp & "^NL^" & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "sunrise") & sunrisetime &"^NL^" & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "text") & newS2U2text &"^NL^" & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "windgusts") & RegRead(IPTWregRoot, IPTWregKey, "windgusts" & dayOrNight & dayNum) & unitSpeed & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "windspeed") & RegRead(IPTWregRoot, IPTWregKey, "windspeed" & dayOrNight & dayNum) & unitSpeed & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "winddirection") & RegRead(IPTWregRoot, IPTWregKey, "winddirection" & dayOrNight & dayNum), \
+	weekday[RegRead(IPTWregRoot, IPTWregKey, "weekday" & dayNum)] & IniRead("../lang.ini", "Information display", "day"))
+Else
+	IPTWconvertTimeFormat = IniRead("..\weather.ini", "User settings", "IPTWconvertTimeFormat")
+	sunset = RegRead(IPTWregRoot, IPTWregKey, "sunset" & daynum)
+	If (IPTWconvertTimeFormat)
+		sunsettime = Part(sunset, " ", 1)
+		If (Part(sunset, " ", 2) eq "PM")
+			sunsettime = (12 + Part(sunsettime, ":", 1)) & ":" & Part(sunsettime, ":", 2)
+		EndIf
+	Else
+		sunsettime = sunset
+	EndIf
+
+	Message(\
+	IniRead("../lang.ini", "Information display", "lotemp") & RegRead(IPTWregRoot, IPTWregKey, "loTemp" & dayNum) & unitTemp & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "lotempfeel") & RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & dayNum) & unitTemp & "^NL^" & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "sunset") & sunsettime & "^NL^" & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "text") & newS2U2text & "^NL^" & "^NL^" & \
+	IniRead("../lang.ini", "Information display", "windgusts") & RegRead(IPTWregRoot, IPTWregKey, "windgusts" & dayOrNight & dayNum) & unitSpeed & "^NL^"& \
+	IniRead("../lang.ini", "Information display", "windspeed") & RegRead(IPTWregRoot, IPTWregKey, "windspeed" & dayOrNight & dayNum) & unitSpeed & "^NL^"& \
+	IniRead("../lang.ini", "Information display", "winddirection") & RegRead(IPTWregRoot, IPTWregKey, "winddirection" & dayOrNight & dayNum), \
+	weekday[RegRead(IPTWregRoot, IPTWregKey, "weekday" & dayNum)] & IniRead("../lang.ini", "Information display", "night"))
+EndIf
