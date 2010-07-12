@@ -1,7 +1,7 @@
 <application>
 <name>IPTWeather</name>
-<version>20100711</version>
-<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br /><br />Please make a backup of your weather.ini file before installing the cab!<br /><br />What's new in IPTWeather_20100711:<br />- Working multi-language weather description even if IPTWtodayForecastInS2U2Text=0.<br />- Added multi-language for %TXT% in IPTWS2U2UserWeatherTextPattern.</description>
+<version>20100712</version>
+<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br /><br />Please make a backup of your weather.ini file before installing the cab!<br /><br />What's new in IPTWeather_20100712:<br />- Added parameter IPTWhideRealFeelInForecastIcons to set to 1 no to show Real Feel temperatures in weather forecast icons in iPhoneToday.<br />- Added parameter IPTWwriteForecastInFile to set to 1 to write icons in the icons.xml file of iPhoneToday.</description>
 <versionurl>http://iptweather.googlecode.com/files/version.xml</versionurl>
-<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100711.cab</caburl>
+<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100712.cab</caburl>
 </application>
