@@ -1,5 +1,9 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20100712 ===
+  * Added parameter IPTWhideRealFeelInForecastIcons to set to 1 no to show Real Feel temperatures in weather forecast icons in iPhoneToday.
+  * Added parameter IPTWwriteForecastInFile to set to 1 to write icons in the icons.xml file of iPhoneToday.
+
 === IPTWeather_20100711 ===
   * Working multi-language weather description even if IPTWtodayForecastInS2U2Text=0.
   * Added multi-language for %TXT% in IPTWS2U2UserWeatherTextPattern.
