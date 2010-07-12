@@ -21,6 +21,7 @@ IPTWlanguageFile			= IniRead("..\weather.ini", "User settings", "IPTWlanguageFil
 IPTWaccuWeatherIconPath		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherIconPath")
 IPTWaccuWeatherAPI		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherAPI")
 IPTWvjvolubilisPath		= IniRead("..\weather.ini", "User settings", "IPTWvjvolubilisPath")
+IPTWwriteForecastInFile	= IniRead("..\weather.ini", "User settings", "IPTWwriteForecastInFile")
 
 If (IPTWaccuWeatherAPI eq "")
 	IPTWaccuWeatherAPI = "rdona"
