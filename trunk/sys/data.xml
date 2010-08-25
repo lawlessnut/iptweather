@@ -13,7 +13,7 @@
 	<state>Belgium</state>
 	<lat>50.83</lat> 
 	<lon>4.33</lon>
-	<time>07:31</time>
+	<time>12:00</time>
 	<timeZone>01:00</timeZone>
 	<obsDaylight>1</obsDaylight>
 	<isDaylight>True</isDaylight>
@@ -23,117 +23,117 @@
 			
 				<url>http://www.accuweather.com/world-index-forecast.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS</url>
 				
-				<observationtime>7:31 AM</observationtime>
+				<observationtime>12:00 PM</observationtime>
 			
 				<pressure state="Steady">102</pressure>
 			
-				<temperature>19</temperature>
+				<temperature>18</temperature>
 			
-				<realfeel>18</realfeel>
+				<realfeel>19</realfeel>
 			
-				<humidity>63%</humidity>
+				<humidity>72%</humidity>
 			
-				<weathertext>Sunny</weathertext>
+				<weathertext>Partly Sunny</weathertext>
 			
-				<weathericon>01</weathericon>
+				<weathericon>03</weathericon>
 			
-				<windgusts>11</windgusts>
+				<windgusts>16</windgusts>
 			
-				<windspeed>11</windspeed>
+				<windspeed>16</windspeed>
 			
-				<winddirection>S</winddirection>
+				<winddirection>WSW</winddirection>
 			
 				<visibility>16</visibility>
 			
 				<precip>0.0</precip>
 			
-				<uvindex index="0">Low</uvindex>
+				<uvindex index="4">Moderate</uvindex>
 			
-				<dewpoint>12</dewpoint>
+				<dewpoint>13</dewpoint>
 			
-				<cloudcover>0%</cloudcover>
+				<cloudcover>35%</cloudcover>
 						
 
 		</currentconditions>
 		
 			<planets>
-				<sun rise="5:40 AM" set="9:56 PM"/>
-				<moon rise="2:49 AM" set="8:05 PM"/>
-				<mercury rise="6:27 AM" set="10:44 PM"/>
-<venus rise="9:23 AM" set="11:54 PM"/>
-<mars rise="11:19 AM" set="12:25 AM"/>
-<jupiter rise="12:48 AM" set="12:56 PM"/>
-<saturn rise="12:22 PM" set="12:55 AM"/>
-<uranus rise="12:40 AM" set="12:44 PM"/>
-<neptune rise="11:40 PM" set="9:43 AM"/>
-<pluto rise="8:25 PM" set="5:24 AM"/>
+				<sun rise="6:37 AM" set="8:54 PM"/>
+				<moon rise="6:49 PM" set="No Rise"/>
+				<mercury rise="8:58 AM" set="9:15 PM"/>
+<venus rise="11:00 AM" set="10:09 PM"/>
+<mars rise="10:58 AM" set="10:21 PM"/>
+<jupiter rise="10:02 PM" set="10:06 AM"/>
+<saturn rise="9:58 AM" set="10:15 PM"/>
+<uranus rise="9:53 PM" set="9:54 AM"/>
+<neptune rise="8:52 PM" set="6:52 AM"/>
+<pluto rise="5:37 PM" set="2:34 AM"/>
 
 			</planets>
 			<moon>
 				
-					<phase date="7/8/2010" text="Waning Crescent" >25</phase>
+					<phase date="8/19/2010" text="Waxing Gibbous" >8</phase>
 			
-					<phase date="7/9/2010" text="Waning Crescent" >26</phase>
+					<phase date="8/20/2010" text="Waxing Gibbous" >9</phase>
 			
-					<phase date="7/10/2010" text="Waning Crescent" >27</phase>
+					<phase date="8/21/2010" text="Waxing Gibbous" >10</phase>
 			
-					<phase date="7/11/2010" text="New" >1</phase>
+					<phase date="8/22/2010" text="Waxing Gibbous" >11</phase>
 			
-					<phase date="7/12/2010" text="New" >1</phase>
+					<phase date="8/23/2010" text="Waxing Gibbous" >12</phase>
 			
-					<phase date="7/13/2010" text="New" >1</phase>
+					<phase date="8/24/2010" text="Full" >14</phase>
 			
-					<phase date="7/14/2010" text="New" >1</phase>
+					<phase date="8/25/2010" text="Full" >14</phase>
 			
-					<phase date="7/15/2010" text="Waxing Crescent" >2</phase>
+					<phase date="8/26/2010" text="Waning Gibbous" >15</phase>
 			
-					<phase date="7/16/2010" text="Waxing Crescent" >3</phase>
+					<phase date="8/27/2010" text="Waning Gibbous" >16</phase>
 			
-					<phase date="7/17/2010" text="Waxing Crescent" >4</phase>
+					<phase date="8/28/2010" text="Waning Gibbous" >17</phase>
 			
-					<phase date="7/18/2010" text="First" >7</phase>
+					<phase date="8/29/2010" text="Waning Gibbous" >18</phase>
 			
-					<phase date="7/19/2010" text="Waxing Crescent" >6</phase>
+					<phase date="8/30/2010" text="Waning Gibbous" >19</phase>
 			
-					<phase date="7/20/2010" text="First" >7</phase>
+					<phase date="8/31/2010" text="Waning Gibbous" >20</phase>
 			
-					<phase date="7/21/2010" text="Waxing Gibbous" >8</phase>
+					<phase date="9/1/2010" text="Last" >21</phase>
 			
-					<phase date="7/22/2010" text="Waxing Gibbous" >9</phase>
+					<phase date="9/2/2010" text="Waning Crescent" >22</phase>
 			
-					<phase date="7/23/2010" text="Waxing Gibbous" >10</phase>
+					<phase date="9/3/2010" text="Waning Crescent" >23</phase>
 			
-					<phase date="7/24/2010" text="Waxing Gibbous" >11</phase>
+					<phase date="9/4/2010" text="Waning Crescent" >24</phase>
 			
-					<phase date="7/25/2010" text="Waxing Gibbous" >12</phase>
+					<phase date="9/5/2010" text="Waning Crescent" >25</phase>
 			
-					<phase date="7/26/2010" text="Full" >14</phase>
+					<phase date="9/6/2010" text="Waning Crescent" >26</phase>
 			
-					<phase date="7/27/2010" text="Full" >14</phase>
+					<phase date="9/7/2010" text="Waning Crescent" >27</phase>
 			
-					<phase date="7/28/2010" text="Waning Gibbous" >15</phase>
+					<phase date="9/8/2010" text="New" >1</phase>
 			
-					<phase date="7/29/2010" text="Waning Gibbous" >16</phase>
+					<phase date="9/9/2010" text="New" >1</phase>
 			
-					<phase date="7/30/2010" text="Waning Gibbous" >17</phase>
+					<phase date="9/10/2010" text="New" >1</phase>
 			
-					<phase date="7/31/2010" text="Waning Gibbous" >18</phase>
+					<phase date="9/11/2010" text="New" >1</phase>
 			
-					<phase date="8/1/2010" text="Waning Gibbous" >19</phase>
+					<phase date="9/12/2010" text="Waxing Crescent" >2</phase>
 			
-					<phase date="8/2/2010" text="Waning Gibbous" >20</phase>
+					<phase date="9/13/2010" text="Waxing Crescent" >3</phase>
 			
-					<phase date="8/3/2010" text="Last" >21</phase>
+					<phase date="9/14/2010" text="Waxing Crescent" >4</phase>
 			
-					<phase date="8/4/2010" text="Waning Crescent" >22</phase>
+					<phase date="9/15/2010" text="First" >7</phase>
 			
-					<phase date="8/5/2010" text="Waning Crescent" >23</phase>
+					<phase date="9/16/2010" text="Waxing Crescent" >6</phase>
 			
-					<phase date="8/6/2010" text="Waning Crescent" >24</phase>
+					<phase date="9/17/2010" text="First" >7</phase>
 			
-					<phase date="8/7/2010" text="Waning Crescent" >25</phase>
+					<phase date="9/18/2010" text="Waxing Gibbous" >8</phase>
 			
-					<phase date="8/8/2010" text="Waning Crescent" >26</phase>
+					<phase date="9/19/2010" text="Waxing Gibbous" >9</phase>
 			
 			</moon>
 		
@@ -143,60 +143,60 @@
 					<day number="1">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=1</url>
 						
-					<obsdate>7/8/2010</obsdate>
+					<obsdate>8/19/2010</obsdate>
 					<daycode>Thursday</daycode>
 					
-						<sunrise>5:40 AM</sunrise>
-						<sunset>9:56 PM</sunset>
+						<sunrise>6:37 AM</sunrise>
+						<sunset>8:54 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>Partly sunny and warmer</txtshort>
+							<txtshort>Partial sunshine with a shower</txtshort>
 							
-							<txtlong>Partly sunny and warmer</txtlong>
+							<txtlong>Partial sunshine with a shower</txtlong>
 							
-							<weathericon>03</weathericon>
+							<weathericon>14</weathericon>
 						
-							<hightemperature>30</hightemperature>
-							<lowtemperature>18</lowtemperature>
+							<hightemperature>21</hightemperature>
+							<lowtemperature>14</lowtemperature>
 						
-							<realfeelhigh>33</realfeelhigh>
-							<realfeellow>17</realfeellow>
+							<realfeelhigh>21</realfeelhigh>
+							<realfeellow>13</realfeellow>
 						
-							<windspeed>6</windspeed>
+							<windspeed>14</windspeed>
 						
-							<winddirection>SSE</winddirection>
+							<winddirection>SSW</winddirection>
 						
-							<windgust>14</windgust>
+							<windgust>33</windgust>
 						
-							<maxuv>6</maxuv>
+							<maxuv>5</maxuv>
 						
-							<rainamount>0.0</rainamount>
+							<rainamount>2.0</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>0.0</precipamount>
+						<precipamount>2.0</precipamount>
 						
-							<tstormprob>0</tstormprob>
+							<tstormprob>20</tstormprob>
 						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Partly cloudy and mild</txtshort>
+							<txtshort>Partly cloudy</txtshort>
 							
-							<txtlong>Partly cloudy and mild</txtlong>
+							<txtlong>Partly cloudy</txtlong>
 							
-							<weathericon>35</weathericon>
+							<weathericon>36</weathericon>
 						
-							<hightemperature>30</hightemperature>
-							<lowtemperature>18</lowtemperature>
+							<hightemperature>21</hightemperature>
+							<lowtemperature>14</lowtemperature>
 						
-							<realfeelhigh>33</realfeelhigh>
-							<realfeellow>17</realfeellow>
+							<realfeelhigh>21</realfeelhigh>
+							<realfeellow>13</realfeellow>
 						
-							<windspeed>4</windspeed>
+							<windspeed>8</windspeed>
 						
 							<winddirection>S</winddirection>
 						
@@ -219,64 +219,64 @@
 				<day number="2">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=2</url>
 						
-					<obsdate>7/9/2010</obsdate>
+					<obsdate>8/20/2010</obsdate>
 					<daycode>Friday</daycode>
 					
-						<sunrise>5:41 AM</sunrise>
-						<sunset>9:55 PM</sunset>
+						<sunrise>6:39 AM</sunrise>
+						<sunset>8:52 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>Very warm with periods of rain</txtshort>
+							<txtshort>Mostly sunny and pleasant</txtshort>
 							
-							<txtlong>Very warm with periods of rain</txtlong>
+							<txtlong>Mostly sunny and pleasant</txtlong>
 							
-							<weathericon>18</weathericon>
+							<weathericon>02</weathericon>
 						
-							<hightemperature>31</hightemperature>
-							<lowtemperature>18</lowtemperature>
+							<hightemperature>24</hightemperature>
+							<lowtemperature>17</lowtemperature>
 						
-							<realfeelhigh>33</realfeelhigh>
-							<realfeellow>18</realfeellow>
+							<realfeelhigh>26</realfeelhigh>
+							<realfeellow>17</realfeellow>
 						
-							<windspeed>8</windspeed>
+							<windspeed>11</windspeed>
 						
-							<winddirection>S</winddirection>
+							<winddirection>SSW</winddirection>
 						
-							<windgust>22</windgust>
+							<windgust>25</windgust>
 						
-							<maxuv>6</maxuv>
+							<maxuv>5</maxuv>
 						
-							<rainamount>6.1</rainamount>
+							<rainamount>0.0</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>6.1</precipamount>
+						<precipamount>0.0</precipamount>
 						
-							<tstormprob>20</tstormprob>
+							<tstormprob>1</tstormprob>
 						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Partly cloudy and mild</txtshort>
+							<txtshort>Mainly clear</txtshort>
 							
-							<txtlong>Partly cloudy and mild</txtlong>
+							<txtlong>Mainly clear</txtlong>
 							
-							<weathericon>35</weathericon>
+							<weathericon>34</weathericon>
 						
-							<hightemperature>31</hightemperature>
-							<lowtemperature>18</lowtemperature>
+							<hightemperature>24</hightemperature>
+							<lowtemperature>17</lowtemperature>
 						
-							<realfeelhigh>33</realfeelhigh>
-							<realfeellow>18</realfeellow>
+							<realfeelhigh>26</realfeelhigh>
+							<realfeellow>17</realfeellow>
 						
-							<windspeed>4</windspeed>
+							<windspeed>8</windspeed>
 						
 							<winddirection>SSW</winddirection>
 						
-							<windgust>14</windgust>
+							<windgust>17</windgust>
 						
 							<maxuv></maxuv>
 						
@@ -288,221 +288,69 @@
 						
 							<precipamount>0.0</precipamount>
 						
-							<tstormprob>1</tstormprob>
+							<tstormprob>0</tstormprob>
 						
 					</nighttime>
 				</day>
 				<day number="3">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=3</url>
 						
-					<obsdate>7/10/2010</obsdate>
+					<obsdate>8/21/2010</obsdate>
 					<daycode>Saturday</daycode>
 					
-						<sunrise>5:42 AM</sunrise>
-						<sunset>9:54 PM</sunset>
+						<sunrise>6:40 AM</sunrise>
+						<sunset>8:49 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>Partly sunny, showers around</txtshort>
+							<txtshort>Sunny and very warm</txtshort>
 							
-							<txtlong>Partly sunny and very warm with a couple of showers</txtlong>
+							<txtlong>Sunny and very warm</txtlong>
 							
-							<weathericon>14</weathericon>
+							<weathericon>01</weathericon>
 						
-							<hightemperature>31</hightemperature>
-							<lowtemperature>21</lowtemperature>
+							<hightemperature>29</hightemperature>
+							<lowtemperature>17</lowtemperature>
 						
-							<realfeelhigh>35</realfeelhigh>
-							<realfeellow>21</realfeellow>
-						
-							<windspeed>1</windspeed>
-						
-							<winddirection>SSE</winddirection>
-						
-							<windgust>6</windgust>
-						
-							<maxuv>6</maxuv>
-						
-							<rainamount>2.0</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-						<precipamount>2.0</precipamount>
-						
-							<tstormprob>29</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>Strong t-storms, mainly later</txtshort>
-							
-							<txtlong>A couple of thunderstorms around, mainly later, when they can be strong; increasing clouds and warm</txtlong>
-							
-							<weathericon>42</weathericon>
-						
-							<hightemperature>31</hightemperature>
-							<lowtemperature>21</lowtemperature>
-						
-							<realfeelhigh>35</realfeelhigh>
-							<realfeellow>21</realfeellow>
-						
-							<windspeed>6</windspeed>
-						
-							<winddirection>SE</winddirection>
-						
-							<windgust>16</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>5.1</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>5.1</precipamount>
-						
-							<tstormprob>95</tstormprob>
-						
-					</nighttime>
-				</day>
-				<day number="4">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=4</url>
-						
-					<obsdate>7/11/2010</obsdate>
-					<daycode>Sunday</daycode>
-					
-						<sunrise>5:43 AM</sunrise>
-						<sunset>9:53 PM</sunset>
-					
-					<daytime>
-						
-							<txtshort>Partly sunny, showers around</txtshort>
-							
-							<txtlong>Partly sunny and very warm with a couple of showers</txtlong>
-							
-							<weathericon>14</weathericon>
-						
-							<hightemperature>32</hightemperature>
-							<lowtemperature>19</lowtemperature>
-						
-							<realfeelhigh>33</realfeelhigh>
+							<realfeelhigh>30</realfeelhigh>
 							<realfeellow>18</realfeellow>
-						
-							<windspeed>11</windspeed>
-						
-							<winddirection>WSW</winddirection>
-						
-							<windgust>27</windgust>
-						
-							<maxuv>6</maxuv>
-						
-							<rainamount>3.0</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-						<precipamount>3.0</precipamount>
-						
-							<tstormprob>29</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>Strong thunderstorms; mild</txtshort>
-							
-							<txtlong>Watch for strong thunderstorms; mild</txtlong>
-							
-							<weathericon>42</weathericon>
-						
-							<hightemperature>32</hightemperature>
-							<lowtemperature>19</lowtemperature>
-						
-							<realfeelhigh>33</realfeelhigh>
-							<realfeellow>18</realfeellow>
-						
-							<windspeed>6</windspeed>
-						
-							<winddirection>NW</winddirection>
-						
-							<windgust>19</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>7.6</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>7.6</precipamount>
-						
-							<tstormprob>95</tstormprob>
-						
-					</nighttime>
-				</day>
-				<day number="5">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=5</url>
-						
-					<obsdate>7/12/2010</obsdate>
-					<daycode>Monday</daycode>
-					
-						<sunrise>5:44 AM</sunrise>
-						<sunset>9:53 PM</sunset>
-					
-					<daytime>
-						
-							<txtshort>A morning shower; cloudy</txtshort>
-							
-							<txtlong>A brief shower in the morning; otherwise, low clouds and remaining very warm</txtlong>
-							
-							<weathericon>08</weathericon>
-						
-							<hightemperature>32</hightemperature>
-							<lowtemperature>13</lowtemperature>
-						
-							<realfeelhigh>31</realfeelhigh>
-							<realfeellow>12</realfeellow>
 						
 							<windspeed>9</windspeed>
 						
-							<winddirection>NNW</winddirection>
+							<winddirection>SW</winddirection>
 						
-							<windgust>16</windgust>
+							<windgust>24</windgust>
 						
-							<maxuv>3</maxuv>
+							<maxuv>5</maxuv>
 						
-							<rainamount>0.3</rainamount>
+							<rainamount>0.0</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>0.3</precipamount>
+						<precipamount>0.0</precipamount>
 						
-							<tstormprob>35</tstormprob>
+							<tstormprob>31</tstormprob>
 						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Cloudy</txtshort>
+							<txtshort>A moonlit sky</txtshort>
 							
-							<txtlong>Cloudy</txtlong>
+							<txtlong>A moonlit sky</txtlong>
 							
-							<weathericon>07</weathericon>
+							<weathericon>33</weathericon>
 						
-							<hightemperature>32</hightemperature>
-							<lowtemperature>13</lowtemperature>
+							<hightemperature>29</hightemperature>
+							<lowtemperature>17</lowtemperature>
 						
-							<realfeelhigh>31</realfeelhigh>
-							<realfeellow>12</realfeellow>
+							<realfeelhigh>30</realfeelhigh>
+							<realfeellow>18</realfeellow>
 						
-							<windspeed>11</windspeed>
+							<windspeed>4</windspeed>
 						
-							<winddirection>NE</winddirection>
+							<winddirection>SW</winddirection>
 						
 							<windgust>12</windgust>
 						
@@ -516,7 +364,159 @@
 						
 							<precipamount>0.0</precipamount>
 						
-							<tstormprob>10</tstormprob>
+							<tstormprob>31</tstormprob>
+						
+					</nighttime>
+				</day>
+				<day number="4">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=4</url>
+						
+					<obsdate>8/22/2010</obsdate>
+					<daycode>Sunday</daycode>
+					
+						<sunrise>6:42 AM</sunrise>
+						<sunset>8:47 PM</sunset>
+					
+					<daytime>
+						
+							<txtshort>Partly sunny, showers around</txtshort>
+							
+							<txtlong>Partly sunny and very warm with a couple of showers</txtlong>
+							
+							<weathericon>14</weathericon>
+						
+							<hightemperature>30</hightemperature>
+							<lowtemperature>18</lowtemperature>
+						
+							<realfeelhigh>30</realfeelhigh>
+							<realfeellow>18</realfeellow>
+						
+							<windspeed>11</windspeed>
+						
+							<winddirection>WSW</winddirection>
+						
+							<windgust>30</windgust>
+						
+							<maxuv>5</maxuv>
+						
+							<rainamount>2.5</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>2.5</precipamount>
+						
+							<tstormprob>29</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>Strong thunderstorms; mild</txtshort>
+							
+							<txtlong>Watch for strong thunderstorms; mild</txtlong>
+							
+							<weathericon>42</weathericon>
+						
+							<hightemperature>30</hightemperature>
+							<lowtemperature>18</lowtemperature>
+						
+							<realfeelhigh>30</realfeelhigh>
+							<realfeellow>18</realfeellow>
+						
+							<windspeed>4</windspeed>
+						
+							<winddirection>W</winddirection>
+						
+							<windgust>17</windgust>
+						
+							<maxuv></maxuv>
+						
+							<rainamount>1.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+							<precipamount>1.0</precipamount>
+						
+							<tstormprob>95</tstormprob>
+						
+					</nighttime>
+				</day>
+				<day number="5">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=5</url>
+						
+					<obsdate>8/23/2010</obsdate>
+					<daycode>Monday</daycode>
+					
+						<sunrise>6:43 AM</sunrise>
+						<sunset>8:45 PM</sunset>
+					
+					<daytime>
+						
+							<txtshort>A couple of showers</txtshort>
+							
+							<txtlong>Times of clouds and sun with spotty showers</txtlong>
+							
+							<weathericon>14</weathericon>
+						
+							<hightemperature>25</hightemperature>
+							<lowtemperature>11</lowtemperature>
+						
+							<realfeelhigh>26</realfeelhigh>
+							<realfeellow>10</realfeellow>
+						
+							<windspeed>12</windspeed>
+						
+							<winddirection>WSW</winddirection>
+						
+							<windgust>33</windgust>
+						
+							<maxuv>4</maxuv>
+						
+							<rainamount>2.5</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>2.5</precipamount>
+						
+							<tstormprob>59</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>Cooler; a stray shower late</txtshort>
+							
+							<txtlong>Mainly clear and colder; a shower in spots late</txtlong>
+							
+							<weathericon>34</weathericon>
+						
+							<hightemperature>25</hightemperature>
+							<lowtemperature>11</lowtemperature>
+						
+							<realfeelhigh>26</realfeelhigh>
+							<realfeellow>10</realfeellow>
+						
+							<windspeed>9</windspeed>
+						
+							<winddirection>WSW</winddirection>
+						
+							<windgust>22</windgust>
+						
+							<maxuv></maxuv>
+						
+							<rainamount>0.3</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+							<precipamount>0.3</precipamount>
+						
+							<tstormprob>2</tstormprob>
 						
 					</nighttime>
 				</day>
