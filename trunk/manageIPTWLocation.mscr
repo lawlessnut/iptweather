@@ -140,5 +140,16 @@ Else
 EndIf
 
 RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
-RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 1)
+showForecastAfterChange = 0
+If (RegRead(IPTWregRoot, IPTWappRegKey, "ShowingForecast"))
+	showForecastAfterChange = 1
+Else
+	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 1)
+EndIf
+
 CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
+
+If (showForecastAfterChange)
+	CallScript(SystemPath("ScriptPath") \ "sys\waitForReadyIPT.mscr", 2)
+	CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
+EndIf
