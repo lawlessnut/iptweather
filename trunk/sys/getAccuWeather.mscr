@@ -28,7 +28,7 @@ If (IPTWaccuWeatherAPI eq "")
 EndIf
 
 If (IPTWiPhoneTodayDisabled <> 1)
-	If (NOT RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "Enabled") AND NOT ProcExists("iPhoneToday.exe"))
+	If (NOT RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "Enabled") AND NOT ProcExists("iPhoneToday.exe") AND NOT ProcExists("iPhoneTodayDesktop.exe"))
 		If (IPTWiPhoneTodayDisabled <> -1)
 			IniWrite("..\weather.ini", "User settings", "IPTWiPhoneTodayDisabled", 1)
 		EndIf
@@ -156,14 +156,14 @@ If (InternetConnected("http://www.perdu.com"))
 	dataUpdated = 1
 EndIf
 
+disconnectThenExit = 0
 If (NOT FileExists(IPTWdataFile))
 	iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
 	iPhoneTodayTemp = "N/A"
 	CallScript("IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
 	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 0)
 	CallScript("IPTWreloadS2U2.mscr", -1)
-	CallScript("IPTWdisconnect.mscr")
-	Exit
+	disconnectThenExit = 1
 EndIf
 
 If (Find(data, "<failure>") > 0 OR Find(data, "<error>") > 0)
@@ -172,11 +172,10 @@ If (Find(data, "<failure>") > 0 OR Find(data, "<error>") > 0)
 	CallScript("IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, iPhoneTodayTemp, iPhoneTodayPic)
 	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 0)
 	CallScript("IPTWreloadS2U2.mscr", -1)
-	CallScript("IPTWdisconnect.mscr")
-	Exit
+	disconnectThenExit = 1
 EndIf
 
-If (dataUpdated = 1)
+If (dataUpdated AND NOT disconnectThenExit)
 	If (Find(data,"</adc_database>") > 0)
 		xmlParserConfigFile = ReadFile(IPTWxmlParserConfigFile)
 		beginXMLPos = Find(xmlParserConfigFile, "<sourcefile>") + 12
@@ -216,15 +215,19 @@ If (dataUpdated = 1)
 		translatedCurrentText = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText)
 		If (Length(translatedCurrentText) = 0)
 			dataCTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/Quick-Look.aspx")
+WriteFile(IPTWdataFile&"CTr", dataCTr)
 			beginDesc = Find(dataCTr, "ctl00_cphContent_lblCurrentText") + 92
-			endDesc = Find(dataCTr, "</span>", beginDesc)
-			translatedCurrentText = SubStr(dataCTr, beginDesc, endDesc - beginDesc)
-			IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText, translatedCurrentText)
+			If (beginDesc > 92)
+				endDesc = Find(dataCTr, "</span>", beginDesc)
+				translatedCurrentText = SubStr(dataCTr, beginDesc, endDesc - beginDesc)
+				IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText, translatedCurrentText)
+			EndIf
 		EndIf
 
 		i = 0
 		time = Array("D", "N")
-		timeTxt = Array("", "N")
+#		timeTxt = Array("", "N")
+		timeTxt = Array("Day", "Night")
 		While (RegValueExists(IPTWregRoot, IPTWregKey, "textD" & i))
 			For j = 1 to 2
 				If (RegValueExists(IPTWregRoot, IPTWregKey, "text" & time[j] & i))
@@ -233,11 +236,17 @@ If (dataUpdated = 1)
 					If (Length(translatedForecasttext) = 0)
 						If (dataFTr eq "")
 							dataFTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/forecast.aspx")
+WriteFile(IPTWdataFile&"FTr", dataFTr)
 						EndIf
-						beginDesc = Find(dataFTr, "ctl00_cphContent_rptFC_ctl0" & i & "_lblDesc" & timeTxt[j]) + 37 + j
-						endDesc = Find(dataFTr, "</span>", beginDesc)
-						translatedForecastText = SubStr(dataFTr, beginDesc, endDesc - beginDesc)
-						IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", forecastText, translatedForecastText)
+#						beginDesc = Find(dataFTr, "ctl00_cphContent_rptFC_ctl0" & i & "_lblDesc" & timeTxt[j]) + 37 + Length(timeTxt[j])
+#						searchString = "ctl00_cphContent_rptFC_ctl0" & i & "_lblDesc" & timeTxt[j]
+						searchString = "ctl00_cphContent_repForecast" & timeTxt[j] &"_ctl0" & i & "_lblDesc"">"
+						beginDesc = Find(dataFTr, searchString) + Length(searchString)
+						If (beginDesc > Length(searchString))
+							endDesc = Find(dataFTr, "</span>", beginDesc)
+							translatedForecastText = SubStr(dataFTr, beginDesc, endDesc - beginDesc)
+							IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", forecastText, translatedForecastText)
+						EndIf
 					EndIf
 				EndIf
 			Next
@@ -246,7 +255,29 @@ If (dataUpdated = 1)
 	EndIf
 EndIf
 
-CallScript("IPTWdisconnect.mscr")
+If (IPTWdisconnectOnExit AND didconnect)
+	If (IPTWinternetConnection eq "VJVolubilis")
+		If (FileExists(IPTWvjvolubilisPath))
+			Run(IPTWvjvolubilisPath, "-gprsoff")
+		EndIf
+	Else
+		CloseConnection
+		Disconnect
+	EndIf
+EndIf
+
+If (IPTWpreventSleepOnUpdate)
+	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout", BattSuspendTimeout)
+	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout", ACSuspendTimeout)
+	RegWriteDword ("HKCU", "ControlPanel\Backlight", "BatteryTimeout", BatteryTimeout)
+	RegWriteDword ("HKCU", "ControlPanel\Backlight", "ACTimeout", ACTimeout)
+
+	RegWriteDword(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented", 0)
+EndIf
+
+If (disconnectThenExit)
+	Exit
+EndIf
 
 # ############################################################################
 # new data observation date and time
