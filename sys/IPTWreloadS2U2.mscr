@@ -9,11 +9,13 @@ If (argv[1] < 0)
 		EndIf
 		oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
 		IPTWS2U2UserWeatherIconToForce = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherIconToForce")
+		S2U2Text = "N/A"
 		If (IPTWS2U2UserWeatherIconToForce ne "")
-			newS2U2weather = "C|" & IPTWS2U2UserWeatherIconToForce & "|N/A"
+			S2U2Pic = IPTWS2U2UserWeatherIconToForce
 		Else
-			newS2U2weather = "C|10000|N/A"
+			S2U2Pic = 10000
 		EndIf
+		Call S2U2UserWeather
 		If (oldS2U2weather ne newS2U2weather)
 			RegWriteString("HKCU", "\Software\A_C\S2U2\", "UserWeather", newS2U2weather)
 			reloadS2U2 = TRUE
@@ -108,7 +110,7 @@ Else
 
 			CallScript("IPTWS2U2iconText.mscr", argv[1], 1, "D")
 
-			newS2U2weather = "C|" & S2U2Pic & "|" & S2U2Text
+			Call S2U2UserWeather
 			If (oldS2U2weather ne newS2U2weather)
 				RegWriteString("HKCU", "\Software\A_C\S2U2\", "UserWeather", newS2U2weather)
 				reloadS2U2 = TRUE
@@ -132,7 +134,7 @@ Else
 
 				CallScript("IPTWS2U2iconText.mscr", 0, 0, "")
 
-				newS2U2weather = "C|" & S2U2Pic & "|" & S2U2Text
+				Call S2U2UserWeather
 				If (oldS2U2weather ne newS2U2weather)
 					RegWriteString("HKCU", "\Software\A_C\S2U2\", "UserWeather", newS2U2weather)
 					reloadS2U2 = TRUE
@@ -148,7 +150,7 @@ Else
 
 				CallScript("IPTWS2U2iconText.mscr", iconNum, 1, suffix)
 
-				newS2U2weather = "C|" & S2U2Pic & "|" & S2U2Text
+				Call S2U2UserWeather
 				If (oldS2U2weather ne newS2U2weather)
 					RegWriteString("HKCU", "\Software\A_C\S2U2\", "UserWeather", newS2U2weather)
 					reloadS2U2 = TRUE
@@ -251,3 +253,27 @@ If (reloadS2U2)
 EndIf
 
 CallScript("userScriptOnUpdate.mscr", argv[1])
+
+Sub S2U2UserWeather
+
+IPTWS2U2UserWeatherIconsPath = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherIconsPath")
+
+If (IPTWS2U2UserWeatherIconsPath ne "")
+	prevNum = Split(RegRead("HKCU","Software\A_C\S2U2","UserWeather"), "|")
+	prevNum = prevNum[2]
+	If (prevNum eq S2U2Pic)
+		newS2U2weather = "C|" & S2U2Pic & "|" & S2U2Text
+	Else
+		If (FileExists(IPTWS2U2Path  \ "gfx\weather" \ Eval(prevNum) & ".png"))
+			Delete(IPTWS2U2Path \ "gfx\weather" \ Eval(prevNum) & ".png")
+		EndIf
+
+		Copy(IPTWS2U2UserWeatherIconsPath \ Eval(S2U2Pic) & ".png", IPTWS2U2Path \ "gfx\weather" \ Eval(S2U2Pic) & ".png", TRUE)
+		newS2U2weather = "C|" & S2U2Pic & "|" & S2U2Text
+	EndIf
+Else
+	newS2U2weather = "C|" & S2U2Pic & "|" & S2U2Text
+EndIf
+
+EndSub
+
