@@ -42,7 +42,7 @@ IPTWregKey					= IniRead("weather.ini", "Script settings", "IPTWregKey") \ IPTWa
 IPTWgetAccuWeatherScript	= "getAccuWeather.mscr"
 
 If (IPTWiPhoneTodayDisabled <> 1)
-	If (NOT RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "Enabled") AND NOT ProcExists("iPhoneToday.exe"))
+	If (NOT RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "Enabled") AND NOT ProcExists("iPhoneToday.exe") AND NOT ProcExists("iPhoneTodayDesktop.exe"))
 		If (IPTWiPhoneTodayDisabled <> -1)
 			IniWrite("weather.ini", "User settings", "IPTWiPhoneTodayDisabled", 1)
 		EndIf
