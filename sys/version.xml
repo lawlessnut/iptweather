@@ -1,7 +1,7 @@
 <application>
 <name>IPTWeather</name>
-<version>20100712</version>
-<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br /><br />Please make a backup of your weather.ini file before installing the cab!<br /><br />What's new in IPTWeather_20100712:<br />- Added parameter IPTWhideRealFeelInForecastIcons to set to 1 no to show Real Feel temperatures in weather forecast icons in iPhoneToday.<br />- Added parameter IPTWwriteForecastInFile to set to 1 to write icons in the icons.xml file of iPhoneToday.</description>
+<version>20100826</version>
+<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br /><br />Please make a backup of your weather.ini file before installing the cab!<br /><br />What's new in IPTWeather_20100826:<br />- If no weather translation found, then use default non-translated language.<br />- Added IPTWS2U2UserWeatherIconsPath setting to use any path for S2U2 weather icons (by default, old behaviour by using icons in the S2U2\gfx\weather folder).<br />- Added IPTWalsoDisplayOriginalDescInIPT option to display non-translated weather description in the iPhoneToday pop-ups.<br />- Weather translation compatible with the new AccuWeather site coding.<br />- Compatible with the iPhoneTodayDesktop.exe version.<br />- Removed IPTWdisconnect.mscr script for better disconnection management.<br />- Keep forecast weather icons expanded in iPhoneToday after changing location.<br />- Now, by default, IPTWtranslationLanguageCode is empty so there is no weather description translation.<br />- Added lang_fr.ini fo French lang.ini file to rename to lang.ini to have French text in iPhoneToday.</description>
 <versionurl>http://iptweather.googlecode.com/files/version.xml</versionurl>
-<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100712.cab</caburl>
+<caburl>http://iptweather.googlecode.com/files/IPTWeather_20100826.cab</caburl>
 </application>
