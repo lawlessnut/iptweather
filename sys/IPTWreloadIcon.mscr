@@ -12,9 +12,18 @@ If (NOT IPTWiPhoneTodayDisabled)
 		CallScript("waitForReadyIPT.mscr", 1)
 	EndIf
 
+	If (argv[3] eq "N/A" or argv[3] eq "Error")
+		iconName = argv[3]
+	ElseIf (iconName = 0)
+		CallScript("IPTWtextPattern.mscr", 0, 0, "", "User settings", "IPTWcurrentWeatherIconTextPattern")
+		iconName = textPattern
+	Else
+		CallScript("IPTWtextPattern.mscr", argv[3], 1, suffix, "User settings", "IPTWcurrentWeatherIconTextPattern")
+		iconName = IPTWobsoleteDataPrefix & textPattern
+	EndIf
 	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", argv[1])
 	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", argv[2])
-	RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", argv[3])
+	RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", iconName )
 	RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ argv[4])
 	RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 2)
 
