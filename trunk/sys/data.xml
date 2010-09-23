@@ -13,7 +13,7 @@
 	<state>Belgium</state>
 	<lat>50.83</lat> 
 	<lon>4.33</lon>
-	<time>12:00</time>
+	<time>17:26</time>
 	<timeZone>01:00</timeZone>
 	<obsDaylight>1</obsDaylight>
 	<isDaylight>True</isDaylight>
@@ -23,31 +23,31 @@
 			
 				<url>http://www.accuweather.com/world-index-forecast.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS</url>
 				
-				<observationtime>12:00 PM</observationtime>
+				<observationtime>5:26 PM</observationtime>
 			
 				<pressure state="Steady">102</pressure>
 			
-				<temperature>18</temperature>
+				<temperature>20</temperature>
 			
-				<realfeel>19</realfeel>
+				<realfeel>20</realfeel>
 			
-				<humidity>72%</humidity>
+				<humidity>63%</humidity>
 			
 				<weathertext>Partly Sunny</weathertext>
 			
 				<weathericon>03</weathericon>
 			
-				<windgusts>16</windgusts>
+				<windgusts>3</windgusts>
 			
-				<windspeed>16</windspeed>
+				<windspeed>3</windspeed>
 			
-				<winddirection>WSW</winddirection>
+				<winddirection>N</winddirection>
 			
 				<visibility>16</visibility>
 			
 				<precip>0.0</precip>
 			
-				<uvindex index="4">Moderate</uvindex>
+				<uvindex index="0">Low</uvindex>
 			
 				<dewpoint>13</dewpoint>
 			
@@ -57,83 +57,83 @@
 		</currentconditions>
 		
 			<planets>
-				<sun rise="6:37 AM" set="8:54 PM"/>
-				<moon rise="6:49 PM" set="No Rise"/>
-				<mercury rise="8:58 AM" set="9:15 PM"/>
-<venus rise="11:00 AM" set="10:09 PM"/>
-<mars rise="10:58 AM" set="10:21 PM"/>
-<jupiter rise="10:02 PM" set="10:06 AM"/>
-<saturn rise="9:58 AM" set="10:15 PM"/>
-<uranus rise="9:53 PM" set="9:54 AM"/>
-<neptune rise="8:52 PM" set="6:52 AM"/>
-<pluto rise="5:37 PM" set="2:34 AM"/>
+				<sun rise="7:29 AM" set="7:42 PM"/>
+				<moon rise="6:55 PM" set="6:33 AM"/>
+				<mercury rise="5:44 AM" set="7:19 PM"/>
+<venus rise="11:36 AM" set="8:22 PM"/>
+<mars rise="10:51 AM" set="8:49 PM"/>
+<jupiter rise="7:46 PM" set="7:34 AM"/>
+<saturn rise="8:09 AM" set="8:12 PM"/>
+<uranus rise="7:41 PM" set="7:37 AM"/>
+<neptune rise="6:40 PM" set="4:37 AM"/>
+<pluto rise="3:27 PM" set="12:23 AM"/>
 
 			</planets>
 			<moon>
 				
-					<phase date="8/19/2010" text="Waxing Gibbous" >8</phase>
+					<phase date="9/21/2010" text="Waxing Gibbous" >11</phase>
 			
-					<phase date="8/20/2010" text="Waxing Gibbous" >9</phase>
+					<phase date="9/22/2010" text="Waxing Gibbous" >12</phase>
 			
-					<phase date="8/21/2010" text="Waxing Gibbous" >10</phase>
+					<phase date="9/23/2010" text="Full" >14</phase>
 			
-					<phase date="8/22/2010" text="Waxing Gibbous" >11</phase>
+					<phase date="9/24/2010" text="Full" >14</phase>
 			
-					<phase date="8/23/2010" text="Waxing Gibbous" >12</phase>
+					<phase date="9/25/2010" text="Waning Gibbous" >15</phase>
 			
-					<phase date="8/24/2010" text="Full" >14</phase>
+					<phase date="9/26/2010" text="Waning Gibbous" >16</phase>
 			
-					<phase date="8/25/2010" text="Full" >14</phase>
+					<phase date="9/27/2010" text="Waning Gibbous" >17</phase>
 			
-					<phase date="8/26/2010" text="Waning Gibbous" >15</phase>
+					<phase date="9/28/2010" text="Waning Gibbous" >18</phase>
 			
-					<phase date="8/27/2010" text="Waning Gibbous" >16</phase>
+					<phase date="9/29/2010" text="Waning Gibbous" >19</phase>
 			
-					<phase date="8/28/2010" text="Waning Gibbous" >17</phase>
+					<phase date="9/30/2010" text="Waning Gibbous" >20</phase>
 			
-					<phase date="8/29/2010" text="Waning Gibbous" >18</phase>
+					<phase date="10/1/2010" text="Last" >21</phase>
 			
-					<phase date="8/30/2010" text="Waning Gibbous" >19</phase>
+					<phase date="10/2/2010" text="Waning Crescent" >23</phase>
 			
-					<phase date="8/31/2010" text="Waning Gibbous" >20</phase>
+					<phase date="10/3/2010" text="Waning Crescent" >24</phase>
 			
-					<phase date="9/1/2010" text="Last" >21</phase>
+					<phase date="10/4/2010" text="Waning Crescent" >25</phase>
 			
-					<phase date="9/2/2010" text="Waning Crescent" >22</phase>
+					<phase date="10/5/2010" text="Waning Crescent" >26</phase>
 			
-					<phase date="9/3/2010" text="Waning Crescent" >23</phase>
+					<phase date="10/6/2010" text="Waning Crescent" >27</phase>
 			
-					<phase date="9/4/2010" text="Waning Crescent" >24</phase>
+					<phase date="10/7/2010" text="New" >1</phase>
 			
-					<phase date="9/5/2010" text="Waning Crescent" >25</phase>
+					<phase date="10/8/2010" text="New" >1</phase>
 			
-					<phase date="9/6/2010" text="Waning Crescent" >26</phase>
+					<phase date="10/9/2010" text="New" >1</phase>
 			
-					<phase date="9/7/2010" text="Waning Crescent" >27</phase>
+					<phase date="10/10/2010" text="New" >1</phase>
 			
-					<phase date="9/8/2010" text="New" >1</phase>
+					<phase date="10/11/2010" text="Waxing Crescent" >2</phase>
 			
-					<phase date="9/9/2010" text="New" >1</phase>
+					<phase date="10/12/2010" text="Waxing Crescent" >3</phase>
 			
-					<phase date="9/10/2010" text="New" >1</phase>
+					<phase date="10/13/2010" text="Waxing Crescent" >4</phase>
 			
-					<phase date="9/11/2010" text="New" >1</phase>
+					<phase date="10/14/2010" text="First" >7</phase>
 			
-					<phase date="9/12/2010" text="Waxing Crescent" >2</phase>
+					<phase date="10/15/2010" text="Waxing Crescent" >6</phase>
 			
-					<phase date="9/13/2010" text="Waxing Crescent" >3</phase>
+					<phase date="10/16/2010" text="First" >7</phase>
 			
-					<phase date="9/14/2010" text="Waxing Crescent" >4</phase>
+					<phase date="10/17/2010" text="Waxing Gibbous" >8</phase>
 			
-					<phase date="9/15/2010" text="First" >7</phase>
+					<phase date="10/18/2010" text="Waxing Gibbous" >9</phase>
 			
-					<phase date="9/16/2010" text="Waxing Crescent" >6</phase>
+					<phase date="10/19/2010" text="Waxing Gibbous" >10</phase>
 			
-					<phase date="9/17/2010" text="First" >7</phase>
+					<phase date="10/20/2010" text="Waxing Gibbous" >11</phase>
 			
-					<phase date="9/18/2010" text="Waxing Gibbous" >8</phase>
+					<phase date="10/21/2010" text="Waxing Gibbous" >12</phase>
 			
-					<phase date="9/19/2010" text="Waxing Gibbous" >9</phase>
+					<phase date="10/22/2010" text="Waxing Gibbous" >13</phase>
 			
 			</moon>
 		
@@ -143,64 +143,64 @@
 					<day number="1">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=1</url>
 						
-					<obsdate>8/19/2010</obsdate>
-					<daycode>Thursday</daycode>
+					<obsdate>9/21/2010</obsdate>
+					<daycode>Tuesday</daycode>
 					
-						<sunrise>6:37 AM</sunrise>
-						<sunset>8:54 PM</sunset>
+						<sunrise>7:29 AM</sunrise>
+						<sunset>7:42 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>Partial sunshine with a shower</txtshort>
+							<txtshort>Sun and some clouds</txtshort>
 							
-							<txtlong>Partial sunshine with a shower</txtlong>
+							<txtlong>Sun and some clouds</txtlong>
 							
-							<weathericon>14</weathericon>
+							<weathericon>03</weathericon>
 						
 							<hightemperature>21</hightemperature>
-							<lowtemperature>14</lowtemperature>
+							<lowtemperature>11</lowtemperature>
 						
-							<realfeelhigh>21</realfeelhigh>
-							<realfeellow>13</realfeellow>
+							<realfeelhigh>22</realfeelhigh>
+							<realfeellow>12</realfeellow>
 						
-							<windspeed>14</windspeed>
+							<windspeed>3</windspeed>
 						
-							<winddirection>SSW</winddirection>
+							<winddirection>SE</winddirection>
 						
-							<windgust>33</windgust>
+							<windgust>11</windgust>
 						
-							<maxuv>5</maxuv>
+							<maxuv>3</maxuv>
 						
-							<rainamount>2.0</rainamount>
+							<rainamount>0.0</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>2.0</precipamount>
+						<precipamount>0.0</precipamount>
 						
-							<tstormprob>20</tstormprob>
+							<tstormprob>0</tstormprob>
 						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Partly cloudy</txtshort>
+							<txtshort>Clear and moonlit</txtshort>
 							
-							<txtlong>Partly cloudy</txtlong>
+							<txtlong>Clear and moonlit</txtlong>
 							
-							<weathericon>36</weathericon>
+							<weathericon>33</weathericon>
 						
 							<hightemperature>21</hightemperature>
-							<lowtemperature>14</lowtemperature>
+							<lowtemperature>11</lowtemperature>
 						
-							<realfeelhigh>21</realfeelhigh>
-							<realfeellow>13</realfeellow>
+							<realfeelhigh>22</realfeelhigh>
+							<realfeellow>12</realfeellow>
 						
 							<windspeed>8</windspeed>
 						
-							<winddirection>S</winddirection>
+							<winddirection>SE</winddirection>
 						
-							<windgust>19</windgust>
+							<windgust>16</windgust>
 						
 							<maxuv></maxuv>
 						
@@ -219,33 +219,33 @@
 				<day number="2">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=2</url>
 						
-					<obsdate>8/20/2010</obsdate>
-					<daycode>Friday</daycode>
+					<obsdate>9/22/2010</obsdate>
+					<daycode>Wednesday</daycode>
 					
-						<sunrise>6:39 AM</sunrise>
-						<sunset>8:52 PM</sunset>
+						<sunrise>7:30 AM</sunrise>
+						<sunset>7:39 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>Mostly sunny and pleasant</txtshort>
+							<txtshort>Sunny and beautiful</txtshort>
 							
-							<txtlong>Mostly sunny and pleasant</txtlong>
+							<txtlong>Sunny and beautiful</txtlong>
 							
-							<weathericon>02</weathericon>
+							<weathericon>01</weathericon>
 						
-							<hightemperature>24</hightemperature>
-							<lowtemperature>17</lowtemperature>
+							<hightemperature>22</hightemperature>
+							<lowtemperature>13</lowtemperature>
 						
-							<realfeelhigh>26</realfeelhigh>
-							<realfeellow>17</realfeellow>
+							<realfeelhigh>23</realfeelhigh>
+							<realfeellow>12</realfeellow>
 						
-							<windspeed>11</windspeed>
+							<windspeed>8</windspeed>
 						
-							<winddirection>SSW</winddirection>
+							<winddirection>S</winddirection>
 						
-							<windgust>25</windgust>
+							<windgust>16</windgust>
 						
-							<maxuv>5</maxuv>
+							<maxuv>3</maxuv>
 						
 							<rainamount>0.0</rainamount>
 						
@@ -255,26 +255,26 @@
 						
 						<precipamount>0.0</precipamount>
 						
-							<tstormprob>1</tstormprob>
+							<tstormprob>0</tstormprob>
 						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Mainly clear</txtshort>
+							<txtshort>Patchy clouds</txtshort>
 							
-							<txtlong>Mainly clear</txtlong>
+							<txtlong>Patchy clouds</txtlong>
 							
-							<weathericon>34</weathericon>
+							<weathericon>35</weathericon>
 						
-							<hightemperature>24</hightemperature>
-							<lowtemperature>17</lowtemperature>
+							<hightemperature>22</hightemperature>
+							<lowtemperature>13</lowtemperature>
 						
-							<realfeelhigh>26</realfeelhigh>
-							<realfeellow>17</realfeellow>
+							<realfeelhigh>23</realfeelhigh>
+							<realfeellow>12</realfeellow>
 						
-							<windspeed>8</windspeed>
+							<windspeed>9</windspeed>
 						
-							<winddirection>SSW</winddirection>
+							<winddirection>S</winddirection>
 						
 							<windgust>17</windgust>
 						
@@ -295,109 +295,142 @@
 				<day number="3">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=3</url>
 						
-					<obsdate>8/21/2010</obsdate>
-					<daycode>Saturday</daycode>
+					<obsdate>9/23/2010</obsdate>
+					<daycode>Thursday</daycode>
 					
-						<sunrise>6:40 AM</sunrise>
-						<sunset>8:49 PM</sunset>
+						<sunrise>7:32 AM</sunrise>
+						<sunset>7:37 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>Sunny and very warm</txtshort>
+							<txtshort>A shower in the afternoon</txtshort>
 							
-							<txtlong>Sunny and very warm</txtlong>
+							<txtlong>Times of sun and clouds with a passing shower in the afternoon</txtlong>
 							
-							<weathericon>01</weathericon>
+							<weathericon>14</weathericon>
 						
-							<hightemperature>29</hightemperature>
-							<lowtemperature>17</lowtemperature>
+							<hightemperature>23</hightemperature>
+							<lowtemperature>14</lowtemperature>
 						
-							<realfeelhigh>30</realfeelhigh>
-							<realfeellow>18</realfeellow>
+							<realfeelhigh>23</realfeelhigh>
+							<realfeellow>15</realfeellow>
 						
-							<windspeed>9</windspeed>
+							<windspeed>11</windspeed>
 						
-							<winddirection>SW</winddirection>
+							<winddirection>SSW</winddirection>
 						
-							<windgust>24</windgust>
+							<windgust>28</windgust>
 						
-							<maxuv>5</maxuv>
+							<maxuv>3</maxuv>
 						
-							<rainamount>0.0</rainamount>
+							<rainamount>0.8</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>0.0</precipamount>
+						<precipamount>0.8</precipamount>
 						
-							<tstormprob>31</tstormprob>
+							<tstormprob>11</tstormprob>
 						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>A moonlit sky</txtshort>
+							<txtshort>Periods of rain</txtshort>
 							
-							<txtlong>A moonlit sky</txtlong>
+							<txtlong>Periods of rain</txtlong>
 							
-							<weathericon>33</weathericon>
+							<weathericon>18</weathericon>
 						
-							<hightemperature>29</hightemperature>
-							<lowtemperature>17</lowtemperature>
+							<hightemperature>23</hightemperature>
+							<lowtemperature>14</lowtemperature>
 						
-							<realfeelhigh>30</realfeelhigh>
-							<realfeellow>18</realfeellow>
+							<realfeelhigh>23</realfeelhigh>
+							<realfeellow>15</realfeellow>
 						
-							<windspeed>4</windspeed>
+							<windspeed>8</windspeed>
 						
 							<winddirection>SW</winddirection>
 						
-							<windgust>12</windgust>
+							<windgust>20</windgust>
 						
 							<maxuv></maxuv>
 						
-							<rainamount>0.0</rainamount>
+							<rainamount>7.1</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-							<precipamount>0.0</precipamount>
+							<precipamount>7.1</precipamount>
 						
-							<tstormprob>31</tstormprob>
+							<tstormprob>39</tstormprob>
 						
 					</nighttime>
 				</day>
 				<day number="4">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=4</url>
 						
-					<obsdate>8/22/2010</obsdate>
-					<daycode>Sunday</daycode>
+					<obsdate>9/24/2010</obsdate>
+					<daycode>Friday</daycode>
 					
-						<sunrise>6:42 AM</sunrise>
-						<sunset>8:47 PM</sunset>
+						<sunrise>7:33 AM</sunrise>
+						<sunset>7:35 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>Partly sunny, showers around</txtshort>
+							<txtshort>Not as warm with rain</txtshort>
 							
-							<txtlong>Partly sunny and very warm with a couple of showers</txtlong>
+							<txtlong>Not as warm with periods of rain</txtlong>
 							
-							<weathericon>14</weathericon>
+							<weathericon>18</weathericon>
 						
-							<hightemperature>30</hightemperature>
-							<lowtemperature>18</lowtemperature>
+							<hightemperature>19</hightemperature>
+							<lowtemperature>11</lowtemperature>
 						
-							<realfeelhigh>30</realfeelhigh>
-							<realfeellow>18</realfeellow>
+							<realfeelhigh>18</realfeelhigh>
+							<realfeellow>9</realfeellow>
 						
-							<windspeed>11</windspeed>
+							<windspeed>14</windspeed>
 						
 							<winddirection>WSW</winddirection>
 						
 							<windgust>30</windgust>
 						
-							<maxuv>5</maxuv>
+							<maxuv>3</maxuv>
+						
+							<rainamount>6.1</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>6.1</precipamount>
+						
+							<tstormprob>24</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>Rain</txtshort>
+							
+							<txtlong>Rain</txtlong>
+							
+							<weathericon>18</weathericon>
+						
+							<hightemperature>19</hightemperature>
+							<lowtemperature>11</lowtemperature>
+						
+							<realfeelhigh>18</realfeelhigh>
+							<realfeellow>9</realfeellow>
+						
+							<windspeed>12</windspeed>
+						
+							<winddirection>WNW</winddirection>
+						
+							<windgust>27</windgust>
+						
+							<maxuv></maxuv>
 						
 							<rainamount>2.5</rainamount>
 						
@@ -405,118 +438,85 @@
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>2.5</precipamount>
+							<precipamount>2.5</precipamount>
 						
-							<tstormprob>29</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>Strong thunderstorms; mild</txtshort>
-							
-							<txtlong>Watch for strong thunderstorms; mild</txtlong>
-							
-							<weathericon>42</weathericon>
-						
-							<hightemperature>30</hightemperature>
-							<lowtemperature>18</lowtemperature>
-						
-							<realfeelhigh>30</realfeelhigh>
-							<realfeellow>18</realfeellow>
-						
-							<windspeed>4</windspeed>
-						
-							<winddirection>W</winddirection>
-						
-							<windgust>17</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>1.0</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>1.0</precipamount>
-						
-							<tstormprob>95</tstormprob>
+							<tstormprob>14</tstormprob>
 						
 					</nighttime>
 				</day>
 				<day number="5">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=rdona&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=5</url>
 						
-					<obsdate>8/23/2010</obsdate>
-					<daycode>Monday</daycode>
+					<obsdate>9/25/2010</obsdate>
+					<daycode>Saturday</daycode>
 					
-						<sunrise>6:43 AM</sunrise>
-						<sunset>8:45 PM</sunset>
+						<sunrise>7:35 AM</sunrise>
+						<sunset>7:33 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>A couple of showers</txtshort>
+							<txtshort>Cloudy with showers around</txtshort>
 							
-							<txtlong>Times of clouds and sun with spotty showers</txtlong>
+							<txtlong>Cloudy with a couple of showers</txtlong>
 							
-							<weathericon>14</weathericon>
+							<weathericon>12</weathericon>
 						
-							<hightemperature>25</hightemperature>
-							<lowtemperature>11</lowtemperature>
+							<hightemperature>18</hightemperature>
+							<lowtemperature>9</lowtemperature>
 						
-							<realfeelhigh>26</realfeelhigh>
-							<realfeellow>10</realfeellow>
+							<realfeelhigh>16</realfeelhigh>
+							<realfeellow>8</realfeellow>
 						
-							<windspeed>12</windspeed>
+							<windspeed>17</windspeed>
 						
-							<winddirection>WSW</winddirection>
+							<winddirection>NW</winddirection>
 						
-							<windgust>33</windgust>
+							<windgust>38</windgust>
 						
-							<maxuv>4</maxuv>
+							<maxuv>1</maxuv>
 						
-							<rainamount>2.5</rainamount>
+							<rainamount>1.8</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>2.5</precipamount>
+						<precipamount>1.8</precipamount>
 						
-							<tstormprob>59</tstormprob>
+							<tstormprob>11</tstormprob>
 						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Cooler; a stray shower late</txtshort>
+							<txtshort>Rain</txtshort>
 							
-							<txtlong>Mainly clear and colder; a shower in spots late</txtlong>
+							<txtlong>Rain</txtlong>
 							
-							<weathericon>34</weathericon>
+							<weathericon>18</weathericon>
 						
-							<hightemperature>25</hightemperature>
-							<lowtemperature>11</lowtemperature>
+							<hightemperature>18</hightemperature>
+							<lowtemperature>9</lowtemperature>
 						
-							<realfeelhigh>26</realfeelhigh>
-							<realfeellow>10</realfeellow>
+							<realfeelhigh>16</realfeelhigh>
+							<realfeellow>8</realfeellow>
 						
-							<windspeed>9</windspeed>
+							<windspeed>14</windspeed>
 						
-							<winddirection>WSW</winddirection>
+							<winddirection>NNW</winddirection>
 						
-							<windgust>22</windgust>
+							<windgust>30</windgust>
 						
 							<maxuv></maxuv>
 						
-							<rainamount>0.3</rainamount>
+							<rainamount>3.6</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-							<precipamount>0.3</precipamount>
+							<precipamount>3.6</precipamount>
 						
-							<tstormprob>2</tstormprob>
+							<tstormprob>0</tstormprob>
 						
 					</nighttime>
 				</day>
