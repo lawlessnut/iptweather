@@ -1,5 +1,5 @@
 reloadS2U2 = FALSE
-IPTWS2U2Path = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2Path")
+IPTWS2U2Path = SystemPath("ProgramFiles") \ "S2U2"
 If (argv[1] < 0)
 	IPTWtomorrowForecastInS2U2UserWeather = IniRead("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather")
 	If (IPTWtomorrowForecastInS2U2UserWeather = 1 OR IPTWtomorrowForecastInS2U2UserWeather = -1)
@@ -48,6 +48,12 @@ If (argv[1] < 0)
 
 		If (IPTWtodayForecastInS2U2Wallpaper)
 			RegWriteString("HKCU", "\Software\A_C\S2U2\", "Wallpaper", wallpaper)
+		EndIf
+
+		IPTWS2U2WallpaperLPath = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperLPath")
+		If (IPTWtodayForecastInS2U2Wallpaper AND IPTWS2U2WallpaperLPath ne "")
+			wallpaperL = IPTWS2U2WallpaperLPath \ IniRead("..\weather.ini", "S2U2 settings", "IPTWdefautS2U2WallpaperL") & "." & IPTWS2U2WallpaperExtension
+			RegWriteString("HKCU", "\Software\A_C\S2U2\", "WallpaperL", wallpaperL)
 		EndIf
 
 		If (IPTWuseS2U2wallpaperForBackground AND IPTWiPhoneTodayDisabled <> 1)
@@ -108,9 +114,11 @@ Else
 				S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "iconD" & argv[1])
 			EndIf
 
-			CallScript("IPTWS2U2iconText.mscr", argv[1], 1, "D")
+			CallScript("IPTWtextPattern.mscr", argv[1], 1, "D", "S2U2 settings", "IPTWS2U2UserWeatherTextPattern")
+			S2U2Text = textPattern
 
 			Call S2U2UserWeather
+
 			If (oldS2U2weather ne newS2U2weather)
 				RegWriteString("HKCU", "\Software\A_C\S2U2\", "UserWeather", newS2U2weather)
 				reloadS2U2 = TRUE
@@ -120,7 +128,6 @@ Else
 				RegWriteBinary("HKCU", "Software\A_C\S2U2", "ShowWeather","05")
 				reloadS2U2 = TRUE
 			EndIf
-			IPTWS2U2UserWeatherTextPattern = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherTextPattern")
 			obsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
 			obsdate = SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2) & "/" & Part(obsdate, "/", 3)
 			If ((iconNum = 0) AND (currentDate eq obsdate))
@@ -132,7 +139,8 @@ Else
 					S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "icon0")
 				EndIf
 
-				CallScript("IPTWS2U2iconText.mscr", 0, 0, "")
+				CallScript("IPTWtextPattern.mscr", 0, 0, "", "S2U2 settings", "IPTWS2U2UserWeatherTextPattern")
+				S2U2Text = textPattern
 
 				Call S2U2UserWeather
 				If (oldS2U2weather ne newS2U2weather)
@@ -148,7 +156,8 @@ Else
 					S2U2Pic = RegRead(IPTWregRoot, IPTWregKey, "icon" & suffix & iconNum)
 				EndIf
 
-				CallScript("IPTWS2U2iconText.mscr", iconNum, 1, suffix)
+				CallScript("IPTWtextPattern.mscr", iconNum, 1, suffix, "S2U2 settings", "IPTWS2U2UserWeatherTextPattern")
+				S2U2Text = textPattern
 
 				Call S2U2UserWeather
 				If (oldS2U2weather ne newS2U2weather)
@@ -189,6 +198,17 @@ Else
 				wallpaper = IPTWS2U2WallpaperPath \ Eval(RegRead(IPTWregRoot, IPTWregKey, "icon" & suffix & iconNum)) & "." & IPTWS2U2WallpaperExtension
 			EndIf
 			RegWriteString("HKCU", "\Software\A_C\S2U2\", "Wallpaper", wallpaper)
+
+			IPTWS2U2WallpaperLPath = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperLPath")
+
+			If (IPTWS2U2WallpaperLPath ne "")
+				If (IPTWtodayForecastInS2U2Wallpaper = -1)
+					wallpaperL = IPTWS2U2WallpaperLPath \ Eval(RegRead(IPTWregRoot, IPTWregKey, "icon0")) & "." & IPTWS2U2WallpaperExtension
+				Else
+					wallpaperL = IPTWS2U2WallpaperLPath \ Eval(RegRead(IPTWregRoot, IPTWregKey, "icon" & suffix & iconNum)) & "." & IPTWS2U2WallpaperExtension
+				EndIf
+				RegWriteString("HKCU", "\Software\A_C\S2U2\", "WallpaperL", wallpaperL)
+			EndIf
 
 			If (IPTWuseS2U2wallpaperForBackground AND IPTWiPhoneTodayDisabled <> 1)
 				IPTWiPhoneTodayPath = RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "DLL")
