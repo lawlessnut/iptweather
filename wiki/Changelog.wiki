@@ -1,6 +1,6 @@
 #summary Changelog of IPTWeather.
 
-=== IPTWeather_20100829 Killing Dragon ===
+=== IPTWeather Killing Dragon (aKa IPTWeather_20100929) ===
   * More generic IPTWreloadIcon.mscr script to allow customizing of icon texts in iPhoneToday.
   * IPTWeather doesn't remove any notification anymore if IPTWdelayHours=0 OR IPTWdelayMinutes=0. Usefull to use an external notification system.
   * Removed setting IPTWS2U2Path.
