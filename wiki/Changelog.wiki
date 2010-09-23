@@ -6,7 +6,6 @@
   * Removed setting IPTWS2U2Path.
   * Removed setting IPTWhideRealFeelInForecastIcons.
   * Replaced IPTWS2U2iconText.mscr script by more generic IPTWtextPattern.mscr script.
-  * Added setting IPTWS2U2WallpaperLPath.
   * Added setting IPTWhideNightForecastIcons.
   * Added settings IPTWcurrentWeatherIconTextPattern and IPTWforecastWeatherIconsTextPattern to customize icon texts in iPhoneToday.
   * Added symbols %DAY%, %SDAY%, %PT% and %PRFT% for the three <...>TextPattern settings (check weather.ini file comments for more help).
