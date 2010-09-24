@@ -4,7 +4,7 @@
   * More generic IPTWreloadIcon.mscr script to allow customizing of icon texts in iPhoneToday.
   * IPTWeather doesn't remove any notification anymore if IPTWdelayHours=0 OR IPTWdelayMinutes=0. Usefull to use an external notification system.
   * Removed setting IPTWS2U2Path.
-  * Removed setting IPTWhideRealFeelInForecastIcons.
+  * Removed setting IPTWhideRealFeelInForecastIcons (configure IPTWforecastWeatherIconsTextPattern instead).
   * Replaced IPTWS2U2iconText.mscr script by more generic IPTWtextPattern.mscr script.
   * Added setting IPTWhideNightForecastIcons.
   * Added settings IPTWcurrentWeatherIconTextPattern and IPTWforecastWeatherIconsTextPattern to customize icon texts in iPhoneToday.
