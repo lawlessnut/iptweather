@@ -1,0 +1,139 @@
+fileName = argv[1]
+iniFile = ReadFile(fileName)
+
+SetMessageFont(10)
+StatusType(ST_MESSAGE, 0)
+StatusMessage("Loading " & fileName & " sections")
+index = 1
+beginPos = Find(iniFile, "[")
+While (beginPos > 0)
+	StatusMessageAppend(".")
+	endPos = Find(iniFile, "]", beginPos)
+	section = SubStr(iniFile, beginPos + 1, endPos - beginPos - 1)
+	If (SubStr(iniFile, endPos + 1, 1) eq "^CR^")
+		sectionList[index] = section
+		index = index + 1
+	EndIf
+	beginPos = Find(iniFile, "[", endPos)
+EndWhile
+
+choosenSection = 1
+While (choosenSection <> 0)
+	choosenSection = Choice("IPTWeather settings", "Please choose a settings section:", 0,0, sectionList)
+	If (choosenSection <> 0)
+		Call("IPTWkeys")
+	EndIf
+EndWhile
+
+Sub IPTWkeys
+	Clear(keyList)
+	Clear(valueList)
+	Clear(keyValueList)
+	Clear(valueTypeList)
+	Clear(commentList)
+
+	keyIndex = 1
+	endPos = Find(iniFile, "[" & sectionList[choosenSection] & "]")
+	endPos = Find(iniFile, "=", endPos)
+	endSectionPos = Find(iniFile, "[", endPos)
+	StatusMessage("Loading " & sectionList[choosenSection])
+	While (endPos > 0 AND (endPos < endSectionPos OR endSectionPos = 0))
+		StatusMessageAppend(".")
+		beginLinePos = ReverseFind(Substr(iniFile, 1, endPos -1),"^LF^")
+		endLinePos = Find(iniFile, "^LF^", endPos)
+		If (SubStr(iniFile, beginLinePos + 1, 1) ne ";")
+			keyList[keyIndex] = SubStr(iniFile, beginLinePos + 1, endPos - beginLinePos - 1)
+			If (endPos+2 = endLinePos)
+				valueList[keyIndex] = ""
+			Else
+				valueList[keyIndex] = SubStr(iniFile, endPos + 1, endLinePos - endPos - 2)
+			EndIf
+			keyValueList[keyIndex] = keyList[keyIndex] & "=" & valueList[keyIndex]
+			If (SubStr(iniFile, endLinePos + 1, 1) eq ";")
+				endNextLinePos = Find(iniFile, "^LF^", endLinePos + 1)
+				If (endNextLinePos > 0)
+					valueTypeList[keyIndex] = SubStr(iniFile, endLinePos + 2, endNextLinePos - endLinePos - 3)
+					endLinePos = endNextLinePos
+				Else
+					valueTypeList[keyIndex] = SubStr(iniFile, endLinePos + 2, Length(iniFile) - endLinePos - 1)
+					endLinePos = endLinePos +1
+				EndIf
+			EndIf
+			If (SubStr(iniFile, endLinePos + 1, 2) eq ";;")
+				endNextLinePos = Find(iniFile, "^LF^", endLinePos + 1)
+				If (endNextLinePos > 0)
+					commentList[keyIndex] = SubStr(iniFile, endLinePos + 3, endNextLinePos - endLinePos - 4)
+					endLinePos = endNextLinePos
+				Else
+					commentList[keyIndex] = SubStr(iniFile, endLinePos + 3, Length(iniFile) - endLinePos - 2)
+					endLinePos = endLinePos +1
+				EndIf
+			Else
+				While (SubStr(iniFile, endLinePos + 1, 1) eq ";")
+					endNextLinePos = Find(iniFile, "^LF^", endLinePos + 1)
+					If (endNextLinePos > 0)
+						If (commentList[keyIndex] ne "")
+							commentList[keyIndex] = commentList[keyIndex] & "^NL^" & SubStr(iniFile, endLinePos + 2, endNextLinePos - endLinePos - 3)
+						Else
+							commentList[keyIndex] = SubStr(iniFile, endLinePos + 2, endNextLinePos - endLinePos - 3)
+						EndIf
+						endLinePos = endNextLinePos
+					Else
+						If (commentList[keyIndex] ne "")
+							commentList[keyIndex] = commentList[keyIndex] & "^NL^" & SubStr(iniFile, endLinePos + 2, Length(iniFile) - endLinePos - 1)
+						Else
+							commentList[keyIndex] = SubStr(iniFile, endLinePos + 2, Length(iniFile) - endLinePos - 1)
+						EndIf
+						endLinePos = endLinePos +1
+					EndIf
+				EndWhile
+			EndIf
+			keyIndex = keyIndex + 1
+		EndIf
+		endNewPos = Find(iniFile, "=", endLinePos + 1)
+		If (endNewPos > endPos)
+			endPos = endNewPos
+		Else
+			endPos = 0
+		EndIf
+	EndWhile
+
+	StatusClear()
+
+	choosenKey = 1
+	While (choosenKey <> 0)
+		choosenKey = Choice(sectionList[choosenSection], "Please choose a setting:", 0,0, keyValueList)
+		If (choosenKey <> 0)
+			If (valueTypeList[choosenKey] eq "int")
+				newValue = Input(commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", "Enter new value?", 1, 0, valueList[choosenKey])
+			ElseIf (SubStr(valueTypeList[choosenKey], 1, 4) eq "list")
+				choiceList = Split(SubStr(valueTypeList[choosenKey], 6), ",")
+				default = 0
+				valueIndex = 1
+				ForEach value in array(choiceList)
+					If (value eq valueList[choosenKey])
+						default = valueIndex
+					EndIf
+					valueIndex = valueIndex + 1
+				EndForEach
+				newValue = Choice("Enter new value?", commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", default, 0, choiceList)
+				If (newValue = 0)
+					newValue = valueList[choosenKey]
+				Else
+					newValue = choiceList[newValue]
+				EndIf
+			ElseIf (SubStr(valueTypeList[choosenKey], 1, 10) eq "callscript")
+				CallScript(SubStr(valueTypeList[choosenKey], 12))
+				Exit
+			Else
+				newValue = Input(commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", "Enter new value?", 0, 0, valueList[choosenKey])
+			EndIf
+			confirmation = Question("Set '" & keyList[choosenKey] &"=" & newValue & "'?", "Confirmation required!")
+			If (confirmation)
+				valueList[choosenKey] = newValue
+				keyValueList[choosenKey] = keyList[choosenKey] & "=" & newValue
+				IniWrite(fileName, sectionList[choosenSection], keyList[choosenKey], newValue)
+			EndIf
+		EndIf
+	EndWhile
+EndSub
