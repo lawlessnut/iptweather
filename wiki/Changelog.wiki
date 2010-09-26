@@ -1,16 +1,20 @@
 #summary Changelog of IPTWeather.
 
 === IPTWeather Killing Dragon (aKa IPTWeather_20100929) ===
+  * New script IPTWeatherConfig.mscr to help configuring IPTWeather and the weather.ini file.
   * More generic IPTWreloadIcon.mscr script to allow full customization of icon texts in iPhoneToday.
-  * IPTWeather doesn't remove any notification anymore if IPTWdelayHours=0 OR IPTWdelayMinutes=0. Usefull to use an external notification system.
+  * IPTWeather doesn't remove any notification anymore if IPTWdelayHours=0 and IPTWdelayMinutes=0. Usefull to use an external notification system.
   * Removed setting IPTWS2U2Path.
   * Removed setting IPTWhideRealFeelInForecastIcons (configure IPTWforecastWeatherIconsTextPattern instead).
+  * Removed setting IPTWquickLocationChangeSleepMsgTime (status message instead).
   * Replaced IPTWS2U2iconText.mscr script by more generic IPTWtextPattern.mscr script.
   * Added setting IPTWhideNightForecastIcons.
   * Added settings IPTWcurrentWeatherIconTextPattern and IPTWforecastWeatherIconsTextPattern to customize icon texts in iPhoneToday.
   * Added symbols %DAY%, %SDAY%, %PT% and %PRFT% for the three <...>TextPattern settings (check weather.ini file comments for more help).
   * Added settings IPTWS2U2WallpaperLPath and IPTWdefautS2U2WallpaperL for landscape wallpaper in S2U2.
   * Reviewed comments in the weather.ini file for better understanding of the different settings.
+  * Corrected bug when no data was available that IPTWdefaultS2U2Text was not displayed in S2U2 and IPTWtodayForecastInS2U2Text was set to 0.
+  * Added city and state in the title of the dialog box asking for updates.
 
 === IPTWeather_20100826 ===
   * If no weather translation found, then use default non-translated language.
