@@ -163,7 +163,14 @@ Else
 		ctime = TimeStamp()
 		If (time < ctime)
 			If (IPTWupdateWeatherNowQuestion ne "")
-				updateWeatherNow = Question(IPTWupdateWeatherNowQuestion)
+				currentCityName = RegRead(IPTWregRoot, IPTWregKey, "city")
+				If (currentCityName ne "")
+					currentState = RegRead(IPTWregRoot, IPTWregKey, "state")
+					currentLocation = currentCityName & ", " & currentState
+				Else
+					currentLocation = IPTWaccuWeatherLocation
+				EndIf
+				updateWeatherNow = Question(IPTWupdateWeatherNowQuestion, currentLocation)
 			Else
 				updateWeatherNow = TRUE
 			EndIf
