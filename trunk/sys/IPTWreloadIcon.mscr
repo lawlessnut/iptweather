@@ -14,7 +14,7 @@ If (NOT IPTWiPhoneTodayDisabled)
 
 	If (argv[3] eq "N/A" or argv[3] eq "Error")
 		iconName = argv[3]
-	ElseIf (iconName = 0)
+	ElseIf (argv[3] = 0)
 		CallScript("IPTWtextPattern.mscr", 0, 0, "", "User settings", "IPTWcurrentWeatherIconTextPattern")
 		iconName = textPattern
 	Else
