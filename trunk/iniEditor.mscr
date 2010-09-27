@@ -1,4 +1,5 @@
 fileName = argv[1]
+appName = argv[2]
 iniFile = ReadFile(fileName)
 
 SetMessageFont(10)
@@ -19,7 +20,7 @@ EndWhile
 
 choosenSection = 1
 While (choosenSection <> 0)
-	choosenSection = Choice("IPTWeather settings", "Please choose a settings section:", 0,0, sectionList)
+	choosenSection = Choice(appName & " settings", "Please choose a settings section:", 0,0, sectionList)
 	If (choosenSection <> 0)
 		Call("IPTWkeys")
 	EndIf
@@ -105,7 +106,7 @@ Sub IPTWkeys
 		choosenKey = Choice(sectionList[choosenSection], "Please choose a setting:", 0,0, keyValueList)
 		If (choosenKey <> 0)
 			If (valueTypeList[choosenKey] eq "int")
-				newValue = Input(commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", "Enter new value?", 1, 0, valueList[choosenKey])
+				newValue = Input(commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", "Enter new value", 1, 0, valueList[choosenKey])
 			ElseIf (SubStr(valueTypeList[choosenKey], 1, 4) eq "list")
 				choiceList = Split(SubStr(valueTypeList[choosenKey], 6), ",")
 				default = 0
@@ -116,7 +117,7 @@ Sub IPTWkeys
 					EndIf
 					valueIndex = valueIndex + 1
 				EndForEach
-				newValue = Choice("Enter new value?", commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", default, 0, choiceList)
+				newValue = Choice("Enter new value", commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", default, 0, choiceList)
 				If (newValue = 0)
 					newValue = valueList[choosenKey]
 				Else
@@ -126,7 +127,7 @@ Sub IPTWkeys
 				CallScript(SubStr(valueTypeList[choosenKey], 12))
 				Exit
 			Else
-				newValue = Input(commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", "Enter new value?", 0, 0, valueList[choosenKey])
+				newValue = Input(commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", "Enter new value", 0, 0, valueList[choosenKey])
 			EndIf
 			confirmation = Question("Set '" & keyList[choosenKey] &"=" & newValue & "'?", "Confirmation required!")
 			If (confirmation)
