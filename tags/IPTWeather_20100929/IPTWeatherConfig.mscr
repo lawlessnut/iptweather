@@ -1,0 +1,1 @@
+CallScript("iniEditor.mscr", "weather.ini", "IPTWeather")

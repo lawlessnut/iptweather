@@ -1,0 +1,155 @@
+
+# ############################################################################
+# retrieve user preference
+IPTWaccuWeatherLocation				= IniRead("weather.ini", "User settings", "IPTWaccuWeatherLocation")
+IPTWinternetConnection				= IniRead("weather.ini", "User settings", "IPTWinternetConnection")
+IPTWdisconnectOnExit				= IniRead("weather.ini", "User settings", "IPTWdisconnectOnExit")
+IPTWaccuWeatherFavoriteLocations	= IniRead("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations")
+IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "User settings", "IPTWupdateWeatherNowQuestion")
+IPTWaccuWeatherAPI					= IniRead("weather.ini", "User settings", "IPTWaccuWeatherAPI")
+
+If (IPTWaccuWeatherAPI eq "")
+	IPTWaccuWeatherAPI = "rdona"
+EndIf
+
+# ############################################################################
+# configure location of parsed weather data in registry
+IPTWregRoot					= IniRead("weather.ini", "Script settings", "IPTWregRoot")
+IPTWappRegKey				= IniRead("weather.ini", "Script settings", "IPTWregKey")
+IPTWregKey					= IniRead("weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
+IPTWaccuLocationURL			= "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/city-find.asp?location="
+IPTWgetAccuWeatherScript	= "getAccuWeather.mscr"
+
+currentCityName = RegRead(IPTWregRoot, IPTWregKey, "city")
+If (currentCityName ne "")
+	currentLocationCode = RegRead(IPTWregRoot, IPTWregKey, "locationCode")
+	currentState = RegRead(IPTWregRoot, IPTWregKey, "state")
+	currentLocation = IPTWaccuWeatherLocation & " (" & currentCityName & ", " & currentState & ", " & currentLocationCode & ")"
+Else
+	currentLocation = IPTWaccuWeatherLocation
+EndIf
+
+If (IPTWaccuWeatherFavoriteLocations ne "")
+	choiceList = Split("Search for a new location code;Use My Location;Use Google Latitude;Add current location to favorites;Remove a location from favorites;" & IPTWaccuWeatherFavoriteLocations, ";")
+Else
+	choiceList = Array("Search for a new location code", "Use My Location", "Use Google Latitude", "Add current location to favorites")
+EndIf
+
+choosenAction = Choice("Change location?", "Current location is " & currentLocation, 1, 30, choiceList)
+If (choosenAction = 0)
+	Exit
+ElseIf (choosenAction = 1)
+	If (NOT InternetConnected("http://www.perdu.com"))
+		Connect(IPTWinternetConnection)
+		didconnect = TRUE
+	EndIf
+
+	location = Input("Please enter location code or name")
+
+	nbSleeps = 0
+	While(NOT InternetConnected("http://www.perdu.com") AND nbSleeps < 6)
+		Sleep(5000)
+		nbSleeps = nbSleeps + 1
+	EndWhile
+
+	If (InternetConnected("http://www.perdu.com"))
+		data = ReadFile(IPTWaccuLocationURL & location)
+	EndIf
+
+	If (IPTWdisconnectOnExit AND didconnect)
+		CloseConnection
+		Disconnect
+	EndIf
+
+	locArray = Split(data, "location cnt")
+	i = 1
+	ForEach loc in array (locArray)
+		cityPos = Find(loc, "city=")
+		statePos = Find(loc, "state=", cityPos)
+		locationPos = Find(loc, "location=", statePos)
+		locationEndPos = Find(loc, "/>", locationPos)
+		If (cityPos <> 0 AND statePos <> 0 AND locationPos <> 0 AND locationEndPos <> 0)
+			cityName = SubStr(loc, cityPos + 6, statePos - 2 - (cityPos + 6))
+			stateName = SubStr(loc, statePos + 7, locationPos - 2 - (statePos + 7))
+			locationCode = SubStr(loc, locationPos + 10, locationEndPos - 1 - (locationPos + 10))
+			locationList[i] = cityName & ", " & stateName & ", " & locationCode
+			i = i +1
+		EndIf
+	EndForEach
+	choosenLocation = Choice("Location selection", "Choose a location", 0, 0, locationList)
+	If (choosenLocation <> 0)
+		isInFavorites = Find(IPTWaccuWeatherFavoriteLocations, locationList[choosenLocation])
+		If (isInFavorites = 0)
+			addToFavorites = Question(locationList[choosenLocation], "Add to favorites?")
+			If (addToFavorites)
+				If (IPTWaccuWeatherFavoriteLocations eq "")
+					IniWrite("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations", locationList[choosenLocation])
+				Else
+					IniWrite("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations & ";" & locationList[choosenLocation])
+				EndIf
+			EndIf
+		EndIf
+		IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", Part(locationList[choosenLocation], ",", -1, TRUE))
+	EndIf
+ElseIf (choosenAction = 2)
+	IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", "My Location")
+ElseIf (choosenAction = 3)
+	IPTWgoogleUserID = IniRead("weather.ini", "User settings", "IPTWgoogleUserID")
+	changeGoogleUserId = Question("Your current Google User ID is " & IPTWgoogleUserID & ". Change it?", "Google User ID")
+	If (changeGoogleUserId = 1)
+		newIPTWgoogleUserID = Input("Enter your Google User ID")
+		If (newIPTWgoogleUserID ne "")
+			IPTWgoogleUserID = newIPTWgoogleUserID
+			IniWrite("weather.ini", "User settings", "IPTWgoogleUserID", newIPTWgoogleUserID)
+		EndIf
+	EndIf
+	If (IPTWgoogleUserID ne "")
+		IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", "Google Latitude")
+	EndIf
+ElseIf (choosenAction = 4)
+	If (currentLocationCode eq "")
+		Message("No current location defined!")
+	EndIf
+	If (Find(IPTWaccuWeatherFavoriteLocations, currentLocationCode))
+		Message("Location already added to favorites!")
+	Else
+		If (IPTWaccuWeatherFavoriteLocations eq "")
+			IniWrite("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations", currentCityName & ", " & currentState & ", " & currentLocationCode)
+		Else
+			IniWrite("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations & ";" & currentCityName & ", " & currentState & ", " & currentLocationCode)
+		EndIf
+	EndIf
+	Exit
+ElseIf (choosenAction = 5 and IPTWaccuWeatherFavoriteLocations ne "")
+	locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+	choosenLocation = Choice("Remove location", "Choose a location to remove", 0, 0, locationsArray)
+	If (choosenLocation = 0)
+		Exit
+	ElseIf (choosenLocation = 1)
+		IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation] & ";", "")
+		If (Find(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation]) <> 0)
+			IPTWaccuWeatherFavoriteLocations = ""
+		EndIf
+	Else
+		IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, ";" & locationsArray[choosenLocation], "")
+	EndIf
+	IniWrite("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations)
+	Exit
+Else
+	IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", Part(choiceList[choosenAction], ",", -1, TRUE))
+EndIf
+
+RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
+showForecastAfterChange = 0
+If (RegRead(IPTWregRoot, IPTWappRegKey, "ShowingForecast"))
+	showForecastAfterChange = 1
+Else
+	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 1)
+EndIf
+
+CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
+
+If (showForecastAfterChange)
+	CallScript(SystemPath("ScriptPath") \ "sys\waitForReadyIPT.mscr", 2)
+	CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
+EndIf
