@@ -126,6 +126,10 @@ Sub IPTWkeys
 			ElseIf (SubStr(valueTypeList[choosenKey], 1, 10) eq "callscript")
 				CallScript(SubStr(valueTypeList[choosenKey], 12))
 				Exit
+			ElseIf (valueTypeList[choosenKey] eq "path")
+				newValue = SelectDirectory("Choose path", commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", valueList[choosenKey])
+			ElseIf (valueTypeList[choosenKey] eq "fullfilepath")
+				newValue = SelectFile("Choose full file path", FALSE, "*", commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", valueList[choosenKey])
 			Else
 				newValue = Input(commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", "Enter new value", 0, 0, valueList[choosenKey])
 			EndIf
