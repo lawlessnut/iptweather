@@ -11,7 +11,7 @@ While (beginPos > 0)
 	StatusMessageAppend(".")
 	endPos = Find(iniFile, "]", beginPos)
 	section = SubStr(iniFile, beginPos + 1, endPos - beginPos - 1)
-	If (SubStr(iniFile, endPos + 1, 1) eq "^CR^")
+	If (SubStr(iniFile, beginPos - 1, 1) eq "^LF^" OR beginPos = 1)
 		sectionList[index] = section
 		index = index + 1
 	EndIf
@@ -37,6 +37,9 @@ Sub IPTWkeys
 	endPos = Find(iniFile, "[" & sectionList[choosenSection] & "]")
 	endPos = Find(iniFile, "=", endPos)
 	endSectionPos = Find(iniFile, "[", endPos)
+	While (SubStr(iniFile, endSectionPos - 1, 1) ne "^LF^" AND endSectionPos <> 0)
+		endSectionPos = Find(iniFile, "[", endSectionPos + 1)
+	EndWhile
 	StatusMessage("Loading " & sectionList[choosenSection])
 	While (endPos > 0 AND (endPos < endSectionPos OR endSectionPos = 0))
 		StatusMessageAppend(".")
