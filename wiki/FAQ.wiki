@@ -1,5 +1,14 @@
 #summary IPTWeather FAQ.
 
+<b><font color="Green">Q: I want to install the latest version of IPTWeather, but I'm scared to install it because I don't want to loose all my so hardly configured settings in the weather.ini file.
+</font></b><br />
+A: You can update to the newest IPTWeather version without being scared of loosing all your settings:
+1 - backup your weather.ini by creating a copy anywhere.
+2 - install IPTWeather Killing Dragon
+3 - run the new script restoreConfigBackup.mscr or its shortcut 'IPTWeather Config' in the Start Menu
+4 - select your backup weather.ini
+5 - and your settings are restored!
+
 <b><font color="Green">Q: IPTweather have some bug, can update weather only several time after install, after this cant update at any time.</font></b><br />
 A: Try restarting your device. It may happen sometimes that the MortScript is "locked" during the download process, thus resulting in not updating any more. I cannot do anything about that. It is a MortScript limitation.<br />
 <br />
