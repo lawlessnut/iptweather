@@ -9,6 +9,7 @@
   * *Any question? Need some help? Please check the <a href="http://code.google.com/p/iptweather/wiki/FAQ" target="_blank">FAQ</a>.*<br />
   * *Configure all* settings listed below and others by running *'ITPWeather Config'* shortcut from the *Start Menu*. (or edit the <a href="http://code.google.com/p/iptweather/wiki/Configuration" target="_blank">weather.ini file</a>)<br />
   * *Change* your weather *location* by running *'ITPWeather Location'* shortcut from the *Start Menu*. (or edit the <a href="http://code.google.com/p/iptweather/wiki/Configuration" target="_blank">weather.ini file</a>)<br />
+  * Please note that if you don't have S2U2 installed on your device, ITPWeather will automatically disable all features related to S2U2! The same for iPhoneToday!<br />
 ===Next installation steps:===
   * *To use IPTWeather in iPhoneToday*:<br />
     * extract an icon set (<a href="http://iptweather.googlecode.com/files/accuweathericons.zip" target="_blank">accuweathericons.zip</a> or <a href="http://iptweather.googlecode.com/files/spilicons.zip" target="_blank">spilicons.zip</a> or from other users) to any folder and change *`IPTWaccuWeatherIconPath`* in the *`User settings`* to point to this folder.<br />
