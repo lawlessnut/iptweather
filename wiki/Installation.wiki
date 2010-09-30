@@ -6,7 +6,7 @@
   * Optionnaly, to use the 'My Location' feature, install <a href="http://forum.xda-developers.com/showthread.php?t=607102" target="_blank">Sleuth's myLocation Service</a><br />
   * *Install the latest IPTWeather* cab file provided <a href="http://code.google.com/p/iptweather/downloads/list" target="_blank">here</a>. (the configuration at installation is the one I use with S2U2 and iPhoneToday with the current weather icon displayed in place of the top left icon on the first page)<br />
 ===*IMPORTANT*:===
-  * *Any question? Need some help? Please check the <a href="http://code.google.com/p/iptweather/wiki/FAQ" target="_blank">FAQ</a>.*<br />
+  * *Any question? Need some help? Please check the <a href="http://code.google.com/p/iptweather/wiki/FAQ" target="_blank">FAQ</a> first, then dicuss on the <a href="http://forum.xda-developers.com/showthread.php?t=603817" target="_blank">xda thread</a>.*<br />
   * *Configure all* settings listed below and others by running *'ITPWeather Config'* shortcut from the *Start Menu*. (or edit the <a href="http://code.google.com/p/iptweather/wiki/Configuration" target="_blank">weather.ini file</a>)<br />
   * *Change* your weather *location* by running *'ITPWeather Location'* shortcut from the *Start Menu*. (or edit the <a href="http://code.google.com/p/iptweather/wiki/Configuration" target="_blank">weather.ini file</a>)<br />
   * Please note that if you don't have S2U2 installed on your device, ITPWeather will automatically disable all features related to S2U2! The same for iPhoneToday!<br />
