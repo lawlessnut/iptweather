@@ -1,4 +1,8 @@
 #summary How to install IPTWeather in IPhoneToday (simple and fast) by tito12 (reviewed by michoob)
+===Prerequesite:===
+  * *Install* *<a href="http://forum.xda-developers.com/showthread.php?t=633618" target="_blank">tronikos' iPhoneToday</a>* and/or *<a href="http://s2u2.ac-s2.com/" target="_blank">S2U2</a>*<br />
+  * *Install* <a href="http://www.sto-helit.de/index.php?module=download&amp;action=view&amp;entry=65" target="_blank">Mortscript 4.2</a> or even *<a href="http://www.sto-helit.de/forum/download/file.php?id=265" target="_blank">MortScript 4.3b15</a>* for faster run<br />
+
 ===Install===
 
   * Download:<br />
