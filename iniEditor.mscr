@@ -5,6 +5,7 @@ iniFile = ReadFile(fileName)
 SetMessageFont(10)
 StatusType(ST_MESSAGE, 0)
 StatusMessage("Loading " & fileName & " sections")
+
 index = 1
 beginPos = Find(iniFile, "[")
 While (beginPos > 0)
