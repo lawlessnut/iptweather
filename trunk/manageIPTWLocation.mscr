@@ -1,3 +1,4 @@
+Include("sys\IPTWsubs.mscr")
 
 # ############################################################################
 # retrieve user preference
@@ -35,16 +36,25 @@ Else
 	choiceList = Array("Search for a new location code", "Use My Location", "Use Google Latitude", "Add current location to favorites")
 EndIf
 
+mdidconnect = FALSE
+
 choosenAction = Choice("Change location?", "Current location is " & currentLocation, 1, 30, choiceList)
 If (choosenAction = 0)
 	Exit
 ElseIf (choosenAction = 1)
 	If (NOT InternetConnected("http://www.perdu.com"))
 		Connect(IPTWinternetConnection)
-		didconnect = TRUE
+		mdidconnect = TRUE
 	EndIf
 
 	location = Input("Please enter location code or name")
+	If (location eq "")
+		If (IPTWdisconnectOnExit AND mdidconnect)
+			CloseConnection
+			Disconnect
+		EndIf
+		Exit
+	EndIf
 
 	nbSleeps = 0
 	While(NOT InternetConnected("http://www.perdu.com") AND nbSleeps < 6)
@@ -54,11 +64,6 @@ ElseIf (choosenAction = 1)
 
 	If (InternetConnected("http://www.perdu.com"))
 		data = ReadFile(IPTWaccuLocationURL & location)
-	EndIf
-
-	If (IPTWdisconnectOnExit AND didconnect)
-		CloseConnection
-		Disconnect
 	EndIf
 
 	locArray = Split(data, "location cnt")
@@ -90,6 +95,12 @@ ElseIf (choosenAction = 1)
 			EndIf
 		EndIf
 		IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", Part(locationList[choosenLocation], ",", -1, TRUE))
+	Else
+		If (IPTWdisconnectOnExit AND mdidconnect)
+			CloseConnection
+			Disconnect
+		EndIf
+		Exit
 	EndIf
 ElseIf (choosenAction = 2)
 	IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", "My Location")
@@ -150,6 +161,11 @@ EndIf
 CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
 
 If (showForecastAfterChange)
-	CallScript(SystemPath("ScriptPath") \ "sys\waitForReadyIPT.mscr", 2)
+	Call("waitForReadyIPT", 2)
 	CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
+EndIf
+
+If (IPTWdisconnectOnExit AND mdidconnect)
+	CloseConnection
+	Disconnect
 EndIf
