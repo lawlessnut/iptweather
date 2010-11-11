@@ -1,0 +1,184 @@
+<?xml version="1.0" ?>
+<xml2reg>
+	<sourcefile>\Program Files\IPTWeather\sys\data.xml</sourcefile>
+	<xmlin>
+		<node name="adc_database">
+			<node name="units">
+				<node name="temp" out="unit_temp"/>
+				<node name="dist" out="unit_dist"/>
+				<node name="speed" out="unit_speed"/>
+				<node name="pres" out="unit_pres"/>
+				<node name="prec" out="unit_prec"/>
+			</node>
+			<node name="local">
+				<node name="time" out="localtime"/>
+				<node name="timeZone" out="localtimezone"/>
+				<node name="city" out="city"/>
+				<node name="state" out="state"/>
+				<node name="isDaylight" out="isDaylight"/>
+			</node>
+			<node name="watchwarnareas">
+			</node>
+			<node name="currentconditions">
+				<node name="url" out="curr_url"/>
+				<node name="temperature" out="curr_temp"/>
+				<node name="realfeel" out="curr_feel"/>
+				<node name="pressure" out="curr_pressure">
+					<attr name="state" out="curr_pressure_state"/>
+				</node>
+				<node name="weathertext" out="curr_weather_text"/>
+				<node name="humidity" out="curr_humidity"/>
+				<node name="weathericon" out="curr_icon"/>
+				<node name="windgusts" out="curr_wgust"/>
+				<node name="windspeed" out="curr_wspeed"/>
+				<node name="winddirection" out="curr_wdir"/>
+				<node name="visibility" out="curr_vis"/>
+				<node name="precip" out="curr_prec"/>
+				<node name="uvindex" out="curr_uv_text">
+					<attr name="index" out="curr_uv_index"/>
+				</node>
+			</node>
+			<node name="forecast">
+				<node name="day" skip="0">
+					<attr name="number" out="forc1_dayn"/>
+					<node name="obsdate" out="obsdate"/>
+					<node name="daycode" out="forc1_dayt"/>
+					<node name="sunset" out="forc1_sunset"/>
+					<node name="sunrise" out="forc1_sunrise"/>
+					<node name="daytime">
+						<node name="txtshort" out="forcd1_short"/>
+						<node name="txtlong" out="forcd1_long"/>
+						<node name="weathericon" out="forcd1_icon"/>
+						<node name="hightemperature" out="forcd1_temph"/>
+						<node name="lowtemperature" out="forcd1_templ"/>
+						<node name="realfeelhigh" out="forcd1_feelh"/>
+						<node name="realfeellow" out="forcd1_feell"/>
+						<node name="windspeed" out="forcd1_wspeed"/>
+						<node name="winddirection" out="forcd1_wdir"/>
+						<node name="windgust" out="forcd1_wgust"/>
+						<node name="maxuv" out="forcd1_uv_index"/>
+						<node name="rainamount" out="forcd1_rain"/>
+						<node name="snowamount" out="forcd1_snow"/>
+						<node name="precipamount" out="forcd1_prec"/>
+						<node name="tstormprob" out="forcd1_storm"/>
+					</node>
+					<node name="nighttime">
+						<node name="txtshort" out="forcn1_short"/>
+						<node name="txtlong" out="forcn1_long"/>
+						<node name="weathericon" out="forcn1_icon"/>
+						<node name="hightemperature" out="forcn1_temph"/>
+						<node name="lowtemperature" out="forcn1_templ"/>
+						<node name="realfeelhigh" out="forcn1_feelh"/>
+						<node name="realfeellow" out="forcn1_feell"/>
+						<node name="windspeed" out="forcn1_wspeed"/>
+						<node name="winddirection" out="forcn1_wdir"/>
+						<node name="windgust" out="forcn1_wgust"/>
+						<node name="maxuv" out="forcn1_uv_index"/>
+						<node name="rainamount" out="forcn1_rain"/>
+						<node name="snowamount" out="forcn1_snow"/>
+						<node name="precipamount" out="forcn1_prec"/>
+						<node name="tstormprob" out="forcn1_storm"/>
+					</node>
+				</node>
+				<node name="day" skip="1">
+					<attr name="number" out="forc2_dayn"/>
+					<node name="obsdate" out="obsdate2"/>
+					<node name="daycode" out="forc2_dayt"/>
+					<node name="sunset" out="forc2_sunset"/>
+					<node name="sunrise" out="forc2_sunrise"/>
+					<node name="daytime">
+						<node name="txtshort" out="forcd2_short"/>
+						<node name="txtlong" out="forcd2_long"/>
+						<node name="weathericon" out="forcd2_icon"/>
+						<node name="hightemperature" out="forcd2_temph"/>
+						<node name="lowtemperature" out="forcd2_templ"/>
+						<node name="realfeelhigh" out="forcd2_feelh"/>
+						<node name="realfeellow" out="forcd2_feell"/>
+						<node name="windspeed" out="forcd2_wspeed"/>
+						<node name="winddirection" out="forcd2_wdir"/>
+						<node name="windgust" out="forcd2_wgust"/>
+						<node name="maxuv" out="forcd2_uv_index"/>
+						<node name="rainamount" out="forcd2_rain"/>
+						<node name="snowamount" out="forcd2_snow"/>
+						<node name="precipamount" out="forcd2_prec"/>
+						<node name="tstormprob" out="forcd2_storm"/>
+					</node>
+					<node name="nighttime">
+						<node name="txtshort" out="forcn2_short"/>
+						<node name="txtlong" out="forcn2_long"/>
+						<node name="weathericon" out="forcn2_icon"/>
+						<node name="hightemperature" out="forcn2_temph"/>
+						<node name="lowtemperature" out="forcn2_templ"/>
+						<node name="realfeelhigh" out="forcn2_feelh"/>
+						<node name="realfeellow" out="forcn2_feell"/>
+						<node name="windspeed" out="forcn2_wspeed"/>
+						<node name="winddirection" out="forcn2_wdir"/>
+						<node name="windgust" out="forcn2_wgust"/>
+						<node name="maxuv" out="forcn2_uv_index"/>
+						<node name="rainamount" out="forcn2_rain"/>
+						<node name="snowamount" out="forcn2_snow"/>
+						<node name="precipamount" out="forcn2_prec"/>
+						<node name="tstormprob" out="forcn2_storm"/>
+					</node>
+				</node>
+			</node>
+		</node>
+	</xmlin>
+	<xmlout type="registry"><!-- available types: file or registry -->
+		<filename>out.txt</filename><!-- only used for inifile output -->
+		<registryroot>HKCU</registryroot><!-- available: HKCU HKLM -->
+		<registrykey>Software\iPhoneToday\AccuWeather\</registrykey>
+		<!-- current weather situation -->
+		<value name="obsdate0"><data type="data">obsdate</data></value>
+		<value name="obstime"><data type="data">localtime</data></value>
+		<value name="timezone"><data type="data">localtimezone</data></value>
+		<value name="url"><data type="data">curr_url</data></value>
+		<value name="city"><data type="data">city</data></value>
+		<value name="state"><data type="data">state</data></value>
+		<value name="isDaylight"><data type="data">isDaylight</data></value>
+		<value name="unitTemp"><data type="data">unit_temp</data></value>
+		<value name="unitSpeed"><data type="data">unit_speed</data></value>
+		<value name="icon0"><data type="data">curr_icon</data></value>
+		<value name="temp0"><data type="data">curr_temp</data><data type="text">°</data></value>
+		<value name="tempfeel0"><data type="data">curr_feel</data><data type="text">°</data></value>
+		<value name="text0"><data type="data">curr_weather_text</data></value>
+		<value name="humidity"><data type="data">curr_humidity</data></value>
+		<value name="windgusts0"><data type="data">curr_wgust</data></value>
+		<value name="windspeed0"><data type="data">curr_wspeed</data></value>
+		<value name="winddirection0"><data type="data">curr_wdir</data></value>
+		<value name="iconD0"><data type="data">forcd1_icon</data></value>
+		<value name="iconN0"><data type="data">forcn1_icon</data></value>
+		<value name="weekday0"><data type="data">forc1_dayt</data></value>
+		<value name="hiTemp0"><data type="data">forcd1_temph</data><data type="text">°</data></value>
+		<value name="loTemp0"><data type="data">forcn1_templ</data><data type="text">°</data></value>
+		<value name="hiFeelTemp0"><data type="data">forcd1_feelh</data><data type="text">°</data></value>
+		<value name="loFeelTemp0"><data type="data">forcn1_feell</data><data type="text">°</data></value>
+		<value name="sunset0"><data type="data">forc1_sunset</data></value>
+		<value name="sunrise0"><data type="data">forc1_sunrise</data></value>
+		<value name="textD0"><data type="data">forcd1_short</data></value>
+		<value name="textN0"><data type="data">forcn1_short</data></value>
+		<value name="windgustsD0"><data type="data">forcd1_wgust</data></value>
+		<value name="windgustsN0"><data type="data">forcn1_wgust</data></value>
+		<value name="windspeedD0"><data type="data">forcd1_wspeed</data></value>
+		<value name="windspeedN0"><data type="data">forcn1_wspeed</data></value>
+		<value name="winddirectionD0"><data type="data">forcd1_wdir</data></value>
+		<value name="winddirectionN0"><data type="data">forcn1_wdir</data></value>
+		<value name="iconD1"><data type="data">forcd2_icon</data></value>
+		<value name="iconN1"><data type="data">forcn2_icon</data></value>
+		<value name="weekday1"><data type="data">forc2_dayt</data></value>
+		<value name="hiTemp1"><data type="data">forcd2_temph</data><data type="text">°</data></value>
+		<value name="loTemp1"><data type="data">forcn2_templ</data><data type="text">°</data></value>
+		<value name="hiFeelTemp1"><data type="data">forcd2_feelh</data><data type="text">°</data></value>
+		<value name="loFeelTemp1"><data type="data">forcn2_feell</data><data type="text">°</data></value>
+		<value name="sunset1"><data type="data">forc2_sunset</data></value>
+		<value name="sunrise1"><data type="data">forc2_sunrise</data></value>
+		<value name="textD1"><data type="data">forcd2_short</data></value>
+		<value name="textN1"><data type="data">forcn2_short</data></value>
+		<value name="windgustsD1"><data type="data">forcd2_wgust</data></value>
+		<value name="windgustsN1"><data type="data">forcn2_wgust</data></value>
+		<value name="windspeedD1"><data type="data">forcd2_wspeed</data></value>
+		<value name="windspeedN1"><data type="data">forcn2_wspeed</data></value>
+		<value name="winddirectionD1"><data type="data">forcd2_wdir</data></value>
+		<value name="winddirectionN1"><data type="data">forcn2_wdir</data></value>
+	</xmlout>
+</xml2reg>
