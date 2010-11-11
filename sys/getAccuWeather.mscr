@@ -1,11 +1,14 @@
 ErrorLevel("off")
 
+Include("IPTWsubs.mscr")
+
 # ############################################################################
 # retrieve user preference
 IPTWaccuWeatherMetric		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherMetric")
 IPTWaccuWeatherLocation		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherLocation")
 IPTWdelayHours				= IniRead("..\weather.ini", "User settings", "IPTWdelayHours")
 IPTWdelayMinutes			= IniRead("..\weather.ini", "User settings", "IPTWdelayMinutes")
+IPTWmaxDownloadMinutes		= IniRead("..\weather.ini", "User settings", "IPTWmaxDownloadMinutes")
 IPTWinternetConnection		= IniRead("..\weather.ini", "User settings", "IPTWinternetConnection")
 IPTWdisconnectOnExit		= IniRead("..\weather.ini", "User settings", "IPTWdisconnectOnExit")
 IPTWcurrentWeatherIcon		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherIcon")
@@ -52,7 +55,6 @@ IPTWregRoot				= IniRead("..\weather.ini", "Script settings", "IPTWregRoot")
 IPTWappRegKey			= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
 IPTWregKey				= IniRead("..\weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
 IPTWdataFile			= SystemPath("ScriptPath") \ "data.xml"
-IPTWxmlParserConfigFile	= SystemPath("ScriptPath") \ "config.xml"
 IPTWaccuWeatherURL = "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/weather-data.asp?"
 
 # ############################################################################
@@ -151,6 +153,12 @@ If (InternetConnected("http://www.perdu.com"))
 	Else
 		IPTWaccuWeatherURL = IPTWaccuWeatherURL & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
 	EndIf
+
+	killscript = SystemPath("ScriptPath") \ "killGetAccuWeather.mscr"
+	utime = TimeStamp() + IPTWmaxDownloadMinutes * 60
+	RemoveNotifications(mort, """" & killscript & """") 
+	RunAt(utime, mort, """" & killscript & """")
+
 	data = ReadFile(IPTWaccuWeatherURL)
 	WriteFile(IPTWdataFile, data)
 	dataUpdated = 1
@@ -175,28 +183,54 @@ EndIf
 
 If (dataUpdated AND NOT disconnectThenExit)
 	If (Find(data,"</adc_database>") > 0)
-		xmlParserConfigFile = ReadFile(IPTWxmlParserConfigFile)
-		beginXMLPos = Find(xmlParserConfigFile, "<sourcefile>") + 12
-		endXMLPos = Find(xmlParserConfigFile, "</sourcefile>", beginXMLPos)
-		oldXMLFile = SubStr(xmlParserConfigFile, beginXMLPos, endXMLPos - beginXMLPos)
-		If (IPTWdataFile ne oldXMLFile)
-			xmlParserConfigFile = Replace(xmlParserConfigFile, oldXMLFile, IPTWdataFile)
-			WriteFile(IPTWxmlParserConfigFile, xmlParserConfigFile)
+		xmlConfigFileNumber=1
+		While(Find(data, "day number=""" & xmlConfigFileNumber & """"))
+			xmlConfigFileNumber = xmlConfigFileNumber + 1
+		EndWhile
+		xmlConfigFileNumber = xmlConfigFileNumber - 1
+		If (xmlConfigFileNumber > 0 AND xmlConfigFileNumber < 8)
+			IPTWxmlParserConfigFile = SystemPath("ScriptPath") \ "config" & xmlConfigFileNumber & ".xml"
+			xmlParserConfigFile = ReadFile(IPTWxmlParserConfigFile)
+			beginXMLPos = Find(xmlParserConfigFile, "<sourcefile>") + 12
+			endXMLPos = Find(xmlParserConfigFile, "</sourcefile>", beginXMLPos)
+			oldXMLFile = SubStr(xmlParserConfigFile, beginXMLPos, endXMLPos - beginXMLPos)
+			If (IPTWdataFile ne oldXMLFile)
+				xmlParserConfigFile = Replace(xmlParserConfigFile, oldXMLFile, IPTWdataFile)
+				WriteFile(IPTWxmlParserConfigFile, xmlParserConfigFile)
+			EndIf
+# ############################################################################
+# delete all old data from the registry
+			ForEach value, data in regValues(IPTWregRoot, IPTWregKey)
+				If (value ne "ACSuspendTimeout" \
+					AND value ne "ACTimeout" \
+					AND value ne "BatteryTimeout" \
+					AND value ne "BattSuspendTimeout" \
+					AND value ne "ShowingForecast" \
+					AND value ne "sleepOnUpdatePrevented" \
+					AND value ne "Started")
+					If (RegValueExists(IPTWregRoot, IPTWappRegKey, value))
+						RegDelete(IPTWregRoot, IPTWappRegKey, value)
+					EndIf
+					If (RegValueExists(IPTWregRoot, IPTWregKey, value))
+						RegDelete(IPTWregRoot, IPTWregKey, value)
+					EndIf
+				EndIf
+			EndForEach
+			RunWait(SystemPath("ScriptPath") \ "xml2reg.exe", IPTWxmlParserConfigFile)
+			RegWriteString(IPTWregRoot, IPTWregKey, "updateTime", TimeStamp())
 		EndIf
-		RunWait(SystemPath("ScriptPath") \ "xml2reg.exe", IPTWxmlParserConfigFile)
-		RegWriteString(IPTWregRoot, IPTWregKey, "updateTime", TimeStamp())
 	EndIf
 
 # ############################################################################
 # copy all data the location registry key
 	ForEach value, data in regValues(IPTWregRoot, IPTWappRegKey)
 		If (value ne "ACSuspendTimeout" \
-				AND value ne "ACTimeout" \
-				AND value ne "BatteryTimeout" \
-				AND value ne "BattSuspendTimeout" \
-				AND value ne "ShowingForecast" \
-				AND value ne "sleepOnUpdatePrevented" \
-				AND value ne "Started")
+			AND value ne "ACTimeout" \
+			AND value ne "BatteryTimeout" \
+			AND value ne "BattSuspendTimeout" \
+			AND value ne "ShowingForecast" \
+			AND value ne "sleepOnUpdatePrevented" \
+			AND value ne "Started")
 			 RegWriteString(IPTWregRoot, IPTWregKey, value, data)
 		EndIf
 	EndForEach
@@ -206,14 +240,12 @@ If (dataUpdated AND NOT disconnectThenExit)
 	locationCode = SubStr(url, locationCodeBegin)
 	RegWriteString(IPTWregRoot, IPTWregKey, "locationCode", locationCode)
 
-
 	IPTWtranslationLanguageCode = IniRead("..\weather.ini", "User settings", "IPTWtranslationLanguageCode")
 	If (IPTWtranslationLanguageCode ne "" AND Find(IPTWaccuWeatherLocation, "|") > 0)
 		currentText = RegRead(IPTWregRoot, IPTWregKey, "text0")
 		translatedCurrentText = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText)
 		If (Length(translatedCurrentText) = 0)
 			dataCTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/Quick-Look.aspx")
-WriteFile(IPTWdataFile&"CTr", dataCTr)
 			beginDesc = Find(dataCTr, "ctl00_cphContent_lblCurrentText") + 92
 			If (beginDesc > 92)
 				endDesc = Find(dataCTr, "</span>", beginDesc)
@@ -234,7 +266,6 @@ WriteFile(IPTWdataFile&"CTr", dataCTr)
 					If (Length(translatedForecasttext) = 0)
 						If (dataFTr eq "")
 							dataFTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/forecast.aspx")
-WriteFile(IPTWdataFile&"FTr", dataFTr)
 						EndIf
 #						searchString = "ctl00_cphContent_rptFC_ctl0" & i & "_lblDesc" & timeTxt[j]
 						searchString = "ctl00_cphContent_repForecast" & timeTxt[j] &"_ctl0" & i & "_lblDesc"">"
@@ -263,6 +294,8 @@ If (IPTWdisconnectOnExit AND didconnect)
 	EndIf
 EndIf
 
+RemoveNotifications(mort, """" & killscript & """") 
+
 If (IPTWpreventSleepOnUpdate)
 	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout", BattSuspendTimeout)
 	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout", ACSuspendTimeout)
@@ -287,36 +320,18 @@ newlocation = RegRead(IPTWregRoot, IPTWregKey, "locationCode")
 # is the first run of getAccuWeather after phone starts
 isStarted = RegRead(IPTWregRoot, IPTWappRegKey, "Started")
 
-timeZone = RegRead(IPTWregRoot, IPTWregKey, "timeZone")
-deviceTimeZone = 60 * (TimeZoneBias() - 60)
-dataTimeZone = timeZone * 3600
-timeOffset = dataTimeZone - deviceTimeZone
-currentLocalTime = TimeStamp() + timeOffset
-currentDate = FormatTime("m/d/Y", currentLocalTime)
+Call("IPTWsetCurrentTimeAndDate")
 
 # new not obsolete data, so update
 If (isStarted = 0 OR ((newobsdate eq currentDate) AND ((lastlocation ne newlocation) OR (lastobsdate ne newobsdate) OR (lastobstime ne newobstime))))
-	currenttime = Replace(FormatTime("A h:i", currentLocalTime), " 12", " 00")
-	sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset0"), -8)
-	sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
-	If (currenttime gt sunset)
-		iconSuffix = IPTWnightIconSuffix
-		suffix = "N"
-	Else
-		iconSuffix = ""
-		suffix = "D"
-	EndIf
-	iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "icon0") & iconSuffix & "." & IPTWiconsExtension
-	CallScript("IPTWreloadS2U2.mscr", 1)
-	CallScript("IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, 0, iPhoneTodayPic)
-# no new data?
+	Call("IPTWreloadData", 0, "")
 Else
 # If change of day, we retrieve previous night forecast as current condition
 	If (newobsdate ne currentDate)
-		CallScript("IPTWuseObsoleteData.mscr")
+		Call("IPTWreloadData", 1, "")
 	EndIf
 EndIf
 
 RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
 
-CallScript("waitForReadyIPT.mscr", 2)
+Call("waitForReadyIPT", 2)
