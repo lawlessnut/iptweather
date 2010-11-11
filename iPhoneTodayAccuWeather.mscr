@@ -1,6 +1,8 @@
 ShowWaitCursor
 #ErrorLevel("off")
 
+Include("sys\IPTWsubs.mscr")
+
 # ############################################################################
 # retrieve user preference
 IPTWforecastStartIcon				= IniRead("weather.ini", "User settings", "IPTWforecastStartIcon")
@@ -61,26 +63,12 @@ If (isStarted = 0 AND IPTWdownloadDataAfterStartOnIconTap)
 	KillScript(IPTWgetAccuWeatherScript)
 	CallScript(SystemPath("ScriptPath") \ "sys" \ IPTWgetAccuWeatherScript)
 Else
-	timeZone = RegRead(IPTWregRoot, IPTWregKey, "timeZone")
-	deviceTimeZone = 60 * (TimeZoneBias() - 60)
-	dataTimeZone = timeZone * 3600
-	timeOffset = dataTimeZone - deviceTimeZone
-	currentLocalTime = TimeStamp() + timeOffset
+	Call IPTWsetCurrentTimeAndDate
 	If (isShowingForecast = 0 AND NOT IPTWiPhoneTodayDisabled)
 		RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 1)
-		currentDate = FormatTime("m/d/Y", currentLocalTime)
-		daysToSkip = 0
 		skipMorning = 0
-		foundDay = FALSE
-		While (NOT foundDay AND RegValueExists(IPTWregRoot, IPTWregKey, "obsdate" & daysToSkip))
-			obsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate" & daysToSkip)
-			obsdate = SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2) & "/" & Part(obsdate, "/", 3)
-			If (obsdate eq currentDate)
-				foundDay = TRUE
-			Else
-				daysToSkip = daysToSkip + 1
-			EndIf
-		EndWhile
+		daysToSkip = 0
+		Call IPTWfindDay
 		shownIcons = 0
 		iconPositionOffset = 0
 		If (IPTWhideNightForecastIcons)
@@ -89,7 +77,6 @@ Else
 			oneOrTwo = 2
 		EndIf
 		If (foundDay)
-			currenttime = Replace(FormatTime("A h:i", currentLocalTime), " 12", " 00")
 			sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & daysToSkip), -8)
 			sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
 			If (currenttime gt sunset)
@@ -176,40 +163,25 @@ Else
 			EndIf
 		EndIf
 
-		CallScript(SystemPath("ScriptPath") \ "sys\waitForReadyIPT.mscr", 1)
+		Call("waitForReadyIPT", 1)
 		RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 0)
 
 		If (updateWeatherNow)
 			KillScript(IPTWgetAccuWeatherScript)
 			CallScript(SystemPath("ScriptPath") \ "sys" \ IPTWgetAccuWeatherScript)
 		Else
-			currentDate = FormatTime("m/d/Y", currentLocalTime)
 			obsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
 			obsdate = SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2) & "/" & Part(obsdate, "/", 3)
 			If (obsdate eq currentDate)
-				currenttime = Replace(FormatTime("A h:i", currentLocalTime), " 12", " 00")
-				sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset0"), -8)
-				sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
-				If (currenttime gt sunset)
-					iconSuffix = IPTWnightIconSuffix
-					suffix = "N"
-				Else
-					iconSuffix = ""
-					suffix = "D"
-				EndIf
-				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "icon0") & iconSuffix & "." & IPTWiconsExtension
-				CallScript(SystemPath("ScriptPath") \ "sys\IPTWreloadS2U2.mscr", 1)
-				CallScript(SystemPath("ScriptPath") \ "sys\IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, 0, iPhoneTodayPic)
-# no new data?
+				Call("IPTWreloadData", 0, SystemPath("ScriptPath") \ "sys\")
 			Else
-# If change of day, we retrieve previous night forecast as current condition
-				CallScript(SystemPath("ScriptPath") \ "sys\IPTWuseObsoleteData.mscr")
+				Call("IPTWreloadData", 1, SystemPath("ScriptPath") \ "sys\")
 			EndIf
 		EndIf
 	EndIf
 EndIf
 
-CallScript(SystemPath("ScriptPath") \ "sys" \ "waitForReadyIPT.mscr", 2)
+Call("waitForReadyIPT", 2)
 
 Sub IPTWsetIcon
 	If (NOT IPTWiPhoneTodayDisabled)
