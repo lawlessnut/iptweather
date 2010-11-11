@@ -1,0 +1,19 @@
+IPTWregRoot		= IniRead("..\weather.ini", "Script settings", "IPTWregRoot")
+IPTWappRegKey		= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
+IPTWpreventSleepOnUpdate	= IniRead("..\weather.ini", "User settings", "IPTWpreventSleepOnUpdate")
+
+KillScript("getAccuWeather.mscr") 
+
+If (IPTWpreventSleepOnUpdate)
+	BattSuspendTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "BattSuspendTimeout")
+	ACSuspendTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "ACSuspendTimeout")
+	BatteryTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "BatteryTimeout")
+	ACTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "ACTimeout")
+
+	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout", BattSuspendTimeout)
+	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout", ACSuspendTimeout)
+	RegWriteDword ("HKCU", "ControlPanel\Backlight", "BatteryTimeout", BatteryTimeout)
+	RegWriteDword ("HKCU", "ControlPanel\Backlight", "ACTimeout", ACTimeout)
+
+	RegWriteDword(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented", 0)
+EndIf
