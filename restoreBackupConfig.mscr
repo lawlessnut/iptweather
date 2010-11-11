@@ -40,9 +40,13 @@ While (beginPos > 0)
 						If (value)
 							IniWrite("weather.ini", section, "IPTWforecastWeatherIconsTextPattern", "%SDAY%%PT%")
 						EndIf
-					Else
+
+#rdona API does not work anymore. Replace rdona API by ruan API by default.
+					ElseIf (key eq "IPTWaccuWeatherAPI" AND value eq "rdona")
+						IniWrite("weather.ini", section, key, "ruan")					
 
 #In all other cases, we restore previousely backuped up fileName file to the new one.
+					Else
 						IniWrite("weather.ini", section, key, value)
 					EndIf
 				EndIf
