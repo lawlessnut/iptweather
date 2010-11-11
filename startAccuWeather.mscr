@@ -1,3 +1,5 @@
+Include("sys\IPTWsubs.mscr")
+
 IPTWscriptPath					= SystemPath("ScriptPath")
 IPTWregRoot						= IniRead(IPTWscriptPath \ "weather.ini", "Script settings", "IPTWregRoot")
 IPTWregKey						= IniRead(IPTWscriptPath \ "weather.ini", "Script settings", "IPTWregKey")
@@ -49,4 +51,4 @@ If (IPTWreloadLastDataOnStart = 0)
 	RegWriteDWord(IPTWregRoot, IPTWregKey, "Started", 0)
 EndIf
 
-CallScript(SystemPath("ScriptPath") \ "sys" \ "waitForReadyIPT.mscr", 2)
+Call("waitForReadyIPT", 2)
