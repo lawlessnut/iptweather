@@ -9,6 +9,7 @@
   * Now, can load AccuWeather forecasts from 1 to 7 forecast days instead of fixed 5, depending on the number of days available in the API.
   * Corrected bug that the wrong weather information may be showed during night before the sunrise if data are not up-to-date.
   * Do not reload S2U2 wallpaper if pictures cannot be found, for instance if pictures are on the storage card and the device is connected to a PC.
+  * Corrected bug on winter time management.
 
 === IPTWeather Killing Dragon (aKa IPTWeather_20100929) ===
   * New script IPTWeatherConfig.mscr to help configuring IPTWeather and the weather.ini file.
