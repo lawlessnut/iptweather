@@ -27,7 +27,7 @@ IPTWvjvolubilisPath		= IniRead("..\weather.ini", "User settings", "IPTWvjvolubil
 IPTWwriteForecastInFile	= IniRead("..\weather.ini", "User settings", "IPTWwriteForecastInFile")
 
 If (IPTWaccuWeatherAPI eq "")
-	IPTWaccuWeatherAPI = "rdona"
+	IPTWaccuWeatherAPI = "ruan"
 EndIf
 
 If (IPTWiPhoneTodayDisabled <> 1)
@@ -77,6 +77,9 @@ If (IPTWdelayHours <> 0 OR IPTWdelayMinutes <> 0)
 	RemoveNotifications(mort, """" & script & """") 
 	RunAt(utime, mort, """" & script & """")
 EndIf
+
+killscript = SystemPath("ScriptPath") \ "killGetAccuWeather.mscr"
+RemoveNotifications(mort, """" & killscript & """") 
 
 # ############################################################################
 # last data observation date and time
@@ -154,9 +157,7 @@ If (InternetConnected("http://www.perdu.com"))
 		IPTWaccuWeatherURL = IPTWaccuWeatherURL & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
 	EndIf
 
-	killscript = SystemPath("ScriptPath") \ "killGetAccuWeather.mscr"
 	utime = TimeStamp() + IPTWmaxDownloadMinutes * 60
-	RemoveNotifications(mort, """" & killscript & """") 
 	RunAt(utime, mort, """" & killscript & """")
 
 	data = ReadFile(IPTWaccuWeatherURL)
@@ -283,6 +284,8 @@ If (dataUpdated AND NOT disconnectThenExit)
 	EndIf
 EndIf
 
+RemoveNotifications(mort, """" & killscript & """") 
+
 If (IPTWdisconnectOnExit AND didconnect)
 	If (IPTWinternetConnection eq "VJVolubilis")
 		If (FileExists(IPTWvjvolubilisPath))
@@ -293,8 +296,6 @@ If (IPTWdisconnectOnExit AND didconnect)
 		Disconnect
 	EndIf
 EndIf
-
-RemoveNotifications(mort, """" & killscript & """") 
 
 If (IPTWpreventSleepOnUpdate)
 	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout", BattSuspendTimeout)

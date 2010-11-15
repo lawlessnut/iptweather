@@ -1,19 +1,47 @@
-IPTWregRoot		= IniRead("..\weather.ini", "Script settings", "IPTWregRoot")
-IPTWappRegKey		= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
-IPTWpreventSleepOnUpdate	= IniRead("..\weather.ini", "User settings", "IPTWpreventSleepOnUpdate")
+Include("IPTWsubs.mscr")
 
-KillScript("getAccuWeather.mscr") 
+IPTWregRoot					= IniRead("..\weather.ini", "Script settings", "IPTWregRoot")
+IPTWappRegKey				= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
+IPTWaccuWeatherLocation		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherLocation")
+IPTWregKey					= IniRead("..\weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
+IPTWcurrentWeatherIcon		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherIcon")
+IPTWcurrentWeatherPage		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherPage")
+IPTWiconsExtension			= IniRead("..\weather.ini", "User settings", "IPTWiconsExtension")
+IPTWobsoleteDataPrefix		= IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
+IPTWpreventSleepOnUpdate	= IniRead("..\weather.ini", "User settings", "IPTWpreventSleepOnUpdate")
+IPTWnightIconSuffix			= IniRead("..\weather.ini", "User settings", "IPTWnightIconSuffix")
+IPTWlanguageFile			= IniRead("..\weather.ini", "User settings", "IPTWlanguageFile")
+IPTWaccuWeatherIconPath		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherIconPath")
+IPTWwriteForecastInFile		= IniRead("..\weather.ini", "User settings", "IPTWwriteForecastInFile")
+
+KillScript("getAccuWeather.mscr")
+KillScript("iPhoneTodayAccuWeather.mscr")
 
 If (IPTWpreventSleepOnUpdate)
-	BattSuspendTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "BattSuspendTimeout")
-	ACSuspendTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "ACSuspendTimeout")
-	BatteryTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "BatteryTimeout")
-	ACTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "ACTimeout")
+	sleepOnUpdatePrevented = RegRead(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented")
+	If (sleepOnUpdatePrevented = 1)
+		BattSuspendTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "BattSuspendTimeout")
+		ACSuspendTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "ACSuspendTimeout")
+		BatteryTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "BatteryTimeout")
+		ACTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "ACTimeout")
 
-	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout", BattSuspendTimeout)
-	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout", ACSuspendTimeout)
-	RegWriteDword ("HKCU", "ControlPanel\Backlight", "BatteryTimeout", BatteryTimeout)
-	RegWriteDword ("HKCU", "ControlPanel\Backlight", "ACTimeout", ACTimeout)
+		RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout", BattSuspendTimeout)
+		RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout", ACSuspendTimeout)
+		RegWriteDword ("HKCU", "ControlPanel\Backlight", "BatteryTimeout", BatteryTimeout)
+		RegWriteDword ("HKCU", "ControlPanel\Backlight", "ACTimeout", ACTimeout)
 
-	RegWriteDword(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented", 0)
+		RegWriteDword(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented", 0)
+	EndIf
 EndIf
+
+Call("IPTWsetCurrentTimeAndDate")
+
+obsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
+obsdate = SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2) & "/" & Part(obsdate, "/", 3)
+If (obsdate eq currentDate)
+	Call("IPTWreloadData", 0, "")
+Else
+	Call("IPTWreloadData", 1, "")
+EndIf
+
+Call("waitForReadyIPT", 2)
