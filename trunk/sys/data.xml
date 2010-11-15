@@ -13,7 +13,7 @@
 	<state>Belgium</state>
 	<lat>50.83</lat> 
 	<lon>4.33</lon>
-	<time>18:15</time>
+	<time>21:56</time>
 	<timeZone>01:00</timeZone>
 	<obsDaylight>1</obsDaylight>
 	<isDaylight>False</isDaylight>
@@ -21,347 +21,423 @@
 	
 		<currentconditions>
 			
-				<url>http://www.accuweather.com/world-index-forecast.asp?partner=greek&amp;loccode=EUR|BE|BE003|BRUSSELS</url>
+				<url>http://www.accuweather.com/world-index-forecast.asp?partner=ruan&amp;loccode=EUR|BE|BE003|BRUSSELS</url>
 				
-				<observationtime>6:15 PM</observationtime>
+				<observationtime>9:56 PM</observationtime>
 			
-				<pressure state="Decreasing">99</pressure>
+				<pressure state="Rising">102</pressure>
 			
-				<temperature>9</temperature>
+				<temperature>6</temperature>
 			
-				<realfeel>-2</realfeel>
+				<realfeel>7</realfeel>
 			
-				<humidity>87%</humidity>
+				<humidity>93%</humidity>
 			
-				<weathertext>Rain/Drizzle</weathertext>
+				<weathertext>Clear</weathertext>
 			
-				<weathericon>40</weathericon>
+				<weathericon>33</weathericon>
 			
-				<windgusts>56</windgusts>
+				<windgusts>1</windgusts>
 			
-				<windspeed>37</windspeed>
+				<windspeed>1</windspeed>
 			
-				<winddirection>SSW</winddirection>
+				<winddirection>E</winddirection>
 			
-				<visibility>4</visibility>
+				<visibility>16</visibility>
 			
-				<precip>3.0</precip>
+				<precip>0.0</precip>
 			
 				<uvindex index="0">Low</uvindex>
 			
-				<dewpoint>7</dewpoint>
+				<dewpoint>5</dewpoint>
 			
-				<cloudcover>85%</cloudcover>
+				<cloudcover>0%</cloudcover>
 							
-				<apparenttemp>11</apparenttemp>
+				<apparenttemp>8</apparenttemp>
 							
-				<windchill>4</windchill>
+				<windchill>6</windchill>
 						
 
 		</currentconditions>
 		
 			<forecast>
 				
-					<url>http://www.accuweather.com/world-forecast.asp?partner=greek&amp;loccode=EUR|BE|BE003|BRUSSELS</url>
+					<url>http://www.accuweather.com/world-forecast.asp?partner=ruan&amp;loccode=EUR|BE|BE003|BRUSSELS</url>
 					<day number="1">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=greek&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=1</url>
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=1</url>
 						
-					<obsdate>11/11/2010</obsdate>
-					<daycode>Thursday</daycode>
+					<obsdate>11/15/2010</obsdate>
+					<daycode>Monday</daycode>
 					
-						<sunrise>7:53 AM</sunrise>
-						<sunset>5:00 PM</sunset>
+						<sunrise>8:00 AM</sunrise>
+						<sunset>4:55 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>Windy and chilly with rain</txtshort>
+							<txtshort>Becoming cloudy</txtshort>
 							
-							<txtlong>Winds gusting past 64 kph and chilly with rain</txtlong>
+							<txtlong>Becoming cloudy</txtlong>
 							
-							<weathericon>18</weathericon>
+							<weathericon>06</weathericon>
 						
-							<hightemperature>9</hightemperature>
-							<lowtemperature>6</lowtemperature>
+							<hightemperature>11</hightemperature>
+							<lowtemperature>2</lowtemperature>
 						
-							<realfeelhigh>0</realfeelhigh>
-							<realfeellow>-1</realfeellow>
+							<realfeelhigh>14</realfeelhigh>
+							<realfeellow>3</realfeellow>
 						
-							<windspeed>35</windspeed>
+							<windspeed>4</windspeed>
 						
-							<winddirection>SW</winddirection>
+							<winddirection>NW</winddirection>
 						
-							<windgust>77</windgust>
+							<windgust>14</windgust>
 						
 							<maxuv>1</maxuv>
 						
-							<rainamount>15.0</rainamount>
+							<rainamount>0.0</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>15.0</precipamount>
-						
-							<tstormprob>19</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>Windy; a few evening showers</txtshort>
-							
-							<txtlong>Rising temperatures this evening with a couple of showers; partly cloudy and windy</txtlong>
-							
-							<weathericon>39</weathericon>
-						
-							<hightemperature>9</hightemperature>
-							<lowtemperature>6</lowtemperature>
-						
-							<realfeelhigh>0</realfeelhigh>
-							<realfeellow>-1</realfeellow>
-						
-							<windspeed>37</windspeed>
-						
-							<winddirection>WSW</winddirection>
-						
-							<windgust>83</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>2.3</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>2.3</precipamount>
-						
-							<tstormprob>20</tstormprob>
-						
-					</nighttime>
-				</day>
-				<day number="2">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=greek&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=2</url>
-						
-					<obsdate>11/12/2010</obsdate>
-					<daycode>Friday</daycode>
-					
-						<sunrise>7:55 AM</sunrise>
-						<sunset>4:59 PM</sunset>
-					
-					<daytime>
-						
-							<txtshort>Windy and milder with rain</txtshort>
-							
-							<txtlong>Winds gusting past 64 kph and milder with periods of rain</txtlong>
-							
-							<weathericon>18</weathericon>
-						
-							<hightemperature>12</hightemperature>
-							<lowtemperature>11</lowtemperature>
-						
-							<realfeelhigh>6</realfeelhigh>
-							<realfeellow>6</realfeellow>
-						
-							<windspeed>33</windspeed>
-						
-							<winddirection>WSW</winddirection>
-						
-							<windgust>72</windgust>
-						
-							<maxuv>1</maxuv>
-						
-							<rainamount>7.6</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-						<precipamount>7.6</precipamount>
-						
-							<tstormprob>20</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>Windy with rain</txtshort>
-							
-							<txtlong>Windy with rain</txtlong>
-							
-							<weathericon>18</weathericon>
-						
-							<hightemperature>12</hightemperature>
-							<lowtemperature>11</lowtemperature>
-						
-							<realfeelhigh>6</realfeelhigh>
-							<realfeellow>6</realfeellow>
-						
-							<windspeed>35</windspeed>
-						
-							<winddirection>SW</winddirection>
-						
-							<windgust>72</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>19.1</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>19.1</precipamount>
-						
-							<tstormprob>4</tstormprob>
-						
-					</nighttime>
-				</day>
-				<day number="3">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=greek&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=3</url>
-						
-					<obsdate>11/13/2010</obsdate>
-					<daycode>Saturday</daycode>
-					
-						<sunrise>7:56 AM</sunrise>
-						<sunset>4:57 PM</sunset>
-					
-					<daytime>
-						
-							<txtshort>Rain; windy in the morning</txtshort>
-							
-							<txtlong>Rain; winds gusting past 64 kph in the morning</txtlong>
-							
-							<weathericon>18</weathericon>
-						
-							<hightemperature>14</hightemperature>
-							<lowtemperature>10</lowtemperature>
-						
-							<realfeelhigh>10</realfeelhigh>
-							<realfeellow>7</realfeellow>
-						
-							<windspeed>27</windspeed>
-						
-							<winddirection>SW</winddirection>
-						
-							<windgust>65</windgust>
-						
-							<maxuv>0</maxuv>
-						
-							<rainamount>18.8</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-						<precipamount>18.8</precipamount>
+						<precipamount>0.0</precipamount>
 						
 							<tstormprob>0</tstormprob>
 						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Rain</txtshort>
+							<txtshort>Partly cloudy</txtshort>
 							
-							<txtlong>Rain</txtlong>
+							<txtlong>Partly cloudy</txtlong>
 							
-							<weathericon>18</weathericon>
+							<weathericon>36</weathericon>
 						
-							<hightemperature>14</hightemperature>
-							<lowtemperature>10</lowtemperature>
+							<hightemperature>11</hightemperature>
+							<lowtemperature>2</lowtemperature>
 						
-							<realfeelhigh>10</realfeelhigh>
-							<realfeellow>7</realfeellow>
+							<realfeelhigh>14</realfeelhigh>
+							<realfeellow>3</realfeellow>
 						
-							<windspeed>16</windspeed>
+							<windspeed>4</windspeed>
 						
-							<winddirection>SW</winddirection>
+							<winddirection>NNE</winddirection>
 						
-							<windgust>46</windgust>
+							<windgust>12</windgust>
 						
 							<maxuv></maxuv>
 						
-							<rainamount>15.5</rainamount>
+							<rainamount>0.0</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-							<precipamount>15.5</precipamount>
+							<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</nighttime>
+				</day>
+				<day number="2">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=2</url>
+						
+					<obsdate>11/16/2010</obsdate>
+					<daycode>Tuesday</daycode>
+					
+						<sunrise>8:01 AM</sunrise>
+						<sunset>4:54 PM</sunset>
+					
+					<daytime>
+						
+							<txtshort>Clouds and breaks of sun</txtshort>
+							
+							<txtlong>Clouds and breaks of sun</txtlong>
+							
+							<weathericon>06</weathericon>
+						
+							<hightemperature>9</hightemperature>
+							<lowtemperature>-1</lowtemperature>
+						
+							<realfeelhigh>11</realfeelhigh>
+							<realfeellow>-1</realfeellow>
+						
+							<windspeed>1</windspeed>
+						
+							<winddirection>E</winddirection>
+						
+							<windgust>14</windgust>
+						
+							<maxuv>1</maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>Partly cloudy and chilly</txtshort>
+							
+							<txtlong>Partly cloudy and chilly</txtlong>
+							
+							<weathericon>35</weathericon>
+						
+							<hightemperature>9</hightemperature>
+							<lowtemperature>-1</lowtemperature>
+						
+							<realfeelhigh>11</realfeelhigh>
+							<realfeellow>-1</realfeellow>
+						
+							<windspeed>6</windspeed>
+						
+							<winddirection>E</winddirection>
+						
+							<windgust>16</windgust>
+						
+							<maxuv></maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+							<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</nighttime>
+				</day>
+				<day number="3">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=3</url>
+						
+					<obsdate>11/17/2010</obsdate>
+					<daycode>Wednesday</daycode>
+					
+						<sunrise>8:03 AM</sunrise>
+						<sunset>4:52 PM</sunset>
+					
+					<daytime>
+						
+							<txtshort>Sun, then clouds</txtshort>
+							
+							<txtlong>Sun followed by increasing clouds in the morning followed by low clouds in the afternoon</txtlong>
+							
+							<weathericon>06</weathericon>
+						
+							<hightemperature>8</hightemperature>
+							<lowtemperature>-1</lowtemperature>
+						
+							<realfeelhigh>4</realfeelhigh>
+							<realfeellow>-1</realfeellow>
+						
+							<windspeed>14</windspeed>
+						
+							<winddirection>E</winddirection>
+						
+							<windgust>35</windgust>
+						
+							<maxuv>1</maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>Chilly with low clouds</txtshort>
+							
+							<txtlong>Chilly with low clouds</txtlong>
+							
+							<weathericon>08</weathericon>
+						
+							<hightemperature>8</hightemperature>
+							<lowtemperature>-1</lowtemperature>
+						
+							<realfeelhigh>4</realfeelhigh>
+							<realfeellow>-1</realfeellow>
+						
+							<windspeed>9</windspeed>
+						
+							<winddirection>SE</winddirection>
+						
+							<windgust>20</windgust>
+						
+							<maxuv></maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+							<precipamount>0.0</precipamount>
 						
 							<tstormprob>0</tstormprob>
 						
 					</nighttime>
 				</day>
 				<day number="4">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=greek&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=4</url>
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=4</url>
 						
-					<obsdate>11/14/2010</obsdate>
-					<daycode>Sunday</daycode>
+					<obsdate>11/18/2010</obsdate>
+					<daycode>Thursday</daycode>
 					
-						<sunrise>7:58 AM</sunrise>
-						<sunset>4:56 PM</sunset>
+						<sunrise>8:05 AM</sunrise>
+						<sunset>4:51 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>Rain</txtshort>
+							<txtshort>A few showers in the morning</txtshort>
 							
-							<txtlong>Rain</txtlong>
+							<txtlong>A couple of morning showers; otherwise, cloudy</txtlong>
 							
-							<weathericon>18</weathericon>
+							<weathericon>12</weathericon>
 						
-							<hightemperature>11</hightemperature>
-							<lowtemperature>7</lowtemperature>
+							<hightemperature>6</hightemperature>
+							<lowtemperature>1</lowtemperature>
 						
-							<realfeelhigh>9</realfeelhigh>
-							<realfeellow>4</realfeellow>
+							<realfeelhigh>4</realfeelhigh>
+							<realfeellow>1</realfeellow>
 						
-							<windspeed>11</windspeed>
+							<windspeed>8</windspeed>
 						
-							<winddirection>SW</winddirection>
+							<winddirection>S</winddirection>
 						
-							<windgust>33</windgust>
+							<windgust>20</windgust>
 						
 							<maxuv>0</maxuv>
 						
-							<rainamount>9.4</rainamount>
+							<rainamount>0.3</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>9.4</precipamount>
+						<precipamount>0.3</precipamount>
 						
 							<tstormprob>0</tstormprob>
 						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>Rain and drizzle early</txtshort>
+							<txtshort>Low clouds</txtshort>
 							
-							<txtlong>Rain and drizzle in the evening; otherwise, considerable cloudiness</txtlong>
+							<txtlong>Low clouds</txtlong>
 							
-							<weathericon>12</weathericon>
+							<weathericon>08</weathericon>
 						
-							<hightemperature>11</hightemperature>
-							<lowtemperature>7</lowtemperature>
+							<hightemperature>6</hightemperature>
+							<lowtemperature>1</lowtemperature>
 						
-							<realfeelhigh>9</realfeelhigh>
-							<realfeellow>4</realfeellow>
+							<realfeelhigh>4</realfeelhigh>
+							<realfeellow>1</realfeellow>
 						
-							<windspeed>16</windspeed>
+							<windspeed>9</windspeed>
 						
-							<winddirection>SW</winddirection>
+							<winddirection>S</winddirection>
 						
-							<windgust>38</windgust>
+							<windgust>20</windgust>
 						
 							<maxuv></maxuv>
 						
-							<rainamount>1.0</rainamount>
+							<rainamount>0.0</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-							<precipamount>1.0</precipamount>
+							<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</nighttime>
+				</day>
+				<day number="5">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|BE|BE003|BRUSSELS&amp;fday=5</url>
+						
+					<obsdate>11/19/2010</obsdate>
+					<daycode>Friday</daycode>
+					
+						<sunrise>8:06 AM</sunrise>
+						<sunset>4:50 PM</sunset>
+					
+					<daytime>
+						
+							<txtshort>Low clouds</txtshort>
+							
+							<txtlong>Low clouds</txtlong>
+							
+							<weathericon>08</weathericon>
+						
+							<hightemperature>8</hightemperature>
+							<lowtemperature>1</lowtemperature>
+						
+							<realfeelhigh>4</realfeelhigh>
+							<realfeellow>1</realfeellow>
+						
+							<windspeed>16</windspeed>
+						
+							<winddirection>S</winddirection>
+						
+							<windgust>38</windgust>
+						
+							<maxuv>0</maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>Mostly cloudy</txtshort>
+							
+							<txtlong>Mostly cloudy</txtlong>
+							
+							<weathericon>38</weathericon>
+						
+							<hightemperature>8</hightemperature>
+							<lowtemperature>1</lowtemperature>
+						
+							<realfeelhigh>4</realfeelhigh>
+							<realfeellow>1</realfeellow>
+						
+							<windspeed>9</windspeed>
+						
+							<winddirection>SSE</winddirection>
+						
+							<windgust>24</windgust>
+						
+							<maxuv></maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+							<precipamount>0.0</precipamount>
 						
 							<tstormprob>0</tstormprob>
 						
@@ -372,6 +448,6 @@
 			
 		<copyright>Copyright 2010 AccuWeather.com</copyright>
 		<use>This document is intended only for use by authorized licensees of AccuWeather.com. Unauthorized use is prohibited. All Rights Reserved.</use>
-		<product>greekpeak</product>
+		<product>ruan</product>
 		<redistribution>Redistribution Prohibited.</redistribution>
 	</adc_database>
