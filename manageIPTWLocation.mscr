@@ -19,7 +19,6 @@ IPTWregRoot					= IniRead("weather.ini", "Script settings", "IPTWregRoot")
 IPTWappRegKey				= IniRead("weather.ini", "Script settings", "IPTWregKey")
 IPTWregKey					= IniRead("weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
 IPTWaccuLocationURL			= "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/city-find.asp?location="
-IPTWgetAccuWeatherScript	= "getAccuWeather.mscr"
 
 currentCityName = RegRead(IPTWregRoot, IPTWregKey, "city")
 If (currentCityName ne "")
