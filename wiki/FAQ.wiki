@@ -5,7 +5,7 @@
 A: You can update to the newest IPTWeather version without being scared of loosing all your settings:<br />
 1 - backup your weather.ini by creating a copy of it anywhere.<br />
 2 - install latest version of IPTWeather (Killing Dragon or upper)<br />
-3 - run the new script restoreConfigBackup.mscr or its shortcut 'IPTWeather Config' in the Start Menu<br />
+3 - run the new script restoreConfigBackup.mscr<br />
 4 - select your backup weather.ini<br />
 5 - and your settings are restored!<br />
 <br />
