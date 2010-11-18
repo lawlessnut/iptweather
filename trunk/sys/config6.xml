@@ -327,6 +327,7 @@
 		<value name="windspeedN0"><data type="data">forcn1_wspeed</data></value>
 		<value name="winddirectionD0"><data type="data">forcd1_wdir</data></value>
 		<value name="winddirectionN0"><data type="data">forcn1_wdir</data></value>
+		<value name="obsdate1"><data type="data">obsdate2</data></value>
 		<value name="iconD1"><data type="data">forcd2_icon</data></value>
 		<value name="iconN1"><data type="data">forcn2_icon</data></value>
 		<value name="weekday1"><data type="data">forc2_dayt</data></value>
@@ -344,6 +345,7 @@
 		<value name="windspeedN1"><data type="data">forcn2_wspeed</data></value>
 		<value name="winddirectionD1"><data type="data">forcd2_wdir</data></value>
 		<value name="winddirectionN1"><data type="data">forcn2_wdir</data></value>
+		<value name="obsdate2"><data type="data">obsdate3</data></value>
 		<value name="iconD2"><data type="data">forcd3_icon</data></value>
 		<value name="iconN2"><data type="data">forcn3_icon</data></value>
 		<value name="weekday2"><data type="data">forc3_dayt</data></value>
@@ -361,6 +363,7 @@
 		<value name="windspeedN2"><data type="data">forcn3_wspeed</data></value>
 		<value name="winddirectionD2"><data type="data">forcd3_wdir</data></value>
 		<value name="winddirectionN2"><data type="data">forcn3_wdir</data></value>
+		<value name="obsdate3"><data type="data">obsdate4</data></value>
 		<value name="iconN3"><data type="data">forcn4_icon</data></value>
 		<value name="iconD3"><data type="data">forcd4_icon</data></value>
 		<value name="weekday3"><data type="data">forc4_dayt</data></value>
@@ -378,6 +381,7 @@
 		<value name="windspeedN3"><data type="data">forcn4_wspeed</data></value>
 		<value name="winddirectionD3"><data type="data">forcd4_wdir</data></value>
 		<value name="winddirectionN3"><data type="data">forcn4_wdir</data></value>
+		<value name="obsdate4"><data type="data">obsdate5</data></value>
 		<value name="iconN4"><data type="data">forcn5_icon</data></value>
 		<value name="iconD4"><data type="data">forcd5_icon</data></value>
 		<value name="weekday4"><data type="data">forc5_dayt</data></value>
@@ -395,6 +399,7 @@
 		<value name="windspeedN4"><data type="data">forcn5_wspeed</data></value>
 		<value name="winddirectionD4"><data type="data">forcd5_wdir</data></value>
 		<value name="winddirectionN4"><data type="data">forcn5_wdir</data></value>
+		<value name="obsdate5"><data type="data">obsdate6</data></value>
 		<value name="iconN5"><data type="data">forcn6_icon</data></value>
 		<value name="iconD5"><data type="data">forcd6_icon</data></value>
 		<value name="weekday5"><data type="data">forc6_dayt</data></value>
