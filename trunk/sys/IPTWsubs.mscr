@@ -4,7 +4,7 @@ Sub IPTWreloadData
 		foundDay = TRUE
 	Else
 		daysToSkip = 1
-		Call("ITPWfindDay")
+		Call("IPTWfindDay")
 	EndIf
 	If (foundDay)
 		updatetime = Replace(FormatTime("A h:i", RegRead(IPTWregRoot, IPTWregKey, "updatetime")), " 12", " 00")
@@ -28,6 +28,7 @@ Sub IPTWreloadData
 					daysToSkip = daysToSkip - 1
 					iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
 					suffix = "N"
+					notUseCurrent = TRUE
 				EndIf
 			Else
 				If (daysToSkip = 0 AND updatetime gt sunrise)
@@ -39,12 +40,12 @@ Sub IPTWreloadData
 				EndIf
 			EndIf
 		EndIf
-		CallScript(argv[2] & "IPTWreloadS2U2.mscr", daysToSkip + 1)
-		CallScript(argv[2] & "IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, daysToSkip, iPhoneTodayPic, notUseCurrent)
+		CallScript(argv[2] \ "IPTWreloadS2U2.mscr", daysToSkip + 1)
+		CallScript(argv[2] \ "IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, daysToSkip, iPhoneTodayPic, notUseCurrent)
 	Else
 		iPhoneTodayPic = "AccuWeather" & "." & IPTWiconsExtension
-		CallScript(argv[2] & "IPTWreloadS2U2.mscr", -1)
-		CallScript(argv[2] & "IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, "N/A", iPhoneTodayPic)
+		CallScript(argv[2] \ "IPTWreloadS2U2.mscr", -1)
+		CallScript(argv[2] \ "IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, "N/A", iPhoneTodayPic)
 	EndIf
 EndSub
 
