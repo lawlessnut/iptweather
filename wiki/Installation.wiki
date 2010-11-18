@@ -21,5 +21,6 @@
   * *Configure ITPWeather by running the 'IPTWeather Config' shortcut in the Start Menu* (or by editing the <a href="http://code.google.com/p/iptweather/wiki/Configuration" target="_blank">weather.ini file</a>).<br />
   * *Run 'Start IPTWeather'* so the next update will be scheduled in *`IPTWdelayHours`* hours and *`IPTWdelayMinutes`* minutes (settings in the *`User settings`*).<br />
   * If you don't want to wait for the next scheduled update, you can:<br />
-    * either tap your new IPTWeather icon in iPhoneToday once to show weather forecasts, and a second time to get the dialog box to force the update.<br />
+    * either run 'IPTWeather Location' from the Start Menu and choose your city so you get a pop-up to update the weather,<br />
+    * or tap your new IPTWeather icon in iPhoneToday once to show weather forecasts, and a second time to get the dialog box to force the update,<br />
     * or just run the `getAccuWeather.mscr` script in the `sys` folder.<br />
