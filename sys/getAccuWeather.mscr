@@ -219,68 +219,68 @@ If (dataUpdated AND NOT disconnectThenExit)
 			EndForEach
 			RunWait(SystemPath("ScriptPath") \ "xml2reg.exe", IPTWxmlParserConfigFile)
 			RegWriteString(IPTWregRoot, IPTWregKey, "updateTime", TimeStamp())
-		EndIf
-	EndIf
 
 # ############################################################################
-# copy all data the location registry key
-	ForEach value, data in regValues(IPTWregRoot, IPTWappRegKey)
-		If (value ne "ACSuspendTimeout" \
-			AND value ne "ACTimeout" \
-			AND value ne "BatteryTimeout" \
-			AND value ne "BattSuspendTimeout" \
-			AND value ne "ShowingForecast" \
-			AND value ne "sleepOnUpdatePrevented" \
-			AND value ne "Started")
-			 RegWriteString(IPTWregRoot, IPTWregKey, value, data)
-		EndIf
-	EndForEach
+# copy all data to the location registry key
+			ForEach value, data in regValues(IPTWregRoot, IPTWappRegKey)
+				If (value ne "ACSuspendTimeout" \
+					AND value ne "ACTimeout" \
+					AND value ne "BatteryTimeout" \
+					AND value ne "BattSuspendTimeout" \
+					AND value ne "ShowingForecast" \
+					AND value ne "sleepOnUpdatePrevented" \
+					AND value ne "Started")
+					 RegWriteString(IPTWregRoot, IPTWregKey, value, data)
+				EndIf
+			EndForEach
 
-	url = RegRead(IPTWregRoot, IPTWregKey, "url")
-	locationCodeBegin = ReverseFind(url, "=") + 1
-	locationCode = SubStr(url, locationCodeBegin)
-	RegWriteString(IPTWregRoot, IPTWregKey, "locationCode", locationCode)
+			url = RegRead(IPTWregRoot, IPTWregKey, "url")
+			locationCodeBegin = ReverseFind(url, "=") + 1
+			locationCode = SubStr(url, locationCodeBegin)
+			RegWriteString(IPTWregRoot, IPTWregKey, "locationCode", locationCode)
 
-	IPTWtranslationLanguageCode = IniRead("..\weather.ini", "User settings", "IPTWtranslationLanguageCode")
-	If (IPTWtranslationLanguageCode ne "" AND Find(IPTWaccuWeatherLocation, "|") > 0)
-		currentText = RegRead(IPTWregRoot, IPTWregKey, "text0")
-		translatedCurrentText = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText)
-		If (Length(translatedCurrentText) = 0)
-			dataCTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/Quick-Look.aspx")
-			beginDesc = Find(dataCTr, "ctl00_cphContent_lblCurrentText") + 92
-			If (beginDesc > 92)
-				endDesc = Find(dataCTr, "</span>", beginDesc)
-				translatedCurrentText = SubStr(dataCTr, beginDesc, endDesc - beginDesc)
-				IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText, translatedCurrentText)
-			EndIf
-		EndIf
-
-		i = 0
-		time = Array("D", "N")
-#		timeTxt = Array("", "N")
-		timeTxt = Array("Day", "Night")
-		While (RegValueExists(IPTWregRoot, IPTWregKey, "textD" & i))
-			For j = 1 to 2
-				If (RegValueExists(IPTWregRoot, IPTWregKey, "text" & time[j] & i))
-					forecastText = RegRead(IPTWregRoot, IPTWregKey, "text" & time[j] & i)
-					translatedForecastText = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", forecastText)
-					If (Length(translatedForecasttext) = 0)
-						If (dataFTr eq "")
-							dataFTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/forecast.aspx")
-						EndIf
-#						searchString = "ctl00_cphContent_rptFC_ctl0" & i & "_lblDesc" & timeTxt[j]
-						searchString = "ctl00_cphContent_repForecast" & timeTxt[j] &"_ctl0" & i & "_lblDesc"">"
-						beginDesc = Find(dataFTr, searchString) + Length(searchString)
-						If (beginDesc > Length(searchString))
-							endDesc = Find(dataFTr, "</span>", beginDesc)
-							translatedForecastText = SubStr(dataFTr, beginDesc, endDesc - beginDesc)
-							IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", forecastText, translatedForecastText)
-						EndIf
+			IPTWtranslationLanguageCode = IniRead("..\weather.ini", "User settings", "IPTWtranslationLanguageCode")
+			If (IPTWtranslationLanguageCode ne "" AND Find(IPTWaccuWeatherLocation, "|") > 0)
+				currentText = RegRead(IPTWregRoot, IPTWregKey, "text0")
+				translatedCurrentText = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText)
+				If (Length(translatedCurrentText) = 0)
+					dataCTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/Quick-Look.aspx")
+					beginDesc = Find(dataCTr, "ctl00_cphContent_lblCurrentText") + 92
+					If (beginDesc > 92)
+						endDesc = Find(dataCTr, "</span>", beginDesc)
+						translatedCurrentText = SubStr(dataCTr, beginDesc, endDesc - beginDesc)
+						IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText, translatedCurrentText)
 					EndIf
 				EndIf
-			Next
-			i = i + 1
-		EndWhile
+
+				i = 0
+				time = Array("D", "N")
+#				timeTxt = Array("", "N")
+				timeTxt = Array("Day", "Night")
+				While (RegValueExists(IPTWregRoot, IPTWregKey, "textD" & i))
+					For j = 1 to 2
+						If (RegValueExists(IPTWregRoot, IPTWregKey, "text" & time[j] & i))
+							forecastText = RegRead(IPTWregRoot, IPTWregKey, "text" & time[j] & i)
+							translatedForecastText = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", forecastText)
+							If (Length(translatedForecasttext) = 0)
+								If (dataFTr eq "")
+									dataFTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/forecast.aspx")
+								EndIf
+#								searchString = "ctl00_cphContent_rptFC_ctl0" & i & "_lblDesc" & timeTxt[j]
+								searchString = "ctl00_cphContent_repForecast" & timeTxt[j] &"_ctl0" & i & "_lblDesc"">"
+								beginDesc = Find(dataFTr, searchString) + Length(searchString)
+								If (beginDesc > Length(searchString))
+									endDesc = Find(dataFTr, "</span>", beginDesc)
+									translatedForecastText = SubStr(dataFTr, beginDesc, endDesc - beginDesc)
+									IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", forecastText, translatedForecastText)
+								EndIf
+							EndIf
+						EndIf
+					Next
+					i = i + 1
+				EndWhile
+			EndIf
+		EndIf
 	EndIf
 EndIf
 
@@ -325,11 +325,11 @@ Call("IPTWsetCurrentTimeAndDate")
 
 # new not obsolete data, so update
 If (isStarted = 0 OR ((newobsdate eq currentDate) AND ((lastlocation ne newlocation) OR (lastobsdate ne newobsdate) OR (lastobstime ne newobstime))))
-	Call("IPTWreloadData", 0, "")
+	Call("IPTWreloadData", 0, SystemPath("ScriptPath"))
 Else
 # If change of day, we retrieve previous night forecast as current condition
 	If (newobsdate ne currentDate)
-		Call("IPTWreloadData", 1, "")
+		Call("IPTWreloadData", 1, SystemPath("ScriptPath"))
 	EndIf
 EndIf
 
