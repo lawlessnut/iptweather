@@ -191,15 +191,26 @@ If (reloadS2U2 AND NOT doNotReloadS2U2)
 	If (DirExists(IPTWS2U2Path))
 		If (WndActive("S2U2") = True)
 			Run(IPTWS2U2Path \ "iLock2.exe", "-nomsg")
-			While(ProcExists("iLock2.exe"))
+			nbWaitToCloseS2U2 = 0
+			While (ProcExists("iLock2.exe") AND nbWaitToCloseS2U2 < 10)
 				Sleep(200)
+				nbWaitToCloseS2U2 = nbWaitToCloseS2U2 + 1
 			EndWhile
+			If (ProcExists("iLock2.exe"))
+				Kill("iLock2.exe")
+				Run(IPTWS2U2Path \ "iLock2.exe")
+			EndIf
 			Run(IPTWS2U2Path \ "s2u2.exe")
 		Else
 			Run(IPTWS2U2Path \ "iLock2.exe", "-nomsg")
-			While(ProcExists("iLock2.exe"))
+			nbWaitToCloseS2U2 = 0
+			While (ProcExists("iLock2.exe") AND nbWaitToCloseS2U2 < 10)
 				Sleep(200)
+				nbWaitToCloseS2U2 = nbWaitToCloseS2U2 + 1
 			EndWhile
+			If (ProcExists("iLock2.exe"))
+				Kill("iLock2.exe")
+			EndIf
 			Run(IPTWS2U2Path \ "iLock2.exe")
 		EndIf
 	Else
