@@ -163,6 +163,7 @@
 		<value name="windspeedN0"><data type="data">forcn1_wspeed</data></value>
 		<value name="winddirectionD0"><data type="data">forcd1_wdir</data></value>
 		<value name="winddirectionN0"><data type="data">forcn1_wdir</data></value>
+		<value name="obsdate1"><data type="data">obsdate2</data></value>
 		<value name="iconD1"><data type="data">forcd2_icon</data></value>
 		<value name="iconN1"><data type="data">forcn2_icon</data></value>
 		<value name="weekday1"><data type="data">forc2_dayt</data></value>
