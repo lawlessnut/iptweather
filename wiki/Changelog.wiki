@@ -1,5 +1,12 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20101119 ===
+  * Better management of weather update download kill system (data refreshed even after an update failure).
+  * Corrected major bug that IPTWeather may be blocked if S2U2 fails to be restarted correctly (S2U2 issue).
+  * Corrected bug in observation dates (introduced in previous version).
+  * Corrected bug in obsolete data display (introduced in previous version).
+  * Small code improvements.
+
 === IPTWeather WWI (aKa IPTWeather_20101111) ===
   * Code refactored for less duplicated code.
   * Enhanced connection management in the change location script.
