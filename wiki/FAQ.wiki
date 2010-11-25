@@ -1,7 +1,8 @@
 #summary IPTWeather FAQ.
 
 <b><font color="Green">Q: I'm getting constant Mortscript errors when it tries to update ("A problem has occurred with MortScript.exe").</font></b><br />
-A: MortScript cannot toggle the data connection off on some ROMs and just crashes. You can bypass this by installing VJVolubilis and setting IPTWinternetConnection=VJVolubilis. Depending on your OS language, you might have to change IPTWvjvolubilisPath.
+A: MortScript cannot toggle the data connection off on some ROMs and just crashes.<br />
+You can bypass this by installing <a href="http://www.vijay555.com/?Releases:VJVolubilis" target="_blank">VJVolubilis</a> and setting IPTWinternetConnection=VJVolubilis. Depending on your OS language, you might have to change IPTWvjvolubilisPath.<br />
 For your information, VJVolubilis is an app to toggle your data connection, and it works better than MortScript to achieve that.<br />
 <br />
 <b><font color="Green">Q: I want to install the latest version of IPTWeather, but I'm scared to install it because I don't want to loose all my so hardly configured settings in the weather.ini file.</font></b><br />
