@@ -52,10 +52,12 @@ for?</font></b><br />
 A: This script creates a shortcut to the startAccuWeather.mscr script in your Windows StartUp menu, to start IPTWeather when you restart your device. This script should only be used if you want to change the installation directory of IPTWeather.<br />
 <br />
 <b><font color="Green">Q: How to use IPTWeather only with S2U2, not with iPhoneToday?</font></b><br />
-A: In the weather.ini file, set IPTWiPhoneTodayDisabled=1<br />
+A: In the weather.ini file, set IPTWiPhoneTodayDisabled=1.<br />
+Please note it will be automatically disabled if iPhoneToday is not running nor installed, unless IPTWiPhoneTodayDisabled=-1.<br />
 <br />
 <b><font color="Green">Q: How to use IPTWeather only with iPhoneToday, not with S2U2?</font></b><br />
-A: In the weather.ini file, set IPTWtomorrowForecastInS2U2UserWeather=0, IPTWtodayForecastInS2U2Wallpaper=0, and IPTWtodayForecastInS2U2Text=0<br />
+A: In the weather.ini file, set IPTWtomorrowForecastInS2U2UserWeather=0, IPTWtodayForecastInS2U2Wallpaper=0, and IPTWtodayForecastInS2U2Text=0.<br />
+Please note it will be automatically disable if you have not installed S2U2 on your device.<br />
 <br />
 <b><font color="Green">Q: The text shown on the S2U2 slider is sometimes to long and is not entirely visible and the right margin is out of the text box. Can I fix it somehow?</font></b><br />
 A: In the weather.ini you can set the IPTWlanguageFile to the weather description file you want. By default, it is eng.ini but you can change it. You can also change the text to fit your language or the size you want.<br />
