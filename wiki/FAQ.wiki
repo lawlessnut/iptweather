@@ -34,6 +34,7 @@ A: IPTWeather updates with the current weather the icon defined in the weather.i
 <br />
 <b><font color="Green">Q: What is the iPhoneTodayAccuWeather.mscr script for?</font></b><br />
 A: This script expands, without modifying your icons.xml file, all weather forecast icons in iPhoneToday at first call. If you call it a second time, weather forecast icons are hidden and it's back to your icons.xml configuration.<br />
+If you actually want to write the weather forecast icons into your icons.xml configuration, just set IPTWwriteForecastInFile=1.<br />
 <br />
 <b><font color="Green">Q: How to easily change the weather location?</font></b><br />
 A: Call the manageIPTWLocation.mscr script. You can also set your favorite locations thanks to this script.<br />
