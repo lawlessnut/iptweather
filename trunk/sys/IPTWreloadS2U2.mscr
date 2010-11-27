@@ -1,6 +1,11 @@
 reloadS2U2 = FALSE
 doNotReloadS2U2 = FALSE
 IPTWS2U2Path = SystemPath("ProgramFiles") \ "S2U2"
+If (NOT DirExists(IPTWS2U2Path))
+	IniWrite("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather", 0)
+	IniWrite("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Text", 0)
+	IniWrite("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Wallpaper", 0)
+EndIf
 If (argv[1] < 0)
 	IPTWtomorrowForecastInS2U2UserWeather = IniRead("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather")
 	If (IPTWtomorrowForecastInS2U2UserWeather = 1 OR IPTWtomorrowForecastInS2U2UserWeather = -1)
@@ -188,35 +193,26 @@ Else
 EndIf
 
 If (reloadS2U2 AND NOT doNotReloadS2U2)
-	If (DirExists(IPTWS2U2Path))
-		If (WndActive("S2U2") = True)
-			Run(IPTWS2U2Path \ "iLock2.exe", "-nomsg")
-			nbWaitToCloseS2U2 = 0
-			While (ProcExists("iLock2.exe") AND nbWaitToCloseS2U2 < 10)
-				Sleep(200)
-				nbWaitToCloseS2U2 = nbWaitToCloseS2U2 + 1
-			EndWhile
-			If (ProcExists("iLock2.exe"))
-				Kill("iLock2.exe")
-				Run(IPTWS2U2Path \ "iLock2.exe")
-			EndIf
+	If (WndActive("S2U2") = True)
+		Run(IPTWS2U2Path \ "iLock2.exe", "-nomsg")
+		nbWaitToCloseS2U2 = 0
+		While (ProcExists("iLock2.exe") AND nbWaitToCloseS2U2 < 10)
+			Sleep(200)
+			nbWaitToCloseS2U2 = nbWaitToCloseS2U2 + 1
+		EndWhile
+		If (NOT ProcExists("iLock2.exe"))
 			Run(IPTWS2U2Path \ "s2u2.exe")
-		Else
-			Run(IPTWS2U2Path \ "iLock2.exe", "-nomsg")
-			nbWaitToCloseS2U2 = 0
-			While (ProcExists("iLock2.exe") AND nbWaitToCloseS2U2 < 10)
-				Sleep(200)
-				nbWaitToCloseS2U2 = nbWaitToCloseS2U2 + 1
-			EndWhile
-			If (ProcExists("iLock2.exe"))
-				Kill("iLock2.exe")
-			EndIf
-			Run(IPTWS2U2Path \ "iLock2.exe")
 		EndIf
 	Else
-		IniWrite("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather", 0)
-		IniWrite("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Text", 0)
-		IniWrite("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Wallpaper", 0)
+		Run(IPTWS2U2Path \ "iLock2.exe", "-nomsg")
+		nbWaitToCloseS2U2 = 0
+		While (ProcExists("iLock2.exe") AND nbWaitToCloseS2U2 < 10)
+			Sleep(200)
+			nbWaitToCloseS2U2 = nbWaitToCloseS2U2 + 1
+		EndWhile
+		If (NOT ProcExists("iLock2.exe"))
+			Run(IPTWS2U2Path \ "iLock2.exe")
+		EndIf
 	EndIf
 EndIf
 
@@ -232,6 +228,10 @@ Sub S2U2UserWeather
 			If (FileExists(IPTWS2U2UserWeatherIconsPath \ Eval(S2U2Pic) & ".png"))
 				If (NOT FileExists(IPTWS2U2Path  \ "gfx\weather" \ Eval(S2U2Pic) & ".png"))
 					Copy(IPTWS2U2UserWeatherIconsPath \ Eval(S2U2Pic) & ".png", IPTWS2U2Path \ "gfx\weather" \ Eval(S2U2Pic) & ".png", TRUE)
+				Else
+					If (FileSize(IPTWS2U2UserWeatherIconsPath \ Eval(S2U2Pic) & ".png") <> FileSize(IPTWS2U2Path  \ "gfx\weather" \ Eval(S2U2Pic) & ".png"))
+						Copy(IPTWS2U2UserWeatherIconsPath \ Eval(S2U2Pic) & ".png", IPTWS2U2Path \ "gfx\weather" \ Eval(S2U2Pic) & ".png", TRUE)
+					EndIf
 				EndIf
 
 				newS2U2weather = "C|" & S2U2Pic & "|" & S2U2Text
