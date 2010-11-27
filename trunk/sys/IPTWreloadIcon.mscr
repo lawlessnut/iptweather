@@ -11,6 +11,9 @@ If (NOT IPTWiPhoneTodayDisabled)
 			CallScript("..\iPhoneTodayAccuWeather.mscr")
 		EndIf
 	Else
+		If (IPTWwriteForecastInFile)
+			showForecast = 1
+		EndIf
 		Call("waitForReadyIPT", 1)
 	EndIf
 
