@@ -8,7 +8,6 @@ IPTWaccuWeatherMetric		= IniRead("..\weather.ini", "User settings", "IPTWaccuWea
 IPTWaccuWeatherLocation		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherLocation")
 IPTWdelayHours				= IniRead("..\weather.ini", "User settings", "IPTWdelayHours")
 IPTWdelayMinutes			= IniRead("..\weather.ini", "User settings", "IPTWdelayMinutes")
-IPTWmaxDownloadMinutes		= IniRead("..\weather.ini", "User settings", "IPTWmaxDownloadMinutes")
 IPTWinternetConnection		= IniRead("..\weather.ini", "User settings", "IPTWinternetConnection")
 IPTWdisconnectOnExit		= IniRead("..\weather.ini", "User settings", "IPTWdisconnectOnExit")
 IPTWcurrentWeatherIcon		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherIcon")
@@ -77,9 +76,6 @@ If (IPTWdelayHours <> 0 OR IPTWdelayMinutes <> 0)
 	RemoveNotifications(mort, """" & script & """") 
 	RunAt(utime, mort, """" & script & """")
 EndIf
-
-killscript = SystemPath("ScriptPath") \ "killGetAccuWeather.mscr"
-RemoveNotifications(mort, """" & killscript & """") 
 
 # ############################################################################
 # last data observation date and time
@@ -156,9 +152,6 @@ If (InternetConnected("http://www.perdu.com"))
 	Else
 		IPTWaccuWeatherURL = IPTWaccuWeatherURL & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
 	EndIf
-
-	utime = TimeStamp() + IPTWmaxDownloadMinutes * 60
-	RunAt(utime, mort, """" & killscript & """")
 
 	data = ReadFile(IPTWaccuWeatherURL)
 	WriteFile(IPTWdataFile, data)
@@ -239,7 +232,9 @@ If (dataUpdated AND NOT disconnectThenExit)
 			locationCode = SubStr(url, locationCodeBegin)
 			RegWriteString(IPTWregRoot, IPTWregKey, "locationCode", locationCode)
 
-			IPTWtranslationLanguageCode = IniRead("..\weather.ini", "User settings", "IPTWtranslationLanguageCode")
+#Translation not working anymore, so commented to avoid unexpected behaviour
+#			IPTWtranslationLanguageCode = IniRead("..\weather.ini", "User settings", "IPTWtranslationLanguageCode")
+			IPTWtranslationLanguageCode = ""
 			If (IPTWtranslationLanguageCode ne "" AND Find(IPTWaccuWeatherLocation, "|") > 0)
 				currentText = RegRead(IPTWregRoot, IPTWregKey, "text0")
 				translatedCurrentText = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText)
@@ -283,8 +278,6 @@ If (dataUpdated AND NOT disconnectThenExit)
 		EndIf
 	EndIf
 EndIf
-
-RemoveNotifications(mort, """" & killscript & """") 
 
 If (IPTWdisconnectOnExit AND didconnect)
 	If (IPTWinternetConnection eq "VJVolubilis")
