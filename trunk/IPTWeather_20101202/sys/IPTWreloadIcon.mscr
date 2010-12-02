@@ -1,0 +1,39 @@
+Include("IPTWsubs.mscr")
+
+If (NOT IPTWiPhoneTodayDisabled)
+#If weather forecast icons are displayed in iPhoneToday, then do not update tge current weather icon, not to mess up the icons.xml file
+	showForecast = 0
+	If (RegRead(IPTWregRoot, IPTWappRegKey, "ShowingForecast"))
+		showForecast = 1
+		If (IPTWwriteForecastInFile)
+			RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 0)
+		Else
+			CallScript("..\iPhoneTodayAccuWeather.mscr")
+		EndIf
+	Else
+		If (IPTWwriteForecastInFile)
+			showForecast = 1
+		EndIf
+		Call("waitForReadyIPT", 1)
+	EndIf
+
+	If (argv[3] eq "N/A" or argv[3] eq "Error")
+		iconName = argv[3]
+	ElseIf (argv[3] = 0 AND NOT argv[5])
+		CallScript("IPTWtextPattern.mscr", 0, 0, "", "User settings", "IPTWcurrentWeatherIconTextPattern")
+		iconName = textPattern
+	Else
+		CallScript("IPTWtextPattern.mscr", argv[3], 1, suffix, "User settings", "IPTWcurrentWeatherIconTextPattern")
+		iconName = IPTWobsoleteDataPrefix & textPattern
+	EndIf
+	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", argv[1])
+	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", argv[2])
+	RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", iconName )
+	RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ argv[4])
+	RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 2)
+
+	If (showForecast)
+		Call("waitForReadyIPT", 2)
+		CallScript("..\iPhoneTodayAccuWeather.mscr")
+	EndIf
+EndIf
