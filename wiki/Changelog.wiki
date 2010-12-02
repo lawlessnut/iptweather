@@ -2,11 +2,12 @@
 
 === IPTWeather_20101202 ===
   * If IPTWwriteForecastInFile=1, then automatically display forecast icons in iPhoneToday.
+  * To avoid issues with S2U2, removed use of the Kill function of MortScript and run iLock2.exe -slide instead of s2u2.exe.
+  * Check S2U2 icon file sizes to ensure UserWeather icons are updated correctly if IPTWS2U2UserWeatherIconsPath is changed and/or if icons are changed within the same folder.
+  * Removed not well working IPTWmaxDownloadMinutes setting.
   * If S2U2 not installed, disable S2U2 related features before updating S2U2 registry.
-  * Never kill S2U2 but just skip its refresh if it cannot be closed.
-  * Check S2U2 icon file sizes to ensure UserWeather icons are updated correctly if IPTWS2U2UserWeatherIconsPath is changed and/or if icons are changed.
-  * Removed not really working IPTWmaxDownloadMinutes setting.
   * Disabled IPTWtranslationLanguageCode setting which cannot work since last AccuWeather.com website update.
+  * IPTWalsoDisplayOriginalDescInIPT=0 by default.
 
 === IPTWeather_20101119 ===
   * Better management of weather update download kill system (data refreshed even after an update failure).
