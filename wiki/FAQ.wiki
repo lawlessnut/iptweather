@@ -1,7 +1,7 @@
 #summary IPTWeather FAQ.
 
 <b><font color="Green">Q: I've tried all but it doesn't download anything even if I have an active connection. The data.xml file in the sys folder is not updating.</font></b><br />
-A: Try to install <a href="http://www.sto-helit.de/index.php?module=download&amp;action=view&amp;entry=65" target="_blank">MortScript 4.2</a> instead of MortScript 4.3b15 which seems not working well under some WM6.5 builds.<br />
+A: You may be using the MortScript which is cooked into your ROM. Then try to reinstall MortScript (either <a href="http://www.sto-helit.de/index.php?module=download&amp;action=view&amp;entry=65" target="_blank">MortScript 4.2</a> or <a href="http://www.sto-helit.de/forum/download/file.php?id=265" target="_blank">MortScript 4.3b15</a>).<br />
 <br />
 <b><font color="Green">Q: I'm getting constant Mortscript errors when it tries to update ("A problem has occurred with MortScript.exe").</font></b><br />
 A: MortScript cannot toggle the data connection off on some ROMs and just crashes.<br />
