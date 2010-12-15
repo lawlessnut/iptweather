@@ -1,5 +1,8 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20101215 ===
+  * Fixed display if IPTWeather update time is after sunrise/sunset but AccuWeather observation time is before.
+
 === IPTWeather_20101202 ===
   * At installation, create the 'Start IPTWeather' shortcut in the StartUp folder.
   * If IPTWwriteForecastInFile=1, then automatically display forecast icons in iPhoneToday.
