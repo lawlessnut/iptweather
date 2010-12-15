@@ -1,4 +1,5 @@
 Sub IPTWreloadData
+	reloadScriptPath = argv[2]
 	daysToSkip = argv[1]
 	If (daysToSkip = 0)
 		foundDay = TRUE
@@ -7,17 +8,21 @@ Sub IPTWreloadData
 		Call("IPTWfindDay")
 	EndIf
 	If (foundDay)
-		updatetime = Replace(FormatTime("A h:i", RegRead(IPTWregRoot, IPTWregKey, "updatetime")), " 12", " 00")
 		sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & daysToSkip), -8)
 		sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
 		If (currenttime gt sunset)
-			If (daysToSkip = 0 AND updatetime gt sunset)
+			sunsettime = SubStr("0" & Part(sunset, " ", 1), -5)
+			If (Part(sunset, " ", 2) eq "PM")
+				sunsettime = (12 + Part(sunsettime, ":", 1)) & ":" & Part(sunsettime, ":", 2)
+			EndIf
+			obstime = RegRead(IPTWregRoot, IPTWregKey, "obstime")
+			If (daysToSkip = 0 AND obstime gt sunsettime)
 				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "icon0") & IPTWnightIconSuffix & "." & IPTWiconsExtension
 			Else
 				notUseCurrent = TRUE
 				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
-				suffix = "N"
 			EndIf
+			suffix = "N"
 		Else
 			sunrise = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunrise" & daysToSkip), -8)
 			sunrise = Replace(Part(sunrise, " ", 2) & " " & Part(sunrise, " ", 1), " 12", " 00")
@@ -27,25 +32,30 @@ Sub IPTWreloadData
 				Else
 					daysToSkip = daysToSkip - 1
 					iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
-					suffix = "N"
 					notUseCurrent = TRUE
 				EndIf
+				suffix = "N"
 			Else
-				If (daysToSkip = 0 AND updatetime gt sunrise)
+				sunrisetime = SubStr("0" & Part(sunrise, " ", 1), -5)
+				If (Part(sunrise, " ", 2) eq "PM")
+					sunrisetime = (12 + Part(sunrisetime, ":", 1)) & ":" & Part(sunrisetime, ":", 2)
+				EndIf
+				obstime = RegRead(IPTWregRoot, IPTWregKey, "obstime")
+				If (daysToSkip = 0 AND obstime gt sunrisetime)
 					iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "icon0") & "." & IPTWiconsExtension
 				Else
 					notUseCurrent = TRUE
 					iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconD" & daysToSkip) & "." & IPTWiconsExtension
-					suffix = "D"
 				EndIf
+				suffix = "D"
 			EndIf
 		EndIf
-		CallScript(argv[2] \ "IPTWreloadS2U2.mscr", daysToSkip + 1)
-		CallScript(argv[2] \ "IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, daysToSkip, iPhoneTodayPic, notUseCurrent)
+		CallScript(reloadScriptPath \ "IPTWreloadS2U2.mscr", daysToSkip + 1)
+		CallScript(reloadScriptPath \ "IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, daysToSkip, iPhoneTodayPic, notUseCurrent)
 	Else
 		iPhoneTodayPic = "AccuWeather" & "." & IPTWiconsExtension
-		CallScript(argv[2] \ "IPTWreloadS2U2.mscr", -1)
-		CallScript(argv[2] \ "IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, "N/A", iPhoneTodayPic)
+		CallScript(reloadScriptPath \ "IPTWreloadS2U2.mscr", -1)
+		CallScript(reloadScriptPath \ "IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, "N/A", iPhoneTodayPic)
 	EndIf
 EndSub
 
