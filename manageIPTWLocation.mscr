@@ -30,7 +30,7 @@ Else
 EndIf
 
 If (IPTWaccuWeatherFavoriteLocations ne "")
-	choiceList = Split("Search for a new location code;Use My Location;Use Google Latitude;Add current location to favorites;Remove a location from favorites;" & IPTWaccuWeatherFavoriteLocations, ";")
+	choiceList = Split("Search for a new location code;Use My Location;Use Google Latitude;Add current location to favorites;Remove a location from favorites;Manage favorite download list;" & IPTWaccuWeatherFavoriteLocations, ";")
 Else
 	choiceList = Array("Search for a new location code", "Use My Location", "Use Google Latitude", "Add current location to favorites")
 EndIf
@@ -133,17 +133,33 @@ ElseIf (choosenAction = 4)
 ElseIf (choosenAction = 5 and IPTWaccuWeatherFavoriteLocations ne "")
 	locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
 	choosenLocation = Choice("Remove location", "Choose a location to remove", 0, 0, locationsArray)
-	If (choosenLocation = 0)
-		Exit
-	ElseIf (choosenLocation = 1)
-		IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation] & ";", "")
-		If (Find(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation]) <> 0)
-			IPTWaccuWeatherFavoriteLocations = ""
+	While (choosenLocation <> 0)
+		If (choosenLocation = 1)
+			IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation] & ";", "")
+			If (Find(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation]) <> 0)
+				IPTWaccuWeatherFavoriteLocations = ""
+			EndIf
+		Else
+			IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, ";" & locationsArray[choosenLocation], "")
 		EndIf
-	Else
-		IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, ";" & locationsArray[choosenLocation], "")
-	EndIf
-	IniWrite("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations)
+		IniWrite("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations)
+		locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+		choosenLocation = Choice("Remove location", "Choose a location to remove", 0, 0, locationsArray)
+	EndWhile
+	Exit
+ElseIf (choosenAction = 6 and IPTWaccuWeatherFavoriteLocations ne "")
+	locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+	choosenLocation = Choice("Download list", "Add/star or remove/unstar a location to/from the download list.", 0, 0, locationsArray)
+	While (choosenLocation <> 0)
+		If (SubStr(locationsArray[choosenLocation], 1, 1) eq "*")
+			IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation], SubStr(locationsArray[choosenLocation], 2))
+		Else
+			IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation], "*" & locationsArray[choosenLocation])
+		EndIf
+		IniWrite("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations)
+		locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+		choosenLocation = Choice("Download list", "Choose a location to remove from or add to the download list. The location will appear with a * if it is in the download list.", 0, 0, locationsArray)
+	EndWhile
 	Exit
 Else
 	IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", Part(choiceList[choosenAction], ",", -1, TRUE))
