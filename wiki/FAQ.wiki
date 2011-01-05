@@ -1,5 +1,8 @@
 #summary IPTWeather FAQ.
 
+<b><font color="Green">Q: Q: I cannot display a specific icon for a location as the city icon for a location code with a + in it. For instance, for the location code MEA|IL|IS005|TEL+AVIV, if I set a icon named 'MEA_IL_IS005_TEL+AVIV.png', it is not displayed, but the IPTWdefaultCityIcon is displayed instead.</font></b><br />
+A: You actually must replace the + by a blank space for the icon name and it will work. For the above example, just set the icon name to 'MEA_IL_IS005_TEL AVIV.png'.<br />
+<br />
 <b><font color="Green">Q: I've tried all but it doesn't download anything even if I have an active connection. The data.xml file in the sys folder is not updating.</font></b><br />
 A: You may be using the MortScript which is cooked into your ROM. Then try to reinstall MortScript (either <a href="http://www.sto-helit.de/index.php?module=download&amp;action=view&amp;entry=65" target="_blank">MortScript 4.2</a> or <a href="http://www.sto-helit.de/forum/download/file.php?id=265" target="_blank">MortScript 4.3b15</a>).<br />
 <br />
