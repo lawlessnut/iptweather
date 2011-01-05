@@ -1,6 +1,6 @@
 #summary IPTWeather FAQ.
 
-<b><font color="Green">Q: Q: I cannot display a specific icon for a location as the city icon for a location code with a + in it. For instance, for the location code MEA|IL|IS005|TEL+AVIV, if I set a icon named 'MEA_IL_IS005_TEL+AVIV.png', it is not displayed, but the IPTWdefaultCityIcon is displayed instead.</font></b><br />
+<b><font color="Green">Q: Q: I cannot display a specific icon for a location as the city icon for a location code with a + in it. For instance, for the location code MEA|IL|IS005|TEL+AVIV, if I set an icon named 'MEA_IL_IS005_TEL+AVIV.png', it is not displayed, but the IPTWdefaultCityIcon is displayed instead.</font></b><br />
 A: You actually must replace the + by a blank space for the icon name and it will work. For the above example, just set the icon name to 'MEA_IL_IS005_TEL AVIV.png'.<br />
 <br />
 <b><font color="Green">Q: I've tried all but it doesn't download anything even if I have an active connection. The data.xml file in the sys folder is not updating.</font></b><br />
