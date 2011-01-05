@@ -207,7 +207,7 @@ CallScript("userScriptOnUpdate.mscr", argv[1])
 Sub S2U2restart
 	Run(IPTWS2U2Path \ "iLock2.exe", "-nomsg")
 	nbWaitToCloseS2U2 = 0
-	While (ProcExists("iLock2.exe") AND nbWaitToCloseS2U2 < 40)
+	While (WindowProcess("iLock2") ne "" AND nbWaitToCloseS2U2 < 40)
 		Sleep(500)
 		nbWaitToCloseS2U2 = nbWaitToCloseS2U2 + 1
 	EndWhile
