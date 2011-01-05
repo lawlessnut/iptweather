@@ -1,3 +1,104 @@
+Sub IPTWdownload
+If (InternetConnected("http://www.perdu.com"))
+	IPTWcurrentAccuWeatherLocation = argv[1]
+	If (IPTWcurrentAccuWeatherLocation eq "My Location")
+#		locationData = ReadFile("http://www.maxmind.com/app/mylocation")
+#		locBegin = Find(locationData, "Latitude/Longitude") + 57
+#		locEnd = Find(locationData, "</td>", locBegin)
+#		Split(SubStr(locationData, locBegin, locEnd - locBegin - 1), "/", 1, latitude, longitude)
+
+		latitude = RegRead("HKLM", "Services\myLocation", "Latitude")
+		longitude = RegRead("HKLM", "Services\myLocation", "Longitude")
+		
+		IPTWaccuWeatherRequestURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+	ElseIf (IPTWcurrentAccuWeatherLocation eq "Google Latitude" AND IPTWgoogleUserID ne "")
+		locationData= ReadFile("http://www.google.com/latitude/apps/badge/api?user=" & IPTWgoogleUserID & "&type=json")
+		locBegin = Find(locationData, "coordinates") + 15
+		locEnd = Find(locationData, "]", locBegin)
+		Split(SubStr(locationData, locBegin, locEnd - locBegin), ",", 1, longitude, latitude)
+
+		IPTWaccuWeatherRequestURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
+	Else
+		If (IPTWcurrentAccuWeatherLocation ne "")
+			weatherLocation = "location=" & IPTWcurrentAccuWeatherLocation
+		Else
+			IPTWlocationLatitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLatitude")
+			IPTWlocationLongitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLongitude")
+			weatherLocation = "slat=" & IPTWlocationLatitude & "slon=" & IPTWlocationLongitude
+		EndIf
+		IPTWaccuWeatherRequestURL = IPTWaccuWeatherURL & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
+	EndIf
+
+	data = ReadFile(IPTWaccuWeatherRequestURL)
+	WriteFile(IPTWdataFile, data)
+
+	If (IPTWcurrentAccuWeatherLocation eq IPTWaccuWeatherLocation)
+		dataUpdated = 1
+	EndIf
+EndIf
+EndSub
+
+Sub IPTWparse
+	If (Find(data,"</adc_database>") > 0)
+		xmlConfigFileNumber=1
+		While(Find(data, "day number=""" & xmlConfigFileNumber & """"))
+			xmlConfigFileNumber = xmlConfigFileNumber + 1
+		EndWhile
+		xmlConfigFileNumber = xmlConfigFileNumber - 1
+		If (xmlConfigFileNumber > 0 AND xmlConfigFileNumber < 8)
+			IPTWxmlParserConfigFile = SystemPath("ScriptPath") \ "config" & xmlConfigFileNumber & ".xml"
+			xmlParserConfigFile = ReadFile(IPTWxmlParserConfigFile)
+			beginXMLPos = Find(xmlParserConfigFile, "<sourcefile>") + 12
+			endXMLPos = Find(xmlParserConfigFile, "</sourcefile>", beginXMLPos)
+			oldXMLFile = SubStr(xmlParserConfigFile, beginXMLPos, endXMLPos - beginXMLPos)
+			If (IPTWdataFile ne oldXMLFile)
+				xmlParserConfigFile = Replace(xmlParserConfigFile, oldXMLFile, IPTWdataFile)
+				WriteFile(IPTWxmlParserConfigFile, xmlParserConfigFile)
+			EndIf
+# ############################################################################
+# delete all old data from the registry
+			IPTWcurrentRegKey = IPTWappRegKey \ argv[1]
+			ForEach value, data in regValues(IPTWregRoot, IPTWcurrentRegKey)
+				If (value ne "ACSuspendTimeout" \
+					AND value ne "ACTimeout" \
+					AND value ne "BatteryTimeout" \
+					AND value ne "BattSuspendTimeout" \
+					AND value ne "ShowingForecast" \
+					AND value ne "sleepOnUpdatePrevented" \
+					AND value ne "Started")
+					If (RegValueExists(IPTWregRoot, IPTWappRegKey, value))
+						RegDelete(IPTWregRoot, IPTWappRegKey, value)
+					EndIf
+					If (RegValueExists(IPTWregRoot, IPTWcurrentRegKey, value))
+						RegDelete(IPTWregRoot, IPTWcurrentRegKey, value)
+					EndIf
+				EndIf
+			EndForEach
+			RunWait(SystemPath("ScriptPath") \ "xml2reg.exe", IPTWxmlParserConfigFile)
+			RegWriteString(IPTWregRoot, IPTWcurrentRegKey, "updateTime", TimeStamp())
+
+# ############################################################################
+# copy all data to the location registry key
+			ForEach value, data in regValues(IPTWregRoot, IPTWappRegKey)
+				If (value ne "ACSuspendTimeout" \
+					AND value ne "ACTimeout" \
+					AND value ne "BatteryTimeout" \
+					AND value ne "BattSuspendTimeout" \
+					AND value ne "ShowingForecast" \
+					AND value ne "sleepOnUpdatePrevented" \
+					AND value ne "Started")
+					 RegWriteString(IPTWregRoot, IPTWcurrentRegKey, value, data)
+				EndIf
+			EndForEach
+
+			url = RegRead(IPTWregRoot, IPTWcurrentRegKey, "url")
+			locationCodeBegin = ReverseFind(url, "=") + 1
+			locationCode = SubStr(url, locationCodeBegin)
+			RegWriteString(IPTWregRoot, IPTWcurrentRegKey, "locationCode", locationCode)
+		EndIf
+	EndIf
+EndSub
+
 Sub IPTWreloadData
 	reloadScriptPath = argv[2]
 	daysToSkip = argv[1]
@@ -11,8 +112,8 @@ Sub IPTWreloadData
 		sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & daysToSkip), -8)
 		sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
 		If (currenttime gt sunset)
-			sunsettime = SubStr("0" & Part(sunset, " ", 1), -5)
-			If (Part(sunset, " ", 2) eq "PM")
+			sunsettime = SubStr("0" & Part(sunset, " ", 2), -5)
+			If (Part(sunset, " ", 1) eq "PM")
 				sunsettime = (12 + Part(sunsettime, ":", 1)) & ":" & Part(sunsettime, ":", 2)
 			EndIf
 			obstime = RegRead(IPTWregRoot, IPTWregKey, "obstime")
@@ -36,8 +137,8 @@ Sub IPTWreloadData
 				EndIf
 				suffix = "N"
 			Else
-				sunrisetime = SubStr("0" & Part(sunrise, " ", 1), -5)
-				If (Part(sunrise, " ", 2) eq "PM")
+				sunrisetime = SubStr("0" & Part(sunrise, " ", 2), -5)
+				If (Part(sunrise, " ", 1) eq "PM")
 					sunrisetime = (12 + Part(sunrisetime, ":", 1)) & ":" & Part(sunrisetime, ":", 2)
 				EndIf
 				obstime = RegRead(IPTWregRoot, IPTWregKey, "obstime")
