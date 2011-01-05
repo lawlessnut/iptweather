@@ -21,9 +21,10 @@ IPTWgoogleUserID			= IniRead("..\weather.ini", "User settings", "IPTWgoogleUserI
 IPTWiPhoneTodayDisabled		= IniRead("..\weather.ini", "User settings", "IPTWiPhoneTodayDisabled")
 IPTWlanguageFile			= IniRead("..\weather.ini", "User settings", "IPTWlanguageFile")
 IPTWaccuWeatherIconPath		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherIconPath")
-IPTWaccuWeatherAPI		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherAPI")
-IPTWvjvolubilisPath		= IniRead("..\weather.ini", "User settings", "IPTWvjvolubilisPath")
-IPTWwriteForecastInFile	= IniRead("..\weather.ini", "User settings", "IPTWwriteForecastInFile")
+IPTWaccuWeatherAPI			= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherAPI")
+IPTWvjvolubilisPath			= IniRead("..\weather.ini", "User settings", "IPTWvjvolubilisPath")
+IPTWwriteForecastInFile		= IniRead("..\weather.ini", "User settings", "IPTWwriteForecastInFile")
+IPTWaccuWeatherFavoriteLocations	= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations")
 
 If (IPTWaccuWeatherAPI eq "")
 	IPTWaccuWeatherAPI = "ruan"
@@ -40,19 +41,11 @@ If (IPTWiPhoneTodayDisabled <> 1)
 	EndIf
 EndIf
 
-If (IPTWaccuWeatherLocation ne "")
-	weatherLocation = "location=" & IPTWaccuWeatherLocation
-Else
-	IPTWlocationLatitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLatitude")
-	IPTWlocationLongitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLongitude")
-	weatherLocation = "slat=" & IPTWlocationLatitude & "slon=" & IPTWlocationLongitude
-EndIf
-
 # ############################################################################
 # configure location of parsed weather data in registry
 IPTWregRoot				= IniRead("..\weather.ini", "Script settings", "IPTWregRoot")
 IPTWappRegKey			= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
-IPTWregKey				= IniRead("..\weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
+IPTWregKey				= IPTWappRegKey \ IPTWaccuWeatherLocation
 IPTWdataFile			= SystemPath("ScriptPath") \ "data.xml"
 IPTWaccuWeatherURL = "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/weather-data.asp?"
 
@@ -130,33 +123,9 @@ If (NOT InternetConnected("http://www.perdu.com"))
 		nbSleeps = nbSleeps + 1
 	EndWhile
 EndIf
+
 dataUpdated = 0
-If (InternetConnected("http://www.perdu.com"))
-	If (IPTWaccuWeatherLocation eq "My Location")
-#		locationData = ReadFile("http://www.maxmind.com/app/mylocation")
-#		locBegin = Find(locationData, "Latitude/Longitude") + 57
-#		locEnd = Find(locationData, "</td>", locBegin)
-#		Split(SubStr(locationData, locBegin, locEnd - locBegin - 1), "/", 1, latitude, longitude)
-
-		latitude = RegRead("HKLM", "Services\myLocation", "Latitude")
-		longitude = RegRead("HKLM", "Services\myLocation", "Longitude")
-		
-		IPTWaccuWeatherURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
-	ElseIf (IPTWaccuWeatherLocation eq "Google Latitude" AND IPTWgoogleUserID ne "")
-		locationData= ReadFile("http://www.google.com/latitude/apps/badge/api?user=" & IPTWgoogleUserID & "&type=json")
-		locBegin = Find(locationData, "coordinates") + 15
-		locEnd = Find(locationData, "]", locBegin)
-		Split(SubStr(locationData, locBegin, locEnd - locBegin), ",", 1, longitude, latitude)
-
-		IPTWaccuWeatherURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
-	Else
-		IPTWaccuWeatherURL = IPTWaccuWeatherURL & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
-	EndIf
-
-	data = ReadFile(IPTWaccuWeatherURL)
-	WriteFile(IPTWdataFile, data)
-	dataUpdated = 1
-EndIf
+Call("IPTWdownload", IPTWaccuWeatherLocation)
 
 disconnectThenExit = 0
 If (NOT FileExists(IPTWdataFile))
@@ -176,107 +145,23 @@ If (Find(data, "<failure>") > 0 OR Find(data, "<error>") > 0)
 EndIf
 
 If (dataUpdated AND NOT disconnectThenExit)
-	If (Find(data,"</adc_database>") > 0)
-		xmlConfigFileNumber=1
-		While(Find(data, "day number=""" & xmlConfigFileNumber & """"))
-			xmlConfigFileNumber = xmlConfigFileNumber + 1
-		EndWhile
-		xmlConfigFileNumber = xmlConfigFileNumber - 1
-		If (xmlConfigFileNumber > 0 AND xmlConfigFileNumber < 8)
-			IPTWxmlParserConfigFile = SystemPath("ScriptPath") \ "config" & xmlConfigFileNumber & ".xml"
-			xmlParserConfigFile = ReadFile(IPTWxmlParserConfigFile)
-			beginXMLPos = Find(xmlParserConfigFile, "<sourcefile>") + 12
-			endXMLPos = Find(xmlParserConfigFile, "</sourcefile>", beginXMLPos)
-			oldXMLFile = SubStr(xmlParserConfigFile, beginXMLPos, endXMLPos - beginXMLPos)
-			If (IPTWdataFile ne oldXMLFile)
-				xmlParserConfigFile = Replace(xmlParserConfigFile, oldXMLFile, IPTWdataFile)
-				WriteFile(IPTWxmlParserConfigFile, xmlParserConfigFile)
-			EndIf
-# ############################################################################
-# delete all old data from the registry
-			ForEach value, data in regValues(IPTWregRoot, IPTWregKey)
-				If (value ne "ACSuspendTimeout" \
-					AND value ne "ACTimeout" \
-					AND value ne "BatteryTimeout" \
-					AND value ne "BattSuspendTimeout" \
-					AND value ne "ShowingForecast" \
-					AND value ne "sleepOnUpdatePrevented" \
-					AND value ne "Started")
-					If (RegValueExists(IPTWregRoot, IPTWappRegKey, value))
-						RegDelete(IPTWregRoot, IPTWappRegKey, value)
-					EndIf
-					If (RegValueExists(IPTWregRoot, IPTWregKey, value))
-						RegDelete(IPTWregRoot, IPTWregKey, value)
-					EndIf
+	Call("IPTWparse", IPTWaccuWeatherLocation)
+EndIf
+
+#Update favorite locations data for all favorite locations marked with a *
+If (Find(IPTWaccuWeatherFavoriteLocations, "*") <> 0)
+	locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+	ForEach IPTWaccuWeatherFavoriteLocation in array(locationsArray)
+		If (SubStr(IPTWaccuWeatherFavoriteLocation, 1, 1) eq "*")
+			IPTWaccuWeatherFavoriteLocationCode = Part(IPTWaccuWeatherFavoriteLocation, ",", -1, TRUE)
+			If (IPTWaccuWeatherFavoriteLocationCode ne IPTWaccuWeatherLocation)
+				Call("IPTWdownload", IPTWaccuWeatherFavoriteLocationCode)
+				If (Find(data, "<failure>") = 0 AND Find(data, "<error>") = 0)
+					Call("IPTWparse", IPTWaccuWeatherFavoriteLocationCode)
 				EndIf
-			EndForEach
-			RunWait(SystemPath("ScriptPath") \ "xml2reg.exe", IPTWxmlParserConfigFile)
-			RegWriteString(IPTWregRoot, IPTWregKey, "updateTime", TimeStamp())
-
-# ############################################################################
-# copy all data to the location registry key
-			ForEach value, data in regValues(IPTWregRoot, IPTWappRegKey)
-				If (value ne "ACSuspendTimeout" \
-					AND value ne "ACTimeout" \
-					AND value ne "BatteryTimeout" \
-					AND value ne "BattSuspendTimeout" \
-					AND value ne "ShowingForecast" \
-					AND value ne "sleepOnUpdatePrevented" \
-					AND value ne "Started")
-					 RegWriteString(IPTWregRoot, IPTWregKey, value, data)
-				EndIf
-			EndForEach
-
-			url = RegRead(IPTWregRoot, IPTWregKey, "url")
-			locationCodeBegin = ReverseFind(url, "=") + 1
-			locationCode = SubStr(url, locationCodeBegin)
-			RegWriteString(IPTWregRoot, IPTWregKey, "locationCode", locationCode)
-
-#Translation not working anymore, so commented to avoid unexpected behaviour
-#			IPTWtranslationLanguageCode = IniRead("..\weather.ini", "User settings", "IPTWtranslationLanguageCode")
-			IPTWtranslationLanguageCode = ""
-			If (IPTWtranslationLanguageCode ne "" AND Find(IPTWaccuWeatherLocation, "|") > 0)
-				currentText = RegRead(IPTWregRoot, IPTWregKey, "text0")
-				translatedCurrentText = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText)
-				If (Length(translatedCurrentText) = 0)
-					dataCTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/Quick-Look.aspx")
-					beginDesc = Find(dataCTr, "ctl00_cphContent_lblCurrentText") + 92
-					If (beginDesc > 92)
-						endDesc = Find(dataCTr, "</span>", beginDesc)
-						translatedCurrentText = SubStr(dataCTr, beginDesc, endDesc - beginDesc)
-						IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", currentText, translatedCurrentText)
-					EndIf
-				EndIf
-
-				i = 0
-				time = Array("D", "N")
-#				timeTxt = Array("", "N")
-				timeTxt = Array("Day", "Night")
-				While (RegValueExists(IPTWregRoot, IPTWregKey, "textD" & i))
-					For j = 1 to 2
-						If (RegValueExists(IPTWregRoot, IPTWregKey, "text" & time[j] & i))
-							forecastText = RegRead(IPTWregRoot, IPTWregKey, "text" & time[j] & i)
-							translatedForecastText = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", forecastText)
-							If (Length(translatedForecasttext) = 0)
-								If (dataFTr eq "")
-									dataFTr = ReadFile("http://www.accuweather.com/" & IPTWtranslationLanguageCode & "/" & Replace(IPTWaccuWeatherLocation, "|", "/") & "/forecast.aspx")
-								EndIf
-#								searchString = "ctl00_cphContent_rptFC_ctl0" & i & "_lblDesc" & timeTxt[j]
-								searchString = "ctl00_cphContent_repForecast" & timeTxt[j] &"_ctl0" & i & "_lblDesc"">"
-								beginDesc = Find(dataFTr, searchString) + Length(searchString)
-								If (beginDesc > Length(searchString))
-									endDesc = Find(dataFTr, "</span>", beginDesc)
-									translatedForecastText = SubStr(dataFTr, beginDesc, endDesc - beginDesc)
-									IniWrite(IPTWtranslationLanguageCode & ".ini", "Weather description translation", forecastText, translatedForecastText)
-								EndIf
-							EndIf
-						EndIf
-					Next
-					i = i + 1
-				EndWhile
 			EndIf
 		EndIf
-	EndIf
+	EndForEach
 EndIf
 
 If (IPTWdisconnectOnExit AND didconnect)
