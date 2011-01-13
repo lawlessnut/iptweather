@@ -28,6 +28,8 @@ Else
 	textPattern = Replace(textPattern, "%CRFT%", RegRead(IPTWregRoot, IPTWregKey, "tempfeel0"))
 	textPattern = Replace(textPattern, "%HUM%", RegRead(IPTWregRoot, IPTWregKey, "humidity"))
 EndIf
+textPattern = Replace(textPattern, "%TUNIT%", RegRead(IPTWregRoot, IPTWregKey, "unitTemp"))
+textPattern = Replace(textPattern, "%SUNIT%", RegRead(IPTWregRoot, IPTWregKey, "unitSpeed"))
 textPattern = Replace(textPattern, "%CITY%", RegRead(IPTWregRoot, IPTWregKey, "city"))
 textPattern = Replace(textPattern, "%OBST%", RegRead(IPTWregRoot, IPTWregKey, "obstime"))
 textPattern = Replace(textPattern, "%OBSD%", RegRead(IPTWregRoot, IPTWregKey, "obsdate0"))
