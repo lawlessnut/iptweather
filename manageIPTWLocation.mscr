@@ -42,15 +42,28 @@ If (choosenAction = 0)
 	Exit
 ElseIf (choosenAction = 1)
 	If (NOT InternetConnected("http://www.perdu.com"))
-		Connect(IPTWinternetConnection)
-		mdidconnect = TRUE
+		If (IPTWinternetConnection eq "VJVolubilis")
+			If (FileExists(IPTWvjvolubilisPath))
+				RunWait(IPTWvjvolubilisPath, "-gprson")
+				mdidconnect = TRUE
+			EndIf
+		Else
+			Connect(IPTWinternetConnection)
+			mdidconnect = TRUE
+		EndIf
 	EndIf
 
 	location = Input("Please enter location code or name")
 	If (location eq "")
 		If (IPTWdisconnectOnExit AND mdidconnect)
-			CloseConnection
-			Disconnect
+			If (IPTWinternetConnection eq "VJVolubilis")
+				If (FileExists(IPTWvjvolubilisPath))
+					Run(IPTWvjvolubilisPath, "-gprsoff")
+				EndIf
+			Else
+				CloseConnection
+				Disconnect
+			EndIf
 		EndIf
 		Exit
 	EndIf
@@ -96,8 +109,14 @@ ElseIf (choosenAction = 1)
 		IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", Part(locationList[choosenLocation], ",", -1, TRUE))
 	Else
 		If (IPTWdisconnectOnExit AND mdidconnect)
-			CloseConnection
-			Disconnect
+			If (IPTWinternetConnection eq "VJVolubilis")
+				If (FileExists(IPTWvjvolubilisPath))
+					Run(IPTWvjvolubilisPath, "-gprsoff")
+				EndIf
+			Else
+				CloseConnection
+				Disconnect
+			EndIf
 		EndIf
 		Exit
 	EndIf
