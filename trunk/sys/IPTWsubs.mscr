@@ -1,41 +1,36 @@
 Sub IPTWdownload
-If (InternetConnected("http://www.perdu.com"))
-	IPTWcurrentAccuWeatherLocation = argv[1]
-	If (IPTWcurrentAccuWeatherLocation eq "My Location")
-#		locationData = ReadFile("http://www.maxmind.com/app/mylocation")
-#		locBegin = Find(locationData, "Latitude/Longitude") + 57
-#		locEnd = Find(locationData, "</td>", locBegin)
-#		Split(SubStr(locationData, locBegin, locEnd - locBegin - 1), "/", 1, latitude, longitude)
-
-		latitude = RegRead("HKLM", "Services\myLocation", "Latitude")
-		longitude = RegRead("HKLM", "Services\myLocation", "Longitude")
+	If (InternetConnected("http://www.perdu.com"))
+		IPTWcurrentAccuWeatherLocation = argv[1]
+		If (IPTWcurrentAccuWeatherLocation eq "My Location")
+			latitude = RegRead("HKLM", "Services\myLocation", "Latitude")
+			longitude = RegRead("HKLM", "Services\myLocation", "Longitude")
 		
-		IPTWaccuWeatherRequestURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
-	ElseIf (IPTWcurrentAccuWeatherLocation eq "Google Latitude" AND IPTWgoogleUserID ne "")
-		locationData= ReadFile("http://www.google.com/latitude/apps/badge/api?user=" & IPTWgoogleUserID & "&type=json")
-		locBegin = Find(locationData, "coordinates") + 15
-		locEnd = Find(locationData, "]", locBegin)
-		Split(SubStr(locationData, locBegin, locEnd - locBegin), ",", 1, longitude, latitude)
+			IPTWaccuWeatherRequestURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude
+		ElseIf (IPTWcurrentAccuWeatherLocation eq "Google Latitude" AND IPTWgoogleUserID ne "")
+			locationData= ReadFile("http://www.google.com/latitude/apps/badge/api?user=" & IPTWgoogleUserID & "&type=json")
+			locBegin = Find(locationData, "coordinates") + 15
+			locEnd = Find(locationData, "]", locBegin)
+			Split(SubStr(locationData, locBegin, locEnd - locBegin), ",", 1, longitude, latitude)
 
-		IPTWaccuWeatherRequestURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude & "&metric=" & IPTWaccuWeatherMetric
-	Else
-		If (IPTWcurrentAccuWeatherLocation ne "")
-			weatherLocation = "location=" & IPTWcurrentAccuWeatherLocation
+			IPTWaccuWeatherRequestURL = IPTWaccuWeatherURL & "slat=" & latitude & "&slon=" & longitude
 		Else
-			IPTWlocationLatitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLatitude")
-			IPTWlocationLongitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLongitude")
-			weatherLocation = "slat=" & IPTWlocationLatitude & "slon=" & IPTWlocationLongitude
+			If (IPTWcurrentAccuWeatherLocation ne "")
+				weatherLocation = "location=" & IPTWcurrentAccuWeatherLocation
+			Else
+				IPTWlocationLatitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLatitude")
+				IPTWlocationLongitude = IniRead("..\weather.ini", "User settings", "IPTWlocationLongitude")
+				weatherLocation = "slat=" & IPTWlocationLatitude & "slon=" & IPTWlocationLongitude
+			EndIf
+			IPTWaccuWeatherRequestURL = IPTWaccuWeatherURL & weatherLocation
 		EndIf
-		IPTWaccuWeatherRequestURL = IPTWaccuWeatherURL & weatherLocation & "&metric=" & IPTWaccuWeatherMetric
-	EndIf
 
-	data = ReadFile(IPTWaccuWeatherRequestURL)
-	WriteFile(IPTWdataFile, data)
+		data = ReadFile(IPTWaccuWeatherRequestURL)
+		WriteFile(IPTWdataFile, data)
 
-	If (IPTWcurrentAccuWeatherLocation eq IPTWaccuWeatherLocation)
-		dataUpdated = 1
+		If (IPTWcurrentAccuWeatherLocation eq IPTWaccuWeatherLocation)
+			dataUpdated = 1
+		EndIf
 	EndIf
-EndIf
 EndSub
 
 Sub IPTWparse
@@ -65,6 +60,8 @@ Sub IPTWparse
 					AND value ne "BattSuspendTimeout" \
 					AND value ne "ShowingForecast" \
 					AND value ne "sleepOnUpdatePrevented" \
+					AND value ne "lastShownIconsNumber" \
+					AND value ne "lastShownForecastLocation" \
 					AND value ne "Started")
 					If (RegValueExists(IPTWregRoot, IPTWappRegKey, value))
 						RegDelete(IPTWregRoot, IPTWappRegKey, value)
@@ -86,6 +83,8 @@ Sub IPTWparse
 					AND value ne "BattSuspendTimeout" \
 					AND value ne "ShowingForecast" \
 					AND value ne "sleepOnUpdatePrevented" \
+					AND value ne "lastShownIconsNumber" \
+					AND value ne "lastShownForecastLocation" \
 					AND value ne "Started")
 					 RegWriteString(IPTWregRoot, IPTWcurrentRegKey, value, data)
 				EndIf
@@ -100,14 +99,34 @@ Sub IPTWparse
 EndSub
 
 Sub IPTWreloadData
-	reloadScriptPath = argv[2]
-	daysToSkip = argv[1]
-	If (daysToSkip = 0)
-		foundDay = TRUE
-	Else
-		daysToSkip = 1
-		Call("IPTWfindDay")
+	iPTiconNum = 0
+#Update favorite locations data for all favorite locations marked with a *
+	If (Find(IPTWaccuWeatherFavoriteLocations, "*") <> 0 AND IPTWFIP eq "")
+		locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+		ForEach IPTWaccuWeatherFavoriteLocation in array(locationsArray)
+			If (SubStr(IPTWaccuWeatherFavoriteLocation, 1, 1) eq "+" OR SubStr(IPTWaccuWeatherFavoriteLocation, 2, 1) eq "+")
+				IPTWaccuWeatherFavoriteLocationCode = Part(IPTWaccuWeatherFavoriteLocation, ",", -1, TRUE)
+				If (IPTWaccuWeatherFavoriteLocationCode ne IPTWaccuWeatherLocation)
+					IPTWcurrentWeatherIcon = IPTWcurrentWeatherIcon + 1
+					IPTWregKey = IPTWappRegKey \ IPTWaccuWeatherFavoriteLocationCode
+					Call("IPTWreload", argv[1], 0)
+					iPTiconNum = iPTiconNum + 1
+				EndIf
+			EndIf
+		EndForEach
+		IPTWcurrentWeatherIcon = IPTWcurrentWeatherIcon - iPTiconNum
+		IPTWregKey = IPTWappRegKey \ IPTWaccuWeatherLocation
 	EndIf
+	Call("IPTWreload", argv[1], 1)
+	Call("waitForReadyIPT", 2)
+EndSub
+
+Sub IPTWreload
+	reloadScriptPath = argv[1]
+	mainLocation = argv[2]
+	notUseCurrent = FALSE
+	daysToSkip = 0
+	Call("IPTWfindDay")
 	If (foundDay)
 		sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & daysToSkip), -8)
 		sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
@@ -151,11 +170,15 @@ Sub IPTWreloadData
 				suffix = "D"
 			EndIf
 		EndIf
-		CallScript(reloadScriptPath \ "IPTWreloadS2U2.mscr", daysToSkip + 1)
+		If (mainLocation)
+			CallScript(reloadScriptPath \ "IPTWreloadS2U2.mscr", daysToSkip + 1)
+		EndIf
 		CallScript(reloadScriptPath \ "IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, daysToSkip, iPhoneTodayPic, notUseCurrent)
 	Else
 		iPhoneTodayPic = "AccuWeather" & "." & IPTWiconsExtension
-		CallScript(reloadScriptPath \ "IPTWreloadS2U2.mscr", -1)
+		If (mainLocation)
+			CallScript(reloadScriptPath \ "IPTWreloadS2U2.mscr", -1)
+		EndIf
 		CallScript(reloadScriptPath \ "IPTWreloadIcon.mscr", IPTWcurrentWeatherPage, IPTWcurrentWeatherIcon, "N/A", iPhoneTodayPic)
 	EndIf
 EndSub
@@ -163,16 +186,18 @@ EndSub
 Sub waitForReadyIPT
 	If (NOT IPTWiPhoneTodayDisabled)
 		maxTryTime = TimeStamp() + 20
-		If (argv[1] = 1)
-			While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcons") <> 0 AND TimeStamp() < maxTryTime)
+		If (argv[1] = 1 AND NOT IPTWwriteForecastInFile)
+			While(RegRead("HKLM", "\Software" \ IPTWiPhoneTodayClassName, "reloadIcons") <> 0 AND TimeStamp() < maxTryTime)
 				Sleep(200)
 			EndWhile
-			If (RegRead("HKLM", "\Software\iPhonetoday", "reloadIcons"))
-				RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcons", 0)
-				Exit
+			If (RegRead("HKLM", "\Software" \ IPTWiPhoneTodayClassName, "reloadIcons"))
+				RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName, "reloadIcons", 0)
+				If (NOT IPTWwriteForecastInFile)
+					Exit
+				EndIf
 			EndIf
 		ElseIf (argv[1] = 2)
-			While(RegRead("HKLM", "\Software\iPhonetoday", "reloadIcon") AND RegKeyExists("HKLM", "\Software\iPhonetoday\icon0"))
+			While(RegRead("HKLM", "\Software" \ IPTWiPhoneTodayClassName, "reloadIcon") AND RegKeyExists("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon0"))
 				Sleep(200)
 			EndWhile
 			Sleep(500)
