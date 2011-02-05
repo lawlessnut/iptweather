@@ -1,8 +1,13 @@
 IPTWtranslationLanguageCode = IniRead("..\weather.ini", "User settings", "IPTWtranslationLanguageCode")
-If (IPTWtranslationLanguageCode ne "" AND Find(IPTWaccuWeatherLocation, "|") > 0)
+If (IPTWtranslationLanguageCode ne "")
+	IPTWlanguageFile = IPTWtranslationLanguageCode & ".ini"
+Else
+	IPTWlanguageFile = IniRead("..\weather.ini", "User settings", "IPTWlanguageFile")
+EndIf
+If (IPTWtranslationLanguageCode ne "")
 	newS2U2text = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", weatherText)
 EndIf
-If (newS2U2text eq "" OR IPTWtranslationLanguageCode eq "" OR Find(IPTWaccuWeatherLocation, "|") = 0)
+If (newS2U2text eq "" OR IPTWtranslationLanguageCode eq "")
 	newS2U2text = IniRead(IPTWlanguageFile, "Weather description translation", weatherText)
 	If (Length(newS2U2text) = 0)
 		newS2U2text = weatherText
