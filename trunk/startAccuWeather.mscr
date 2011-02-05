@@ -12,6 +12,7 @@ IPTWscheduleNextUpdateOnStart	= IniRead(IPTWscriptPath \ "weather.ini", "User se
 IPTWdelayHours					= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWdelayHours")
 IPTWdelayMinutes				= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWdelayMinutes")
 IPTWreloadLastDataOnStart		= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWreloadLastDataOnStart")
+IPTWiPhoneTodayClassName		= IniRead("weather.ini", "Script settings", "IPTWiPhoneTodayClassName")
 
 # ############################################################################
 # Set App-to-date version file path
@@ -42,11 +43,11 @@ EndIf
 If (IPTWreloadLastDataOnStart = 0)
 	If (NOT IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled"))
 		iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
-		RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nScreen", IPTWcurrentWeatherPage)
-		RegWriteDWord("HKLM", "\Software\iPhonetoday\icon0", "nIcon", IPTWcurrentWeatherIcon)
-		RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strName", IPTWstartText)
-		RegWriteString("HKLM", "\Software\iPhonetoday\icon0", "strImage", IPTWaccuWeatherIconPath \ iPhoneTodayPic)
-		RegWriteDWord("HKLM", "\Software\iPhonetoday", "reloadIcon", 1)
+		RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon0", "nScreen", IPTWcurrentWeatherPage)
+		RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon0", "nIcon", IPTWcurrentWeatherIcon)
+		RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon0", "strName", IPTWstartText)
+		RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon0", "strImage", IPTWaccuWeatherIconPath \ iPhoneTodayPic)
+		RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName, "reloadIcon", 1)
 	EndIf
 	RegWriteDWord(IPTWregRoot, IPTWregKey, "Started", 0)
 EndIf
