@@ -1,7 +1,12 @@
-IPTWaccuWeatherLocation	= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherLocation")
 IPTWlanguageFile		= IniRead("..\weather.ini", "User settings", "IPTWlanguageFile")
 IPTWregRoot				= IniRead("..\weather.ini", "Script settings", "IPTWregRoot")
 IPTWappRegKey			= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
+
+If (RegValueExists(IPTWregRoot, IPTWappRegKey, "lastShownForecastLocation"))
+	IPTWaccuWeatherLocation = RegRead(IPTWregRoot, IPTWappRegKey, "lastShownForecastLocation")
+Else
+	IPTWaccuWeatherLocation = IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherLocation")
+EndIf
 IPTWregKey				= IniRead("..\weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
 weekday["Monday"]		= IniRead("..\weather.ini", "User settings", "IPTWmondayText")
 weekday["Tuesday"]		= IniRead("..\weather.ini", "User settings", "IPTWtuesdayText")
