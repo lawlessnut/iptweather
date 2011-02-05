@@ -5,12 +5,20 @@ Include("IPTWsubs.mscr")
 # ############################################################################
 # retrieve user preference
 IPTWaccuWeatherMetric		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherMetric")
-IPTWaccuWeatherLocation		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherLocation")
+If (IPTWaccuWeatherLocationForecast ne "")
+	IPTWaccuWeatherLocation = IPTWaccuWeatherLocationForecast
+Else
+	IPTWaccuWeatherLocation = IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherLocation")
+EndIf
 IPTWdelayHours				= IniRead("..\weather.ini", "User settings", "IPTWdelayHours")
 IPTWdelayMinutes			= IniRead("..\weather.ini", "User settings", "IPTWdelayMinutes")
 IPTWinternetConnection		= IniRead("..\weather.ini", "User settings", "IPTWinternetConnection")
 IPTWdisconnectOnExit		= IniRead("..\weather.ini", "User settings", "IPTWdisconnectOnExit")
-IPTWcurrentWeatherIcon		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherIcon")
+If (IPTWFIP ne "")
+	IPTWcurrentWeatherIcon = IPTWFIP
+Else
+	IPTWcurrentWeatherIcon		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherIcon")
+EndIf
 IPTWcurrentWeatherPage		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherPage")
 IPTWiconsExtension			= IniRead("..\weather.ini", "User settings", "IPTWiconsExtension")
 IPTWobsoleteDataPrefix		= IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
@@ -19,12 +27,13 @@ IPTWpreventSleepOnUpdate	= IniRead("..\weather.ini", "User settings", "IPTWpreve
 IPTWnightIconSuffix			= IniRead("..\weather.ini", "User settings", "IPTWnightIconSuffix")
 IPTWgoogleUserID			= IniRead("..\weather.ini", "User settings", "IPTWgoogleUserID")
 IPTWiPhoneTodayDisabled		= IniRead("..\weather.ini", "User settings", "IPTWiPhoneTodayDisabled")
-IPTWlanguageFile			= IniRead("..\weather.ini", "User settings", "IPTWlanguageFile")
 IPTWaccuWeatherIconPath		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherIconPath")
 IPTWaccuWeatherAPI			= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherAPI")
 IPTWvjvolubilisPath			= IniRead("..\weather.ini", "User settings", "IPTWvjvolubilisPath")
 IPTWwriteForecastInFile		= IniRead("..\weather.ini", "User settings", "IPTWwriteForecastInFile")
 IPTWaccuWeatherFavoriteLocations	= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations")
+IPTWtranslationLanguageCode		= IniRead("..\weather.ini", "User settings", "IPTWtranslationLanguageCode")
+IPTWiPhoneTodayClassName		= IniRead("..\weather.ini", "Script settings", "IPTWiPhoneTodayClassName")
 
 If (IPTWaccuWeatherAPI eq "")
 	IPTWaccuWeatherAPI = "ruan"
@@ -48,7 +57,12 @@ IPTWappRegKey			= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
 IPTWregKey				= IPTWappRegKey \ IPTWaccuWeatherLocation
 IPTWdataFile			= SystemPath("ScriptPath") \ "data.xml"
 IPTWaccuWeatherURL = "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/weather-data.asp?"
-
+If (IPTWtranslationLanguageCode ne "")
+	IPTWaccuWeatherURL = IPTWaccuWeatherURL & "lang=" & IPTWtranslationLanguageCode & "&"
+EndIf
+If (IPTWaccuWeatherMetric ne "")
+	IPTWaccuWeatherURL = IPTWaccuWeatherURL & "metric=" & IPTWaccuWeatherMetric & "&"
+EndIf
 # ############################################################################
 # Set App-to-date version file path
 versionFilePath = SystemPath("ScriptPath") \ "version.xml"
@@ -69,13 +83,6 @@ If (IPTWdelayHours <> 0 OR IPTWdelayMinutes <> 0)
 	RemoveNotifications(mort, """" & script & """") 
 	RunAt(utime, mort, """" & script & """")
 EndIf
-
-# ############################################################################
-# last data observation date and time
-lastobsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
-lastobsdate = SubStr("0" & Part(lastobsdate, "/", 1), -2) & "/" & SubStr("0" & Part(lastobsdate, "/", 2), -2) & "/" & Part(lastobsdate, "/", 3)
-lastobstime = RegRead(IPTWregRoot, IPTWregKey, "obstime")
-lastlocation = RegRead(IPTWregRoot, IPTWappRegKey, "locationCode")
 
 # ############################################################################
 # load data
@@ -148,20 +155,22 @@ If (dataUpdated AND NOT disconnectThenExit)
 	Call("IPTWparse", IPTWaccuWeatherLocation)
 EndIf
 
-#Update favorite locations data for all favorite locations marked with a *
-If (Find(IPTWaccuWeatherFavoriteLocations, "*") <> 0)
-	locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
-	ForEach IPTWaccuWeatherFavoriteLocation in array(locationsArray)
-		If (SubStr(IPTWaccuWeatherFavoriteLocation, 1, 1) eq "*")
-			IPTWaccuWeatherFavoriteLocationCode = Part(IPTWaccuWeatherFavoriteLocation, ",", -1, TRUE)
-			If (IPTWaccuWeatherFavoriteLocationCode ne IPTWaccuWeatherLocation)
-				Call("IPTWdownload", IPTWaccuWeatherFavoriteLocationCode)
-				If (Find(data, "<failure>") = 0 AND Find(data, "<error>") = 0)
-					Call("IPTWparse", IPTWaccuWeatherFavoriteLocationCode)
+If (IPTWaccuWeatherLocationForecast eq "")
+	#Update favorite locations data for all favorite locations marked with a *
+	If (Find(IPTWaccuWeatherFavoriteLocations, "*") <> 0)
+		locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+		ForEach IPTWaccuWeatherFavoriteLocation in array(locationsArray)
+ 				If (SubStr(IPTWaccuWeatherFavoriteLocation, 1, 1) eq "*" OR SubStr(IPTWaccuWeatherFavoriteLocation, 2, 1) eq "*")
+				IPTWaccuWeatherFavoriteLocationCode = Part(IPTWaccuWeatherFavoriteLocation, ",", -1, TRUE)
+				If (IPTWaccuWeatherFavoriteLocationCode ne IPTWaccuWeatherLocation)
+					Call("IPTWdownload", IPTWaccuWeatherFavoriteLocationCode)
+					If (Find(data, "<failure>") = 0 AND Find(data, "<error>") = 0)
+						Call("IPTWparse", IPTWaccuWeatherFavoriteLocationCode)
+					EndIf
 				EndIf
 			EndIf
-		EndIf
-	EndForEach
+		EndForEach
+	EndIf
 EndIf
 
 If (IPTWdisconnectOnExit AND didconnect)
@@ -188,29 +197,10 @@ If (disconnectThenExit)
 	Exit
 EndIf
 
-# ############################################################################
-# new data observation date and time
-newobsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
-newobsdate = SubStr("0" & Part(newobsdate, "/", 1), -2) & "/" & SubStr("0" & Part(newobsdate, "/", 2), -2) & "/" & Part(newobsdate, "/", 3)
-newobstime = RegRead(IPTWregRoot, IPTWregKey, "obstime")
-newlocation = RegRead(IPTWregRoot, IPTWregKey, "locationCode")
-
-# ############################################################################
-# is the first run of getAccuWeather after phone starts
-isStarted = RegRead(IPTWregRoot, IPTWappRegKey, "Started")
-
 Call("IPTWsetCurrentTimeAndDate")
 
-# new not obsolete data, so update
-If (isStarted = 0 OR ((newobsdate eq currentDate) AND ((lastlocation ne newlocation) OR (lastobsdate ne newobsdate) OR (lastobstime ne newobstime))))
-	Call("IPTWreloadData", 0, SystemPath("ScriptPath"))
+If (RegRead(IPTWregRoot, IPTWappRegKey, "Started"))
+	Call("IPTWreloadData", SystemPath("ScriptPath"))
 Else
-# If change of day, we retrieve previous night forecast as current condition
-	If (newobsdate ne currentDate)
-		Call("IPTWreloadData", 1, SystemPath("ScriptPath"))
-	EndIf
+	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
 EndIf
-
-RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
-
-Call("waitForReadyIPT", 2)
