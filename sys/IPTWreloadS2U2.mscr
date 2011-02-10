@@ -194,25 +194,25 @@ EndIf
 
 If (reloadS2U2 AND NOT doNotReloadS2U2)
 	If (WndActive("S2U2") = True)
-		Call("S2U2restart")
-		Sleep(500)
+		Run(IPTWS2U2Path \ "iLock2.exe", "-nomsg")
+		nbWaitToCloseS2U2 = 0
+		While (ProcExists("iLock2.exe") AND nbWaitToCloseS2U2 < 20)
+			Sleep(500)
+			nbWaitToCloseS2U2 = nbWaitToCloseS2U2 + 1
+		EndWhile
 		Run(IPTWS2U2Path \ "iLock2.exe", "-slide")
 	Else
-		Call("S2U2restart")
+		Run(IPTWS2U2Path \ "iLock2.exe", "-nomsg")
+		nbWaitToCloseS2U2 = 0
+		While (ProcExists("iLock2.exe") AND nbWaitToCloseS2U2 < 20)
+			Sleep(500)
+			nbWaitToCloseS2U2 = nbWaitToCloseS2U2 + 1
+		EndWhile
+		Run(IPTWS2U2Path \ "iLock2.exe")
 	EndIf
 EndIf
 
 CallScript("userScriptOnUpdate.mscr", argv[1])
-
-Sub S2U2restart
-	Run(IPTWS2U2Path \ "iLock2.exe", "-nomsg")
-	nbWaitToCloseS2U2 = 0
-	While (WindowProcess("iLock2") ne "" AND nbWaitToCloseS2U2 < 40)
-		Sleep(500)
-		nbWaitToCloseS2U2 = nbWaitToCloseS2U2 + 1
-	EndWhile
-	Run(IPTWS2U2Path \ "iLock2.exe")
-EndSub
 
 Sub S2U2UserWeather
 	IPTWS2U2UserWeatherIconsPath = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherIconsPath")

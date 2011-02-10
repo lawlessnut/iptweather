@@ -1,7 +1,7 @@
 <application>
 <name>IPTWeather</name>
-<version>20101215</version>
-<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br /><br />Please make a backup of your weather.ini file before installing the cab!<br /><br />What's new in IPTWeather_20101215:<br />Please check the full changelogs on Google Code.</description>
+<version>20101202</version>
+<description>IPTWeather brings weather to iPhoneToday and/or S2U2.<br />Download and support at http://iptweather.googlecode.com<br /><br />Please make a backup of your weather.ini file before installing the cab!<br /><br />What's new in IPTWeather_20101202:<br />Please check the full changelogs on Google Code.</description>
 <versionurl>http://iptweather.googlecode.com/files/version.xml</versionurl>
-<caburl>http://iptweather.googlecode.com/files/IPTWeather_20101215.cab</caburl>
+<caburl>http://iptweather.googlecode.com/files/IPTWeather_20101202.cab</caburl>
 </application>

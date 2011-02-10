@@ -46,8 +46,8 @@ If (IPTWdisplayHumidityIcon)
 	Else
 		humidity = "N/A"
 	EndIf
-	RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon1", "nScreen", IPTWhumidityPage)
-	RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon1", "nIcon", IPTWhumidityIcon)
-	RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon1", "strName", humidity)
-	RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon1", "strImage", IPTWaccuWeatherIconPath \ IPTWhumidityIconName)
+	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon1", "nScreen", IPTWhumidityPage)
+	RegWriteDWord("HKLM", "\Software\iPhonetoday\icon1", "nIcon", IPTWhumidityIcon)
+	RegWriteString("HKLM", "\Software\iPhonetoday\icon1", "strName", humidity)
+	RegWriteString("HKLM", "\Software\iPhonetoday\icon1", "strImage", IPTWaccuWeatherIconPath \ IPTWhumidityIconName)
 EndIf

@@ -33,7 +33,7 @@ While (beginPos > 0)
 				EndIf
 
 #We skip the backup of IPTWquickLocationChangeSleepMsgTime and IPTWS2U2Path because of their removal in the new version.
-				If (key ne "IPTWquickLocationChangeSleepMsgTime" AND key ne "IPTWS2U2Path" AND key ne "IPTWmaxDownloadMinutes")
+				If (key ne "IPTWquickLocationChangeSleepMsgTime" AND key ne "IPTWS2U2Path" AND key ne "IPTWtranslationLanguageCode" AND key ne "IPTWmaxDownloadMinutes")
 
 #Setting IPTWhideRealFeelInForecastIcons=1 replaced by just removing %PRFT% from IPTWforecastWeatherIconsTextPattern.
 					If (key eq "IPTWhideRealFeelInForecastIcons")
