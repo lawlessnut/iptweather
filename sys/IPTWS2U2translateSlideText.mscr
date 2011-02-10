@@ -4,25 +4,27 @@ If (IPTWtranslationLanguageCode ne "")
 Else
 	IPTWlanguageFile = IniRead("..\weather.ini", "User settings", "IPTWlanguageFile")
 EndIf
-If (IPTWtranslationLanguageCode ne "")
-	newS2U2text = IniRead(IPTWtranslationLanguageCode & ".ini", "Weather description translation", weatherText)
-EndIf
-If (newS2U2text eq "" OR IPTWtranslationLanguageCode eq "")
-	newS2U2text = IniRead(IPTWlanguageFile, "Weather description translation", weatherText)
-	If (Length(newS2U2text) = 0)
-		newS2U2text = weatherText
+newS2U2text = IniRead(IPTWlanguageFile, "Weather description translation", weatherText)
+If (Length(newS2U2text) = 0)
+	newS2U2text = weatherText
 
-		If (Length(newS2U2text) > 19)
-			translationArray = Array(" and ", " & ", " with ", " w/ ", "this morning", "a.m.", "this afternoon", "p.m.", "morning", "a.m.", "afternoon", "p.m.", "ing ", "in' ", "A couple of", "Some", "some ", "")
-			maxTranslationIndex = MaxIndex(translationArray)
-			translationIndex = 1
-			While (Length(newS2U2text) > 19 and  translationIndex<= maxTranslationIndex)
-				newS2U2text = Replace(newS2U2text, translationArray[translationIndex], translationArray[translationIndex + 1])
-				translationIndex = translationIndex + 2
-			EndWhile
-		EndIf
+	replaceMap = Split(IniRead(IPTWlanguageFile, "", "ReplaceMap"), ",")
+	maxReplaceMapIndex = MaxIndex(replaceMap) - 1
+	replaceIndex = 1
+	While (replaceIndex <= maxReplaceMapIndex)
+		newS2U2text = Replace(newS2U2text, replaceMap[replaceIndex], replaceMap[replaceIndex + 1])
+		replaceIndex = replaceIndex + 2
+	EndWhile
 
-		IniWrite(IPTWlanguageFile, "Weather description translation", weatherText, newS2U2text)
+	If (Length(newS2U2text) > 19)
+		translationArray = Split(IniRead(IPTWlanguageFile, "", "AutoTextShortening"), ",")
+		maxTranslationIndex = MaxIndex(translationArray) - 1
+		translationIndex = 1
+		While (Length(newS2U2text) > 19 and  translationIndex <= maxTranslationIndex)
+			newS2U2text = Replace(newS2U2text, Eval(translationArray[translationIndex]), Eval(translationArray[translationIndex + 1]))
+			translationIndex = translationIndex + 2
+		EndWhile
 	EndIf
-EndIf
 
+	IniWrite(IPTWlanguageFile, "Weather description translation", weatherText, newS2U2text)
+EndIf
