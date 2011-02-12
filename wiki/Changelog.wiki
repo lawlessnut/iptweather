@@ -5,7 +5,7 @@
   * Added feature to update the weather data for all starred favorite locations (see IPTWeather Location script).
   * Display of current weather icons for selected favorite locations in iPhoneToday (see IPTWeather Location script).
   * Added IPTWiPhoneTodayClassName setting to allow the use of any iPhoneToday instance (Tito's iFolder and so on).
-  * IPTWtranslationLanguageCode setting back with language codes de, es, fr, it and pt (empty by default for US  *English).
+  * IPTWtranslationLanguageCode setting back with language codes de, es, fr, it and pt (empty by default for US-English).
   * Added ReplaceMap setting in the weather description .ini files (see eng.ini and fr.ini for examples).
   * Added AutoTextShortening setting in the weather description .ini files (see eng.ini and fr.ini for examples).
   * Added %TUNIT% and %SUNIT% patterns for Temperature and Speed units.
