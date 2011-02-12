@@ -1,0 +1,88 @@
+
+#Arguments:
+#1 - day number
+#2 - type of text: 1 for obsolete data, 0 for up-to-date data
+#3 - day or night suffix ("D" or "N")
+#4 - section for the text pattern in the weather.ini file
+#5 - text pattern in the weather.ini file
+
+textPattern = IniRead("..\weather.ini", argv[4], argv[5])
+If (argv[2] = 1)
+	IPTWobsoleteDataPrefix = IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
+	beginNAPos = 1
+	While (beginNAPos <> 0)
+		beginNAPos = Find(textPattern, "%NA%")
+		endNAPos = Find(textPattern, "%NA%", beginNAPos + 4) + 4
+		If (beginNAPos = 1)
+			textPattern = SubStr(textPattern, endNAPos)
+		ElseIf (beginNAPos <> 0)
+			textPattern = SubStr(textPattern, 1, beginNAPos - 1) & SubStr(textPattern, endNAPos)
+		EndIf
+	EndWhile
+	textPattern = Replace(textPattern, "%CT%", IPTWobsoleteDataPrefix)
+	textPattern = Replace(textPattern, "%CRFT%", IPTWobsoleteDataPrefix)
+	textPattern = Replace(textPattern, "%HUM%", IPTWobsoleteDataPrefix)
+Else
+	textPattern = Replace(textPattern, "%NA%", "")
+	textPattern = Replace(textPattern, "%CT%", RegRead(IPTWregRoot, IPTWregKey, "temp0"))
+	textPattern = Replace(textPattern, "%CRFT%", RegRead(IPTWregRoot, IPTWregKey, "tempfeel0"))
+	textPattern = Replace(textPattern, "%HUM%", RegRead(IPTWregRoot, IPTWregKey, "humidity"))
+EndIf
+textPattern = Replace(textPattern, "%TUNIT%", RegRead(IPTWregRoot, IPTWregKey, "unitTemp"))
+textPattern = Replace(textPattern, "%SUNIT%", RegRead(IPTWregRoot, IPTWregKey, "unitSpeed"))
+textPattern = Replace(textPattern, "%CITY%", RegRead(IPTWregRoot, IPTWregKey, "city"))
+textPattern = Replace(textPattern, "%OBST%", RegRead(IPTWregRoot, IPTWregKey, "obstime"))
+textPattern = Replace(textPattern, "%OBSD%", RegRead(IPTWregRoot, IPTWregKey, "obsdate0"))
+
+textPattern = Replace(textPattern, "%HT%", RegRead(IPTWregRoot, IPTWregKey, "hiTemp" & argv[1]))
+textPattern = Replace(textPattern, "%HRFT%", RegRead(IPTWregRoot, IPTWregKey, "hiFeelTemp" & argv[1]))
+textPattern = Replace(textPattern, "%LT%", RegRead(IPTWregRoot, IPTWregKey, "loTemp" & argv[1]))
+textPattern = Replace(textPattern, "%LRFT%", RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & argv[1]))
+
+If (argv[3] eq "D")
+	textPattern = Replace(textPattern, "%PT%", RegRead(IPTWregRoot, IPTWregKey, "hiTemp" & argv[1]))
+	textPattern = Replace(textPattern, "%PRFT%", RegRead(IPTWregRoot, IPTWregKey, "hiFeelTemp" & argv[1]))
+ElseIf (argv[3] eq "N")
+	textPattern = Replace(textPattern, "%PT%", RegRead(IPTWregRoot, IPTWregKey, "loTemp" & argv[1]))
+	textPattern = Replace(textPattern, "%PRFT%", RegRead(IPTWregRoot, IPTWregKey, "loFeelTemp" & argv[1]))
+Else
+	textPattern = Replace(textPattern, "%PT%", RegRead(IPTWregRoot, IPTWregKey, "temp0"))
+	textPattern = Replace(textPattern, "%PRFT%", RegRead(IPTWregRoot, IPTWregKey, "tempfeel0"))
+EndIf
+
+textPattern = Replace(textPattern, "%DAY%", RegRead(IPTWregRoot, IPTWregKey, "weekday" & argv[1]))
+If (Find(textPattern, "%SDAY%") > 0)
+	day = RegRead(IPTWregRoot, IPTWregKey, "weekday" & argv[1])
+#day = IniRead("..\weather.ini", "User settings", "IPTW" & ToLower(day) & "Text")
+	textPattern = Replace(textPattern, "%SDAY%", IniRead("..\weather.ini", "User settings", "IPTW" & day & "Text"))
+EndIf
+
+If (Find(textPattern, "%TXT%") > 0)
+	weatherText = RegRead(IPTWregRoot, IPTWregKey, "text" & argv[3] & argv[1])
+	CallScript("IPTWS2U2translateSlideText.mscr")
+	textPattern = Replace(textPattern, "%TXT%", newS2U2text)
+EndIf
+textPattern = Replace(textPattern, "%WSPD%", RegRead(IPTWregRoot, IPTWregKey, "windspeed" & argv[3] & argv[1]))
+textPattern = Replace(textPattern, "%WDIR%", RegRead(IPTWregRoot, IPTWregKey, "winddirection" & argv[3] & argv[1]))
+textPattern = Replace(textPattern, "%WGUS%", RegRead(IPTWregRoot, IPTWregKey, "windgusts" & argv[3] & argv[1]))
+
+If (Find(textPattern, "%SUNS%") > 0 OR Find(textPattern, "%SUNR%") > 0)
+	IPTWconvertTimeFormat = IniRead("..\weather.ini", "User settings", "IPTWconvertTimeFormat")
+	sunset = RegRead(IPTWregRoot, IPTWregKey, "sunset" & argv[1])
+	sunrise = RegRead(IPTWregRoot, IPTWregKey, "sunrise" & argv[1])
+	If (IPTWconvertTimeFormat)
+		sunsettime = Part(sunset, " ", 1)
+		If (Part(sunset, " ", 2) eq "PM")
+			sunsettime = (12 + Part(sunsettime, ":", 1)) & ":" & Part(sunsettime, ":", 2)
+		EndIf
+		sunrisetime = Part(sunrise, " ", 1)
+		If (Part(sunrise, " ", 2) eq "PM")
+			sunrisetime = (12 + Part(sunrisetime, ":", 1)) & ":" & Part(sunrisetime, ":", 2)
+		EndIf
+	Else
+		sunrisetime = sunrise
+		sunsettime = sunset
+	EndIf
+	textPattern = Replace(textPattern, "%SUNS%", sunsettime)
+	textPattern = Replace(textPattern, "%SUNR%", sunrisetime)
+EndIf
