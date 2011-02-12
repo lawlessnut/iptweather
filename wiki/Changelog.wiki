@@ -1,5 +1,19 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20110212 ===
+  * Actually fixed display if IPTWeather update time is after sunrise/sunset but AccuWeather observation time is before.
+  * Added feature to update the weather data for all starred favorite locations (see IPTWeather Location script).
+  * Display of current weather icons for selected favorite locations in iPhoneToday (see IPTWeather Location script).
+  * Added IPTWiPhoneTodayClassName setting to allow the use of any iPhoneToday instance (Tito's iFolder and so on).
+  * IPTWtranslationLanguageCode setting back with language codes de, es, fr, it and pt (empty by default for US  *English).
+  * Added ReplaceMap setting in the weather description .ini files (see eng.ini and fr.ini for examples).
+  * Added AutoTextShortening setting in the weather description .ini files (see eng.ini and fr.ini for examples).
+  * Added %TUNIT% and %SUNIT% patterns for Temperature and Speed units.
+  * Add VJVolubilis support to the Manage Location script.
+  * Totally reviewed IPTWeather Location script for more user  *friendlyness.
+  * Use WindowsProcess instead of ProcExists to detect iLock2.exe is stopped.
+  * Code optimization.
+
 === IPTWeather_20101215 ===
   * Fixed display if IPTWeather update time is after sunrise/sunset but AccuWeather observation time is before.
   * Small code improvement.
