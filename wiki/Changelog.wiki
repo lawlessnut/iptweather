@@ -10,7 +10,7 @@
   * Added AutoTextShortening setting in the weather description .ini files (see eng.ini and fr.ini for examples).
   * Added %TUNIT% and %SUNIT% patterns for Temperature and Speed units.
   * Add VJVolubilis support to the Manage Location script.
-  * Totally reviewed IPTWeather Location script for more user  *friendlyness.
+  * Totally reviewed IPTWeather Location script for more user-friendlyness.
   * Use WindowsProcess instead of ProcExists to detect iLock2.exe is stopped.
   * Code optimization.
 
