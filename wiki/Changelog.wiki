@@ -1,5 +1,8 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20110213 ===
+  * Removed all comments from weather.ini file for better performance of IPTWeather. All comments are now in the weather.ini.desc description file that is used for the IPTWeather Config script.
+
 === IPTWeather_20110212 ===
   * Actually fixed display if IPTWeather update time is after sunrise/sunset but AccuWeather observation time is before.
   * Added feature to update the weather data for all starred favorite locations (see IPTWeather Location script).
@@ -11,6 +14,7 @@
   * Added %TUNIT% and %SUNIT% patterns for Temperature and Speed units.
   * Add VJVolubilis support to the Manage Location script.
   * Totally reviewed IPTWeather Location script for more user-friendlyness.
+  * Blank unused weather icons in iPhoneToday if IPTWwriteForecastInFile=1.
   * Use WindowsProcess instead of ProcExists to detect iLock2.exe is stopped.
   * Code optimization.
 
