@@ -1,0 +1,68 @@
+fileName = SelectFile("Choose file", FALSE, "*", "Choose a backup weather.ini file to restore to the current one.", SystemPath("ScriptPath") \ "backupweather.ini")
+
+If (NOT FileExists(fileName))
+	Exit
+EndIf
+
+iniFile = ReadFile(fileName)
+
+StatusType(ST_MESSAGE, 0)
+
+beginPos = Find(iniFile, "[")
+While (beginPos > 0)
+	endSecPos = Find(iniFile, "]", beginPos)
+	section = SubStr(iniFile, beginPos + 1, endSecPos - beginPos - 1)
+	If (SubStr(iniFile, beginPos - 1, 1) eq "^LF^" OR beginPos = 1)
+
+		endPos = Find(iniFile, "=", endSecPos)
+		endSectionPos = Find(iniFile, "[", endPos)
+		While (SubStr(iniFile, endSectionPos - 1, 1) ne "^LF^" AND endSectionPos <> 0)
+			endSectionPos = Find(iniFile, "[", endSectionPos + 1)
+		EndWhile
+		While (endPos > 0 AND (endPos < endSectionPos OR endSectionPos = 0))
+			beginLinePos = ReverseFind(Substr(iniFile, 1, endPos -1),"^LF^")
+			endLinePos = Find(iniFile, "^LF^", endPos)
+			If (SubStr(iniFile, beginLinePos + 1, 1) ne ";")
+				key = SubStr(iniFile, beginLinePos + 1, endPos - beginLinePos - 1)
+				StatusRemoveLastMessage()
+				StatusMessageAppend("Restoring [" & section & "]^NL^" & key & "...")
+				If (endPos+2 = endLinePos)
+					value = ""
+				Else
+					value = SubStr(iniFile, endPos + 1, endLinePos - endPos - 2)
+				EndIf
+
+#We skip the backup of IPTWquickLocationChangeSleepMsgTime and IPTWS2U2Path because of their removal in the new version.
+				If (key ne "IPTWquickLocationChangeSleepMsgTime" AND key ne "IPTWS2U2Path" AND key ne "IPTWmaxDownloadMinutes")
+
+#Setting IPTWhideRealFeelInForecastIcons=1 replaced by just removing %PRFT% from IPTWforecastWeatherIconsTextPattern.
+					If (key eq "IPTWhideRealFeelInForecastIcons")
+						If (value)
+							IniWrite("weather.ini", section, "IPTWforecastWeatherIconsTextPattern", "%SDAY%%PT%")
+						EndIf
+
+#rdona API does not work anymore. Replace rdona API by ruan API by default.
+					ElseIf (key eq "IPTWaccuWeatherAPI" AND value eq "rdona")
+						IniWrite("weather.ini", section, key, "ruan")					
+
+#In all other cases, we restore previousely backuped up fileName file to the new one.
+					Else
+						IniWrite("weather.ini", section, key, value)
+					EndIf
+				EndIf
+
+			EndIf
+			endNewPos = Find(iniFile, "=", endLinePos + 1)
+			If (endNewPos > endPos)
+				endPos = endNewPos
+			Else
+				endPos = 0
+			EndIf
+		EndWhile
+
+	EndIf
+	beginPos = Find(iniFile, "[", endSecPos)
+EndWhile
+
+StatusClear()
+Message("Configuration restored successfully!")
