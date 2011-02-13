@@ -1,22 +1,23 @@
 fileName = argv[1]
+descFileName = fileName & ".desc"
 appName = argv[2]
-iniFile = ReadFile(fileName)
+iniDescFile = ReadFile(descFileName)
 
 SetMessageFont(10)
 StatusType(ST_MESSAGE, 0)
 StatusMessage("Loading " & fileName & " sections")
 
 index = 1
-beginPos = Find(iniFile, "[")
+beginPos = Find(iniDescFile, "[")
 While (beginPos > 0)
 	StatusMessageAppend(".")
-	endPos = Find(iniFile, "]", beginPos)
-	section = SubStr(iniFile, beginPos + 1, endPos - beginPos - 1)
-	If (SubStr(iniFile, beginPos - 1, 1) eq "^LF^" OR beginPos = 1)
+	endPos = Find(iniDescFile, "]", beginPos)
+	section = SubStr(iniDescFile, beginPos + 1, endPos - beginPos - 1)
+	If (SubStr(iniDescFile, beginPos - 1, 1) eq "^LF^" OR beginPos = 1)
 		sectionList[index] = section
 		index = index + 1
 	EndIf
-	beginPos = Find(iniFile, "[", endPos)
+	beginPos = Find(iniDescFile, "[", endPos)
 EndWhile
 
 choosenSection = 1
@@ -35,59 +36,55 @@ Sub IPTWkeys
 	Clear(commentList)
 
 	keyIndex = 1
-	endPos = Find(iniFile, "[" & sectionList[choosenSection] & "]")
-	endPos = Find(iniFile, "=", endPos)
-	endSectionPos = Find(iniFile, "[", endPos)
-	While (SubStr(iniFile, endSectionPos - 1, 1) ne "^LF^" AND endSectionPos <> 0)
-		endSectionPos = Find(iniFile, "[", endSectionPos + 1)
+	endPos = Find(iniDescFile, "[" & sectionList[choosenSection] & "]")
+	endPos = Find(iniDescFile, "=", endPos)
+	endSectionPos = Find(iniDescFile, "[", endPos)
+	While (SubStr(iniDescFile, endSectionPos - 1, 1) ne "^LF^" AND endSectionPos <> 0)
+		endSectionPos = Find(iniDescFile, "[", endSectionPos + 1)
 	EndWhile
 	StatusMessage("Loading " & sectionList[choosenSection])
 	While (endPos > 0 AND (endPos < endSectionPos OR endSectionPos = 0))
 		StatusMessageAppend(".")
-		beginLinePos = ReverseFind(Substr(iniFile, 1, endPos -1),"^LF^")
-		endLinePos = Find(iniFile, "^LF^", endPos)
-		If (SubStr(iniFile, beginLinePos + 1, 1) ne ";")
-			keyList[keyIndex] = SubStr(iniFile, beginLinePos + 1, endPos - beginLinePos - 1)
-			If (endPos+2 = endLinePos)
-				valueList[keyIndex] = ""
-			Else
-				valueList[keyIndex] = SubStr(iniFile, endPos + 1, endLinePos - endPos - 2)
-			EndIf
+		beginLinePos = ReverseFind(Substr(iniDescFile, 1, endPos -1),"^LF^")
+		endLinePos = Find(iniDescFile, "^LF^", endPos)
+		If (SubStr(iniDescFile, beginLinePos + 1, 1) ne ";")
+			keyList[keyIndex] = SubStr(iniDescFile, beginLinePos + 1, endPos - beginLinePos - 1)
+			valueList[keyIndex] = IniRead(fileName, sectionList[choosenSection], keyList[keyIndex])
 			keyValueList[keyIndex] = keyList[keyIndex] & "=" & valueList[keyIndex]
-			If (SubStr(iniFile, endLinePos + 1, 1) eq ";")
-				endNextLinePos = Find(iniFile, "^LF^", endLinePos + 1)
+			If (SubStr(iniDescFile, endLinePos + 1, 1) eq ";")
+				endNextLinePos = Find(iniDescFile, "^LF^", endLinePos + 1)
 				If (endNextLinePos > 0)
-					valueTypeList[keyIndex] = SubStr(iniFile, endLinePos + 2, endNextLinePos - endLinePos - 3)
+					valueTypeList[keyIndex] = SubStr(iniDescFile, endLinePos + 2, endNextLinePos - endLinePos - 3)
 					endLinePos = endNextLinePos
 				Else
-					valueTypeList[keyIndex] = SubStr(iniFile, endLinePos + 2, Length(iniFile) - endLinePos - 1)
+					valueTypeList[keyIndex] = SubStr(iniDescFile, endLinePos + 2, Length(iniDescFile) - endLinePos - 1)
 					endLinePos = endLinePos +1
 				EndIf
 			EndIf
-			If (SubStr(iniFile, endLinePos + 1, 2) eq ";;")
-				endNextLinePos = Find(iniFile, "^LF^", endLinePos + 1)
+			If (SubStr(iniDescFile, endLinePos + 1, 2) eq ";;")
+				endNextLinePos = Find(iniDescFile, "^LF^", endLinePos + 1)
 				If (endNextLinePos > 0)
-					commentList[keyIndex] = SubStr(iniFile, endLinePos + 3, endNextLinePos - endLinePos - 4)
+					commentList[keyIndex] = SubStr(iniDescFile, endLinePos + 3, endNextLinePos - endLinePos - 4)
 					endLinePos = endNextLinePos
 				Else
-					commentList[keyIndex] = SubStr(iniFile, endLinePos + 3, Length(iniFile) - endLinePos - 2)
+					commentList[keyIndex] = SubStr(iniDescFile, endLinePos + 3, Length(iniDescFile) - endLinePos - 2)
 					endLinePos = endLinePos +1
 				EndIf
 			Else
-				While (SubStr(iniFile, endLinePos + 1, 1) eq ";")
-					endNextLinePos = Find(iniFile, "^LF^", endLinePos + 1)
+				While (SubStr(iniDescFile, endLinePos + 1, 1) eq ";")
+					endNextLinePos = Find(iniDescFile, "^LF^", endLinePos + 1)
 					If (endNextLinePos > 0)
 						If (commentList[keyIndex] ne "")
-							commentList[keyIndex] = commentList[keyIndex] & "^NL^" & SubStr(iniFile, endLinePos + 2, endNextLinePos - endLinePos - 3)
+							commentList[keyIndex] = commentList[keyIndex] & "^NL^" & SubStr(iniDescFile, endLinePos + 2, endNextLinePos - endLinePos - 3)
 						Else
-							commentList[keyIndex] = SubStr(iniFile, endLinePos + 2, endNextLinePos - endLinePos - 3)
+							commentList[keyIndex] = SubStr(iniDescFile, endLinePos + 2, endNextLinePos - endLinePos - 3)
 						EndIf
 						endLinePos = endNextLinePos
 					Else
 						If (commentList[keyIndex] ne "")
-							commentList[keyIndex] = commentList[keyIndex] & "^NL^" & SubStr(iniFile, endLinePos + 2, Length(iniFile) - endLinePos - 1)
+							commentList[keyIndex] = commentList[keyIndex] & "^NL^" & SubStr(iniDescFile, endLinePos + 2, Length(iniFile) - endLinePos - 1)
 						Else
-							commentList[keyIndex] = SubStr(iniFile, endLinePos + 2, Length(iniFile) - endLinePos - 1)
+							commentList[keyIndex] = SubStr(iniFile, endLinePos + 2, Length(iniDescFile) - endLinePos - 1)
 						EndIf
 						endLinePos = endLinePos +1
 					EndIf
@@ -95,7 +92,7 @@ Sub IPTWkeys
 			EndIf
 			keyIndex = keyIndex + 1
 		EndIf
-		endNewPos = Find(iniFile, "=", endLinePos + 1)
+		endNewPos = Find(iniDescFile, "=", endLinePos + 1)
 		If (endNewPos > endPos)
 			endPos = endNewPos
 		Else
@@ -142,6 +139,14 @@ Sub IPTWkeys
 				valueList[choosenKey] = newValue
 				keyValueList[choosenKey] = keyList[choosenKey] & "=" & newValue
 				IniWrite(fileName, sectionList[choosenSection], keyList[choosenKey], newValue)
+			Else
+				defaultValue = IniRead(descFileName, sectionList[choosenSection], keyList[choosenKey])
+				confirmation = Question("Set to default '" & keyList[choosenKey] &"=" & defaultValue & "'?", "Confirmation required!")
+				If (confirmation)
+					valueList[choosenKey] = defaultValue
+					keyValueList[choosenKey] = keyList[choosenKey] & "=" & defaultValue
+					IniWrite(fileName, sectionList[choosenSection], keyList[choosenKey], defaultValue)
+				EndIf
 			EndIf
 		EndIf
 	EndWhile
