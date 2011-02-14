@@ -15,7 +15,7 @@
   * Add VJVolubilis support to the Manage Location script.
   * Totally reviewed IPTWeather Location script for more user-friendlyness.
   * Blank unused weather icons in iPhoneToday if IPTWwriteForecastInFile=1.
-  * Use WindowsProcess instead of ProcExists to detect iLock2.exe is stopped.
+  * Use WindowsProcess instead of ProcExists to detect iLock2.exe is stopped (S2U2).
   * Code optimization.
 
 === IPTWeather_20101215 ===
