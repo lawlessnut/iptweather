@@ -13,4 +13,4 @@
   * <a href="http://forum.xda-developers.com/member.php?u=2073632" target="_blank">howdykeith</a> for his help to make IPTWeather better
   * <a href="http://macthemes.net/forum/profile.php?id=16217" target="_blank">Teknofrik</a> for his set of <a href="http://iptweather.googlecode.com/files/AccuWeatherHD.zip" target="_blank">AccuWeatherHD</a> wallpapers
   * <a href="http://forum.xda-developers.com/member.php?u=2543599" target="_blank">sv0911</a> for his work on S2U2 fullscreen and Titanium weather.
-  * <a href="http://forum.xda-developers.com/member.php?u=837517" target="_blank">tito12</a> for his noobs tutorial.
+  * <a href="http://forum.xda-developers.com/member.php?u=837517" target="_blank">tito12</a> for his noobs tutorial and for the idea to reduce the size of the weather.ini file for faster run.
