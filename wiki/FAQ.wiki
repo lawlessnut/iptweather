@@ -1,5 +1,10 @@
 #summary IPTWeather FAQ.
 
+<b><font color="Green">Q: How to replace strange symbols by good ones: 
+Ã± by ñ, Ã¡ by á, Ã³ by ó, Ã by í, íº by ú, í‘ by Ñ, Ãº by ú, í© by é?</font></b><br />
+A: In the sys folder, edit the ini file of your language and set the following first line (see fr.ini for an example):<br />
+ReplaceMap=Ã±,ñ,Ã¡,á,Ã³,ó,Ã,í,íº,ú,í‘,Ñ,Ãº,ú,í©,é<br />
+<br />
 <b><font color="Green">Q: How to display all favorite cities at once with their own current weather icon in iPhoneToday?</font></b><br />
 A: <a href="http://code.google.com/p/iptweather/wiki/MultipleLocations?ts=1298879149&updated=MultipleLocations" target="_blank">follow tito12's tutorial</a><br />
 <br />
