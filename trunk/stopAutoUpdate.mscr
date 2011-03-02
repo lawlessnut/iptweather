@@ -2,8 +2,8 @@ doIt = Question("All update notifications will be removed and no update will be 
 If (doIt)
 	IPTWscriptPath = SystemPath("ScriptPath")
 
-	IniWrite(IPTWscriptPath \ "weather.ini", "User settings", "IPTWdelayHours", 0)
-	IniWrite(IPTWscriptPath \ "weather.ini", "User settings", "IPTWdelayMinutes", 0)
+	IniWrite(IPTWscriptPath \ "weather.ini", "General settings", "IPTWdelayHours", 0)
+	IniWrite(IPTWscriptPath \ "weather.ini", "General settings", "IPTWdelayMinutes", 0)
 
 	mort = SystemPath("ScriptExe") \ "MortScript.exe"
 	script = IPTWscriptPath \ "sys\getAccuWeather.mscr"

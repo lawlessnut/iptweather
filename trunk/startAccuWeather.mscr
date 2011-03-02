@@ -1,17 +1,17 @@
 Include("sys\IPTWsubs.mscr")
 
 IPTWscriptPath					= SystemPath("ScriptPath")
-IPTWregRoot						= IniRead(IPTWscriptPath \ "weather.ini", "Script settings", "IPTWregRoot")
-IPTWregKey						= IniRead(IPTWscriptPath \ "weather.ini", "Script settings", "IPTWregKey")
-IPTWcurrentWeatherIcon			= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWcurrentWeatherIcon")
-IPTWcurrentWeatherPage			= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWcurrentWeatherPage")
-IPTWaccuWeatherIconPath			= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWaccuWeatherIconPath")
-IPTWiconsExtension				= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWiconsExtension")
-IPTWstartText					= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWstartText")
-IPTWscheduleNextUpdateOnStart	= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWscheduleNextUpdateOnStart")
-IPTWdelayHours					= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWdelayHours")
-IPTWdelayMinutes				= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWdelayMinutes")
-IPTWreloadLastDataOnStart		= IniRead(IPTWscriptPath \ "weather.ini", "User settings", "IPTWreloadLastDataOnStart")
+IPTWregRoot						= IniRead("weather.ini", "Script settings", "IPTWregRoot")
+IPTWregKey						= IniRead("weather.ini", "Script settings", "IPTWregKey")
+IPTWcurrentWeatherIcon			= IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherIcon")
+IPTWcurrentWeatherPage			= IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherPage")
+IPTWaccuWeatherIconPath			= IniRead("weather.ini", "iPhoneToday settings", "IPTWaccuWeatherIconPath")
+IPTWiconsExtension				= IniRead("weather.ini", "iPhoneToday settings", "IPTWiconsExtension")
+IPTWstartText					= IniRead("weather.ini", "iPhoneToday settings", "IPTWstartText")
+IPTWscheduleNextUpdateOnStart	= IniRead("weather.ini", "General settings", "IPTWscheduleNextUpdateOnStart")
+IPTWdelayHours					= IniRead("weather.ini", "General settings", "IPTWdelayHours")
+IPTWdelayMinutes				= IniRead("weather.ini", "General settings", "IPTWdelayMinutes")
+IPTWreloadLastDataOnStart		= IniRead("weather.ini", "General settings", "IPTWreloadLastDataOnStart")
 IPTWiPhoneTodayClassName		= IniRead("weather.ini", "Script settings", "IPTWiPhoneTodayClassName")
 
 # ############################################################################
@@ -41,7 +41,7 @@ If (IPTWreloadLastDataOnStart = 1)
 EndIf
 
 If (IPTWreloadLastDataOnStart = 0)
-	If (NOT IniRead("weather.ini", "User settings", "IPTWiPhoneTodayDisabled"))
+	If (NOT IniRead("weather.ini", "iPhoneToday settings", "IPTWiPhoneTodayDisabled"))
 		iPhoneTodayPic = "AccuWeather." & IPTWiconsExtension
 		RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon0", "nScreen", IPTWcurrentWeatherPage)
 		RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon0", "nIcon", IPTWcurrentWeatherIcon)
