@@ -42,7 +42,7 @@ If (argv[1] < 0)
 	EndIf
 
 	IPTWtodayForecastInS2U2Wallpaper = IniRead("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Wallpaper")
-	IPTWuseS2U2wallpaperForBackground = IniRead("..\weather.ini", "User settings", "IPTWuseS2U2wallpaperForBackground")
+	IPTWuseS2U2wallpaperForBackground = IniRead("..\weather.ini", "iPhoneToday settings", "IPTWuseS2U2wallpaperForBackground")
 	If (IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground)
 		IPTWS2U2WallpaperExtension = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperExtension")
 		IPTWS2U2WallpaperPath = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperPath")
@@ -74,7 +74,7 @@ Else
 	IPTWtomorrowForecastInS2U2UserWeather = IniRead("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather")
 	IPTWtodayForecastInS2U2Text = IniRead("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Text")
 	IPTWtodayForecastInS2U2Wallpaper = IniRead("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Wallpaper")
-	IPTWuseS2U2wallpaperForBackground = IniRead("..\weather.ini", "User settings", "IPTWuseS2U2wallpaperForBackground")
+	IPTWuseS2U2wallpaperForBackground = IniRead("..\weather.ini", "iPhoneToday settings", "IPTWuseS2U2wallpaperForBackground")
 	If (IPTWtodayForecastInS2U2Text OR IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground OR IPTWtomorrowForecastInS2U2UserWeather = 1 OR IPTWtomorrowForecastInS2U2UserWeather = -1)
 		iconNum = argv[1] - 1
 
@@ -293,6 +293,6 @@ Sub IPTwallpaper
 			Sleep(1000)
 		EndIf
 	Else
-		IniWrite("..\weather.ini", "User settings", "IPTWuseS2U2wallpaperForBackground", 0)
+		IniWrite("..\weather.ini", "iPhoneToday settings", "IPTWuseS2U2wallpaperForBackground", 0)
 	EndIf
 EndSub
