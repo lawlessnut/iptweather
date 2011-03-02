@@ -8,7 +8,7 @@
 
 textPattern = IniRead("..\weather.ini", argv[4], argv[5])
 If (argv[2] = 1)
-	IPTWobsoleteDataPrefix = IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
+	IPTWobsoleteDataPrefix = IniRead("..\weather.ini", "General settings", "IPTWobsoleteDataPrefix")
 	beginNAPos = 1
 	While (beginNAPos <> 0)
 		beginNAPos = Find(textPattern, "%NA%")
@@ -30,7 +30,13 @@ Else
 EndIf
 textPattern = Replace(textPattern, "%TUNIT%", RegRead(IPTWregRoot, IPTWregKey, "unitTemp"))
 textPattern = Replace(textPattern, "%SUNIT%", RegRead(IPTWregRoot, IPTWregKey, "unitSpeed"))
-textPattern = Replace(textPattern, "%CITY%", RegRead(IPTWregRoot, IPTWregKey, "city"))
+
+cityName = RegRead(IPTWregRoot, IPTWregKey, "city")
+textPattern = Replace(textPattern, "%CITY%", cityName)
+
+cityShortName = IniRead("citiesShortNames.ini", "", cityName)
+textPattern = Replace(textPattern, "%SCITY%", cityShortName)
+
 textPattern = Replace(textPattern, "%OBST%", RegRead(IPTWregRoot, IPTWregKey, "obstime"))
 textPattern = Replace(textPattern, "%OBSD%", RegRead(IPTWregRoot, IPTWregKey, "obsdate0"))
 
@@ -53,8 +59,7 @@ EndIf
 textPattern = Replace(textPattern, "%DAY%", RegRead(IPTWregRoot, IPTWregKey, "weekday" & argv[1]))
 If (Find(textPattern, "%SDAY%") > 0)
 	day = RegRead(IPTWregRoot, IPTWregKey, "weekday" & argv[1])
-#day = IniRead("..\weather.ini", "User settings", "IPTW" & ToLower(day) & "Text")
-	textPattern = Replace(textPattern, "%SDAY%", IniRead("..\weather.ini", "User settings", "IPTW" & day & "Text"))
+	textPattern = Replace(textPattern, "%SDAY%", IniRead("..\weather.ini", "General settings", "IPTW" & day & "Text"))
 EndIf
 
 If (Find(textPattern, "%TXT%") > 0)
@@ -67,7 +72,7 @@ textPattern = Replace(textPattern, "%WDIR%", RegRead(IPTWregRoot, IPTWregKey, "w
 textPattern = Replace(textPattern, "%WGUS%", RegRead(IPTWregRoot, IPTWregKey, "windgusts" & argv[3] & argv[1]))
 
 If (Find(textPattern, "%SUNS%") > 0 OR Find(textPattern, "%SUNR%") > 0)
-	IPTWconvertTimeFormat = IniRead("..\weather.ini", "User settings", "IPTWconvertTimeFormat")
+	IPTWconvertTimeFormat = IniRead("..\weather.ini", "General settings", "IPTWconvertTimeFormat")
 	sunset = RegRead(IPTWregRoot, IPTWregKey, "sunset" & argv[1])
 	sunrise = RegRead(IPTWregRoot, IPTWregKey, "sunrise" & argv[1])
 	If (IPTWconvertTimeFormat)
