@@ -76,9 +76,10 @@ IPTWvjvolubilisPath=\Program Files\vijay555\VJVolubilis\VJVolubilis.exe
 IPTWinternetConnection=The Internet
 ;
 ;This is the name of the Internet connection to connect to, if no data connection is on.
-;Use "The Internet" if you want to use your default connection.
-;If left blank, only the current data connection will be used, and IPTWeather won't enable any data connection.
-;If set to VJVolubilis, it will use the commands -gprson and -gprsoff with VJVolubilis.exe specified by the path IPTWvjvolubilisPath to toggle the data connection.
+;Use "The Internet" to use your default connection.
+;Leave blank to use only the current data connection and never enable any connection.
+;Set VJVolubilis to use the commands -gprson and -gprsoff with VJVolubilis.exe specified by the path IPTWvjvolubilisPath to toggle the data connection.
+;Set Wifi to use Wifi connection and toggle it if required.
 
 IPTWdisconnectOnExit=1
 ;list,0,1
