@@ -1,11 +1,11 @@
 
 # ############################################################################
 # retrieve user preference
-IPTWaccuWeatherLocation				= IniRead("weather.ini", "User settings", "IPTWaccuWeatherLocation")
-IPTWinternetConnection				= IniRead("weather.ini", "User settings", "IPTWinternetConnection")
-IPTWdisconnectOnExit				= IniRead("weather.ini", "User settings", "IPTWdisconnectOnExit")
-IPTWaccuWeatherFavoriteLocations	= IniRead("weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations")
-IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "User settings", "IPTWupdateWeatherNowQuestion")
+IPTWaccuWeatherLocation				= IniRead("weather.ini", "General settings", "IPTWaccuWeatherLocation")
+IPTWinternetConnection				= IniRead("weather.ini", "General settings", "IPTWinternetConnection")
+IPTWdisconnectOnExit				= IniRead("weather.ini", "General settings", "IPTWdisconnectOnExit")
+IPTWaccuWeatherFavoriteLocations	= IniRead("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations")
+IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "General settings", "IPTWupdateWeatherNowQuestion")
 
 # ############################################################################
 # configure location of parsed weather data in registry
@@ -46,7 +46,7 @@ If (newLocationCode eq "")
 	EndIf
 EndIf
 
-IniWrite("weather.ini", "User settings", "IPTWaccuWeatherLocation", newLocationCode)
+IniWrite("weather.ini", "General settings", "IPTWaccuWeatherLocation", newLocationCode)
 
 StatusType(ST_MESSAGE, 0)
 StatusMessage("Changing location to " & newLocationCode)
@@ -56,7 +56,11 @@ If (RegKeyExists(IPTWregRoot, IPTWregKey \ newLocationCode))
 	RegWriteDWord(IPTWregRoot, IPTWregKey, "ShowingForecast", 1)
 	CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
 Else
-	updateWeatherNow = Question(IPTWupdateWeatherNowQuestion)
+	If (IPTWupdateWeatherNowQuestion ne "")
+		updateWeatherNow = Question(IPTWupdateWeatherNowQuestion)
+	Else
+		updateWeatherNow = TRUE
+	EndIf
 	If (updateWeatherNow)
 		KillScript(IPTWgetAccuWeatherScript)
 		CallScript(SystemPath("ScriptPath") \ "sys" \ IPTWgetAccuWeatherScript)
