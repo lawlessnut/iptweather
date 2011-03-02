@@ -43,6 +43,9 @@ While (choosenAction <> 0)
 					RunWait(IPTWvjvolubilisPath, "-gprson")
 					mdidconnect = TRUE
 				EndIf
+			ElseIf (IPTWinternetConnection eq "Wifi")
+				RunWait(SystemPath("ScriptPath") \ "sys\Wifi.exe")
+				mdidconnect = TRUE
 			Else
 				Connect(IPTWinternetConnection)
 				mdidconnect = TRUE
@@ -262,6 +265,8 @@ If (exitDirectly)
 			If (FileExists(IPTWvjvolubilisPath))
 				Run(IPTWvjvolubilisPath, "-gprsoff")
 			EndIf
+		ElseIf (IPTWinternetConnection eq "Wifi")
+			RunWait(SystemPath("ScriptPath") \ "sys\Wifi-OFF.exe")
 		Else
 			CloseConnection
 			Disconnect
@@ -290,6 +295,8 @@ If (IPTWdisconnectOnExit AND mdidconnect)
 		If (FileExists(IPTWvjvolubilisPath))
 			Run(IPTWvjvolubilisPath, "-gprsoff")
 		EndIf
+	ElseIf (IPTWinternetConnection eq "Wifi")
+		RunWait(SystemPath("ScriptPath") \ "sys\Wifi-OFF.exe")
 	Else
 		CloseConnection
 		Disconnect
