@@ -1,48 +1,46 @@
-ErrorLevel("off")
+#ErrorLevel("off")
 
 Include("IPTWsubs.mscr")
 
 # ############################################################################
-# retrieve user preference
-IPTWaccuWeatherMetric		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherMetric")
+# General settings
+IPTWaccuWeatherMetric		= IniRead("..\weather.ini", "General settings", "IPTWaccuWeatherMetric")
 If (IPTWaccuWeatherLocationForecast ne "")
 	IPTWaccuWeatherLocation = IPTWaccuWeatherLocationForecast
 Else
-	IPTWaccuWeatherLocation = IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherLocation")
+	IPTWaccuWeatherLocation = IniRead("..\weather.ini", "General settings", "IPTWaccuWeatherLocation")
 EndIf
-IPTWdelayHours				= IniRead("..\weather.ini", "User settings", "IPTWdelayHours")
-IPTWdelayMinutes			= IniRead("..\weather.ini", "User settings", "IPTWdelayMinutes")
-IPTWinternetConnection		= IniRead("..\weather.ini", "User settings", "IPTWinternetConnection")
-IPTWdisconnectOnExit		= IniRead("..\weather.ini", "User settings", "IPTWdisconnectOnExit")
+IPTWdelayHours				= IniRead("..\weather.ini", "General settings", "IPTWdelayHours")
+IPTWdelayMinutes			= IniRead("..\weather.ini", "General settings", "IPTWdelayMinutes")
+IPTWinternetConnection		= IniRead("..\weather.ini", "General settings", "IPTWinternetConnection")
+IPTWdisconnectOnExit		= IniRead("..\weather.ini", "General settings", "IPTWdisconnectOnExit")
+IPTWobsoleteDataPrefix		= IniRead("..\weather.ini", "General settings", "IPTWobsoleteDataPrefix")
+IPTWwakeUpOnUpdate			= IniRead("..\weather.ini", "General settings", "IPTWwakeUpOnUpdate")
+IPTWpreventSleepOnUpdate	= IniRead("..\weather.ini", "General settings", "IPTWpreventSleepOnUpdate")
+IPTWgoogleUserID			= IniRead("..\weather.ini", "General settings", "IPTWgoogleUserID")
+IPTWaccuWeatherAPI			= IniRead("..\weather.ini", "General settings", "IPTWaccuWeatherAPI")
+IPTWvjvolubilisPath			= IniRead("..\weather.ini", "General settings", "IPTWvjvolubilisPath")
+IPTWaccuWeatherFavoriteLocations	= IniRead("..\weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations")
+IPTWtranslationLanguageCode		= IniRead("..\weather.ini", "General settings", "IPTWtranslationLanguageCode")
+
+# ############################################################################
+# iPhoneToday settings
 If (IPTWFIP ne "")
 	IPTWcurrentWeatherIcon = IPTWFIP
 Else
-	IPTWcurrentWeatherIcon		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherIcon")
+	IPTWcurrentWeatherIcon		= IniRead("..\weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherIcon")
 EndIf
-IPTWcurrentWeatherPage		= IniRead("..\weather.ini", "User settings", "IPTWcurrentWeatherPage")
-IPTWiconsExtension			= IniRead("..\weather.ini", "User settings", "IPTWiconsExtension")
-IPTWobsoleteDataPrefix		= IniRead("..\weather.ini", "User settings", "IPTWobsoleteDataPrefix")
-IPTWwakeUpOnUpdate			= IniRead("..\weather.ini", "User settings", "IPTWwakeUpOnUpdate")
-IPTWpreventSleepOnUpdate	= IniRead("..\weather.ini", "User settings", "IPTWpreventSleepOnUpdate")
-IPTWnightIconSuffix			= IniRead("..\weather.ini", "User settings", "IPTWnightIconSuffix")
-IPTWgoogleUserID			= IniRead("..\weather.ini", "User settings", "IPTWgoogleUserID")
-IPTWiPhoneTodayDisabled		= IniRead("..\weather.ini", "User settings", "IPTWiPhoneTodayDisabled")
-IPTWaccuWeatherIconPath		= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherIconPath")
-IPTWaccuWeatherAPI			= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherAPI")
-IPTWvjvolubilisPath			= IniRead("..\weather.ini", "User settings", "IPTWvjvolubilisPath")
-IPTWwriteForecastInFile		= IniRead("..\weather.ini", "User settings", "IPTWwriteForecastInFile")
-IPTWaccuWeatherFavoriteLocations	= IniRead("..\weather.ini", "User settings", "IPTWaccuWeatherFavoriteLocations")
-IPTWtranslationLanguageCode		= IniRead("..\weather.ini", "User settings", "IPTWtranslationLanguageCode")
-IPTWiPhoneTodayClassName		= IniRead("..\weather.ini", "Script settings", "IPTWiPhoneTodayClassName")
-
-If (IPTWaccuWeatherAPI eq "")
-	IPTWaccuWeatherAPI = "ruan"
-EndIf
+IPTWcurrentWeatherPage		= IniRead("..\weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherPage")
+IPTWiconsExtension			= IniRead("..\weather.ini", "iPhoneToday settings", "IPTWiconsExtension")
+IPTWnightIconSuffix			= IniRead("..\weather.ini", "iPhoneToday settings", "IPTWnightIconSuffix")
+IPTWiPhoneTodayDisabled		= IniRead("..\weather.ini", "iPhoneToday settings", "IPTWiPhoneTodayDisabled")
+IPTWaccuWeatherIconPath		= IniRead("..\weather.ini", "iPhoneToday settings", "IPTWaccuWeatherIconPath")
+IPTWwriteForecastInFile		= IniRead("..\weather.ini", "iPhoneToday settings", "IPTWwriteForecastInFile")
 
 If (IPTWiPhoneTodayDisabled <> 1)
 	If (NOT RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "Enabled") AND NOT ProcExists("iPhoneToday.exe") AND NOT ProcExists("iPhoneTodayDesktop.exe"))
 		If (IPTWiPhoneTodayDisabled <> -1)
-			IniWrite("..\weather.ini", "User settings", "IPTWiPhoneTodayDisabled", 1)
+			IniWrite("..\weather.ini", "iPhoneToday settings", "IPTWiPhoneTodayDisabled", 1)
 		EndIf
 		IPTWiPhoneTodayDisabled = 1
 	ElseIf (IPTWiPhoneTodayDisabled = -1)
@@ -51,11 +49,12 @@ If (IPTWiPhoneTodayDisabled <> 1)
 EndIf
 
 # ############################################################################
-# configure location of parsed weather data in registry
-IPTWregRoot				= IniRead("..\weather.ini", "Script settings", "IPTWregRoot")
-IPTWappRegKey			= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
-IPTWregKey				= IPTWappRegKey \ IPTWaccuWeatherLocation
-IPTWdataFile			= SystemPath("ScriptPath") \ "data.xml"
+# Technical settings
+IPTWiPhoneTodayClassName	= IniRead("..\weather.ini", "Script settings", "IPTWiPhoneTodayClassName")
+IPTWregRoot					= IniRead("..\weather.ini", "Script settings", "IPTWregRoot")
+IPTWappRegKey				= IniRead("..\weather.ini", "Script settings", "IPTWregKey")
+IPTWregKey					= IPTWappRegKey \ IPTWaccuWeatherLocation
+IPTWdataFile				= SystemPath("ScriptPath") \ "data.xml"
 IPTWaccuWeatherURL = "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/weather-data.asp?"
 If (IPTWtranslationLanguageCode ne "")
 	IPTWaccuWeatherURL = IPTWaccuWeatherURL & "lang=" & IPTWtranslationLanguageCode & "&"
@@ -120,6 +119,9 @@ If (NOT InternetConnected("http://www.perdu.com"))
 			RunWait(IPTWvjvolubilisPath, "-gprson")
 			didconnect = TRUE
 		EndIf
+	ElseIf (IPTWinternetConnection eq "Wifi")
+		RunWait(SystemPath("ScriptPath") \ "Wifi.exe")
+		didconnect = TRUE
 	Else
 		Connect(IPTWinternetConnection)
 		didconnect = TRUE
@@ -178,6 +180,8 @@ If (IPTWdisconnectOnExit AND didconnect)
 		If (FileExists(IPTWvjvolubilisPath))
 			Run(IPTWvjvolubilisPath, "-gprsoff")
 		EndIf
+	ElseIf (IPTWinternetConnection eq "Wifi")
+		RunWait( SystemPath("ScriptPath") \ "Wifi-OFF.exe")
 	Else
 		CloseConnection
 		Disconnect
