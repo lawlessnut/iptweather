@@ -34,20 +34,29 @@ While (beginPos > 0)
 
 #We skip the backup of IPTWquickLocationChangeSleepMsgTime and IPTWS2U2Path because of their removal in the new version.
 				If (key ne "IPTWquickLocationChangeSleepMsgTime" AND key ne "IPTWS2U2Path" AND key ne "IPTWmaxDownloadMinutes")
-
+					If (section eq "User settings")
+						isIPTsetting = Find("IPTWobservationTimeExecField,IPTWwriteForecastInFile,IPTWaccuWeatherIconPath,IPTWiPhoneTodayDisabled,IPTWcurrentWeatherIcon,IPTWcurrentWeatherPage,IPTWforecastStartIcon,IPTWforecastStartPage,IPTWforecastIconSkipFirstAtSunset,IPTWforecastSkipIconFrequency,IPTWforecastSkipIconQuantity,IPTWhideNightForecastIcons,IPTWiconsExtension,IPTWcurrentWeatherIconTextPattern,IPTWforecastWeatherIconsTextPattern,IPTWdisplayCityName,IPTWdefaultCityIcon,IPTWdisplayObservationTime,IPTWnightIconSuffix,IPTWstartText,IPTWuseS2U2wallpaperForBackground,IPTWgoToAccuWeatherQuestion,IPTWdownloadDataAfterStartOnIconTap", key)
+						If (isIPTsetting = 0)
+							targetSection = "General settings"
+						Else
+							targetSection = "iPhoneToday settings"
+						EndIf
+					Else
+						targetSection = section
+					EndIf
 #Setting IPTWhideRealFeelInForecastIcons=1 replaced by just removing %PRFT% from IPTWforecastWeatherIconsTextPattern.
 					If (key eq "IPTWhideRealFeelInForecastIcons")
 						If (value)
-							IniWrite("weather.ini", section, "IPTWforecastWeatherIconsTextPattern", "%SDAY%%PT%")
+							IniWrite("weather.ini", targetSection, "IPTWforecastWeatherIconsTextPattern", "%SDAY%%PT%")
 						EndIf
 
 #rdona API does not work anymore. Replace rdona API by ruan API by default.
 					ElseIf (key eq "IPTWaccuWeatherAPI" AND value eq "rdona")
-						IniWrite("weather.ini", section, key, "ruan")					
+						IniWrite("weather.ini", targetSection, key, "ruan")
 
 #In all other cases, we restore previousely backuped up fileName file to the new one.
 					Else
-						IniWrite("weather.ini", section, key, value)
+						IniWrite("weather.ini", targetSection, key, value)
 					EndIf
 				EndIf
 
