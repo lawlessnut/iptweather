@@ -1,5 +1,15 @@
 #summary Changelog of IPTWeather.
 
+=== ITPWeather_20110302 ===
+  * new setting IPTWobservationTimeExecField to run any script or app when clicking on the weather update time icon in iPhoneToday.
+  * split [User settings] into [General settings] and [iPhoneToday settings]: make sure to run the restoreBackupConfig.mscr script to restore your backup weather.ini file!
+  * added the %SCITY% text pattern for cities short names defined in the citiesShortNames.ini file.
+  * do not display any dialog box while running the quickIPTWFavoriteLocationChange.mscr script if IPTWupdateWeatherNowQuestion is empty.
+  * IPTWiPhoneTodayClassName setting also used in the 'IPTWeather Location' script.
+  * the IPTWupdateWeatherNowQuestion dialog box title contains ' + ...' when all the favorite locations with * are to be updated.
+  * corrected bug that current weather icon of favorite locations with a + was not display if no location had a *.
+  * Added Wifi option for the IPTWinternetConnection setting.
+
 === IPTWeather_20110213 ===
   * Removed all comments from weather.ini file for better performance of IPTWeather. All comments are now in the weather.ini.desc description file that is used for the IPTWeather Config script.
 
