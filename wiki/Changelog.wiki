@@ -1,6 +1,6 @@
 #summary Changelog of IPTWeather.
 
-=== ITPWeather_20110302 ===
+=== ITPWeather_20110303 ===
   * new setting IPTWobservationTimeExecField to run any script or app when clicking on the weather update time icon in iPhoneToday.
   * split [User settings] into [General settings] and [iPhoneToday settings]: make sure to run the restoreBackupConfig.mscr script to restore your backup weather.ini file!
   * added the %SCITY% text pattern for cities short names defined in the citiesShortNames.ini file.
