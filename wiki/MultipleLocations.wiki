@@ -15,7 +15,7 @@ IPTWforecastStartPage=0<br>
 IPTWcurrentWeatherIconTextPattern=%CITY%*<br>
 <br>
 *<font color="red">If you want to have IPTW on a separate folder (<a href="http://forum.xda-developers.com/showpost.php?p=10953917&postcount=2686" target="_blank">Folders for iPT</a>) then you set:</font><br>
-<font color="red">IPTWiPhoneTodayClassName=Folder</font>*<br>
+<font color="red">IPTWiPhoneTodayClassName=FolderW</font>*<br>
 <br>
 You can change the page (0 is the first one) and the icons location, but remember to leave enough room for the favorite cities so they will not overwrite the forecast icons.<br>
 <br>
