@@ -12,7 +12,7 @@ Else
 EndIf
 IPTWdelayHours				= IniRead("..\weather.ini", "General settings", "IPTWdelayHours")
 IPTWdelayMinutes			= IniRead("..\weather.ini", "General settings", "IPTWdelayMinutes")
-IPTWinternetConnection		= IniRead("..\weather.ini", "General settings", "IPTWinternetConnection")
+IPTWinternetConnectionList	= Split(IniRead("..\weather.ini", "General settings", "IPTWinternetConnection"), ",")
 IPTWdisconnectOnExit		= IniRead("..\weather.ini", "General settings", "IPTWdisconnectOnExit")
 IPTWobsoleteDataPrefix		= IniRead("..\weather.ini", "General settings", "IPTWobsoleteDataPrefix")
 IPTWwakeUpOnUpdate			= IniRead("..\weather.ini", "General settings", "IPTWwakeUpOnUpdate")
@@ -85,51 +85,87 @@ EndIf
 
 # ############################################################################
 # load data
-didconnect = FALSE
 If (IPTWpreventSleepOnUpdate)
 	sleepOnUpdatePrevented = RegRead(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented")
 	If (sleepOnUpdatePrevented = 1)
 		BattSuspendTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "BattSuspendTimeout")
 		ACSuspendTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "ACSuspendTimeout")
-		BatteryTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "BatteryTimeout")
-		ACTimeout = RegRead(IPTWregRoot, IPTWappRegKey, "ACTimeout")
 	Else
 		BattSuspendTimeout = RegRead("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout")
 		ACSuspendTimeout = RegRead("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout")
-		BatteryTimeout = RegRead("HKCU", "ControlPanel\Backlight", "BatteryTimeout")
-		ACTimeout = RegRead("HKCU", "ControlPanel\Backlight", "ACTimeout")
 
 		RegWriteDword(IPTWregRoot, IPTWappRegKey,"BattSuspendTimeout", BattSuspendTimeout)
-		RegWriteDword(IPTWregRoot, IPTWappRegKey, "BatteryTimeout", BatteryTimeout)
 		RegWriteDword(IPTWregRoot, IPTWappRegKey,"ACSuspendTimeout", ACSuspendTimeout)
-		RegWriteDword(IPTWregRoot, IPTWappRegKey, "ACTimeout", ACTimeout)
 	EndIf
 
 	RegWriteDword("HKLM", "System\CurrentControlSet\Control\Power\Timeouts","BattSuspendTimeout", 0)
-	RegWriteDword("HKCU", "ControlPanel\Backlight", "BatteryTimeout", 0)
 	RegWriteDword("HKLM", "System\CurrentControlSet\Control\Power\Timeouts","ACSuspendTimeout", 0)
-	RegWriteDword("HKCU", "ControlPanel\Backlight", "ACTimeout", 0)
+	Call("IPTWtriggerPowerManagementChange")
 
 	RegWriteDword(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented", 1)
 EndIf
 
+didconnect = FALSE
 If (NOT InternetConnected("http://www.perdu.com"))
-	If (IPTWinternetConnection eq "VJVolubilis")
-		If (FileExists(IPTWvjvolubilisPath))
-			RunWait(IPTWvjvolubilisPath, "-gprson")
-			didconnect = TRUE
+	maxIPTWinternetConnectionIndex = MaxIndex(IPTWinternetConnectionList)
+	internetConnectionIndex = 1
+	While (NOT didconnect AND internetConnectionIndex <= maxIPTWinternetConnectionIndex)
+		IPTWinternetConnection = IPTWinternetConnectionList[internetConnectionIndex]
+		If (IPTWinternetConnection eq "RIL Map")
+			countryCode = RunWait(SystemPath("ScriptPath") \ "RilCmdLine.exe","MobileCountryCode")
+			lac = RunWait(SystemPath("ScriptPath") \ "RilCmdLine.exe","LocationAreaCode")
+			cellID = RunWait(SystemPath("ScriptPath") \ "RilCmdLine.exe","CellID")
+			fullLAC = countryCode & "-" & lac
+			fullCellID = fullLAC & "-" & cellID
+			currentFullCellIDmapping = IniRead(SystemPath("ScriptPath") \ "RILmap.ini", "RIL connection map", fullCellID)
+			If (currentFullCellIDmapping eq "")
+				currentFullLACmapping = IniRead(SystemPath("ScriptPath") \ "RILmap.ini", "RIL connection map", fullLAC)
+				If (currentFullLACmapping eq "")
+					currentCountryMapping = IniRead(SystemPath("ScriptPath") \ "RILmap.ini", "RIL connection map", countryCode)
+					If (currentCountryMapping eq "")
+						IPTWinternetConnection = ""
+					Else
+						IPTWinternetConnection = currentCountryMapping
+					EndIf
+				Else
+					IPTWinternetConnection = currentFullLACmapping
+				EndIf
+			Else
+				IPTWinternetConnection = currentFullCellIDmapping
+			EndIf
 		EndIf
-	ElseIf (IPTWinternetConnection eq "Wifi")
-		RunWait(SystemPath("ScriptPath") \ "Wifi.exe")
-		didconnect = TRUE
-	Else
-		Connect(IPTWinternetConnection)
-		didconnect = TRUE
-	EndIf
-	nbSleeps = 0
-	While(NOT InternetConnected("http://www.perdu.com") AND nbSleeps < 6)
-		Sleep(5000)
-		nbSleeps = nbSleeps + 1
+
+		If (IPTWinternetConnection ne "")
+			If (IPTWinternetConnection eq "VJVolubilis")
+				If (FileExists(IPTWvjvolubilisPath))
+					RunWait(IPTWvjvolubilisPath, "-gprson")
+				EndIf
+			ElseIf (IPTWinternetConnection eq "Wifi")
+				RunWait(SystemPath("ScriptPath") \ "Wifi.exe")
+			Else
+				Connect(IPTWinternetConnection)
+			EndIf
+
+#Do we have a connection?
+			nbSleeps = 0
+			While (NOT RegRead("HKLM", "System\State\Connections", "Count") AND nbSleeps < 8)
+				Sleep(2000)
+				nbSleeps = nbSleeps + 1
+			EndWhile
+
+#Do we have a working connection?
+			nbSleeps = 0
+			While (NOT InternetConnected("http://www.perdu.com") AND nbSleeps < 5)
+				Sleep(5000)
+				nbSleeps = nbSleeps + 1
+			EndWhile
+			If (nbSleeps < 5)
+				didconnect = TRUE
+			ElseIf (IPTWinternetConnection eq "Wifi")
+				RunWait(SystemPath("ScriptPath") \ "Wifi-OFF.exe")
+			EndIf
+		EndIf
+		internetConnectionIndex = internetConnectionIndex + 1
 	EndWhile
 EndIf
 
@@ -191,8 +227,7 @@ EndIf
 If (IPTWpreventSleepOnUpdate)
 	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "BattSuspendTimeout", BattSuspendTimeout)
 	RegWriteDword ("HKLM", "System\CurrentControlSet\Control\Power\Timeouts", "ACSuspendTimeout", ACSuspendTimeout)
-	RegWriteDword ("HKCU", "ControlPanel\Backlight", "BatteryTimeout", BatteryTimeout)
-	RegWriteDword ("HKCU", "ControlPanel\Backlight", "ACTimeout", ACTimeout)
+	Call("IPTWtriggerPowerManagementChange")
 
 	RegWriteDword(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented", 0)
 EndIf
