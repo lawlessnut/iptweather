@@ -249,13 +249,15 @@ While (choosenAction <> 0)
 			EndIf
 		EndIf
 		IniWrite("weather.ini", "General settings", "IPTWaccuWeatherLocation", Part(choiceList[choosenAction], ",", -1, TRUE))
+		IPTWaccuWeatherLocationForecast = Part(choiceList[choosenAction], ",", -1, TRUE)
+		IPTWFIP = IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherIcon")
 		exitDirectly = FALSE
 		choosenAction = 0
 	EndIf
 	
 	If (choosenAction <> 0)
 		Call("IPTWsetChoiceList")
-		choosenAction = Choice("Change location?", "Current location is " & currentLocation, 1, 30, choiceList)
+		choosenAction = Choice("Change location?", "Current location is " & currentLocation, 1, 0, choiceList)
 	EndIf
 EndWhile
 
