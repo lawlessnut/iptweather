@@ -107,7 +107,6 @@
 		<value name="winddirection0"><data type="data">curr_wdir</data></value>
 		<value name="iconD0"><data type="data">forcd1_icon</data></value>
 		<value name="iconN0"><data type="data">forcn1_icon</data></value>
-		<value name="weekday0"><data type="data">forc1_dayt</data></value>
 		<value name="hiTemp0"><data type="data">forcd1_temph</data><data type="text">°</data></value>
 		<value name="loTemp0"><data type="data">forcn1_templ</data><data type="text">°</data></value>
 		<value name="hiFeelTemp0"><data type="data">forcd1_feelh</data><data type="text">°</data></value>

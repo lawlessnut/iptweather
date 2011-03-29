@@ -148,7 +148,6 @@
 		<value name="winddirection0"><data type="data">curr_wdir</data></value>
 		<value name="iconD0"><data type="data">forcd1_icon</data></value>
 		<value name="iconN0"><data type="data">forcn1_icon</data></value>
-		<value name="weekday0"><data type="data">forc1_dayt</data></value>
 		<value name="hiTemp0"><data type="data">forcd1_temph</data><data type="text">°</data></value>
 		<value name="loTemp0"><data type="data">forcn1_templ</data><data type="text">°</data></value>
 		<value name="hiFeelTemp0"><data type="data">forcd1_feelh</data><data type="text">°</data></value>
@@ -166,7 +165,6 @@
 		<value name="obsdate1"><data type="data">obsdate2</data></value>
 		<value name="iconD1"><data type="data">forcd2_icon</data></value>
 		<value name="iconN1"><data type="data">forcn2_icon</data></value>
-		<value name="weekday1"><data type="data">forc2_dayt</data></value>
 		<value name="hiTemp1"><data type="data">forcd2_temph</data><data type="text">°</data></value>
 		<value name="loTemp1"><data type="data">forcn2_templ</data><data type="text">°</data></value>
 		<value name="hiFeelTemp1"><data type="data">forcd2_feelh</data><data type="text">°</data></value>
