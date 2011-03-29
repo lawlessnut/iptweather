@@ -74,6 +74,15 @@ Sub IPTWparse
 			RunWait(SystemPath("ScriptPath") \ "xml2reg.exe", IPTWxmlParserConfigFile)
 			RegWriteString(IPTWregRoot, IPTWcurrentRegKey, "updateTime", TimeStamp())
 
+			daysOfWeek = Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+			obsdate0 = RegRead(IPTWregRoot, IPTWappRegKey, "obsdate0")
+			wday0 = FormatTime("w", MakeTimeStamp(Part(obsdate0, "/", 3), Part(obsdate0, "/", 1), Part(obsdate0, "/", 2)))
+			i = 0
+			While (RegValueExists(IPTWregRoot, IPTWappRegKey, "obsdate" & i))
+				RegWriteString(IPTWregRoot, IPTWappRegKey, "weekday" & i, daysOfWeek[(wday0 + i) MOD 7 + 1])
+				i = i + 1
+			EndWhile
+
 # ############################################################################
 # copy all data to the location registry key
 			ForEach value, data in regValues(IPTWregRoot, IPTWappRegKey)
@@ -224,10 +233,19 @@ EndSub
 
 Sub IPTWsetCurrentTimeAndDate
 	timeZone = RegRead(IPTWregRoot, IPTWregKey, "timeZone")
-	deviceTimeZone = 60 * (TimeZoneBias() - 60 * RegRead(IPTWregRoot, IPTWregKey, "isDayLight"))
+	deviceTimeZone = 60 * (TimeZoneBias() - 60 * Eval(RegRead(IPTWregRoot, IPTWregKey, "isDayLight")))
 	dataTimeZone = timeZone * 3600
 	timeOffset = dataTimeZone - deviceTimeZone
 	currentLocalTime = TimeStamp() + timeOffset
 	currentDate = FormatTime("m/d/Y", currentLocalTime)
 	currenttime = Replace(FormatTime("A h:i", currentLocalTime), " 12", " 00")
+EndSub
+
+Sub IPTWtriggerPowerManagementChange
+	BatteryTimeout = RegRead("HKCU", "ControlPanel\Backlight", "BatteryTimeout")
+	ACTimeout = RegRead("HKCU", "ControlPanel\Backlight", "ACTimeout")
+	RegWriteDword("HKCU", "ControlPanel\Backlight", "BatteryTimeout", 0)
+	RegWriteDword("HKCU", "ControlPanel\Backlight", "ACTimeout", 0)
+	RegWriteDword("HKCU", "ControlPanel\Backlight", "BatteryTimeout", BatteryTimeout)
+	RegWriteDword("HKCU", "ControlPanel\Backlight", "ACTimeout", ACTimeout)
 EndSub
