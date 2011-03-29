@@ -353,7 +353,6 @@
 		<value name="winddirection0"><data type="data">curr_wdir</data></value>
 		<value name="iconD0"><data type="data">forcd1_icon</data></value>
 		<value name="iconN0"><data type="data">forcn1_icon</data></value>
-		<value name="weekday0"><data type="data">forc1_dayt</data></value>
 		<value name="hiTemp0"><data type="data">forcd1_temph</data><data type="text">°</data></value>
 		<value name="loTemp0"><data type="data">forcn1_templ</data><data type="text">°</data></value>
 		<value name="hiFeelTemp0"><data type="data">forcd1_feelh</data><data type="text">°</data></value>
@@ -371,7 +370,6 @@
 		<value name="obsdate1"><data type="data">obsdate2</data></value>
 		<value name="iconD1"><data type="data">forcd2_icon</data></value>
 		<value name="iconN1"><data type="data">forcn2_icon</data></value>
-		<value name="weekday1"><data type="data">forc2_dayt</data></value>
 		<value name="hiTemp1"><data type="data">forcd2_temph</data><data type="text">°</data></value>
 		<value name="loTemp1"><data type="data">forcn2_templ</data><data type="text">°</data></value>
 		<value name="hiFeelTemp1"><data type="data">forcd2_feelh</data><data type="text">°</data></value>
@@ -389,7 +387,6 @@
 		<value name="obsdate2"><data type="data">obsdate3</data></value>
 		<value name="iconD2"><data type="data">forcd3_icon</data></value>
 		<value name="iconN2"><data type="data">forcn3_icon</data></value>
-		<value name="weekday2"><data type="data">forc3_dayt</data></value>
 		<value name="hiTemp2"><data type="data">forcd3_temph</data><data type="text">°</data></value>
 		<value name="loTemp2"><data type="data">forcn3_templ</data><data type="text">°</data></value>
 		<value name="hiFeelTemp2"><data type="data">forcd3_feelh</data><data type="text">°</data></value>
@@ -407,7 +404,6 @@
 		<value name="obsdate3"><data type="data">obsdate4</data></value>
 		<value name="iconN3"><data type="data">forcn4_icon</data></value>
 		<value name="iconD3"><data type="data">forcd4_icon</data></value>
-		<value name="weekday3"><data type="data">forc4_dayt</data></value>
 		<value name="hiTemp3"><data type="data">forcd4_temph</data><data type="text">°</data></value>
 		<value name="loTemp3"><data type="data">forcn4_templ</data><data type="text">°</data></value>
 		<value name="hiFeelTemp3"><data type="data">forcd4_feelh</data><data type="text">°</data></value>
@@ -425,7 +421,6 @@
 		<value name="obsdate4"><data type="data">obsdate5</data></value>
 		<value name="iconN4"><data type="data">forcn5_icon</data></value>
 		<value name="iconD4"><data type="data">forcd5_icon</data></value>
-		<value name="weekday4"><data type="data">forc5_dayt</data></value>
 		<value name="hiTemp4"><data type="data">forcd5_temph</data><data type="text">°</data></value>
 		<value name="loTemp4"><data type="data">forcn5_templ</data><data type="text">°</data></value>
 		<value name="hiFeelTemp4"><data type="data">forcd5_feelh</data><data type="text">°</data></value>
@@ -443,7 +438,6 @@
 		<value name="obsdate5"><data type="data">obsdate6</data></value>
 		<value name="iconN5"><data type="data">forcn6_icon</data></value>
 		<value name="iconD5"><data type="data">forcd6_icon</data></value>
-		<value name="weekday5"><data type="data">forc6_dayt</data></value>
 		<value name="hiTemp5"><data type="data">forcd6_temph</data><data type="text">°</data></value>
 		<value name="loTemp5"><data type="data">forcn6_templ</data><data type="text">°</data></value>
 		<value name="hiFeelTemp5"><data type="data">forcd6_feelh</data><data type="text">°</data></value>
@@ -461,7 +455,6 @@
 		<value name="obsdate6"><data type="data">obsdate7</data></value>
 		<value name="iconN6"><data type="data">forcn7_icon</data></value>
 		<value name="iconD6"><data type="data">forcd7_icon</data></value>
-		<value name="weekday6"><data type="data">forc7_dayt</data></value>
 		<value name="hiTemp6"><data type="data">forcd7_temph</data><data type="text">°</data></value>
 		<value name="loTemp6"><data type="data">forcn7_templ</data><data type="text">°</data></value>
 		<value name="hiFeelTemp6"><data type="data">forcd7_feelh</data><data type="text">°</data></value>
