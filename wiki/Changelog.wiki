@@ -1,5 +1,17 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20110330 ===
+  * corrected bug: now you can display the days of week even if language is not US-English.
+  * corrected bug: wrong time comparisons when in daylight saving time.
+  * better power management change triggering.
+  * added 'RIL Map' connection type for setting IPTWinternetConnection.
+  * now IPTWinternetConnection can be a list of connection types, comma separated. IPTWeather will try each one of them until it connects successfully.
+  * now choosing a location from the manageIPTWLocation.mscr script only updates this one and not all starred ones at script exit.
+  * added Spanish weather description language file.
+  * added mapping for k/h to km/h in the French lang.ini file.
+  * added Spanish lang.ini language file.
+  * better ReplaceMap and AutoTextShortening for the fr.ini file.
+
 === ITPWeather_20110303 ===
   * new setting IPTWobservationTimeExecField to run any script or app when clicking on the weather update time icon in iPhoneToday.
   * split [User settings] into [General settings] and [iPhoneToday settings]: make sure to run the restoreBackupConfig.mscr script to restore your backup weather.ini file!
