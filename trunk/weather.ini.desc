@@ -75,11 +75,12 @@ IPTWvjvolubilisPath=\Program Files\vijay555\VJVolubilis\VJVolubilis.exe
 
 IPTWinternetConnection=The Internet
 ;
-;This is the name of the Internet connection to connect to, if no data connection is on.
-;Use "The Internet" to use your default connection.
-;Leave blank to use only the current data connection and never enable any connection.
-;Set VJVolubilis to use the commands -gprson and -gprsoff with VJVolubilis.exe specified by the path IPTWvjvolubilisPath to toggle the data connection.
-;Set Wifi to use Wifi connection and toggle it if required.
+;Data (or list of data, comma separated) connection(s) to connect to if no data connection is on.
+;Set The Internet (or Internet depending on your system language) to use your default data connection.
+;Leave blank to use only the currently active connection and never enable any connection.
+;Set VJVolubilis to toggle the data connection with commands -gprson and -gprsoff of VJVolubilis.exe specified by the path IPTWvjvolubilisPath.
+;Set Wifi to use Wifi connection.
+;Set RIL Map to use any above connection you want based on your GSM Cell location (run script manageRIL2ConnectionMap.mscr for configuration).
 
 IPTWdisconnectOnExit=1
 ;list,0,1
