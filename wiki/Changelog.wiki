@@ -3,6 +3,7 @@
 === IPTWeather_20110330 ===
   * corrected bug: now you can display the days of week even if language is not US-English.
   * corrected bug: wrong time comparisons when in daylight saving time.
+  * back IPTWwriteForecastInFile=0 by default.
   * better power management change triggering.
   * added 'RIL Map' connection type for setting IPTWinternetConnection.
   * now IPTWinternetConnection can be a list of connection types, comma separated. IPTWeather will try each one of them until it connects successfully.
