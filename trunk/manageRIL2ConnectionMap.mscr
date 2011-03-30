@@ -1,0 +1,75 @@
+countryCode = RunWait(SystemPath("ScriptPath") \ "sys\RilCmdLine.exe","MobileCountryCode")
+lac = RunWait(SystemPath("ScriptPath") \ "sys\RilCmdLine.exe","LocationAreaCode")
+cellID = RunWait(SystemPath("ScriptPath") \ "sys\RilCmdLine.exe","CellID")
+fullLAC = countryCode & "-" & lac
+fullCellID = fullLAC & "-" & cellID
+currentCountryMapping = IniRead(SystemPath("ScriptPath") \ "sys\RILmap.ini", "RIL connection map", countryCode)
+currentFullLACmapping = IniRead(SystemPath("ScriptPath") \ "sys\RILmap.ini", "RIL connection map", fullLAC)
+currentFullCellIDmapping = IniRead(SystemPath("ScriptPath") \ "sys\RILmap.ini", "RIL connection map", fullCellID)
+Call("SetChoiceList")
+choosenAction = Choice("RIL connection map", "You are in cell " & fullCellID & ".^NL^Choose a RIL to connection map to edit", 3, 0, choiceList)
+While (choosenAction <> 0)
+	If (choosenAction = 1)
+		connectionName = Input("Enter connection to be used when in Country " & countryCode, "Connection mapping", 0, 0, currentCountryMapping)
+		If (connectionName eq "")
+			confirmation = Question("Empty connection map with country code?", countryCode)
+			If (confirmation)
+				currentCountryMapping = connectionName
+			Else
+				connectionName = currentCountryMapping
+			EndIf
+		Else
+			currentCountryMapping = connectionName
+		EndIf
+		IniWrite(SystemPath("ScriptPath") \ "sys\RILmap.ini", "RIL connection map", countryCode, connectionName)
+	ElseIf (choosenAction = 2)
+		connectionName = Input("Enter connection to be used when in Location Area " & fullLAC, "Connection mapping", 0, 0, currentFullLACmapping)
+		If (connectionName eq "")
+			confirmation = Question("Empty this RIL to connection mapping?", fullLAC)
+			If (confirmation)
+				currentFullLACmapping = connectionName
+			Else
+				connectionName = currentFullLACmapping 
+			EndIf
+		Else
+			currentFullLACmapping = connectionName
+		EndIf
+		IniWrite(SystemPath("ScriptPath") \ "sys\RILmap.ini", "RIL connection map", fullLAC, connectionName)
+	ElseIf (choosenAction = 3)
+		connectionName = Input("Enter connection to be used when in Cell " & fullCellID, "Connection mapping", 0, 0, currentFullCellIDmapping)
+		If (connectionName eq "")
+			confirmation = Question("Empty this RIL to connection mapping?", fullCellID)
+			If (confirmation)
+				currentFullCellIDmapping = connectionName
+			Else
+				connectionName = currentFullCellIDmapping
+			EndIf
+		Else
+			currentFullCellIDmapping = connectionName
+		EndIf
+		IniWrite(SystemPath("ScriptPath") \ "sys\RILmap.ini", "RIL connection map", fullCellID, connectionName)
+	ElseIf (choosenAction <> 0)
+		choosenRIL = Part(choiceList[choosenAction], "=", 1)
+		choosenConnection = Part(choiceList[choosenAction], "=", 2)
+		connectionName = Input("Enter connection to be used when in " & choosenRIL, "Connection mapping", 0, 0, choosenConnection)
+		If (connectionName eq "")
+			confirmation = Question("Empty this RIL to connection mapping?", choosenRIL)
+			If (NOT confirmation)
+				connectionName = choosenConnection
+			EndIf
+		EndIf
+		IniWrite(SystemPath("ScriptPath") \ "sys\RILmap.ini", "RIL connection map", choosenRIL, connectionName)
+	EndIf
+	Call("SetChoiceList")
+	choosenAction = Choice("RIL connection map", "You are in cell " & fullCellID & ".^NL^Choose a RIL to connection map to edit", 3, 0, choiceList)
+EndWhile
+
+Sub SetChoiceList
+	ril2connection = countryCode & "=" & currentCountryMapping & "," & fullLAC & "=" & currentFullLACmapping & "," & fullCellID & "=" & currentFullCellIDmapping
+	ForEach ril, connection in iniKeys (SystemPath("ScriptPath") \ "sys\RILmap.ini", "RIL connection map")
+		If (ril ne fullCellID AND ril ne fullLAC AND ril ne countryCode)
+			ril2connection = ril2connection & "," & ril & "=" & connection 
+		EndIf
+	EndForEach
+	choiceList = Split(ril2connection, ",")
+EndSub
