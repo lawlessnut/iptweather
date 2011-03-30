@@ -2,7 +2,7 @@
 
 ===Prerequesite:===
   * *Install* *<a href="http://forum.xda-developers.com/showthread.php?t=633618" target="_blank">tronikos' iPhoneToday</a>* and/or *<a href="http://s2u2.ac-s2.com/" target="_blank">S2U2</a>*<br />
-  * *Install* <a href="http://www.sto-helit.de/index.php?module=download&amp;action=view&amp;entry=65" target="_blank">Mortscript 4.2</a> or even *<a href="http://www.sto-helit.de/forum/download/file.php?id=265" target="_blank">MortScript 4.3b15</a>* for faster run<br />
+  * *Install* <a href="http://www.sto-helit.de/downloads/mortscript/MortScript-4.2.zip" target="_blank">Mortscript 4.2</a> or even *<a href="http://www.sto-helit.de/forum/download/file.php?id=265" target="_blank">MortScript 4.3b15</a>* for faster run<br />
   * Optionnaly, to use the 'My Location' feature, install <a href="http://forum.xda-developers.com/showthread.php?t=607102" target="_blank">Sleuth's myLocation Service</a><br />
   * *Install the latest IPTWeather* cab file provided <a href="http://code.google.com/p/iptweather/downloads/list" target="_blank">here</a>. (the configuration at installation is the one I use with S2U2 and iPhoneToday with the current weather icon displayed in place of the top left icon on the first page)<br />
 ===*IMPORTANT*:===
