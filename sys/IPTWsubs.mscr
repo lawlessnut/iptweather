@@ -37,7 +37,7 @@ Sub IPTWparse
 	If (Find(data,"</adc_database>") > 0)
 		xmlConfigFileNumber=1
 		While(Find(data, "day number=""" & xmlConfigFileNumber & """"))
-			xmlConfigFileNumber = xmlConfigFileNumber + 1
+			xmlConfigFileNumber += 1
 		EndWhile
 		xmlConfigFileNumber = xmlConfigFileNumber - 1
 		If (xmlConfigFileNumber > 0 AND xmlConfigFileNumber < 8)
@@ -80,7 +80,7 @@ Sub IPTWparse
 			i = 0
 			While (RegValueExists(IPTWregRoot, IPTWappRegKey, "obsdate" & i))
 				RegWriteString(IPTWregRoot, IPTWappRegKey, "weekday" & i, daysOfWeek[(wday0 + i) MOD 7 + 1])
-				i = i + 1
+				i += 1
 			EndWhile
 
 # ############################################################################
@@ -117,10 +117,10 @@ Sub IPTWreloadData
 			If (SubStr(IPTWaccuWeatherFavoriteLocation, 1, 1) eq "+" OR SubStr(IPTWaccuWeatherFavoriteLocation, 2, 1) eq "+")
 				IPTWaccuWeatherFavoriteLocationCode = Part(IPTWaccuWeatherFavoriteLocation, ",", -1, TRUE)
 				If (IPTWaccuWeatherFavoriteLocationCode ne IPTWaccuWeatherLocation)
-					IPTWcurrentWeatherIcon = IPTWcurrentWeatherIcon + 1
+					IPTWcurrentWeatherIcon += 1
 					IPTWregKey = IPTWappRegKey \ IPTWaccuWeatherFavoriteLocationCode
 					Call("IPTWreload", argv[1], 0)
-					iPTiconNum = iPTiconNum + 1
+					iPTiconNum += 1
 				Else
 					changeExecFieldForMainLocation = TRUE
 				EndIf
@@ -226,7 +226,7 @@ Sub IPTWfindDay
 		If (obsdate eq currentDate)
 			foundDay = TRUE
 		Else
-			daysToSkip = daysToSkip + 1
+			daysToSkip += 1
 		EndIf
 	EndWhile
 EndSub
@@ -248,4 +248,30 @@ Sub IPTWtriggerPowerManagementChange
 	RegWriteDword("HKCU", "ControlPanel\Backlight", "ACTimeout", 0)
 	RegWriteDword("HKCU", "ControlPanel\Backlight", "BatteryTimeout", BatteryTimeout)
 	RegWriteDword("HKCU", "ControlPanel\Backlight", "ACTimeout", ACTimeout)
+EndSub
+
+Sub IPTWgetIPTPage
+	iPTPage = argv[1]
+	If (Find(iPTPage, "header:"))
+		IPTWiPhoneTodayPath = RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "DLL")
+		IPTWiPhoneTodayPath = Replace(IPTWiPhoneTodayPath, "iPhoneToday.dll", "")
+		headernum = 0
+		If (FileExists(IPTWiPhoneTodayPath \ "icons.xml"))
+			iPTPage = Part(iPTPage, "header:", 2)
+			iconsXml = ReadFile(IPTWiPhoneTodayPath \ "icons.xml")
+			pos = Find(iconsXml, "screen header=")
+			While (pos > 0)
+				endPos = Find(iconsXml, """>", pos)
+				currentHeader = SubStr(iconsXml, pos + 14, endPos - pos - 13)
+				If (currentHeader eq iPTPage)
+					pos = 0
+				Else
+					headerNum += 1
+					pos = Find(iconsXml, "screen header=", endPos)
+				EndIf
+			EndWhile
+		EndIf
+		iPTPage = headernum
+	EndIf
+	Return(iPTPage)
 EndSub
