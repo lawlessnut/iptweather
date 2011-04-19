@@ -6,8 +6,14 @@ If (NOT DirExists(IPTWS2U2Path))
 	IniWrite("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Text", 0)
 	IniWrite("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Wallpaper", 0)
 EndIf
+
+IPTWtodayForecastInS2U2Wallpaper = IniRead("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Wallpaper")
+IPTWuseS2U2wallpaperForBackground = IniRead("..\weather.ini", "iPhoneToday settings", "IPTWuseS2U2wallpaperForBackground")
+IPTWuseS2U2wallpaperInToday = IniRead("..\weather.ini", "General settings", "IPTWuseS2U2wallpaperInToday")
+IPTWtomorrowForecastInS2U2UserWeather = IniRead("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather")
+IPTWtodayForecastInS2U2Text = IniRead("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Text")
+
 If (argv[1] < 0)
-	IPTWtomorrowForecastInS2U2UserWeather = IniRead("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather")
 	If (IPTWtomorrowForecastInS2U2UserWeather = 1 OR IPTWtomorrowForecastInS2U2UserWeather = -1)
 		If (RegRead("HKCU", "Software\A_C\S2U2", "ShowWeather") ne "05")
 			RegWriteBinary("HKCU", "Software\A_C\S2U2", "ShowWeather","05")
@@ -24,7 +30,6 @@ If (argv[1] < 0)
 		Call("S2U2UserWeather")
 	EndIf
 
-	IPTWtodayForecastInS2U2Text = IniRead("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Text")
 	If (IPTWtodayForecastInS2U2Text=1 OR IPTWtodayForecastInS2U2Text=-1)
 		If (FileExists(IPTWS2U2Path \ "lang.ini"))
 			newS2U2text = IniRead("..\weather.ini", "S2U2 settings", "IPTWdefaultS2U2Text")
@@ -41,9 +46,7 @@ If (argv[1] < 0)
 		EndIf
 	EndIf
 
-	IPTWtodayForecastInS2U2Wallpaper = IniRead("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Wallpaper")
-	IPTWuseS2U2wallpaperForBackground = IniRead("..\weather.ini", "iPhoneToday settings", "IPTWuseS2U2wallpaperForBackground")
-	If (IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground)
+	If (IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground OR IPTWuseS2U2wallpaperInToday)
 		IPTWS2U2WallpaperExtension = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperExtension")
 		IPTWS2U2WallpaperPath = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperPath")
 		wallpaper = IPTWS2U2WallpaperPath \ IniRead("..\weather.ini", "S2U2 settings", "IPTWdefautS2U2Wallpaper") & "." & IPTWS2U2WallpaperExtension
@@ -67,14 +70,10 @@ If (argv[1] < 0)
 		EndIf
 
 		If (IPTWuseS2U2wallpaperForBackground AND IPTWiPhoneTodayDisabled <> 1 AND FileExists(wallpaper))
-			Call IPTwallpaper
+			Call("IPTwallpaper")
 		EndIf
 	EndIf
 Else
-	IPTWtomorrowForecastInS2U2UserWeather = IniRead("..\weather.ini", "S2U2 settings", "IPTWtomorrowForecastInS2U2UserWeather")
-	IPTWtodayForecastInS2U2Text = IniRead("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Text")
-	IPTWtodayForecastInS2U2Wallpaper = IniRead("..\weather.ini", "S2U2 settings", "IPTWtodayForecastInS2U2Wallpaper")
-	IPTWuseS2U2wallpaperForBackground = IniRead("..\weather.ini", "iPhoneToday settings", "IPTWuseS2U2wallpaperForBackground")
 	If (IPTWtodayForecastInS2U2Text OR IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground OR IPTWtomorrowForecastInS2U2UserWeather = 1 OR IPTWtomorrowForecastInS2U2UserWeather = -1)
 		iconNum = argv[1] - 1
 
@@ -186,7 +185,7 @@ Else
 			EndIf
 
 			If (IPTWuseS2U2wallpaperForBackground AND IPTWiPhoneTodayDisabled <> 1 AND FileExists(wallpaper))
-				Call IPTwallpaper
+				Call("IPTwallpaper")
 			EndIf
 		EndIf
 	EndIf
@@ -209,7 +208,7 @@ Sub S2U2restart
 	nbWaitToCloseS2U2 = 0
 	While (WindowProcess("iLock2") ne "" AND nbWaitToCloseS2U2 < 40)
 		Sleep(500)
-		nbWaitToCloseS2U2 = nbWaitToCloseS2U2 + 1
+		nbWaitToCloseS2U2 += 1
 	EndWhile
 	Run(IPTWS2U2Path \ "iLock2.exe")
 EndSub
@@ -286,9 +285,12 @@ Sub IPTwallpaper
 			WriteFile(IPTWiPhoneTodayPath \ "settings.xml", IPTsettings, FALSE)
 			If (RegRead("HKLM", "Software\Microsoft\Today\Items\iPhoneToday", "Enabled") = 1)
 				RedrawToday
-			Else
+			ElseIf (ProcExists("iPhoneToday.exe"))
 				Kill("iPhoneToday.exe")
 				Run(IPTWiPhoneTodayPath \ "iPhoneToday.exe")
+			ElseIf (ProcExists("iPhoneTodayDesktop.exe"))
+				Kill("iPhoneTodayDesktop.exe")
+				Run(IPTWiPhoneTodayPath \ "iPhoneTodayDesktop.exe")
 			EndIf
 			Sleep(1000)
 		EndIf
