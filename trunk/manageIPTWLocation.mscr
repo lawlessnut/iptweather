@@ -35,7 +35,7 @@ exitDirectly = TRUE
 Call("IPTWsetChoiceList")
 
 choosenAction = Choice("Change location?", "Current location is " & currentLocation, 1, 0, choiceList)
-While (choosenAction <> 0)
+While (choosenAction <> 0 AND choosenAction <= MaxIndex(choiceList))
 	If (choosenAction = 1)
 		If (NOT InternetConnected("http://www.perdu.com"))
 			If (IPTWinternetConnection eq "VJVolubilis")
@@ -57,7 +57,7 @@ While (choosenAction <> 0)
 			nbSleeps = 0
 			While(NOT InternetConnected("http://www.perdu.com") AND nbSleeps < 6)
 				Sleep(5000)
-				nbSleeps = nbSleeps + 1
+				nbSleeps += 1
 			EndWhile
 
 			If (InternetConnected("http://www.perdu.com"))
@@ -93,6 +93,8 @@ While (choosenAction <> 0)
 					EndIf
 				EndIf
 				IniWrite("weather.ini", "General settings", "IPTWaccuWeatherLocation", Part(locationList[choosenLocation], ",", -1, TRUE))
+				IPTWaccuWeatherLocationForecast = Part(locationList[choosenLocation], ",", -1, TRUE)
+				IPTWFIP = IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherIcon")
 				exitDirectly = FALSE
 				choosenAction = 0
 			EndIf
@@ -190,7 +192,7 @@ While (choosenAction <> 0)
 			Else
 				IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation], "+" & locationsArray[choosenLocation])
 				If (Part(locationsArray[choosenLocation], ",", -1, TRUE) ne IPTWaccuWeatherLocation)
-					nbAddedDisplayedLocations = nbAddedDisplayedLocations + 1
+					nbAddedDisplayedLocations += 1
 				Else
 					Message("iPhoneToday execute field of the current weather icon for main location will be overwritten", "Warning!")
 				EndIf
@@ -309,12 +311,12 @@ Sub IPTWclearCurrentIcons
 		IPTWiPhoneTodayClassName = IniRead("weather.ini", "Script settings", "IPTWiPhoneTodayClassName")
 		IPTWcurrentWeatherIcon = IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherIcon")
 		IPTWcurrentWeatherPage = IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherPage")
-		IPTWcurrentWeatherIcon = IPTWcurrentWeatherIcon + 1
+		IPTWcurrentWeatherIcon += 1
 		ForEach IPTWaccuWeatherFavoriteLocation in array(locationArray)
 			If (SubStr(IPTWaccuWeatherFavoriteLocation, 1, 1) eq "+" OR SubStr(IPTWaccuWeatherFavoriteLocation, 2, 1) eq "+")
 				IPTWaccuWeatherFavoriteLocationCode = Part(IPTWaccuWeatherFavoriteLocation, ",", -1, TRUE)
 				If (IPTWaccuWeatherFavoriteLocationCode ne IPTWaccuWeatherLocation)
-					IPTWcurrentWeatherIcon = IPTWcurrentWeatherIcon + 1
+					IPTWcurrentWeatherIcon += 1
 				EndIf
 			EndIf
 		EndForEach
