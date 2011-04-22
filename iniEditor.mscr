@@ -1,39 +1,64 @@
-fileName = argv[1]
-descFileName = fileName & ".desc"
-appName = argv[2]
+# Parameters:
+# 1 - string: name of the .ini file to edit
+# 2 - string: name of the application that uses the .ini file (just for display purpose)
+# 3 - boolean (optional, default is FALSE): if 1 or TRUE, create a .ini.bkp backup file if changes are made
+# 4 - boolean (optional, default is TRUE): if 0 or FALSE, do not prompt for change confirmation. If FALSE, the cancel button will just cancel the change
+
+iniFileName = argv[1]
+If (FilePath(iniFileName) eq "")
+	iniFileName = SystemPath("ScriptPath") \ iniFileName
+EndIf
+descFileName = iniFileName & ".desc"
 iniDescFile = ReadFile(descFileName)
+
+appName = argv[2]
+
+iniFileNameBAK = iniFileName & ".bak"
+If (argv[3])
+	Copy(iniFileName, iniFileNameBAK)
+EndIf
+
+promptForConfirmation = (argv[4] eq "")?TRUE:argv[4]
 
 SetMessageFont(10)
 StatusType(ST_MESSAGE, 0)
 StatusMessage("Loading " & fileName & " sections")
 
+iniChanged = 0
 index = 1
+sectionList = Array()
 beginPos = Find(iniDescFile, "[")
 While (beginPos > 0)
 	StatusMessageAppend(".")
 	endPos = Find(iniDescFile, "]", beginPos)
 	section = SubStr(iniDescFile, beginPos + 1, endPos - beginPos - 1)
-	If (SubStr(iniDescFile, beginPos - 1, 1) eq "^LF^" OR beginPos = 1)
+	If ((SubStr(iniDescFile, beginPos - 1, 1) eq "^LF^") OR (beginPos = 1))
 		sectionList[index] = section
-		index = index + 1
+		index += 1
 	EndIf
 	beginPos = Find(iniDescFile, "[", endPos)
 EndWhile
 
 choosenSection = 1
 While (choosenSection <> 0)
-	choosenSection = Choice(appName & " settings", "Please choose a settings section:", 0,0, sectionList)
-	If (choosenSection <> 0)
+	If (MaxIndex(sectionList) > 1)
+		choosenSection = Choice(appName & " settings", "Please choose a settings section:", 0,0, sectionList)
+		If (choosenSection <> 0)
+			Call("IPTWkeys")
+		EndIf
+	Else
+		choosenSection = 1
 		Call("IPTWkeys")
+		Break
 	EndIf
 EndWhile
 
+If(argv[3] AND NOT iniChanged)
+	Delete(iniFileNameBAK)
+EndIf
+
 Sub IPTWkeys
-	Clear(keyList)
-	Clear(valueList)
-	Clear(keyValueList)
-	Clear(valueTypeList)
-	Clear(commentList)
+	Global(iniFileName, descFileName, iniDescFile, promptForConfirmation, iniChanged, sectionList, choosenSection)
 
 	keyIndex = 1
 	endPos = Find(iniDescFile, "[" & sectionList[choosenSection] & "]")
@@ -49,7 +74,7 @@ Sub IPTWkeys
 		endLinePos = Find(iniDescFile, "^LF^", endPos)
 		If (SubStr(iniDescFile, beginLinePos + 1, 1) ne ";")
 			keyList[keyIndex] = SubStr(iniDescFile, beginLinePos + 1, endPos - beginLinePos - 1)
-			valueList[keyIndex] = IniRead(fileName, sectionList[choosenSection], keyList[keyIndex])
+			valueList[keyIndex] = IniRead(iniFileName, sectionList[choosenSection], keyList[keyIndex])
 			keyValueList[keyIndex] = keyList[keyIndex] & "=" & valueList[keyIndex]
 			If (SubStr(iniDescFile, endLinePos + 1, 1) eq ";")
 				endNextLinePos = Find(iniDescFile, "^LF^", endLinePos + 1)
@@ -90,7 +115,7 @@ Sub IPTWkeys
 					EndIf
 				EndWhile
 			EndIf
-			keyIndex = keyIndex + 1
+			keyIndex += 1
 		EndIf
 		endNewPos = Find(iniDescFile, "=", endLinePos + 1)
 		If (endNewPos > endPos)
@@ -106,7 +131,7 @@ Sub IPTWkeys
 	While (choosenKey <> 0)
 		choosenKey = Choice(sectionList[choosenSection], "Please choose a setting:", 0,0, keyValueList)
 		If (choosenKey <> 0)
-			If (valueTypeList[choosenKey] eq "int")
+			If (ToLower(valueTypeList[choosenKey]) eq "int")
 				newValue = Input(commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", "Enter new value", 1, 0, valueList[choosenKey])
 			ElseIf (SubStr(valueTypeList[choosenKey], 1, 4) eq "list")
 				choiceList = Split(SubStr(valueTypeList[choosenKey], 6), ",")
@@ -116,7 +141,7 @@ Sub IPTWkeys
 					If (value eq valueList[choosenKey])
 						default = valueIndex
 					EndIf
-					valueIndex = valueIndex + 1
+					valueIndex += 1
 				EndForEach
 				newValue = Choice("Enter new value", commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", default, 0, choiceList)
 				If (newValue = 0)
@@ -124,28 +149,38 @@ Sub IPTWkeys
 				Else
 					newValue = choiceList[newValue]
 				EndIf
-			ElseIf (SubStr(valueTypeList[choosenKey], 1, 10) eq "callscript")
+			ElseIf (ToLower(SubStr(valueTypeList[choosenKey], 1, 10)) eq "callscript")
 				CallScript(SubStr(valueTypeList[choosenKey], 12))
 				Exit
-			ElseIf (valueTypeList[choosenKey] eq "path")
+			ElseIf (ToLower(valueTypeList[choosenKey]) eq "path")
 				newValue = SelectDirectory("Choose path", commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", valueList[choosenKey])
-			ElseIf (valueTypeList[choosenKey] eq "fullfilepath")
+			ElseIf (ToLower(valueTypeList[choosenKey]) eq "fullfilepath")
 				newValue = SelectFile("Choose full file path", FALSE, "*", commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", valueList[choosenKey])
 			Else
 				newValue = Input(commentList[choosenKey] & "^NL^" & keyList[choosenKey] & "=", "Enter new value", 0, 0, valueList[choosenKey])
 			EndIf
-			confirmation = Question("Set '" & keyList[choosenKey] &"=" & newValue & "'?", "Confirmation required!")
+
+			If (promptForConfirmation)
+				confirmation = Question("Set '" & keyList[choosenKey] &"=" & newValue & "'?", "Confirmation required!")
+			ElseIf (newValue eq "")
+				confirmation = FALSE
+			Else
+				confirmation = TRUE
+			EndIf
+
 			If (confirmation)
 				valueList[choosenKey] = newValue
 				keyValueList[choosenKey] = keyList[choosenKey] & "=" & newValue
-				IniWrite(fileName, sectionList[choosenSection], keyList[choosenKey], newValue)
-			Else
+				IniWrite(iniFileName, sectionList[choosenSection], keyList[choosenKey], newValue)
+				iniChanged = 1
+			ElseIf (promptForConfirmation)
 				defaultValue = IniRead(descFileName, sectionList[choosenSection], keyList[choosenKey])
 				confirmation = Question("Set to default '" & keyList[choosenKey] &"=" & defaultValue & "'?", "Confirmation required!")
 				If (confirmation)
 					valueList[choosenKey] = defaultValue
 					keyValueList[choosenKey] = keyList[choosenKey] & "=" & defaultValue
-					IniWrite(fileName, sectionList[choosenSection], keyList[choosenKey], defaultValue)
+					IniWrite(iniFileName, sectionList[choosenSection], keyList[choosenKey], defaultValue)
+					iniChanged = 1
 				EndIf
 			EndIf
 		EndIf
