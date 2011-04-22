@@ -163,6 +163,7 @@ IPTWforecastStartIcon=4
 IPTWforecastStartPage=0
 ;int
 ;Page number where to start displaying the weather forecast icons in iPhoneToday.
+;It can be the page header name if you set it to header:"<my header name>".
 
 IPTWforecastIconSkipFirstAtSunset=
 ;list,0,1
