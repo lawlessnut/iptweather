@@ -106,7 +106,13 @@ If (IPTWpreventSleepOnUpdate)
 EndIf
 
 didconnect = FALSE
-If (NOT InternetConnected("http://www.perdu.com"))
+isConnected = FALSE
+If (RegRead("HKLM", "System\State\Connections", "Count"))
+	If (InternetConnected("http://www.perdu.com"))
+		isConnected = TRUE
+	EndIf
+EndIf
+If (NOT isConnected)
 	maxIPTWinternetConnectionIndex = MaxIndex(IPTWinternetConnectionList)
 	internetConnectionIndex = 1
 	While (NOT didconnect AND internetConnectionIndex <= maxIPTWinternetConnectionIndex)
@@ -150,14 +156,14 @@ If (NOT InternetConnected("http://www.perdu.com"))
 			nbSleeps = 0
 			While (NOT RegRead("HKLM", "System\State\Connections", "Count") AND nbSleeps < 8)
 				Sleep(2000)
-				nbSleeps = nbSleeps + 1
+				nbSleeps += 1
 			EndWhile
 
 #Do we have a working connection?
 			nbSleeps = 0
 			While (NOT InternetConnected("http://www.perdu.com") AND nbSleeps < 5)
 				Sleep(5000)
-				nbSleeps = nbSleeps + 1
+				nbSleeps += 1
 			EndWhile
 			If (nbSleeps < 5)
 				didconnect = TRUE
@@ -165,7 +171,7 @@ If (NOT InternetConnected("http://www.perdu.com"))
 				RunWait(SystemPath("ScriptPath") \ "Wifi-OFF.exe")
 			EndIf
 		EndIf
-		internetConnectionIndex = internetConnectionIndex + 1
+		internetConnectionIndex += 1
 	EndWhile
 EndIf
 
