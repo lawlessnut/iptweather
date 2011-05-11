@@ -1,6 +1,6 @@
 #summary Changelog of IPTWeather.
 
-=== IPTWeather_20110330 ===
+=== IPTWeather_20110511 ===
   * added the "header:" prefix for the IPTWforecastStartPage setting so you can set the page header name instead of the page number (very usefull if you which to move your iPhoneToday weather page around...)
   * now working weather background for iPhoneTodayDesktop.exe
   * code improvement (use of += 1 instead of = ... + 1, less duplicated code, added some tests)
