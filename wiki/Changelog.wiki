@@ -1,6 +1,15 @@
 #summary Changelog of IPTWeather.
 
 === IPTWeather_20110330 ===
+  * added the "header:" prefix for the IPTWforecastStartPage setting so you can set the page header name instead of the page number (very usefull if you which to move your iPhoneToday weather page around...)
+  * now working weather background for iPhoneTodayDesktop.exe
+  * code improvement (use of += 1 instead of = ... + 1, less duplicated code, added some tests)
+  * corrected bug that the goToAccuWeather question was displaying empty dialog box.
+  * corrected bug that the error icon was not displayed in iPhoneToday on current weather icon when there were update errors (rather rare...)
+  * optimized check for live connection
+  * updated to iniEditor_v05
+
+=== IPTWeather_20110330 ===
   * corrected bug: now you can display the days of week even if language is not US-English.
   * corrected bug: wrong time comparisons when in daylight saving time.
   * back IPTWwriteForecastInFile=0 by default.
