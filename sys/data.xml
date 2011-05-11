@@ -13,7 +13,7 @@
 	<state>France</state>
 	<lat>48.86</lat> 
 	<lon>2.33</lon>
-	<time>18:50</time>
+	<time>18:39</time>
 	<timeZone>01:00</timeZone>
 	<obsDaylight>1</obsDaylight>
 	<isDaylight>True</isDaylight>
@@ -23,23 +23,23 @@
 			
 				<url>http://www.accuweather.com/world-index-forecast.asp?partner=ruan&amp;loccode=EUR|FR|FR012|PARIS</url>
 				
-				<observationtime>6:50 PM</observationtime>
+				<observationtime>6:39 PM</observationtime>
 			
-				<pressure state="Steady">101</pressure>
+				<pressure state="Steady">102</pressure>
 			
-				<temperature>15</temperature>
+				<temperature>22</temperature>
 			
-				<realfeel>8</realfeel>
+				<realfeel>22</realfeel>
 			
-				<humidity>84%</humidity>
+				<humidity>37%</humidity>
 			
-				<weathertext>Ciel Nuageux</weathertext>
+				<weathertext>Ensoleillé</weathertext>
 			
-				<weathericon>07</weathericon>
+				<weathericon>01</weathericon>
 			
-				<windgusts>3</windgusts>
+				<windgusts>7</windgusts>
 			
-				<windspeed>3</windspeed>
+				<windspeed>7</windspeed>
 			
 				<winddirection>0</winddirection>
 			
@@ -49,13 +49,13 @@
 			
 				<uvindex index="0">Low</uvindex>
 			
-				<dewpoint>12</dewpoint>
+				<dewpoint>7</dewpoint>
 			
-				<cloudcover>95%</cloudcover>
+				<cloudcover>0%</cloudcover>
 							
-				<apparenttemp>18</apparenttemp>
+				<apparenttemp>22</apparenttemp>
 							
-				<windchill>14</windchill>
+				<windchill>22</windchill>
 						
 
 		</currentconditions>
@@ -66,216 +66,64 @@
 					<day number="1">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=1</url>
 						
-					<obsdate>3/29/2011</obsdate>
-					<daycode>Mardi</daycode>
-					
-						<sunrise>7:34 AM</sunrise>
-						<sunset>8:18 PM</sunset>
-					
-					<daytime>
-						
-							<txtshort>quelques averses</txtshort>
-							
-							<txtlong>quelques averses</txtlong>
-							
-							<weathericon>12</weathericon>
-						
-							<hightemperature>17</hightemperature>
-							<lowtemperature>8</lowtemperature>
-						
-							<realfeelhigh>17</realfeelhigh>
-							<realfeellow>6</realfeellow>
-						
-							<windspeed>11</windspeed>
-						
-							<winddirection>157.5</winddirection>
-						
-							<windgust>33</windgust>
-						
-							<maxuv>4</maxuv>
-						
-							<rainamount>0.5</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-						<precipamount>0.5</precipamount>
-						
-							<tstormprob>20</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>nuageux</txtshort>
-							
-							<txtlong>nuageux</txtlong>
-							
-							<weathericon>07</weathericon>
-						
-							<hightemperature>17</hightemperature>
-							<lowtemperature>8</lowtemperature>
-						
-							<realfeelhigh>17</realfeelhigh>
-							<realfeellow>6</realfeellow>
-						
-							<windspeed>11</windspeed>
-						
-							<winddirection>202.5</winddirection>
-						
-							<windgust>25</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>1.5</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>1.5</precipamount>
-						
-							<tstormprob>5</tstormprob>
-						
-					</nighttime>
-				</day>
-				<day number="2">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=2</url>
-						
-					<obsdate>3/30/2011</obsdate>
+					<obsdate>5/11/2011</obsdate>
 					<daycode>Mercredi</daycode>
 					
-						<sunrise>7:32 AM</sunrise>
-						<sunset>8:19 PM</sunset>
+						<sunrise>6:14 AM</sunrise>
+						<sunset>9:21 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>quelques averses</txtshort>
+							<txtshort>partiellement ensoleill&#233;</txtshort>
 							
-							<txtlong>quelques averses</txtlong>
+							<txtlong>partiellement ensoleill&#233;</txtlong>
 							
-							<weathericon>12</weathericon>
+							<weathericon>03</weathericon>
 						
-							<hightemperature>13</hightemperature>
-							<lowtemperature>7</lowtemperature>
+							<hightemperature>22</hightemperature>
+							<lowtemperature>12</lowtemperature>
 						
-							<realfeelhigh>8</realfeelhigh>
-							<realfeellow>3</realfeellow>
+							<realfeelhigh>24</realfeelhigh>
+							<realfeellow>13</realfeellow>
 						
-							<windspeed>20</windspeed>
+							<windspeed>9</windspeed>
 						
-							<winddirection>225</winddirection>
+							<winddirection>0</winddirection>
 						
-							<windgust>48</windgust>
+							<windgust>22</windgust>
 						
-							<maxuv>2</maxuv>
+							<maxuv>6</maxuv>
 						
-							<rainamount>1.3</rainamount>
+							<rainamount>0.0</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>1.3</precipamount>
-						
-							<tstormprob>20</tstormprob>
-						
-					</daytime>
-					<nighttime>
-						
-							<txtshort>une ou deux br&#232;ves averses</txtshort>
-							
-							<txtlong>une ou deux br&#232;ves averses</txtlong>
-							
-							<weathericon>12</weathericon>
-						
-							<hightemperature>13</hightemperature>
-							<lowtemperature>7</lowtemperature>
-						
-							<realfeelhigh>8</realfeelhigh>
-							<realfeellow>3</realfeellow>
-						
-							<windspeed>17</windspeed>
-						
-							<winddirection>225</winddirection>
-						
-							<windgust>40</windgust>
-						
-							<maxuv></maxuv>
-						
-							<rainamount>1.3</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-							<precipamount>1.3</precipamount>
+						<precipamount>0.0</precipamount>
 						
 							<tstormprob>0</tstormprob>
 						
-					</nighttime>
-				</day>
-				<day number="3">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=3</url>
-						
-					<obsdate>3/31/2011</obsdate>
-					<daycode>Jeudi</daycode>
-					
-						<sunrise>7:30 AM</sunrise>
-						<sunset>8:21 PM</sunset>
-					
-					<daytime>
-						
-							<txtshort>nuages bas</txtshort>
-							
-							<txtlong>nuages bas</txtlong>
-							
-							<weathericon>08</weathericon>
-						
-							<hightemperature>16</hightemperature>
-							<lowtemperature>9</lowtemperature>
-						
-							<realfeelhigh>12</realfeelhigh>
-							<realfeellow>7</realfeellow>
-						
-							<windspeed>25</windspeed>
-						
-							<winddirection>225</winddirection>
-						
-							<windgust>59</windgust>
-						
-							<maxuv>1</maxuv>
-						
-							<rainamount>0.3</rainamount>
-						
-							<snowamount>0.00</snowamount>
-						
-							<iceamount>0.0</iceamount>
-						
-						<precipamount>0.3</precipamount>
-						
-							<tstormprob>1</tstormprob>
-						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>nuages bas</txtshort>
+							<txtshort>ciel tr&#232;s nuageux</txtshort>
 							
-							<txtlong>nuages bas</txtlong>
+							<txtlong>ciel tr&#232;s nuageux</txtlong>
 							
-							<weathericon>08</weathericon>
+							<weathericon>38</weathericon>
 						
-							<hightemperature>16</hightemperature>
-							<lowtemperature>9</lowtemperature>
+							<hightemperature>22</hightemperature>
+							<lowtemperature>12</lowtemperature>
 						
-							<realfeelhigh>12</realfeelhigh>
-							<realfeellow>7</realfeellow>
+							<realfeelhigh>24</realfeelhigh>
+							<realfeellow>13</realfeellow>
 						
-							<windspeed>19</windspeed>
+							<windspeed>8</windspeed>
 						
-							<winddirection>225</winddirection>
+							<winddirection>337.5</winddirection>
 						
-							<windgust>46</windgust>
+							<windgust>24</windgust>
 						
 							<maxuv></maxuv>
 						
@@ -291,36 +139,36 @@
 						
 					</nighttime>
 				</day>
-				<day number="4">
-							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=4</url>
+				<day number="2">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=2</url>
 						
-					<obsdate>4/1/2011</obsdate>
-					<daycode>Vendredi</daycode>
+					<obsdate>5/12/2011</obsdate>
+					<daycode>Jeudi</daycode>
 					
-						<sunrise>7:28 AM</sunrise>
-						<sunset>8:22 PM</sunset>
+						<sunrise>6:12 AM</sunrise>
+						<sunset>9:23 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>ciel nuageux avec de belles &#233;claircies</txtshort>
+							<txtshort>ciel ensoleill&#233; &#224; assez nuageux</txtshort>
 							
-							<txtlong>ciel nuageux avec de belles &#233;claircies</txtlong>
+							<txtlong>ciel ensoleill&#233; &#224; assez nuageux</txtlong>
 							
-							<weathericon>06</weathericon>
+							<weathericon>02</weathericon>
 						
-							<hightemperature>19</hightemperature>
-							<lowtemperature>11</lowtemperature>
+							<hightemperature>20</hightemperature>
+							<lowtemperature>7</lowtemperature>
 						
-							<realfeelhigh>18</realfeelhigh>
-							<realfeellow>9</realfeellow>
+							<realfeelhigh>21</realfeelhigh>
+							<realfeellow>8</realfeellow>
 						
-							<windspeed>16</windspeed>
+							<windspeed>14</windspeed>
 						
-							<winddirection>202.5</winddirection>
+							<winddirection>315</winddirection>
 						
-							<windgust>41</windgust>
+							<windgust>37</windgust>
 						
-							<maxuv>3</maxuv>
+							<maxuv>6</maxuv>
 						
 							<rainamount>0.0</rainamount>
 						
@@ -341,17 +189,169 @@
 							
 							<weathericon>33</weathericon>
 						
-							<hightemperature>19</hightemperature>
+							<hightemperature>20</hightemperature>
+							<lowtemperature>7</lowtemperature>
+						
+							<realfeelhigh>21</realfeelhigh>
+							<realfeellow>8</realfeellow>
+						
+							<windspeed>9</windspeed>
+						
+							<winddirection>22.5</winddirection>
+						
+							<windgust>32</windgust>
+						
+							<maxuv></maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+							<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</nighttime>
+				</day>
+				<day number="3">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=3</url>
+						
+					<obsdate>5/13/2011</obsdate>
+					<daycode>Vendredi</daycode>
+					
+						<sunrise>6:11 AM</sunrise>
+						<sunset>9:24 PM</sunset>
+					
+					<daytime>
+						
+							<txtshort>ensoleill&#233;</txtshort>
+							
+							<txtlong>ensoleill&#233;</txtlong>
+							
+							<weathericon>01</weathericon>
+						
+							<hightemperature>20</hightemperature>
 							<lowtemperature>11</lowtemperature>
 						
-							<realfeelhigh>18</realfeelhigh>
-							<realfeellow>9</realfeellow>
+							<realfeelhigh>26</realfeelhigh>
+							<realfeellow>12</realfeellow>
+						
+							<windspeed>1</windspeed>
+						
+							<winddirection>45</winddirection>
+						
+							<windgust>16</windgust>
+						
+							<maxuv>6</maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>n&#233;bulosit&#233; croissante</txtshort>
+							
+							<txtlong>n&#233;bulosit&#233; croissante</txtlong>
+							
+							<weathericon>38</weathericon>
+						
+							<hightemperature>20</hightemperature>
+							<lowtemperature>11</lowtemperature>
+						
+							<realfeelhigh>26</realfeelhigh>
+							<realfeellow>12</realfeellow>
+						
+							<windspeed>6</windspeed>
+						
+							<winddirection>337.5</winddirection>
+						
+							<windgust>24</windgust>
+						
+							<maxuv></maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+							<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</nighttime>
+				</day>
+				<day number="4">
+							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=4</url>
+						
+					<obsdate>5/14/2011</obsdate>
+					<daycode>Samedi</daycode>
+					
+						<sunrise>6:09 AM</sunrise>
+						<sunset>9:26 PM</sunset>
+					
+					<daytime>
+						
+							<txtshort>nuages de moins en moins nombreux</txtshort>
+							
+							<txtlong>nuages de moins en moins nombreux</txtlong>
+							
+							<weathericon>04</weathericon>
+						
+							<hightemperature>19</hightemperature>
+							<lowtemperature>7</lowtemperature>
+						
+							<realfeelhigh>19</realfeelhigh>
+							<realfeellow>6</realfeellow>
+						
+							<windspeed>16</windspeed>
+						
+							<winddirection>315</winddirection>
+						
+							<windgust>41</windgust>
+						
+							<maxuv>5</maxuv>
+						
+							<rainamount>0.0</rainamount>
+						
+							<snowamount>0.00</snowamount>
+						
+							<iceamount>0.0</iceamount>
+						
+						<precipamount>0.0</precipamount>
+						
+							<tstormprob>0</tstormprob>
+						
+					</daytime>
+					<nighttime>
+						
+							<txtshort>ciel &#233;clair&#233; par la lune</txtshort>
+							
+							<txtlong>ciel &#233;clair&#233; par la lune</txtlong>
+							
+							<weathericon>33</weathericon>
+						
+							<hightemperature>19</hightemperature>
+							<lowtemperature>7</lowtemperature>
+						
+							<realfeelhigh>19</realfeelhigh>
+							<realfeellow>6</realfeellow>
 						
 							<windspeed>11</windspeed>
 						
-							<winddirection>180</winddirection>
+							<winddirection>292.5</winddirection>
 						
-							<windgust>27</windgust>
+							<windgust>33</windgust>
 						
 							<maxuv></maxuv>
 						
@@ -370,76 +370,76 @@
 				<day number="5">
 							<url>http://www.accuweather.com/world-forecast-details.asp?partner=ruan&amp;loccode=EUR|FR|FR012|PARIS&amp;fday=5</url>
 						
-					<obsdate>4/2/2011</obsdate>
-					<daycode>Samedi</daycode>
+					<obsdate>5/15/2011</obsdate>
+					<daycode>Dimanche</daycode>
 					
-						<sunrise>7:25 AM</sunrise>
-						<sunset>8:24 PM</sunset>
+						<sunrise>6:08 AM</sunrise>
+						<sunset>9:27 PM</sunset>
 					
 					<daytime>
 						
-							<txtshort>plut&#244;t ensoleill&#233;</txtshort>
+							<txtshort>&#233;pisodes pluvieux</txtshort>
 							
-							<txtlong>plut&#244;t ensoleill&#233;</txtlong>
+							<txtlong>&#233;pisodes pluvieux</txtlong>
 							
-							<weathericon>02</weathericon>
+							<weathericon>18</weathericon>
 						
-							<hightemperature>22</hightemperature>
-							<lowtemperature>11</lowtemperature>
+							<hightemperature>15</hightemperature>
+							<lowtemperature>7</lowtemperature>
 						
-							<realfeelhigh>21</realfeelhigh>
-							<realfeellow>11</realfeellow>
+							<realfeelhigh>16</realfeelhigh>
+							<realfeellow>6</realfeellow>
 						
-							<windspeed>19</windspeed>
+							<windspeed>11</windspeed>
 						
-							<winddirection>225</winddirection>
+							<winddirection>292.5</winddirection>
 						
-							<windgust>46</windgust>
+							<windgust>37</windgust>
 						
-							<maxuv>5</maxuv>
+							<maxuv>6</maxuv>
 						
-							<rainamount>0.0</rainamount>
+							<rainamount>3.6</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-						<precipamount>0.0</precipamount>
+						<precipamount>3.6</precipamount>
 						
-							<tstormprob>1</tstormprob>
+							<tstormprob>7</tstormprob>
 						
 					</daytime>
 					<nighttime>
 						
-							<txtshort>ciel tr&#232;s nuageux</txtshort>
+							<txtshort>quelques averses</txtshort>
 							
-							<txtlong>ciel tr&#232;s nuageux</txtlong>
+							<txtlong>quelques averses</txtlong>
 							
 							<weathericon>12</weathericon>
 						
-							<hightemperature>22</hightemperature>
-							<lowtemperature>11</lowtemperature>
+							<hightemperature>15</hightemperature>
+							<lowtemperature>7</lowtemperature>
 						
-							<realfeelhigh>21</realfeelhigh>
-							<realfeellow>11</realfeellow>
+							<realfeelhigh>16</realfeelhigh>
+							<realfeellow>6</realfeellow>
 						
-							<windspeed>8</windspeed>
+							<windspeed>9</windspeed>
 						
-							<winddirection>315</winddirection>
+							<winddirection>292.5</winddirection>
 						
-							<windgust>30</windgust>
+							<windgust>38</windgust>
 						
 							<maxuv></maxuv>
 						
-							<rainamount>5.8</rainamount>
+							<rainamount>0.5</rainamount>
 						
 							<snowamount>0.00</snowamount>
 						
 							<iceamount>0.0</iceamount>
 						
-							<precipamount>5.8</precipamount>
+							<precipamount>0.5</precipamount>
 						
-							<tstormprob>13</tstormprob>
+							<tstormprob>20</tstormprob>
 						
 					</nighttime>
 				</day>
