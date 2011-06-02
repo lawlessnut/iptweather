@@ -1,5 +1,12 @@
 #summary IPTWeather FAQ.
 
+<b><font color="green">Q: I want to create shortcut in my theme (HS++) when clicked it "Manually" update the weather for all cities "or to last city selected" listed to the registry ... Is it possible?</font></b><br />
+A: To manually update the weather, the best is to run the iPhoneTodayAccuWeather.mscr script, even if you don't use iPhoneToday but only S2U2.
+Then, if the last update time is longer ago than IPTWforceDelayHours + IPTWforceDelayMinutes, it will update all the locations set to be auto-updated via the 'IPTWeather Location' script (see in the Start menu).
+With the iPhoneTodayAccuWeather.mscr script, you can also update only one location if you call it with parameter IPTWaccuWeatherLocationForecast="the location AccuWeather code" and IPTWFIP=0 (position of the icon in iPhoneToday - mandatory, even if you don't use iPhoneToday).
+
+If you don't care about IPTWforceDelayHours + Minutes, and want to force the update as soon as you click on your shortcut, then call the getAccuWeather.mscr script with the same settings described above than for iPhoneTodayAccuWeather.mscr.<br />
+<br />
 <b><font color="Green">Q: How to replace strange symbols by good ones: 
 Ã± by ñ, Ã¡ by á, Ã³ by ó, Ã by í, íº by ú, í‘ by Ñ, Ãº by ú, í© by é?</font></b><br />
 A: In the sys folder, edit the ini file of your language and set the following first line (see fr.ini for an example):<br />
