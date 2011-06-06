@@ -1,10 +1,17 @@
 #summary IPTWeather FAQ.
 
+<b><font color="green">Q: I want to test my IPTWeather settings. My update interval is set to 1 minute, but still it seems I cannot have IPTWeather updated with my new settings. I am out of idea...</font></b><br />
+A: Normally, it is useless to have an update interval less than 30 minutes because AccuWeather.com does not update the data more often than every 30 minutes.
+For testing purpose, I would also advise not to set the update interval to less than 2 or 3 minutes, because of the required time to set up an active connection, to download the data and to update iPhoneToday.
+Because the risk is that while IPTWeather is updating, the next update is triggered by Windows Mobile, but as MortScript cannot run several times at once the same script, this next update will be just ignored by MortScript without scheduling any next update, and the consequence will be that IPTWeather will stop auto-updating...
+But to test your settings, no need to have a small update interval.
+*The best and easiest way to test your settings is just to run the 'IPTWeather Location' script and select again the current location (better save it into your favorites from the 'IPTWeather Location' script).*<br />
+<br />
 <b><font color="green">Q: I want to create shortcut in my theme (HS++) when clicked it "Manually" update the weather for all cities "or to last city selected" listed to the registry ... Is it possible?</font></b><br />
 A: To manually update the weather, the best is to run the iPhoneTodayAccuWeather.mscr script, even if you don't use iPhoneToday but only S2U2.
 Then, if the last update time is longer ago than IPTWforceDelayHours + IPTWforceDelayMinutes, it will update all the locations set to be auto-updated via the 'IPTWeather Location' script (see in the Start menu).
-With the iPhoneTodayAccuWeather.mscr script, you can also update only one location if you call it with parameter IPTWaccuWeatherLocationForecast="the location AccuWeather code" and IPTWFIP=0 (position of the icon in iPhoneToday - mandatory, even if you don't use iPhoneToday).
-
+With the iPhoneTodayAccuWeather.mscr script, you can also update only one location if you call it with parameter IPTWaccuWeatherLocationForecast="the location AccuWeather code" and IPTWFIP=0 (position of the icon in iPhoneToday - mandatory, even if you don't use iPhoneToday).<br />
+<br />
 If you don't care about IPTWforceDelayHours + Minutes, and want to force the update as soon as you click on your shortcut, then call the getAccuWeather.mscr script with the same settings described above than for iPhoneTodayAccuWeather.mscr.<br />
 <br />
 <b><font color="Green">Q: How to replace strange symbols by good ones: 
