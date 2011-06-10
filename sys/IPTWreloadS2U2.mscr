@@ -100,7 +100,7 @@ Else
 				reloadS2U2 = TRUE
 			EndIf
 			obsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
-			obsdate = SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2) & "/" & Part(obsdate, "/", 3)
+			obsdate = Part(obsdate, "/", 3) & "/" & SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2)
 			If ((iconNum = 0) AND (currentDate eq obsdate) AND NOT notUseCurrent)
 				oldS2U2weather = RegRead("HKCU", "\Software\A_C\S2U2\", "UserWeather")
 				IPTWS2U2UserWeatherIconToForce = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2UserWeatherIconToForce")
