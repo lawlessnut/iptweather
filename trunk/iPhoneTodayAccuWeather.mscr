@@ -76,39 +76,45 @@ Else
 		IPTWforecastSkipIconFrequency = IniRead("weather.ini", "iPhoneToday settings", "IPTWforecastSkipIconFrequency")
 		IPTWforecastSkipIconQuantity = IniRead("weather.ini", "iPhoneToday settings", "IPTWforecastSkipIconQuantity")
 		IPTWforecastIconSkipFirstAtSunset = IniRead("weather.ini", "iPhoneToday settings", "IPTWforecastIconSkipFirstAtSunset")
-		daysToSkip = 0
+		IPTWmaxForecastDaysToShow = Max(0, IniRead("weather.ini", "iPhoneToday settings", "IPTWmaxForecastDaysToShow"))
+		daysToSkip = Max(0, IniRead("weather.ini", "iPhoneToday settings", "IPTWforecastDaysToSkip"))
 		shownIcons = 0
 		iconPositionOffset = 0
 		oneOrTwo = IPTWhideNightForecastIcons?1:2
 		iconNumOffset = RegKeyExists("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon0")?1:0
 		Call("IPTWfindDay")
-		If (foundDay)
+		If (foundDay AND IPTWmaxForecastDaysToShow > 0)
 			sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & daysToSkip), -8)
 			sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
-			If (currenttime gt sunset AND NOT IPTWwriteForecastInFile)
+			If (currenttime gt sunset)
 				skipMorning = 1
 				If (IPTWforecastIconSkipFirstAtSunset)
 					IPTWforecastStartIcon += 1
 					shownIcons = 1
 				EndIf
-				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
-				CallScript(SystemPath("ScriptPath") \ "sys\IPTWtextPattern.mscr", daysToSkip, 0, "N", "iPhoneToday settings", "IPTWforecastWeatherIconsTextPattern")
-				Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon, textPattern, iPhoneTodayPic, 0, "N", daysToSkip)
+				If (NOT IPTWhideNightForecastIcons)
+					iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
+					CallScript(SystemPath("ScriptPath") \ "sys\IPTWtextPattern.mscr", daysToSkip, 0, "N", "iPhoneToday settings", "IPTWforecastWeatherIconsTextPattern")
+					Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon, textPattern, iPhoneTodayPic, 0, "N", daysToSkip)
+				EndIf
 			Else
 				skipMorning = 0
 				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconD" & daysToSkip) & "." & IPTWiconsExtension
 				CallScript(SystemPath("ScriptPath") \ "sys\IPTWtextPattern.mscr", daysToSkip, 0, "D", "iPhoneToday settings", "IPTWforecastWeatherIconsTextPattern")
 				Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon, textPattern, iPhoneTodayPic, 0, "D", daysToSkip)
 
-				iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
-				CallScript(SystemPath("ScriptPath") \ "sys\IPTWtextPattern.mscr", daysToSkip, 0, "N", "iPhoneToday settings", "IPTWforecastWeatherIconsTextPattern")
-				Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon + 1, textPattern, iPhoneTodayPic, 1, "N", daysToSkip)
+				If (NOT IPTWhideNightForecastIcons)
+					iPhoneTodayPic = RegRead(IPTWregRoot, IPTWregKey, "iconN" & daysToSkip) & IPTWnightIconSuffix & "." & IPTWiconsExtension
+					CallScript(SystemPath("ScriptPath") \ "sys\IPTWtextPattern.mscr", daysToSkip, 0, "N", "iPhoneToday settings", "IPTWforecastWeatherIconsTextPattern")
+					Call("IPTWsetIcon", IPTWforecastStartPage, IPTWforecastStartIcon + 1, textPattern, iPhoneTodayPic, 1, "N", daysToSkip)
+				EndIf
 			EndIf
 			i = daysToSkip + 1
+			maxWeatherDayNumberToShow = IPTWmaxForecastDaysToShow + daysToSkip
 			time = Array("D", "N")
 			tempType = Array("hi", "lo")
 			iconSuffix = Array("", IPTWnightIconSuffix)
-			While (RegValueExists(IPTWregRoot, IPTWregKey, "iconD" & i))
+			While (RegValueExists(IPTWregRoot, IPTWregKey, "iconD" & i) AND (i < maxWeatherDayNumberToShow))
 				For j = 1 to oneOrTwo
 					If (RegValueExists(IPTWregRoot, IPTWregKey, "icon" & time[j] & i))
 						iconNum = oneOrTwo * (i - daysToSkip) + j - 1 - skipMorning
