@@ -222,8 +222,8 @@ Sub IPTWfindDay
 	foundDay = FALSE
 	While (NOT foundDay AND RegValueExists(IPTWregRoot, IPTWregKey, "obsdate" & daysToSkip))
 		obsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate" & daysToSkip)
-		obsdate = SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2) & "/" & Part(obsdate, "/", 3)
-		If (obsdate eq currentDate)
+		obsdate = Part(obsdate, "/", 3) & "/" & SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2)
+		If (obsdate ge currentDate)
 			foundDay = TRUE
 		Else
 			daysToSkip += 1
@@ -237,7 +237,7 @@ Sub IPTWsetCurrentTimeAndDate
 	dataTimeZone = timeZone * 3600
 	timeOffset = dataTimeZone - deviceTimeZone
 	currentLocalTime = TimeStamp() + timeOffset
-	currentDate = FormatTime("m/d/Y", currentLocalTime)
+	currentDate = FormatTime("Y/m/d", currentLocalTime)
 	currenttime = Replace(FormatTime("A h:i", currentLocalTime), " 12", " 00")
 EndSub
 
