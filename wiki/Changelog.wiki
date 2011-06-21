@@ -1,5 +1,12 @@
 #summary Changelog of IPTWeather.
 
+=== IPTWeather_20110621 ===
+  * added iPhoneToday setting IPTWmaxForecastDaysToShow to limit the number of days of weather forecast icons shown in iPhoneToday (to limit to 4 days even if 8 days are downloaded for instance…).
+  * added iPhoneToday setting IPTWforecastDaysToSkip to set a number of days of weather forecast icons to skip in iPhoneToday (not to show current day forecast for instance…).
+  * added many shortcuts in the Start Menu/IPTWeather folder.
+  * now, when IPTWwriteForecastInFile=1, setting IPTWforecastIconSkipFirstAtSunset=0 works.
+  * small performance optimization when IPTWhideNightForecastIcons=1.
+
 === IPTWeather_20110511 ===
   * added the "header:" prefix for the IPTWforecastStartPage setting so you can set the page header name instead of the page number (very usefull if you which to move your iPhoneToday weather page around...)
   * now working weather background for iPhoneTodayDesktop.exe
