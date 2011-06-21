@@ -130,6 +130,15 @@ IPTWscheduleNextUpdateOnStart=1
 ;If set to 1, an update will be scheduled at device start-up in IPTWdelayHours hours and IPTWdelayMinutes minutes.
 
 [iPhoneToday settings]
+IPTWmaxForecastDaysToShow=
+;int
+;Set the maximum number of weather forecast days to show when displaying weather forecast icons in iPhoneToday.
+
+IPTWforecastDaysToSkip=0
+;int
+;Set the number of days to skip in the displayed weather forecasts icons.
+;For instance, if set to 1, the forecast for current day will not be displayed.
+
 IPTWobservationTimeExecField=
 ;fullfilepath
 ;Set the full file path of the file to be executed when clicking on the observation time icon in iPhoneToday.
@@ -187,7 +196,7 @@ IPTWiconsExtension=png
 
 IPTWcurrentWeatherIconTextPattern=%PT% (%PRFT%)
 ;
-;;Check weather.ini file for help on this setting.
+;;Check weather.ini.desc file for help on this setting.
 ;Text pattern for the text displayed for the current weather icon in iPhoneToday.
 ;You can use the following special strings:
 ;%CT% for Current Temperature
@@ -281,7 +290,7 @@ IPTWS2U2UserWeatherIconToForce=
 
 IPTWS2U2UserWeatherTextPattern=%CT%%NA% (%CRFT%)%NA% / Hi: %HT% (%HRFT%) / Lo: %LT% (%LRFT%)
 ;
-;;Check weather.ini file for help on this setting.
+;;Check weather.ini.desc file for help on this setting.
 ;Define what has to be displayed in the S2U2 UserWeather text.
 ;You can use the following special strings:
 ;%CT% for Current Temperature (only available if IPTWtomorrowForecastInS2U2UserWeather=-1, replaced by IPTWobsoleteDataPrefix if not available)
