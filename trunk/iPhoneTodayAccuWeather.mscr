@@ -76,14 +76,14 @@ Else
 		IPTWforecastSkipIconFrequency = IniRead("weather.ini", "iPhoneToday settings", "IPTWforecastSkipIconFrequency")
 		IPTWforecastSkipIconQuantity = IniRead("weather.ini", "iPhoneToday settings", "IPTWforecastSkipIconQuantity")
 		IPTWforecastIconSkipFirstAtSunset = IniRead("weather.ini", "iPhoneToday settings", "IPTWforecastIconSkipFirstAtSunset")
-		IPTWmaxForecastDaysToShow = Max(0, IniRead("weather.ini", "iPhoneToday settings", "IPTWmaxForecastDaysToShow"))
+		IPTWmaxForecastDaysToShow = IniRead("weather.ini", "iPhoneToday settings", "IPTWmaxForecastDaysToShow")
 		daysToSkip = Max(0, IniRead("weather.ini", "iPhoneToday settings", "IPTWforecastDaysToSkip"))
 		shownIcons = 0
 		iconPositionOffset = 0
 		oneOrTwo = IPTWhideNightForecastIcons?1:2
 		iconNumOffset = RegKeyExists("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon0")?1:0
 		Call("IPTWfindDay")
-		If (foundDay AND IPTWmaxForecastDaysToShow > 0)
+		If (foundDay AND (IPTWmaxForecastDaysToShow > 0 OR IPTWmaxForecastDaysToShow eq ""))
 			sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & daysToSkip), -8)
 			sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
 			If (currenttime gt sunset)
@@ -114,7 +114,7 @@ Else
 			time = Array("D", "N")
 			tempType = Array("hi", "lo")
 			iconSuffix = Array("", IPTWnightIconSuffix)
-			While (RegValueExists(IPTWregRoot, IPTWregKey, "iconD" & i) AND (i < maxWeatherDayNumberToShow))
+			While (RegValueExists(IPTWregRoot, IPTWregKey, "iconD" & i) AND (i < maxWeatherDayNumberToShow OR IPTWmaxForecastDaysToShow eq ""))
 				For j = 1 to oneOrTwo
 					If (RegValueExists(IPTWregRoot, IPTWregKey, "icon" & time[j] & i))
 						iconNum = oneOrTwo * (i - daysToSkip) + j - 1 - skipMorning
