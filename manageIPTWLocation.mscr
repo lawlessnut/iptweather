@@ -3,7 +3,7 @@ Include("sys\IPTWsubs.mscr")
 # ############################################################################
 # General settings
 IPTWaccuWeatherLocation				= IniRead("weather.ini", "General settings", "IPTWaccuWeatherLocation")
-IPTWinternetConnection				= IniRead("weather.ini", "General settings", "IPTWinternetConnection")
+IPTWinternetConnectionList			= Split(IniRead("weather.ini", "General settings", "IPTWinternetConnection"), ",")
 IPTWdisconnectOnExit				= IniRead("weather.ini", "General settings", "IPTWdisconnectOnExit")
 IPTWaccuWeatherFavoriteLocations	= IniRead("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations")
 IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "General settings", "IPTWupdateWeatherNowQuestion")
@@ -37,66 +37,78 @@ Call("IPTWsetChoiceList")
 choosenAction = Choice("Change location?", "Current location is " & currentLocation, 1, 0, choiceList)
 While (choosenAction <> 0 AND choosenAction <= MaxIndex(choiceList))
 	If (choosenAction = 1)
-		If (NOT InternetConnected("http://www.perdu.com"))
-			If (IPTWinternetConnection eq "VJVolubilis")
-				If (FileExists(IPTWvjvolubilisPath))
-					RunWait(IPTWvjvolubilisPath, "-gprson")
-					mdidconnect = TRUE
-				EndIf
-			ElseIf (IPTWinternetConnection eq "Wifi")
-				RunWait(SystemPath("ScriptPath") \ "sys\Wifi.exe")
-				mdidconnect = TRUE
-			Else
-				Connect(IPTWinternetConnection)
-				mdidconnect = TRUE
+		isConnected = FALSE
+		If (RegRead("HKLM", "System\State\Connections", "Count"))
+			If (InternetConnected("http://www.perdu.com"))
+				isConnected = TRUE
 			EndIf
 		EndIf
+		If (NOT isConnected)
+			SetMessageFont(10)
+			StatusType(ST_MESSAGE, 0)
+			StatusMessage("Connecting...")
+			maxIPTWinternetConnectionIndex = MaxIndex(IPTWinternetConnectionList)
+			internetConnectionIndex = 1
+			While (NOT mdidconnect AND internetConnectionIndex <= maxIPTWinternetConnectionIndex)
+				Call("IPTWsetInternetConnection", SystemPath("ScriptPath") \ "sys")
 
-		location = Input("Please enter location code or name")
-		If (location ne "")
-			nbSleeps = 0
-			While(NOT InternetConnected("http://www.perdu.com") AND nbSleeps < 6)
-				Sleep(5000)
-				nbSleeps += 1
-			EndWhile
+				If (IPTWinternetConnection ne "")
+					If (IPTWinternetConnection eq "VJVolubilis")
+						If (FileExists(IPTWvjvolubilisPath))
+							RunWait(IPTWvjvolubilisPath, "-gprson")
+						EndIf
+					ElseIf (IPTWinternetConnection eq "Wifi")
+						RunWait(SystemPath("ScriptPath") \ "sys\Wifi.exe")
+					Else
+						Connect(IPTWinternetConnection)
+					EndIf
 
-			If (InternetConnected("http://www.perdu.com"))
-				data = ReadFile(IPTWaccuLocationURL & location)
-			EndIf
-
-			locArray = Split(data, "location cnt")
-			i = 1
-			ForEach loc in array (locArray)
-				cityPos = Find(loc, "city=")
-				statePos = Find(loc, "state=", cityPos)
-				locationPos = Find(loc, "location=", statePos)
-				locationEndPos = Find(loc, "/>", locationPos)
-				If (cityPos <> 0 AND statePos <> 0 AND locationPos <> 0 AND locationEndPos <> 0)
-					cityName = SubStr(loc, cityPos + 6, statePos - 2 - (cityPos + 6))
-					stateName = SubStr(loc, statePos + 7, locationPos - 2 - (statePos + 7))
-					locationCode = SubStr(loc, locationPos + 10, locationEndPos - 1 - (locationPos + 10))
-					locationList[i] = cityName & ", " & stateName & ", " & locationCode
-					i = i +1
+					CallFunction("IPTWdidConnect", mdidconnect, SystemPath("ScriptPath") \ "sys")
 				EndIf
-			EndForEach
-			choosenLocation = Choice("Location selection", "Choose a location", 0, 0, locationList)
-			If (choosenLocation <> 0)
-				isInFavorites = Find(IPTWaccuWeatherFavoriteLocations, locationList[choosenLocation])
-				If (isInFavorites = 0)
-					addToFavorites = Question(locationList[choosenLocation], "Add to favorites?")
-					If (addToFavorites)
-						If (IPTWaccuWeatherFavoriteLocations eq "")
-							IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", locationList[choosenLocation])
-						Else
-							IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations & ";" & locationList[choosenLocation])
+				internetConnectionIndex += 1
+			EndWhile
+			StatusClear()
+		EndIf
+
+		If (mdidconnect)
+			location = Input("Please enter location code or name")
+			If (location ne "")
+				data = ReadFile(IPTWaccuLocationURL & location)
+
+				locArray = Split(data, "location cnt")
+				i = 1
+				ForEach loc in array (locArray)
+					cityPos = Find(loc, "city=")
+					statePos = Find(loc, "state=", cityPos)
+					locationPos = Find(loc, "location=", statePos)
+					locationEndPos = Find(loc, "/>", locationPos)
+					If (cityPos <> 0 AND statePos <> 0 AND locationPos <> 0 AND locationEndPos <> 0)
+						cityName = SubStr(loc, cityPos + 6, statePos - 2 - (cityPos + 6))
+						stateName = SubStr(loc, statePos + 7, locationPos - 2 - (statePos + 7))
+						locationCode = SubStr(loc, locationPos + 10, locationEndPos - 1 - (locationPos + 10))
+						locationList[i] = cityName & ", " & stateName & ", " & locationCode
+						i = i +1
+					EndIf
+				EndForEach
+				choosenLocation = Choice("Location selection", "Choose a location", 0, 0, locationList)
+				If (choosenLocation <> 0)
+					isInFavorites = Find(IPTWaccuWeatherFavoriteLocations, locationList[choosenLocation])
+					If (isInFavorites = 0)
+						addToFavorites = Question(locationList[choosenLocation], "Add to favorites?")
+						If (addToFavorites)
+							If (IPTWaccuWeatherFavoriteLocations eq "")
+								IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", locationList[choosenLocation])
+							Else
+								IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations & ";" & locationList[choosenLocation])
+							EndIf
 						EndIf
 					EndIf
-				EndIf
-				IniWrite("weather.ini", "General settings", "IPTWaccuWeatherLocation", Part(locationList[choosenLocation], ",", -1, TRUE))
-				IPTWaccuWeatherLocationForecast = Part(locationList[choosenLocation], ",", -1, TRUE)
-				IPTWFIP = IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherIcon")
+					IniWrite("weather.ini", "General settings", "IPTWaccuWeatherLocation", Part(locationList[choosenLocation], ",", -1, TRUE))
+					IPTWaccuWeatherLocationForecast = Part(locationList[choosenLocation], ",", -1, TRUE)
+					IPTWFIP = IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherIcon")
 				exitDirectly = FALSE
 				choosenAction = 0
+				EndIf
 			EndIf
 		EndIf
 	ElseIf (choosenAction = 2)
