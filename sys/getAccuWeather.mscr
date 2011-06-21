@@ -1,4 +1,4 @@
-ErrorLevel("off")
+#ErrorLevel("off")
 
 Include("IPTWsubs.mscr")
 
@@ -116,30 +116,7 @@ If (NOT isConnected)
 	maxIPTWinternetConnectionIndex = MaxIndex(IPTWinternetConnectionList)
 	internetConnectionIndex = 1
 	While (NOT didconnect AND internetConnectionIndex <= maxIPTWinternetConnectionIndex)
-		IPTWinternetConnection = IPTWinternetConnectionList[internetConnectionIndex]
-		If (IPTWinternetConnection eq "RIL Map")
-			countryCode = RunWait(SystemPath("ScriptPath") \ "RilCmdLine.exe","MobileCountryCode")
-			lac = RunWait(SystemPath("ScriptPath") \ "RilCmdLine.exe","LocationAreaCode")
-			cellID = RunWait(SystemPath("ScriptPath") \ "RilCmdLine.exe","CellID")
-			fullLAC = countryCode & "-" & lac
-			fullCellID = fullLAC & "-" & cellID
-			currentFullCellIDmapping = IniRead(SystemPath("ScriptPath") \ "RILmap.ini", "RIL connection map", fullCellID)
-			If (currentFullCellIDmapping eq "")
-				currentFullLACmapping = IniRead(SystemPath("ScriptPath") \ "RILmap.ini", "RIL connection map", fullLAC)
-				If (currentFullLACmapping eq "")
-					currentCountryMapping = IniRead(SystemPath("ScriptPath") \ "RILmap.ini", "RIL connection map", countryCode)
-					If (currentCountryMapping eq "")
-						IPTWinternetConnection = ""
-					Else
-						IPTWinternetConnection = currentCountryMapping
-					EndIf
-				Else
-					IPTWinternetConnection = currentFullLACmapping
-				EndIf
-			Else
-				IPTWinternetConnection = currentFullCellIDmapping
-			EndIf
-		EndIf
+		Call("IPTWsetInternetConnection", SystemPath("ScriptPath"))
 
 		If (IPTWinternetConnection ne "")
 			If (IPTWinternetConnection eq "VJVolubilis")
@@ -152,24 +129,7 @@ If (NOT isConnected)
 				Connect(IPTWinternetConnection)
 			EndIf
 
-#Do we have a connection?
-			nbSleeps = 0
-			While (NOT RegRead("HKLM", "System\State\Connections", "Count") AND nbSleeps < 8)
-				Sleep(2000)
-				nbSleeps += 1
-			EndWhile
-
-#Do we have a working connection?
-			nbSleeps = 0
-			While (NOT InternetConnected("http://www.perdu.com") AND nbSleeps < 5)
-				Sleep(5000)
-				nbSleeps += 1
-			EndWhile
-			If (nbSleeps < 5)
-				didconnect = TRUE
-			ElseIf (IPTWinternetConnection eq "Wifi")
-				RunWait(SystemPath("ScriptPath") \ "Wifi-OFF.exe")
-			EndIf
+			CallFunction("IPTWdidConnect", didconnect, SystemPath("ScriptPath"))
 		EndIf
 		internetConnectionIndex += 1
 	EndWhile
