@@ -110,7 +110,7 @@ Else
 				EndIf
 			EndIf
 			i = daysToSkip + 1
-			maxWeatherDayNumberToShow = IPTWmaxForecastDaysToShow + daysToSkip
+			maxWeatherDayNumberToShow = IPTWmaxForecastDaysToShow + daysToSkip + skipMorning
 			time = Array("D", "N")
 			tempType = Array("hi", "lo")
 			iconSuffix = Array("", IPTWnightIconSuffix)
