@@ -1,5 +1,10 @@
 #summary Changelog of IPTWeather.
 
+=== ITPWeather_20110910 ===
+  * Corrected iPhoneToday icon shifting when sun has set and before midnight.
+  * Corrected bug that manage location might not be able to connect or detect active connection.
+  * Added option IPTWuseS2U2wallpaperForBackground = -1 to show current weather in iPhoneToday wallpaper.
+
 === IPTWeather_20110621 ===
   * added iPhoneToday setting IPTWmaxForecastDaysToShow to limit the number of days of weather forecast icons shown in iPhoneToday (to limit to 4 days even if 8 days are downloaded for instance…).
   * added iPhoneToday setting IPTWforecastDaysToSkip to set a number of days of weather forecast icons to skip in iPhoneToday (not to show current day forecast for instance…).
