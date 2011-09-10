@@ -264,9 +264,9 @@ IPTWdownloadDataAfterStartOnIconTap=0
 ;Be carefull, if IPTWdowloadDataAfterStartOnIconTap=0, then IPTWeather will not schedule updates at start, unless you set IPTWscheduleNextUpdateOnStart=1.
 
 IPTWuseS2U2wallpaperForBackground=0
-;list,0,1
-;Set this to 1 if you want to use the S2U2 wallpaper as your iPhoneToday background.
-;If you don't use S2U2 but want to use this background feature, then set IPTWtodayForecastInS2U2Wallpaper=0, and configure the wallpaper path using IPTWS2U2WallpaperExtension, IPTWS2U2WallpaperPath and IPTWdefautS2U2Wallpaper.
+;list,0,1,-1
+;Set this to 1 if you want to use the S2U2 wallpaper as your iPhoneToday wallpaper, or -1 for current weather.
+;If you don't use S2U2 but want to use this wallpaper feature, then set IPTWtodayForecastInS2U2Wallpaper=0, and configure the wallpaper path using IPTWS2U2WallpaperExtension, IPTWS2U2WallpaperPath and IPTWdefautS2U2Wallpaper.
 
 [S2U2 settings]
 IPTWtomorrowForecastInS2U2UserWeather=-1
