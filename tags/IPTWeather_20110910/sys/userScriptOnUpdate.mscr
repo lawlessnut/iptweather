@@ -1,0 +1,53 @@
+# This script is called after each update.
+# By default, it does nothing.
+# The user can edit this script to trigger some actions using IPTWeather data, as calling the StatusTicker app.
+# Some variables are set to help the user using IPTWeather data.
+
+# argv[1] is the current day number to retrieve data from the IPTWeather registry:
+# = 0 if weather data is up-to-date
+# = -1 if no weather data is available for current day
+# = 1 to 4 if weather data is not up-to-date, but a forecast data day matches current day
+
+# suffix is set to "N" or "D" depending on weither current time is Night or Day time
+
+# IPTWregRoot is the registry root of the current location weather data
+
+# IPTWregKey is the registry key of the current location weather data
+
+# To retrieve current weather forecast description:
+#weatherText = RegRead(IPTWregRoot, IPTWregKey, "text" & suffix & argv[1])
+
+# To retrieve current temperature (may be not up-to-date):
+#RegRead(IPTWregRoot, IPTWregKey, "temp0")
+
+# To retrieve current data AccuWeather observation date and to compare it with current system date
+#currentDate = FormatTime("m/d/Y")
+#obsdate = RegRead(IPTWregRoot, IPTWregKey, "obsdate0")
+#obsdate = SubStr("0" & Part(obsdate, "/", 1), -2) & "/" & SubStr("0" & Part(obsdate, "/", 2), -2) & "/" & Part(obsdate, "/", 3)
+#If (obsdate eq currentDate)
+#If (obsdate gt currentDate)
+#...
+
+# To retrieve current day sunset time and to compare it with current system time
+#currentTime = Replace(FormatTime("A h:i", TimeStamp()), " 12", " 00")
+#sunset = SubStr("0" & RegRead(IPTWregRoot, IPTWregKey, "sunset" & argv[1]), -8)
+#sunset = Replace(Part(sunset, " ", 2) & " " & Part(sunset, " ", 1), " 12", " 00")
+#If (sunset eq currentTime)
+#If (sunset gt currentTime)
+#...
+
+IPTWdisplayHumidityIcon	= IniRead("..\weather.ini", "Custom settings", "IPTWdisplayHumidityIcon")
+If (IPTWdisplayHumidityIcon)
+	IPTWhumidityIcon		= IniRead("..\weather.ini", "Custom settings", "IPTWhumidityIcon")
+	IPTWhumidityPage		= IniRead("..\weather.ini", "Custom settings", "IPTWhumidityPage")
+	IPTWhumidityIconName	= IniRead("..\weather.ini", "Custom settings", "IPTWhumidityIconName")
+	If (argv[1] = 1)
+		humidity = RegRead(IPTWregRoot, IPTWregKey, "humidity")
+	Else
+		humidity = "N/A"
+	EndIf
+	RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon1", "nScreen", IPTWhumidityPage)
+	RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon1", "nIcon", IPTWhumidityIcon)
+	RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon1", "strName", humidity)
+	RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon1", "strImage", IPTWaccuWeatherIconPath \ IPTWhumidityIconName)
+EndIf

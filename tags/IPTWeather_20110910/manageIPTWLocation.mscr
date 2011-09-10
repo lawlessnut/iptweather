@@ -1,0 +1,353 @@
+Include("sys\IPTWsubs.mscr")
+
+# ############################################################################
+# General settings
+IPTWaccuWeatherLocation				= IniRead("weather.ini", "General settings", "IPTWaccuWeatherLocation")
+IPTWinternetConnectionList			= Split(IniRead("weather.ini", "General settings", "IPTWinternetConnection"), ",")
+IPTWdisconnectOnExit				= IniRead("weather.ini", "General settings", "IPTWdisconnectOnExit")
+IPTWaccuWeatherFavoriteLocations	= IniRead("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations")
+IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "General settings", "IPTWupdateWeatherNowQuestion")
+IPTWaccuWeatherAPI					= IniRead("weather.ini", "General settings", "IPTWaccuWeatherAPI")
+IPTWvjvolubilisPath			= IniRead("weather.ini", "General settings", "IPTWvjvolubilisPath")
+
+# ############################################################################
+# iPhoneToday settings
+IPTWwriteForecastInFile		= IniRead("weather.ini", "iPhoneToday settings", "IPTWwriteForecastInFile")
+
+# ############################################################################
+# Technical settings
+IPTWregRoot					= IniRead("weather.ini", "Script settings", "IPTWregRoot")
+IPTWappRegKey				= IniRead("weather.ini", "Script settings", "IPTWregKey")
+IPTWregKey					= IniRead("weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
+IPTWaccuLocationURL			= "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/city-find.asp?location="
+
+currentCityName = RegRead(IPTWregRoot, IPTWregKey, "city")
+If (currentCityName ne "")
+	currentLocationCode = RegRead(IPTWregRoot, IPTWregKey, "locationCode")
+	currentState = RegRead(IPTWregRoot, IPTWregKey, "state")
+	currentLocation = IPTWaccuWeatherLocation & " (" & currentCityName & ", " & currentState & ", " & currentLocationCode & ")"
+Else
+	currentLocation = IPTWaccuWeatherLocation
+EndIf
+
+mdidconnect = FALSE
+exitDirectly = TRUE
+
+Call("IPTWsetChoiceList")
+
+choosenAction = Choice("Change location?", "Current location is " & currentLocation, 1, 0, choiceList)
+While (choosenAction <> 0 AND choosenAction <= MaxIndex(choiceList))
+	If (choosenAction = 1)
+		isConnected = FALSE
+		If (RegRead("HKLM", "System\State\Connections", "Count"))
+			If (InternetConnected("http://www.perdu.com"))
+				isConnected = TRUE
+			EndIf
+		EndIf
+		If (NOT isConnected)
+			SetMessageFont(10)
+			StatusType(ST_MESSAGE, 0)
+			StatusMessage("Connecting...")
+			maxIPTWinternetConnectionIndex = MaxIndex(IPTWinternetConnectionList)
+			internetConnectionIndex = 1
+			While (NOT mdidconnect AND internetConnectionIndex <= maxIPTWinternetConnectionIndex)
+				Call("IPTWsetInternetConnection", SystemPath("ScriptPath") \ "sys")
+				If (IPTWinternetConnection ne "")
+					If (IPTWinternetConnection eq "VJVolubilis")
+						If (FileExists(IPTWvjvolubilisPath))
+							RunWait(IPTWvjvolubilisPath, "-gprson")
+						EndIf
+					ElseIf (IPTWinternetConnection eq "Wifi")
+						RunWait(SystemPath("ScriptPath") \ "sys\Wifi.exe")
+					Else
+						Connect(IPTWinternetConnection)
+					EndIf
+
+					CallFunction("IPTWdidConnect", mdidconnect, SystemPath("ScriptPath") \ "sys")
+				EndIf
+				internetConnectionIndex += 1
+			EndWhile
+			StatusClear()
+		EndIf
+
+		If (mdidconnect or isConnected)
+			location = Input("Please enter location code or name")
+			If (location ne "")
+				data = ReadFile(IPTWaccuLocationURL & location)
+
+				locArray = Split(data, "location cnt")
+				i = 1
+				ForEach loc in array (locArray)
+					cityPos = Find(loc, "city=")
+					statePos = Find(loc, "state=", cityPos)
+					locationPos = Find(loc, "location=", statePos)
+					locationEndPos = Find(loc, "/>", locationPos)
+					If (cityPos <> 0 AND statePos <> 0 AND locationPos <> 0 AND locationEndPos <> 0)
+						cityName = SubStr(loc, cityPos + 6, statePos - 2 - (cityPos + 6))
+						stateName = SubStr(loc, statePos + 7, locationPos - 2 - (statePos + 7))
+						locationCode = SubStr(loc, locationPos + 10, locationEndPos - 1 - (locationPos + 10))
+						locationList[i] = cityName & ", " & stateName & ", " & locationCode
+						i = i +1
+					EndIf
+				EndForEach
+				choosenLocation = Choice("Location selection", "Choose a location", 0, 0, locationList)
+				If (choosenLocation <> 0)
+					isInFavorites = Find(IPTWaccuWeatherFavoriteLocations, locationList[choosenLocation])
+					If (isInFavorites = 0)
+						addToFavorites = Question(locationList[choosenLocation], "Add to favorites?")
+						If (addToFavorites)
+							If (IPTWaccuWeatherFavoriteLocations eq "")
+								IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", locationList[choosenLocation])
+							Else
+								IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations & ";" & locationList[choosenLocation])
+							EndIf
+						EndIf
+					EndIf
+					IniWrite("weather.ini", "General settings", "IPTWaccuWeatherLocation", Part(locationList[choosenLocation], ",", -1, TRUE))
+					IPTWaccuWeatherLocationForecast = Part(locationList[choosenLocation], ",", -1, TRUE)
+					IPTWFIP = IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherIcon")
+				exitDirectly = FALSE
+				choosenAction = 0
+				EndIf
+			EndIf
+		EndIf
+	ElseIf (choosenAction = 2)
+		IniWrite("weather.ini", "General settings", "IPTWaccuWeatherLocation", "My Location")
+		exitDirectly = FALSE
+		choosenAction = 0
+	ElseIf (choosenAction = 3)
+		IPTWgoogleUserID = IniRead("weather.ini", "General settings", "IPTWgoogleUserID")
+		changeGoogleUserId = Question("Your current Google User ID is " & IPTWgoogleUserID & ". Change it?", "Google User ID")
+		If (changeGoogleUserId = 1)
+			newIPTWgoogleUserID = Input("Enter your Google User ID")
+			If (newIPTWgoogleUserID ne "")
+				IPTWgoogleUserID = newIPTWgoogleUserID
+				IniWrite("weather.ini", "General settings", "IPTWgoogleUserID", newIPTWgoogleUserID)
+			EndIf
+		EndIf
+		If (IPTWgoogleUserID ne "")
+			IniWrite("weather.ini", "General settings", "IPTWaccuWeatherLocation", "Google Latitude")
+		EndIf
+		exitDirectly = FALSE
+		choosenAction = 0
+	ElseIf (choosenAction = 4)
+		If (currentLocationCode eq "")
+			Message("No current location defined!")
+		EndIf
+		If (Find(IPTWaccuWeatherFavoriteLocations, currentLocationCode))
+			Message("Location already added to favorites!")
+		Else
+	 		If (IPTWaccuWeatherFavoriteLocations eq "")
+				IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", currentCityName & ", " & currentState & ", " & currentLocationCode)
+			Else
+				IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations & ";" & currentCityName & ", " & currentState & ", " & currentLocationCode)
+			EndIf
+		EndIf
+	ElseIf (choosenAction = 5 and IPTWaccuWeatherFavoriteLocations ne "")
+		nbAddedDisplayedLocations = 0
+		locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+		choosenLocation = Choice("Remove location", "Choose a location to remove", 0, 0, locationsArray)
+		While (choosenLocation <> 0)
+			If ((SubStr(locationsArray[choosenLocation], 1, 1) eq "+" \
+				OR SubStr(locationsArray[choosenLocation], 2, 1) eq "+") \
+				AND Part(locationsArray[choosenLocation], ",", -1, TRUE) ne IPTWaccuWeatherLocation)
+				nbAddedDisplayedLocations = nbAddedDisplayedLocations - 1
+			EndIf
+			If (choosenLocation = 1)
+				IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation] & ";", "")
+				If (Find(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation]) <> 0)
+					IPTWaccuWeatherFavoriteLocations = ""
+				EndIf
+			Else
+				IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, ";" & locationsArray[choosenLocation], "")
+			EndIf
+			IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations)
+			locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+			choosenLocation = Choice("Remove location", "Choose a location to remove", 0, 0, locationsArray)
+		EndWhile
+		If (nbAddedDisplayedLocations < 0)
+			exitDirectly = FALSE
+			Call("IPTWclearCurrentIcons")
+		EndIf
+	ElseIf (choosenAction = 6 and IPTWaccuWeatherFavoriteLocations ne "")
+		locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+		choosenLocation = Choice("Download list", "(Un)mark location with * (not) to download its weather automatically.", 0, 0, locationsArray)
+		While (choosenLocation <> 0)
+			If (SubStr(locationsArray[choosenLocation], 1, 1) eq "*")
+				IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation], SubStr(locationsArray[choosenLocation], 2))
+			ElseIf (SubStr(locationsArray[choosenLocation], 2, 1) eq "*")
+				IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation], SubStr(locationsArray[choosenLocation], 1, 1) & SubStr(locationsArray[choosenLocation], 3))
+			Else
+				IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation], "*" & locationsArray[choosenLocation])
+			EndIf
+			IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations)
+			locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+			choosenLocation = Choice("Download list", "(Un)mark location with * (not) to download its weather automatically.", 0, 0, locationsArray)
+		EndWhile
+	ElseIf (choosenAction = 7 and IPTWaccuWeatherFavoriteLocations ne "")
+		nbAddedDisplayedLocations = 0
+		touched = 0
+		locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+		choosenLocation = Choice("Show current list", "(Un)mark location with + to (hide)show its current weather icon in iPT.", 0, 0, locationsArray)
+		While (choosenLocation <> 0)
+			touched = 1
+			If (SubStr(locationsArray[choosenLocation], 1, 1) eq "+")
+				IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation], SubStr(locationsArray[choosenLocation], 2))
+				If (Part(locationsArray[choosenLocation], ",", -1, TRUE) ne IPTWaccuWeatherLocation)
+					nbAddedDisplayedLocations = nbAddedDisplayedLocations - 1
+				EndIf
+			ElseIf (SubStr(locationsArray[choosenLocation], 2, 1) eq "+")
+				IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation], SubStr(locationsArray[choosenLocation], 1, 1) & SubStr(locationsArray[choosenLocation], 3))
+				If (Part(locationsArray[choosenLocation], ",", -1, TRUE) ne IPTWaccuWeatherLocation)
+					nbAddedDisplayedLocations = nbAddedDisplayedLocations - 1
+				EndIf
+			Else
+				IPTWaccuWeatherFavoriteLocations = Replace(IPTWaccuWeatherFavoriteLocations, locationsArray[choosenLocation], "+" & locationsArray[choosenLocation])
+				If (Part(locationsArray[choosenLocation], ",", -1, TRUE) ne IPTWaccuWeatherLocation)
+					nbAddedDisplayedLocations += 1
+				Else
+					Message("iPhoneToday execute field of the current weather icon for main location will be overwritten", "Warning!")
+				EndIf
+			EndIf
+			IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations)
+			locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+			choosenLocation = Choice("Show current list", "(Un)mark location with + to (hide)show its current weather icon in iPT.", 0, 0, locationsArray)
+		EndWhile
+		If (nbAddedDisplayedLocations <> 0 OR touched)
+			exitDirectly = FALSE
+			If (nbAddedDisplayedLocations < 0)
+				Call("IPTWclearCurrentIcons")
+			EndIf
+		EndIf
+	ElseIf (choosenAction = 8 and IPTWaccuWeatherFavoriteLocations ne "")
+		direction = 1
+		locationsArray = Split(IPTWaccuWeatherFavoriteLocations, ";")
+		choosenLocation = Choice("Change favorites order", "Move down/up a favorite in the list (move direction changes to down/up when moving first/last favorite)", 0, 0, locationsArray)
+		While (choosenLocation <> 0)
+			exitDirectly = FALSE
+			If (choosenLocation = MaxIndex(locationsArray))
+				direction = -1
+			ElseIf (choosenLocation = 1)
+				direction = 1
+			EndIf
+
+			nextFavoritePos = choosenLocation + direction
+
+			tempLoc = locationsArray[nextFavoritePos]
+			locationsArray[nextFavoritePos] = locationsArray[choosenLocation]
+			locationsArray[choosenLocation] = tempLoc
+			choosenLocation = Choice("Change favorites order", "Move down/up a favorite in the list (move direction changes to down/up when moving first/last favorite)", nextFavoritePos, 0, locationsArray)
+		EndWhile
+		index = 0
+		ForEach favorite in array(locationsArray)
+			If (index = 0)
+				index = 1
+				IPTWaccuWeatherFavoriteLocations = favorite
+			Else
+				IPTWaccuWeatherFavoriteLocations = IPTWaccuWeatherFavoriteLocations & ";" & favorite
+			EndIf
+		EndForEach
+		IniWrite("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations", IPTWaccuWeatherFavoriteLocations)
+	ElseIf (choosenAction <> 0)
+		currentPos = Find(IPTWaccuWeatherFavoriteLocations, IPTWaccuWeatherLocation)
+		If (currentPos > 0)
+			currentPos = ReverseFind(SubStr(IPTWaccuWeatherFavoriteLocations, 1, currentPos), ";")
+			If (currentPos = 0)
+				currentPos = -1
+			EndIf
+			If (SubStr(IPTWaccuWeatherFavoriteLocations, currentPos + 1, 1) ne "+" AND SubStr(IPTWaccuWeatherFavoriteLocations, currentPos + 2, 1) ne "+")
+				If (SubStr(choiceList[choosenAction], 1, 1) eq "+" OR SubStr(choiceList[choosenAction], 2, 1) eq "+")
+					nbAddedDisplayedLocations = -1
+					Call("IPTWclearCurrentIcons")
+				EndIf
+			EndIf
+		EndIf
+		IniWrite("weather.ini", "General settings", "IPTWaccuWeatherLocation", Part(choiceList[choosenAction], ",", -1, TRUE))
+		IPTWaccuWeatherLocationForecast = Part(choiceList[choosenAction], ",", -1, TRUE)
+		IPTWFIP = IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherIcon")
+		exitDirectly = FALSE
+		choosenAction = 0
+	EndIf
+	
+	If (choosenAction <> 0)
+		Call("IPTWsetChoiceList")
+		choosenAction = Choice("Change location?", "Current location is " & currentLocation, 1, 0, choiceList)
+	EndIf
+EndWhile
+
+If (exitDirectly)
+	If (IPTWdisconnectOnExit AND mdidconnect)
+		If (IPTWinternetConnection eq "VJVolubilis")
+			If (FileExists(IPTWvjvolubilisPath))
+				Run(IPTWvjvolubilisPath, "-gprsoff")
+			EndIf
+		ElseIf (IPTWinternetConnection eq "Wifi")
+			RunWait(SystemPath("ScriptPath") \ "sys\Wifi-OFF.exe")
+		Else
+			CloseConnection
+			Disconnect
+		EndIf
+	EndIf
+	Exit
+EndIf
+
+RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
+showForecastAfterChange = 0
+If (RegRead(IPTWregRoot, IPTWappRegKey, "ShowingForecast") AND NOT IPTWwriteForecastInFile)
+	showForecastAfterChange = 1
+Else
+	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "ShowingForecast", 1)
+EndIf
+
+CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
+
+If (showForecastAfterChange)
+	Call("waitForReadyIPT", 2)
+	CallScript(SystemPath("ScriptPath") \ "iPhoneTodayAccuWeather.mscr")
+EndIf
+
+If (IPTWdisconnectOnExit AND mdidconnect)
+	If (IPTWinternetConnection eq "VJVolubilis")
+		If (FileExists(IPTWvjvolubilisPath))
+			Run(IPTWvjvolubilisPath, "-gprsoff")
+		EndIf
+	ElseIf (IPTWinternetConnection eq "Wifi")
+		RunWait(SystemPath("ScriptPath") \ "sys\Wifi-OFF.exe")
+	Else
+		CloseConnection
+		Disconnect
+	EndIf
+EndIf
+
+Sub IPTWclearCurrentIcons
+		IPTWiPhoneTodayClassName = IniRead("weather.ini", "Script settings", "IPTWiPhoneTodayClassName")
+		IPTWcurrentWeatherIcon = IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherIcon")
+		IPTWcurrentWeatherPage = IniRead("weather.ini", "iPhoneToday settings", "IPTWcurrentWeatherPage")
+		IPTWcurrentWeatherIcon += 1
+		ForEach IPTWaccuWeatherFavoriteLocation in array(locationArray)
+			If (SubStr(IPTWaccuWeatherFavoriteLocation, 1, 1) eq "+" OR SubStr(IPTWaccuWeatherFavoriteLocation, 2, 1) eq "+")
+				IPTWaccuWeatherFavoriteLocationCode = Part(IPTWaccuWeatherFavoriteLocation, ",", -1, TRUE)
+				If (IPTWaccuWeatherFavoriteLocationCode ne IPTWaccuWeatherLocation)
+					IPTWcurrentWeatherIcon += 1
+				EndIf
+			EndIf
+		EndForEach
+		For nbIconsToBlank = 0 to nbAddedDisplayedLocations + 1 step -1
+			RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" & -nbIconsToBlank, "nScreen", IPTWcurrentWeatherPage)
+			RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" &  -nbIconsToBlank, "nIcon", IPTWcurrentWeatherIcon - nbIconsToBlank)
+			RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" &  -nbIconsToBlank, "strName", " ")
+			RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" &  -nbIconsToBlank, "strImage", " ")
+			RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" &  -nbIconsToBlank, "strExec", " ")
+			RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" &  -nbIconsToBlank, "strParameters", " ")
+		Next
+		RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName, "reloadIcon", 2)
+		Call("waitForReadyIPT", 2)
+EndSub
+
+Sub IPTWsetChoiceList
+	If (IPTWaccuWeatherFavoriteLocations ne "")
+		choiceList = Split("Search for a new location code;Use My Location;Use Google Latitude;Add current location to favorites;Remove a location from favorites;Favorites to auto-update;Favorites to show current weather of;Change favorites order;" & IPTWaccuWeatherFavoriteLocations, ";")
+	Else
+		choiceList = Array("Search for a new location code", "Use My Location", "Use Google Latitude", "Add current location to favorites")
+	EndIf
+EndSub

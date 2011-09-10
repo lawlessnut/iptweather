@@ -1,0 +1,373 @@
+[Custom settings]
+IPTWdisplayHumidityIcon=0
+;list,0,1
+IPTWhumidityIcon=25
+;int
+IPTWhumidityPage=0
+;int
+IPTWhumidityIconName=AccuWeather.png
+
+[General settings]
+IPTWtranslationLanguageCode=
+;list,,de,es,fr,it,pt
+;If left empty, the default AccuWeather language English is used and weather description texts are stored in the IPTWlanguageFile file.
+;Otherwise, you can set the AccuWeather country code (de,es,fr,it,pt). Then, weather description texts are stored in the sys folder in the <IPTWtranslationLanguageCode>.ini file.
+
+IPTWalsoDisplayOriginalDescInIPT=0
+;list,0,1
+;Set this to 1 in order to also display the original weather desnription in brackets in the iPhoneToday pop-ups.
+
+IPTWconvertTimeFormat=1
+;list,0,1
+;If set to 1, sunrise and sunset time will be converted to the 24 hours time format.
+
+IPTWaccuWeatherAPI=ruan
+;
+;Set the AccuWeather API to use, in case the rdona API doesn't work any longer.
+;For instance, you can try with one of the following APIs: samsu, ruan, synium, shgao, saray, greek, tl01
+
+IPTWlanguageFile=eng.ini
+;
+;Name of the file used for the weather description texts.
+;If no path is set but just a name, then the file will be in the sys folder.
+
+IPTWaccuWeatherMetric=1
+;list,0,1
+;Set this to 1 for Metric units (temp in °C, speed in KPH), or 0 for English units (temp in °F, speed in MPH)
+
+IPTWaccuWeatherLocation=EUR|BE|BE003|BRUSSELS
+;callscript,manageIPTWLocation.mscr
+;Run the manageIPTWLocation.mscr script to find your location code.
+;Alternatively, you can find your AccuWeather location code on AccuWeather.com International (not AccuWeather.com which doesn't provide the right codes...).
+;Once you are on AccuWeather.com International, find your location and you will find its code in the URL.
+;If IPTWaccuWeatherLocation is set to blank, then IPTWlocationLatitude and IPTWlocationLongitude will be used to retrieve the weather.
+
+IPTWlocationLatitude=
+;
+;If you don't want to use IPTWaccuWeatherLocation, then you can set the latitude and the longitude of the location to retrieve the weather for.
+;(Please note AccuWeather location latitude and longitude database is not very accurate...)
+
+IPTWlocationLongitude=
+;
+;If you don't want to use IPTWaccuWeatherLocation, then you can set the latitude and the longitude of the location to retrieve the weather for.
+;(Please note AccuWeather location latitude and longitude database is not very accurate...)
+
+IPTWaccuWeatherFavoriteLocations=*Brussels, Belgium(Brussels), EUR|BE|BE003|BRUSSELS;Lille, France(Nord-Pas-De-Calais), EUR|FR|FR017|LILLE;Paris, France, EUR|FR|FR012|PARIS;Premery, France(Burgundy), EUR|FR|FR005|PREMERY;Warsaw, Poland(Mazowieckie), EUR|PL|PL007|WARSAW;Lisbon, Portugal(Lisboa), EUR|PT|PO012|LISBON;Copenhagen, Denmark(Staden Kobenhavn), EUR|DK|DA012|COPENHAGEN
+;callscript,manageIPTWLocation.mscr
+;Use the manageIPTWLocations.mscr script to manage your favorite location codes.
+
+IPTWgoogleUserID=
+;int
+;Retrieve your Google User ID on http://www.google.com/latitude/apps/badge to use your Latitude position for weather location.
+
+IPTWdelayHours=2
+;int
+;Set how many hours between each automatic updates.
+
+IPTWdelayMinutes=0
+;int
+;Set how many minutes between each automatic updates.
+
+IPTWvjvolubilisPath=\Program Files\vijay555\VJVolubilis\VJVolubilis.exe
+;fullfilepath
+;VJVolubilis.exe path. You can find this app at http://www.vijay555.com/?Release:VJVolubilis
+;This app should be used if IPTWeather fails to use MortScript to toggle your data connection. It should be used only for some specific devices.
+
+IPTWinternetConnection=The Internet
+;
+;Data (or list of data, comma separated) connection(s) to connect to if no data connection is on.
+;Set The Internet (or Internet depending on your system language) to use your default data connection.
+;Leave blank to use only the currently active connection and never enable any connection.
+;Set VJVolubilis to toggle the data connection with commands -gprson and -gprsoff of VJVolubilis.exe specified by the path IPTWvjvolubilisPath.
+;Set Wifi to use Wifi connection.
+;Set RIL Map to use any above connection you want based on your GSM Cell location (run script manageRIL2ConnectionMap.mscr for configuration).
+
+IPTWdisconnectOnExit=1
+;list,0,1
+;Set this to 1 to Disconnect on exit if and only if Connection has been established by IPTWeather.
+
+IPTWmondayText="Lu: "
+IPTWtuesdayText="Ma: "
+IPTWwednesdayText="Me: "
+IPTWthursdayText="Je: "
+IPTWfridayText="Ve: "
+IPTWsaturdayText="Sa: "
+IPTWsundayText="Di: "
+;
+;Weekdays text used when showing the forecast weather in iPhoneToday
+
+IPTWobsoleteDataPrefix=*
+;
+;Prefix to be used when no data has been found for a given period.
+
+IPTWupdateWeatherNowQuestion=Update weather now?
+;
+;If IPTWupdateWeatherNowQuestion is empty, the weather update will be forced without any pop-up.
+
+IPTWforceDelayHours=2
+;int
+IPTWforceDelayMinutes=0
+;int
+;If IPTWforceDelayHours and IPTWforceDelayMinutes has passed since last update, ask user with IPTWupdateWeatherNowQuestion to force a weather update, when collapsing the forecasts...
+
+IPTWwakeUpOnUpdate=1
+;list,0,1
+;Set this to 1 to wake up screen on update.
+
+IPTWpreventSleepOnUpdate=1
+;list,0,1
+;Set this to 1 to prevent from entering sleep mode while updating.
+;For S2U2 users, this will work only if the PowerOff setting of S2U2 is set to OFF.
+
+IPTWreloadLastDataOnStart=-1
+;list,0,1,-1
+;If left blank or set to 0, at device start-up, the current weather icon in iPhoneToday will have the AccuWeather.com icon with the IPTWstartText text, and the IPTWgoToAccuWeatherQuestion question will pop-up when you click on it.
+;If set to 1, previousely saved data in the registry will be loaded on start-up, and the IPTWgoToAccuWeatherQuestion question will not appear, nor the AccuWeather.com icon with the IPTWstartText text.
+;If set to -1, no data will be reloaded at start-up, but IPTWeather will behave as if data was reloaded, so the IPTWgoToAccuWeatherQuestion question will not appear.
+
+IPTWscheduleNextUpdateOnStart=1
+;list,0,1
+;If set to 1, an update will be scheduled at device start-up in IPTWdelayHours hours and IPTWdelayMinutes minutes.
+
+[iPhoneToday settings]
+IPTWmaxForecastDaysToShow=
+;int
+;Set the maximum number of weather forecast days to show when displaying weather forecast icons in iPhoneToday.
+
+IPTWforecastDaysToSkip=0
+;int
+;Set the number of days to skip in the displayed weather forecasts icons.
+;For instance, if set to 1, the forecast for current day will not be displayed.
+
+IPTWobservationTimeExecField=
+;fullfilepath
+;Set the full file path of the file to be executed when clicking on the observation time icon in iPhoneToday.
+
+IPTWwriteForecastInFile=
+;list,0,1
+;If set to 1, weather forecast icons will be written in the icons.xml file of iPhoneToday.
+
+IPTWaccuWeatherIconPath=\Program Files\IPTWeather\accuweathericons
+;path
+;Path to the icons used in iPhoneToday.
+
+IPTWiPhoneTodayDisabled=
+;list,-1,0,1
+;If set to 1, iPhoneToday will not be updated.
+;If left blank or equal to 0, iPhoneToday will be updated, unless iPhoneToday is off, then IPTWeather will automatically set IPTWiPhoneTodayDisabled=1.
+;If set to -1, iPhoneToday will be updated only if it is on, and IPTWeather won't change it.
+
+IPTWcurrentWeatherIcon=0
+;int
+;Icon position number where to display the current weather icon in iPhoneToday.
+
+IPTWcurrentWeatherPage=0
+;int
+;Page number where to display the current weather icon in iPhoneToday.
+
+IPTWforecastStartIcon=4
+;int
+;Icon position number where to start displaying the weather forecast icons in iPhoneToday.
+
+IPTWforecastStartPage=0
+;int
+;Page number where to start displaying the weather forecast icons in iPhoneToday.
+;It can be the page header name if you set it to header:"<my header name>".
+
+IPTWforecastIconSkipFirstAtSunset=
+;list,0,1
+;Set this to 1 in order to have a one icon shift when showing the weather forecast icons in the evening (when sun has set).
+
+IPTWforecastSkipIconFrequency=
+;int
+;Set every how many icons to skip to show weather forecast icons in iPhoneToday.
+
+IPTWforecastSkipIconQuantity=
+;int
+;Set the number of icons to skip to show in the forecast icons in iPhoneToday every IPTWforecastSkipIconFrequency icon.
+
+IPTWhideNightForecastIcons=
+;list,0,1
+;If set to 1, night forecast icons won't be displayed in iPhoneToday.
+
+IPTWiconsExtension=png
+;
+;File extension to use for the weather icons in the accuweathericons folder
+
+IPTWcurrentWeatherIconTextPattern=%PT% (%PRFT%)
+;
+;;Check weather.ini.desc file for help on this setting.
+;Text pattern for the text displayed for the current weather icon in iPhoneToday.
+;You can use the following special strings:
+;%CT% for Current Temperature
+;%CRFT% for Current RealFeel Temperature
+;%PT% for period temp (Current, Hi or Lo temperature, if current period is current, day or night)
+;%PRFT% for period real feel temp (Current, Hi or Lo temperature, if current period is current, day or night)
+;%HT% for High Temperature
+;%HRFT% for High RealFeel Temperature
+;%LT% for Low Temperature
+;%LRFT% for Low RealFeel Temperature
+;%NA% begin/end of the part that will be hidden if no current temp is available or if IPTWtomorrowForecastInS2U2UserWeather=1
+;%CITY% city name of displayed location
+;%SCITY% short city name of location as per citiesShortNames.ini file
+;%SUNS% sunset time for displayed day
+;%SUNR% sunrise time for displayed day
+;%OBSD% AccuWeather observation date for displayed weather
+;%OBST% AccuWeather observation time for displayed weather
+;%TXT% weather description
+;%HUM% current humidity (only available if IPTWtomorrowForecastInS2U2UserWeather=-1, replaced by IPTWobsoleteDataPrefix if not available)
+;%WSPD% wind speed
+;%WDIR% wind direction
+;%WGUS% wind gusts
+;%DAY% for period day
+;%SDAY% for period short day (see settings IPTWmondayText, IPTWtuesdayText, etc.)
+;%TUNIT% for temperature unit
+;%SUNIT% for speed unit
+
+IPTWforecastWeatherIconsTextPattern=%SDAY%%PT% (%PRFT%)
+;
+;Text pattern for the text displayed for the forecast weather icons in iPhoneToday.
+;You can use the same special strings as for IPTWcurrentWeatherIconTextPattern.
+
+IPTWdisplayCityName=1
+;list,0,1
+;Set this to 1 to display the weather city name in iPhoneToday when showing forecasts.
+
+IPTWdefaultCityIcon=AccuWeather.png
+;
+;Default icon from the IPTWaccuWeatherIconPath folder to be displayed if IPTWdisplayCityName=1
+;If there is an icon named <IPTWaccuWeatherLocation (with _ instead of |)>.<IPTWiconsExtension> in the IPTWaccuWeatherIconPath folder, it will be used.
+;For instance, if IPTWaccuWeatherLocation=EUR|FR|FR012|PARIS and IPTWiconsExtension=bmp, then the icon used would be EUR_FR_FR012_PARIS.bmp if it exists.
+
+IPTWdisplayObservationTime=@
+;
+;If set to anything but blank, the obsercation time will be showed in the forecast icons in iPhoneToday, beginning with the IPTWdisplayObservationTime string.
+;It is the AccuWeather.com observation time, not the data download time.
+
+IPTWnightIconSuffix=
+;
+;If you want to use different icons for night forecasts, use a suffix.
+;For instance, if you want to use the 30N icon instead of the 30 icon for the night forecast, then enter IPTWnightIconSuffix=N
+
+IPTWstartText=Tap to start
+;
+;Name of the current weather icon after device start-up, if and only if IPTWreloadLastDataOnStart=0.
+
+IPTWgoToAccuWeatherQuestion=Go to accuweather.com?
+;
+;Question displayed when you click on the current weather icon aftervdevice start-up, if and only if IPTWreloadLastDataOnStart=0.
+
+IPTWdownloadDataAfterStartOnIconTap=0
+;list,0,1
+;Set this to 0 if you want to reload current weather from the registry after the startAccuWeather.mscr script has run (at start-up), instead of downloading new data from Accuweather.com, when running iPhoneTodayAccuWeather.mscr after a device reset.
+;This parameter is usefull combined with IPTWscheduleNextUpdateOnStart.
+;Be carefull, if IPTWdowloadDataAfterStartOnIconTap=0, then IPTWeather will not schedule updates at start, unless you set IPTWscheduleNextUpdateOnStart=1.
+
+IPTWuseS2U2wallpaperForBackground=0
+;list,0,1,-1
+;Set this to 1 if you want to use the S2U2 wallpaper as your iPhoneToday wallpaper, or -1 for current weather.
+;If you don't use S2U2 but want to use this wallpaper feature, then set IPTWtodayForecastInS2U2Wallpaper=0, and configure the wallpaper path using IPTWS2U2WallpaperExtension, IPTWS2U2WallpaperPath and IPTWdefautS2U2Wallpaper.
+
+[S2U2 settings]
+IPTWtomorrowForecastInS2U2UserWeather=-1
+;list,0,1,-1
+;If set to -1 or 1, then, IPTWeather will use the UserWeather feature to display weather in S2U2. Weather pictures must be in the gfx\weather folder of S2U2 or the IPTWS2U2UserWeatherIconsPath one. Picture names have to be the same as for accuweathericons, but without the 0 behind the digits, i.e. not "01.png" but "1.png", and the AccuWeather icon has to be "10000.png" instead of "AccuWeather.png".
+;Set it to 1 to have tomorrow forecast weather in S2U2 UserWeather.
+;Set it to -1 to have current weather in S2U2 UserWeather.
+
+IPTWS2U2UserWeatherIconsPath=
+;path
+;PLEASE NOTE IF A PATH IS SET, IPTWEATHER WILL DELETE SOME OF THE ICONS FROM THE gfx\weather FOLDER OF S2U2.
+;If left empty, icons located in the gfx/weather folder of S2U2 will be used for the UserWeather icons.
+;Otherwise, you can set any path to an icon set with pictures named 1.png, 2.png, ..., 44.png.
+;The error picture must be named 10000.png.
+
+IPTWS2U2UserWeatherIconToForce=
+;int
+;Set the number (only an integer) of the icon to be forced in the S2U2 UserWeather.
+;Whatever the weather is, always the set icon to be forced will be shown.
+;Usefull if you want to display the weather text, but not the weather icon: just set the number of a blank icon.
+
+IPTWS2U2UserWeatherTextPattern=%CT%%NA% (%CRFT%)%NA% / Hi: %HT% (%HRFT%) / Lo: %LT% (%LRFT%)
+;
+;;Check weather.ini.desc file for help on this setting.
+;Define what has to be displayed in the S2U2 UserWeather text.
+;You can use the following special strings:
+;%CT% for Current Temperature (only available if IPTWtomorrowForecastInS2U2UserWeather=-1, replaced by IPTWobsoleteDataPrefix if not available)
+;%CRFT% for Current RealFeel Temperature (only available if IPTWtomorrowForecastInS2U2UserWeather=-1, replaced by IPTWobsoleteDataPrefix if not available))
+;%HT% for High Temperature
+;%HRFT% for High RealFeel Temperature
+;%LT% for Low Temperature
+;%LRFT% for Low RealFeel Temperature
+;%NA% begin/end of the part that will be hidden if no current temp is available or if IPTWtomorrowForecastInS2U2UserWeather=1
+;%CITY% city name of displayed location
+;%SCITY% short city name of location as per citiesShortNames.ini file
+;%SUNS% sunset time for displayed day
+;%SUNR% sunrise time for displayed day
+;%OBSD% AccuWeather observation date for displayed weather
+;%OBST% AccuWeather observation time for displayed weather
+;%TXT% weather description
+;%HUM% current humidity (only available if IPTWtomorrowForecastInS2U2UserWeather=-1, replaced by IPTWobsoleteDataPrefix if not available)
+;%WSPD% wind speed
+;%WDIR% wind direction
+;%WGUS% wind gusts
+;%DAY% for period day
+;%SDAY% for period short day (see settings IPTWmondayText, IPTWtuesdayText, etc.)
+;%PT% for period temp (Current, Hi or Lo temperature, if current period is current, day or night)
+;%PRFT% for period real feel temp (Current, Hi or Lo temperature, if current period is current, day or night)
+;%TUNIT% for temperature unit
+;%SUNIT% for speed unit
+
+IPTWtodayForecastInS2U2Wallpaper=1
+;list,0,1,-1
+;Set this to 1 to show the current day (or night if sun has set) weather forecast as S2U2 wallpaper.
+;Set to -1 to show the current weather as S2U2 wallpaper.
+
+IPTWS2U2WallpaperExtension=png
+;
+;File extension of the pictures used for the S2U2 wallpaper.
+
+IPTWS2U2WallpaperPath=\Storage Card\IPTWeather\AccuWeatherHD
+;path
+;S2U2 portrait wallpaper path.
+;Picture names are the same as for the IPTWtomorrowForecastInS2U2UserWeather pictures, as described above. But the AccuWeather pictures is replaced here by IPTWdefaultS2U2Wallpaper.
+
+IPTWdefautS2U2Wallpaper=dunno
+;
+;S2U2 portrait wallpaper displayed when no data is available.
+
+IPTWS2U2WallpaperLPath=
+;path
+;S2U2 landscape wallpaper path.
+;If a path is set, then pictures stored in this path will be used for the landscape wallpaper of S2U2.
+;Leave it blank otherwise.
+
+IPTWdefautS2U2WallpaperL=
+;
+;S2U2 landscape wallpaper displayed when no data is available.
+
+IPTWtodayForecastInS2U2Text=1
+;list,0,1,-1
+;Set this to 1 to show the current day (or night if sun has set) weather forecast description as S2U2 slide text.
+;Set to -1 to show the current weather description as S2U2 slide text.
+;The translation between AccuWeather.com description and the description displayed as the slide text, is done in the [Weather description translation] section of the IPTWlanguageFile file or by using the IPTWtranslationLanguageCode feature.
+;If a new weather description appears at AccuWeather.com, then IPTWeather will add a new line in the language file so you can easily do the translation.
+
+IPTWdefaultS2U2Text=slide to unlock
+;
+;If IPTWtodayForecastInS2U2Text=1 or -1, the IPTWdefaultS2U2Text text is shown when no data is available.
+
+[Script settings]
+;Below settings sets the registry key where are stored all the data for IPTWeather.
+
+IPTWregRoot=HKCU
+;
+;Registry root used by IPTWeather
+
+IPTWregKey=Software\iPhoneToday\AccuWeather
+;
+;Registry key used by IPTWeather
+
+IPTWiPhoneTodayClassName=iPhoneToday
+;
+;iPhoneToday Class Name. Change this advanced setting if you want to use IPTWeather with an iPhoneToday instance hacked to use a different class name, e.g. for folders.
