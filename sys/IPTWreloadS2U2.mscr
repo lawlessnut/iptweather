@@ -46,7 +46,7 @@ If (argv[1] < 0)
 		EndIf
 	EndIf
 
-	If (IPTWtodayForecastInS2U2Wallpaper OR IPTWuseS2U2wallpaperForBackground OR IPTWuseS2U2wallpaperInToday)
+	If (IPTWtodayForecastInS2U2Wallpaper = 1 OR IPTWtodayForecastInS2U2Wallpaper = -1 OR IPTWuseS2U2wallpaperForBackground = 1 OR IPTWuseS2U2wallpaperForBackground = -1)
 		IPTWS2U2WallpaperExtension = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperExtension")
 		IPTWS2U2WallpaperPath = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperPath")
 		wallpaper = IPTWS2U2WallpaperPath \ IniRead("..\weather.ini", "S2U2 settings", "IPTWdefautS2U2Wallpaper") & "." & IPTWS2U2WallpaperExtension
@@ -151,7 +151,7 @@ Else
 			EndIf
 		EndIf
 
-		If (IPTWtodayForecastInS2U2Wallpaper = 1 OR IPTWuseS2U2wallpaperForBackground OR IPTWtodayForecastInS2U2Wallpaper = -1)
+		If (IPTWtodayForecastInS2U2Wallpaper = 1 OR IPTWtodayForecastInS2U2Wallpaper = -1 OR IPTWuseS2U2wallpaperForBackground = 1 OR IPTWuseS2U2wallpaperForBackground = -1)
 			IPTWS2U2WallpaperExtension = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperExtension")
 			IPTWS2U2WallpaperPath = IniRead("..\weather.ini", "S2U2 settings", "IPTWS2U2WallpaperPath")
 
@@ -184,7 +184,10 @@ Else
 				EndIf
 			EndIf
 
-			If (IPTWuseS2U2wallpaperForBackground AND IPTWiPhoneTodayDisabled <> 1 AND FileExists(wallpaper))
+			If (IPTWuseS2U2wallpaperForBackground = -1)
+				wallpaper = IPTWS2U2WallpaperPath \ Eval(RegRead(IPTWregRoot, IPTWregKey, "icon0")) & "." & IPTWS2U2WallpaperExtension
+			EndIf
+			If ((IPTWuseS2U2wallpaperForBackground = 1 OR IPTWuseS2U2wallpaperForBackground = -1) AND IPTWiPhoneTodayDisabled <> 1 AND FileExists(wallpaper))
 				Call("IPTwallpaper")
 			EndIf
 		EndIf
