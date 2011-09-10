@@ -8,6 +8,7 @@ IPTWdisconnectOnExit				= IniRead("weather.ini", "General settings", "IPTWdiscon
 IPTWaccuWeatherFavoriteLocations	= IniRead("weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations")
 IPTWupdateWeatherNowQuestion		= IniRead("weather.ini", "General settings", "IPTWupdateWeatherNowQuestion")
 IPTWaccuWeatherAPI					= IniRead("weather.ini", "General settings", "IPTWaccuWeatherAPI")
+IPTWvjvolubilisPath			= IniRead("weather.ini", "General settings", "IPTWvjvolubilisPath")
 
 # ############################################################################
 # iPhoneToday settings
@@ -51,7 +52,6 @@ While (choosenAction <> 0 AND choosenAction <= MaxIndex(choiceList))
 			internetConnectionIndex = 1
 			While (NOT mdidconnect AND internetConnectionIndex <= maxIPTWinternetConnectionIndex)
 				Call("IPTWsetInternetConnection", SystemPath("ScriptPath") \ "sys")
-
 				If (IPTWinternetConnection ne "")
 					If (IPTWinternetConnection eq "VJVolubilis")
 						If (FileExists(IPTWvjvolubilisPath))
@@ -70,7 +70,7 @@ While (choosenAction <> 0 AND choosenAction <= MaxIndex(choiceList))
 			StatusClear()
 		EndIf
 
-		If (mdidconnect)
+		If (mdidconnect or isConnected)
 			location = Input("Please enter location code or name")
 			If (location ne "")
 				data = ReadFile(IPTWaccuLocationURL & location)
