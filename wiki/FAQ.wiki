@@ -92,8 +92,8 @@ Please note it will be automatically disable if you have not installed S2U2 on y
 A: In the weather.ini you can set the IPTWlanguageFile to the weather description file you want. By default, it is eng.ini but you can change it. You can also change the text to fit your language or the size you want.<br />
 <br />
 <b><font color="Green">Q: I'd like the text shown on the S2U2 slider to be in a different language. Is it possible?</font></b><br />
-A: ~~Change the setting IPTWtranslationLanguageCode to fit your language. Default language is US English. Please note that if IPTWtranslationLanguageCode is not empty, this will result in downloading more data.~~<br />
-You can edit manually the weather description file which the file set in IPTWlanguageFile. By default, it is set to the eng.ini file which located in the sys folder of IPTWeather.<br />
+A: Change the setting IPTWtranslationLanguageCode to fit your language. Default language is US English.<br />
+You can also edit manually the weather description file which is the file set in IPTWlanguageFile to change or force the weather descriptions. By default, it is set to the eng.ini file which located in the sys folder of IPTWeather.<br />
 <br />
 <b><font color="Green">Q: How to change the installation path?</font></b><br />
 A: To change the installation path of the IPTWeather folder, you have to:<br />
