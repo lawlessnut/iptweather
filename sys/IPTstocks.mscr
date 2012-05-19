@@ -1,0 +1,70 @@
+Include("IPTWsubs.mscr")
+
+IPTWeatherSysPath = Replace(RegRead("HKCU", "Software\MoDaCo\AppToDate\XML", "IPTWeather"), "sys\version.xml", "")
+IPTWinternetConnectionList = Split(IniRead(IPTWeatherSysPath \ "weather.ini", "General settings", "IPTWinternetConnection"), ",")
+IPTWdisconnectOnExit = IniRead(IPTWeatherSysPath \ "weather.ini", "General settings", "IPTWdisconnectOnExit")
+IPTWvjvolubilisPath = IniRead(IPTWeatherSysPath \ "weather.ini", "General settings", "IPTWvjvolubilisPath")
+IPTWconnectionCheckURL = IniRead(IPTWeatherSysPath \ "weather.ini", "General settings", "IPTWconnectionCheckURL")
+IPTWiPhoneTodayClassName = IniRead(IPTWeatherSysPath \ "weather.ini", "Script settings", "IPTWiPhoneTodayClassName")
+
+isConnected = FALSE
+sdidconnect = FALSE
+If (RegRead("HKLM", "System\State\Connections", "Count"))
+	If (InternetConnected(IPTWconnectionCheckURL))
+		isConnected = TRUE
+	EndIf
+EndIf
+If (NOT isConnected)
+	maxIPTWinternetConnectionIndex = MaxIndex(IPTWinternetConnectionList)
+	internetConnectionIndex = 1
+	While (NOT didconnect AND internetConnectionIndex <= maxIPTWinternetConnectionIndex)
+		Call("IPTWsetInternetConnection", SystemPath("ProgramFiles") \ "IPTWeather\sys")
+		If (IPTWinternetConnection ne "")
+			If (IPTWinternetConnection eq "VJVolubilis")
+				If (FileExists(IPTWvjvolubilisPath))
+					RunWait(IPTWvjvolubilisPath, "-gprson")
+				EndIf
+			ElseIf (IPTWinternetConnection eq "Wifi")
+				RunWait(SystemPath(IPTWeatherSysPath \ "sys\Wifi.exe")
+			Else
+				Connect(IPTWinternetConnection)
+			EndIf
+			CallFunction("IPTWdidConnect", sdidconnect, IPTWeatherSysPath \ "sys")
+		EndIf
+		internetConnectionIndex += 1
+	EndWhile
+EndIf
+
+IPTWstockCode = IniRead(IPTWeatherSysPath \ "weather.ini", "Custom settings", "IPTWstockCode")
+IPTWstockIcon = IniRead(IPTWeatherSysPath \ "weather.ini", "Custom settings", "IPTWstockIcon")
+IPTWstockPage = IniRead(IPTWeatherSysPath \ "weather.ini", "Custom settings", "IPTWstockPage")
+
+If (sdidconnect or isConnected)
+	data = ReadFile("http://finance.yahoo.com/d/quotes.csv?s=" & IPTWstockCode & "&f=np2l1d1t1")
+	Split(data, ",", 0, name, pchange, last, lastdt, lasttime)
+#	message(name & "^NL^" & pchange & "^NL^" & last & "^NL^" & lastdt & "^NL^" & lasttime)
+
+	If (iPTiconNum eq "")
+		iPTiconNum = 0
+	EndIf
+	RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" & iPTiconNum, "nScreen", IPTWstockPage)
+	RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" & iPTiconNum, "nIcon", IPTWstockIcon)
+	RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" & iPTiconNum, "strName", last & " (" & Eval(pchange) & ")")
+#	RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" & iPTiconNum, "strImage", " ")
+
+	RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName, "reloadIcon", 2)
+
+EndIf
+
+If (IPTWdisconnectOnExit AND sdidconnect)
+	If (IPTWinternetConnection eq "VJVolubilis")
+		If (FileExists(IPTWvjvolubilisPath))
+			Run(IPTWvjvolubilisPath, "-gprsoff")
+		EndIf
+	ElseIf (IPTWinternetConnection eq "Wifi")
+		RunWait(IPTWeatherSysPath \ "sys\Wifi-OFF.exe")
+	Else
+		CloseConnection
+		Disconnect
+	EndIf
+EndIf
