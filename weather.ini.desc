@@ -6,6 +6,16 @@ IPTWhumidityIcon=25
 IPTWhumidityPage=0
 ;int
 IPTWhumidityIconName=AccuWeather.png
+;
+
+IPTWdisplayStockIcon=0
+;list,0,1
+IPTWstockCode=BNP.PA
+;
+IPTWstockIcon=18
+;int
+IPTWstockPage=4
+;int
 
 [General settings]
 IPTWtranslationLanguageCode=
@@ -81,6 +91,10 @@ IPTWinternetConnection=The Internet
 ;Set VJVolubilis to toggle the data connection with commands -gprson and -gprsoff of VJVolubilis.exe specified by the path IPTWvjvolubilisPath.
 ;Set Wifi to use Wifi connection.
 ;Set RIL Map to use any above connection you want based on your GSM Cell location (run script manageRIL2ConnectionMap.mscr for configuration).
+
+IPTWconnectionCheckURL="http://www.perdu.com"
+;
+;URL that is used to check if your Internet connection is live.
 
 IPTWdisconnectOnExit=1
 ;list,0,1
