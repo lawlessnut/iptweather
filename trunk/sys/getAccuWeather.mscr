@@ -1,4 +1,4 @@
-#ErrorLevel("off")
+ErrorLevel("off")
 
 Include("IPTWsubs.mscr")
 
@@ -22,6 +22,7 @@ IPTWaccuWeatherAPI			= IniRead("..\weather.ini", "General settings", "IPTWaccuWe
 IPTWvjvolubilisPath			= IniRead("..\weather.ini", "General settings", "IPTWvjvolubilisPath")
 IPTWaccuWeatherFavoriteLocations	= IniRead("..\weather.ini", "General settings", "IPTWaccuWeatherFavoriteLocations")
 IPTWtranslationLanguageCode		= IniRead("..\weather.ini", "General settings", "IPTWtranslationLanguageCode")
+IPTWconnectionCheckURL		= IniRead("..\weather.ini", "General settings", "IPTWconnectionCheckURL")
 
 # ############################################################################
 # iPhoneToday settings
@@ -108,7 +109,7 @@ EndIf
 didconnect = FALSE
 isConnected = FALSE
 If (RegRead("HKLM", "System\State\Connections", "Count"))
-	If (InternetConnected("http://www.perdu.com"))
+	If (InternetConnected(IPTWconnectionCheckURL))
 		isConnected = TRUE
 	EndIf
 EndIf
@@ -177,6 +178,16 @@ If (IPTWaccuWeatherLocationForecast eq "")
 	EndIf
 EndIf
 
+If (NOT disconnectThenExit)
+	Call("IPTWsetCurrentTimeAndDate")
+
+	If (RegRead(IPTWregRoot, IPTWappRegKey, "Started"))
+		Call("IPTWreloadData", SystemPath("ScriptPath"))
+	Else
+		RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
+	EndIf
+EndIf
+
 If (IPTWdisconnectOnExit AND didconnect)
 	If (IPTWinternetConnection eq "VJVolubilis")
 		If (FileExists(IPTWvjvolubilisPath))
@@ -196,16 +207,4 @@ If (IPTWpreventSleepOnUpdate)
 	Call("IPTWtriggerPowerManagementChange")
 
 	RegWriteDword(IPTWregRoot, IPTWappRegKey, "sleepOnUpdatePrevented", 0)
-EndIf
-
-If (disconnectThenExit)
-	Exit
-EndIf
-
-Call("IPTWsetCurrentTimeAndDate")
-
-If (RegRead(IPTWregRoot, IPTWappRegKey, "Started"))
-	Call("IPTWreloadData", SystemPath("ScriptPath"))
-Else
-	RegWriteDWord(IPTWregRoot, IPTWappRegKey, "Started", 1)
 EndIf
