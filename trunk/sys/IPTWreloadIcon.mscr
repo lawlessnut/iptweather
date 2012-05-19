@@ -40,6 +40,7 @@ If (NOT IPTWiPhoneTodayDisabled)
 		RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" & iPTiconNum, "strExec", SystemPath("ScriptExe") \ "MortScript.exe")
 		RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon" & iPTiconNum, "strParameters", """" & Replace(SystemPath("ScriptPath"), "IPTWeather\sys", "IPTWeather") \ "iPhoneTodayAccuWeather.mscr"" IPTWaccuWeatherLocationForecast=""" & IPTWaccuWeatherFavoriteLocationCode & """ IPTWFIP=" & argv[2])
 	EndIf
+
 	If (mainLocation)
 		RegWriteDWord("HKLM", "\Software" \ IPTWiPhoneTodayClassName, "reloadIcon", 2)
 
