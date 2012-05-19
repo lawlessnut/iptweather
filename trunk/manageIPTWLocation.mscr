@@ -20,6 +20,7 @@ IPTWregRoot					= IniRead("weather.ini", "Script settings", "IPTWregRoot")
 IPTWappRegKey				= IniRead("weather.ini", "Script settings", "IPTWregKey")
 IPTWregKey					= IniRead("weather.ini", "Script settings", "IPTWregKey") \ IPTWaccuWeatherLocation
 IPTWaccuLocationURL			= "http://" & IPTWaccuWeatherAPI & ".accu-weather.com/widget/" & IPTWaccuWeatherAPI & "/city-find.asp?location="
+IPTWconnectionCheckURL		= IniRead("weather.ini", "General settings", "IPTWconnectionCheckURL")
 
 currentCityName = RegRead(IPTWregRoot, IPTWregKey, "city")
 If (currentCityName ne "")
@@ -40,7 +41,7 @@ While (choosenAction <> 0 AND choosenAction <= MaxIndex(choiceList))
 	If (choosenAction = 1)
 		isConnected = FALSE
 		If (RegRead("HKLM", "System\State\Connections", "Count"))
-			If (InternetConnected("http://www.perdu.com"))
+			If (InternetConnected(IPTWconnectionCheckURL))
 				isConnected = TRUE
 			EndIf
 		EndIf
