@@ -51,3 +51,7 @@ If (IPTWdisplayHumidityIcon)
 	RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon1", "strName", humidity)
 	RegWriteString("HKLM", "\Software" \ IPTWiPhoneTodayClassName \ "icon1", "strImage", IPTWaccuWeatherIconPath \ IPTWhumidityIconName)
 EndIf
+
+If (IPTWdisplayStockIcon)
+	CallScript(SystemPath("ScriptPath") \ "IPTstocks.mscr")
+EndIf
