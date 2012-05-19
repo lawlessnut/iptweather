@@ -1,5 +1,5 @@
 Sub IPTWdownload
-	If (InternetConnected("http://www.perdu.com"))
+	If (InternetConnected(IPTWconnectionCheckURL))
 		IPTWcurrentAccuWeatherLocation = argv[1]
 		If (IPTWcurrentAccuWeatherLocation eq "My Location")
 			latitude = RegRead("HKLM", "Services\myLocation", "Latitude")
@@ -314,7 +314,7 @@ Sub IPTWdidConnect
 
 	#Do we have a working connection?
 	nbSleeps = 0
-	While (NOT InternetConnected("http://www.perdu.com") AND nbSleeps < 5)
+	While (NOT InternetConnected(IPTWconnectionCheckURL) AND nbSleeps < 5)
 		Sleep(5000)
 		nbSleeps += 1
 	EndWhile
